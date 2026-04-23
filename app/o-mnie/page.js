@@ -58,7 +58,7 @@ export default function AboutPage() {
         <section className="flex flex-col sm:flex-row gap-10 items-start">
           <div className="relative w-36 h-36 rounded-full border-4 border-white shadow-md overflow-hidden flex-shrink-0">
             <Image
-              src="/meCV.jfif"
+              src="/meCV.jpg"
               alt="Paulina"
               fill
               className="object-cover"

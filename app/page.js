@@ -181,7 +181,7 @@ export default function App() {
             <div className="w-full lg:w-[30%] flex-shrink-0">
               <div className="relative w-full aspect-[3/4] rounded-2xl shadow-lg overflow-hidden">
                 <Image
-                  src="/meCV.jfif"
+                  src="/meCV.jpg"
                   alt="Paulina"
                   fill
                   className="object-cover object-top"
