@@ -718,17 +718,17 @@ export default function UlamkiPage() {
               <div className="space-y-3">
                 <ExRow
                   left={<><Frac top="1" bot="4" /> + <Frac top="2" bot="3" /></>}
-                  mid={<>NWW(4,3) = 12 <span className="text-stone-300 px-1">→</span> <Frac top="3" bot="12" /> + <Frac top="8" bot="12" /> = <Frac top="3+8" bot="12" /></>}
+                  mid={<>NWW(4,3) = 12 <span className="text-stone-300 px-1">→</span> <Frac top="1×3" bot="4×3" /> + <Frac top="2×4" bot="3×4" /> = <Frac top="3" bot="12" /> + <Frac top="8" bot="12" /> = <Frac top="3+8" bot="12" /></>}
                   right={<Frac top="11" bot="12" />}
                 />
                 <ExRow
                   left={<><Frac top="5" bot="6" /> − <Frac top="3" bot="8" /></>}
-                  mid={<>NWW(6,8) = 24 <span className="text-stone-300 px-1">→</span> <Frac top="20" bot="24" /> − <Frac top="9" bot="24" /> = <Frac top="20−9" bot="24" /></>}
+                  mid={<>NWW(6,8) = 24 <span className="text-stone-300 px-1">→</span> <Frac top="5×4" bot="6×4" /> − <Frac top="3×3" bot="8×3" /> = <Frac top="20" bot="24" /> − <Frac top="9" bot="24" /> = <Frac top="20−9" bot="24" /></>}
                   right={<Frac top="11" bot="24" />}
                 />
                 <ExRow
                   left={<><Frac top="7" bot="12" /> + <Frac top="5" bot="18" /> − <Frac top="2" bot="9" /></>}
-                  mid={<>NWW = 36 <span className="text-stone-300 px-1">→</span> <Frac top="21" bot="36" /> + <Frac top="10" bot="36" /> − <Frac top="8" bot="36" /> = <Frac top="21+10−8" bot="36" /></>}
+                  mid={<>NWW = 36 <span className="text-stone-300 px-1">→</span> <Frac top="7×3" bot="12×3" /> + <Frac top="5×2" bot="18×2" /> − <Frac top="2×4" bot="9×4" /> = <Frac top="21" bot="36" /> + <Frac top="10" bot="36" /> − <Frac top="8" bot="36" /> = <Frac top="21+10−8" bot="36" /></>}
                   right={<Frac top="23" bot="36" />}
                 />
               </div>
