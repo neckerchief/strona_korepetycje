@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Atom, Calculator, FlaskConical, GraduationCap, Layers, Mail, MapPin,
+  Atom, Calculator, FlaskConical, GraduationCap, Layers, MapPin,
   MessageCircle, Target, TrendingUp, Zap, CheckCircle, ArrowRight,
-  Clock, Award,
+  Clock, Award, Send, Phone, User, CalendarDays,
 } from "lucide-react";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
@@ -106,6 +106,206 @@ const Eyebrow = ({ children }) => (
     {children}
   </p>
 );
+
+// ─── Booking card (Cal.com popup) ────────────────────────────
+const BookingCard = () => {
+  useEffect(() => {
+    if (window.Cal) return;
+    // Cal.com queue pattern - must run before embed.js loads
+    (function (C, A, L) {
+      const p = (a, ar) => a.q.push(ar);
+      const d = C.document;
+      C.Cal = C.Cal || function (...ar) {
+        const cal = C.Cal;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          const s = d.createElement("script");
+          s.src = A;
+          d.head.appendChild(s);
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = (...a) => p(api, a);
+          const ns = ar[1];
+          api.q = [];
+          if (typeof ns === "string") {
+            cal.ns[ns] = cal.ns[ns] || api;
+            p(cal.ns[ns], ar);
+            p(cal, ["-s", ns]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    window.Cal("init", "korepetycje", { origin: "https://cal.com" });
+    window.Cal.ns.korepetycje("ui", {
+      hideEventTypeDetails: false,
+      layout: "month_view",
+      locale: "pl",
+    });
+  }, []);
+
+  return (
+    <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-stone-100 flex flex-col h-full">
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-10 h-10 rounded-xl bg-[#f2ecfb] flex items-center justify-center flex-shrink-0">
+          <CalendarDays size={18} className="text-[#6d3a8e]" />
+        </div>
+        <h3 className="font-display font-semibold text-stone-800 text-lg leading-tight">
+          Zarezerwuj termin
+        </h3>
+      </div>
+
+      <p className="text-stone-500 text-sm leading-relaxed mb-6">
+        Wybierz wolny termin w moim kalendarzu. Po rezerwacji otrzymam powiadomienie i zatwierdzę spotkanie. Potwierdzenie trafi na Twój e-mail.
+      </p>
+
+      <div className="space-y-2.5 mb-8 flex-1">
+        {[
+          { icon: Clock, text: "60 minut · pierwsza lekcja bezpłatna" },
+          { icon: CheckCircle, text: "Wymaga potwierdzenia z mojej strony" },
+          { icon: MapPin, text: "Online lub Warszawa (Targówek)" },
+        ].map(({ icon: Icon, text }) => (
+          <div key={text} className="flex items-start gap-2.5 text-stone-500 text-sm">
+            <Icon size={14} className="text-[#6d3a8e] mt-0.5 flex-shrink-0" />
+            {text}
+          </div>
+        ))}
+      </div>
+
+      <button
+        data-cal-namespace="korepetycje"
+        data-cal-link="paulina-michalak-hmd9mx/korepetycje"
+        data-cal-config='{"layout":"month_view","locale":"pl"}'
+        className="w-full flex items-center justify-center gap-2 bg-[#6d3a8e] hover:bg-[#52297a] text-white font-bold px-6 py-3.5 rounded-xl transition-colors text-base"
+      >
+        <CalendarDays size={16} />
+        Wybierz termin
+      </button>
+    </div>
+  );
+};
+
+// ─── Contact form ────────────────────────────────────────────
+const ContactForm = () => {
+  const [fields, setFields] = useState({ name: "", email: "", phone: "", message: "" });
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+
+  const set = (key) => (e) => setFields((f) => ({ ...f, [key]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "2eed8172-2554-4d40-91e9-449c4b68f261",
+          subject: "Nowa wiadomość z korepetycje.pl",
+          ...fields,
+        }),
+      });
+      const data = await res.json();
+      setStatus(data.success ? "success" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <div className="bg-white rounded-2xl p-8 text-center shadow-sm border border-stone-100">
+        <div className="w-14 h-14 rounded-full bg-[#f2ecfb] flex items-center justify-center mx-auto mb-4">
+          <CheckCircle size={28} className="text-[#6d3a8e]" />
+        </div>
+        <h3 className="font-display text-xl font-semibold text-stone-800 mb-2">Wiadomość wysłana!</h3>
+        <p className="text-stone-500 text-base">Odezwę się do Ciebie w ciągu 24 godzin.</p>
+      </div>
+    );
+  }
+
+  const inputCls =
+    "w-full bg-white border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder:text-stone-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#6d3a8e]/30 focus:border-[#6d3a8e] transition-all";
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-stone-100 text-left">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">
+            <User size={11} className="inline mr-1" />Imię
+          </label>
+          <input
+            type="text"
+            placeholder="Np. Kacper"
+            value={fields.name}
+            onChange={set("name")}
+            required
+            className={inputCls}
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">
+            <Send size={11} className="inline mr-1" />E-mail
+          </label>
+          <input
+            type="email"
+            placeholder="twoj@email.pl"
+            value={fields.email}
+            onChange={set("email")}
+            required
+            className={inputCls}
+          />
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">
+          <Phone size={11} className="inline mr-1" />Telefon <span className="font-normal normal-case text-stone-400">(opcjonalnie)</span>
+        </label>
+        <input
+          type="tel"
+          placeholder="+48 500 000 000"
+          value={fields.phone}
+          onChange={set("phone")}
+          className={inputCls}
+        />
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">
+          <MessageCircle size={11} className="inline mr-1" />Wiadomość
+        </label>
+        <textarea
+          rows={4}
+          placeholder="Z czym potrzebujesz pomocy? Napisz klasę, przedmiot, termin..."
+          value={fields.message}
+          onChange={set("message")}
+          required
+          className={cn(inputCls, "resize-none")}
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={status === "sending"}
+        className="w-full flex items-center justify-center gap-2 bg-[#ffd166] hover:bg-[#f0b429] disabled:opacity-60 disabled:cursor-not-allowed text-[#220b2d] font-bold px-6 py-3.5 rounded-xl transition-colors text-base"
+      >
+        <Send size={16} />
+        {status === "sending" ? "Wysyłam..." : "Wyślij wiadomość"}
+      </button>
+
+      {status === "error" && (
+        <p className="mt-3 text-sm text-red-500 text-center">
+          Coś poszło nie tak. Spróbuj ponownie lub napisz bezpośrednio na e-mail.
+        </p>
+      )}
+    </form>
+  );
+};
 
 // ─── Main App ────────────────────────────────────────────────
 export default function App() {
@@ -222,29 +422,43 @@ export default function App() {
 
       {/* ── CONTACT ── */}
       <section id="kontakt" className="py-24 px-5 bg-[#f2ecfb]">
-        <div className="max-w-2xl mx-auto text-center">
-          <Eyebrow>Zacznijmy</Eyebrow>
-          <h2 className="font-display text-4xl md:text-5xl text-stone-800 mb-5">
-            Pierwsza lekcja<br />
-            <span className="text-[#6d3a8e]">jest bezpłatna</span>
-          </h2>
-          <p className="text-stone-600 text-lg leading-relaxed mb-10">
-            Napisz do mnie, powiedz z czym masz problem i umówimy się na próbną lekcję bez zobowiązań.
-          </p>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <Eyebrow>Zacznijmy</Eyebrow>
+            <h2 className="font-display text-4xl md:text-5xl text-stone-800 mb-5">
+              Pierwsza lekcja<br />
+              <span className="text-[#6d3a8e]">jest bezpłatna</span>
+            </h2>
+            <p className="text-stone-600 text-lg leading-relaxed max-w-xl mx-auto">
+              Napisz do mnie lub od razu zarezerwuj termin w moim kalendarzu.
+            </p>
+          </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="mailto:kontakt@example.com"
-              className="flex items-center justify-center gap-2 bg-[#ffd166] hover:bg-[#f0b429] text-[#220b2d] font-bold px-8 py-4 rounded-2xl text-base transition-colors"
-            >
-              <Mail size={18} /> Napisz e-mail
-            </a>
-            <a
-              href="#"
-              className="flex items-center justify-center gap-2 text-[#220b2d] border-2 border-[#ffd166] hover:bg-[#ffd166] font-semibold px-8 py-4 rounded-2xl text-base transition-colors"
-            >
-              <MessageCircle size={16} /> Wyślij wiadomość
-            </a>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-0 lg:gap-0 items-start">
+            {/* Formularz */}
+            <div>
+              <p className="text-xs font-semibold text-stone-400 uppercase tracking-widest mb-3 text-center lg:text-left">
+                Wyślij wiadomość
+              </p>
+              <ContactForm />
+            </div>
+
+            {/* Separator "LUB" */}
+            <div className="flex lg:flex-col items-center justify-center gap-3 px-8 py-8 lg:py-0 lg:mt-8">
+              <div className="flex-1 lg:flex-none h-px lg:h-16 lg:w-px bg-stone-300 lg:bg-stone-300" />
+              <span className="text-xs font-bold text-stone-400 uppercase tracking-widest bg-[#f2ecfb] px-2">
+                lub
+              </span>
+              <div className="flex-1 lg:flex-none h-px lg:h-16 lg:w-px bg-stone-300 lg:bg-stone-300" />
+            </div>
+
+            {/* Cal.com */}
+            <div>
+              <p className="text-xs font-semibold text-stone-400 uppercase tracking-widest mb-3 text-center lg:text-left">
+                Zarezerwuj termin
+              </p>
+              <BookingCard />
+            </div>
           </div>
 
           <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-stone-500">
