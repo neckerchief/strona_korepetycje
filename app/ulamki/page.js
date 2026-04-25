@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { InlineMath, BlockMath } from "react-katex";
+
+const Mi = ({ children }) => <InlineMath math={children} />;
+const Mb = ({ children }) => <BlockMath math={children} />;
 import {
   ArrowLeft, ChevronRight, CheckCircle, RotateCcw,
   Eye, EyeOff, BookOpen, Lightbulb,
@@ -313,19 +317,31 @@ const exampleDodawanie = [
     label: "Rozkładamy mianowniki",
     content: "Rozkładamy każdy mianownik na czynniki pierwsze:",
             hint: "Szukamy NWW: bierzemy każdy czynnik pierwszy z największą potęgą, w jakiej pojawia się w którymkolwiek rozkładzie.",
-    formula: "12 = 2² · 3\n18 = 2 · 3²\n9 = 3²",
+    formula: (
+      <>
+        <Mb>{"12 = 2^2 \\cdot 3"}</Mb>
+        <Mb>{"18 = 2 \\cdot 3^2"}</Mb>
+        <Mb>{"9 = 3^2"}</Mb>
+      </>
+    ),
   },
   {
     label: "Wyznaczamy NWW",
     content: "NWW(12, 18, 9) bierzemy każdy czynnik z największą potęgą:",
     hint: "Z 12 bierzemy 2², z 18 bierzemy 3². Żadna inna liczba nie daje wyższej potęgi.",
-    formula: "NWW = 2² · 3² = 4 · 9 = 36",
+    formula: <Mb>{"\\text{NWW} = 2^2 \\cdot 3^2 = 4 \\cdot 9 = 36"}</Mb>,
   },
   {
     label: "Rozszerzamy ułamki",
     content: "Każdy ułamek rozszerzamy tak, żeby mianownik wynosił 36:",
             hint: "12 · 3 = 36, 18 · 2 = 36, 9 · 4 = 36. Liczniki mnożymy przez te same czynniki.",
-    formula: "7/12 = 21/36\n5/18 = 10/36\n2/9 = 8/36",
+    formula: (
+      <>
+        <Mb>{"\\frac{7}{12} = \\frac{21}{36}"}</Mb>
+        <Mb>{"\\frac{5}{18} = \\frac{10}{36}"}</Mb>
+        <Mb>{"\\frac{2}{9} = \\frac{8}{36}"}</Mb>
+      </>
+    ),
   },
   {
     label: "Wykonujemy działania",
@@ -342,7 +358,7 @@ const exampleDodawanie = [
     label: "Sprawdzamy, czy można skrócić",
     content: "Czy 23 i 36 mają wspólny dzielnik większy od 1?",
     hint: "23 jest liczbą pierwszą (dzieli się tylko przez 1 i 23). 36 = 2²·3², nie dzieli się przez 23. Ułamek jest już w najprostszej postaci.",
-    formula: <>NWD(23, 36) = 1 ✓ &nbsp; Wynik: <Frac top="23" bot="36" /></>,
+    formula: <><Mi>{"\\text{NWD}(23,\\,36) = 1\\ \\checkmark"}</Mi> &nbsp; Wynik: <Frac top="23" bot="36" /></>,
   },
 ];
 
@@ -363,7 +379,12 @@ const exampleMnozenie = [
       </>
     ),
     hint: "5 i 25 mają NWD = 5. Podobnie 6 i 12 mają NWD = 6. Skracamy obie pary, unikniemy dużych liczb.",
-    formula: "5 i 25: podziel przez 5 → 1 i 5\n6 i 12: podziel przez 6 → 1 i 2",
+    formula: (
+      <>
+        <Mb>{"5\\ \\text{i}\\ 25:\\quad \\div 5 \\implies 1\\ \\text{i}\\ 5"}</Mb>
+        <Mb>{"6\\ \\text{i}\\ 12:\\quad \\div 6 \\implies 1\\ \\text{i}\\ 2"}</Mb>
+      </>
+    ),
   },
   {
     label: "Mnożymy po skróceniu",
@@ -400,7 +421,7 @@ const exampleRownanie = [
     label: "Szukamy NWW mianowników",
     content: "Mianowniki to 3 i 4. Wyznaczamy NWW:",
     hint: "3 = 3, 4 = 2². NWW = 2² · 3 = 12.",
-    formula: "NWW(3, 4) = 12",
+    formula: <Mb>{"\\text{NWW}(3,\\,4) = 12"}</Mb>,
   },
   {
     label: "Mnożymy obie strony przez 12",
@@ -420,13 +441,13 @@ const exampleRownanie = [
     label: "Rozwiązujemy",
     content: "Mamy teraz proste równanie liniowe:",
     hint: "7x = 84, więc x = 84 ÷ 7 = 12.",
-    formula: "7x = 84  →  x = 12",
+    formula: <Mb>{"7x = 84 \\implies x = 12"}</Mb>,
   },
   {
     label: "Sprawdzamy",
     content: "Podstawiamy x = 12 do oryginalnego równania:",
     hint: "12/3 = 4, 12/4 = 3, 4 + 3 = 7. ✓",
-    formula: "12/3 + 12/4 = 4 + 3 = 7  ✓",
+    formula: <Mb>{"\\frac{12}{3} + \\frac{12}{4} = 4 + 3 = 7\\ \\checkmark"}</Mb>,
   },
 ];
 
@@ -540,9 +561,9 @@ export default function UlamkiPage() {
               <RuleBox title="Budowa ułamka">
                 <p><strong>Licznik</strong> (góra): mówi, ile części bierzemy.</p>
                 <p><strong>Mianownik</strong> (dół): mówi, na ile równych części podzielono całość.</p>
-                <p className="text-center mt-3 text-xl">
-                  <Frac top="licznik" bot="mianownik" />
-                </p>
+                <div className="text-center mt-3">
+                  <Mb>{"\\dfrac{\\text{licznik}}{\\text{mianownik}}"}</Mb>
+                </div>
               </RuleBox>
 
               <p className="text-stone-600 text-base leading-relaxed mb-3">
@@ -579,9 +600,9 @@ export default function UlamkiPage() {
                 <p>
                   Ułamek <Frac top="a" bot="b" /> możemy skrócić przez liczbę k, jeżeli k dzieli i licznik, i mianownik:
                 </p>
-                <p className="text-center mt-3 text-lg">
-                  <Frac top="a" bot="b" /> = <Frac top="a ÷ k" bot="b ÷ k" />
-                </p>
+                <div className="text-center mt-3">
+                  <Mb>{"\\frac{a}{b} = \\frac{a \\div k}{b \\div k}"}</Mb>
+                </div>
                 <p className="mt-2">
                   Najlepiej skracać od razu przez <strong>NWD(a, b)</strong>, wtedy dostajemy ułamek w <strong>najprostszej postaci</strong> za jednym razem.
                 </p>
@@ -595,22 +616,22 @@ export default function UlamkiPage() {
               <div className="space-y-4 mb-4">
                 <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm">
                   <p className="text-xs font-bold text-[#6d3a8e] uppercase tracking-wide mb-2">Przykład: NWD(24, 36)</p>
-                  <p className="font-mono text-sm text-stone-700">24 = 2³ · 3</p>
-                  <p className="font-mono text-sm text-stone-700">36 = 2² · 3²</p>
+                  <p className="text-sm text-stone-700"><Mi>{"24 = 2^3 \\cdot 3"}</Mi></p>
+                  <p className="text-sm text-stone-700"><Mi>{"36 = 2^2 \\cdot 3^2"}</Mi></p>
                   <p className="text-stone-600 text-sm mt-3">
                     W obu rozkładach powtarza się <strong className="text-stone-800">2</strong> i <strong className="text-stone-800">3</strong>.
-                    Dla dwójki mniejsza potęga to 2², dla trójki to 3¹. Bierzemy ich iloczyn:
+                    Dla dwójki mniejsza potęga to <Mi>{"2^2"}</Mi>, dla trójki to <Mi>{"3^1"}</Mi>. Bierzemy ich iloczyn:
                   </p>
-                  <p className="font-mono text-sm text-stone-700 mt-1">NWD = 2² · 3 = 4 · 3 = <strong>12</strong></p>
+                  <p className="text-sm text-stone-700 mt-1"><Mi>{"\\text{NWD} = 2^2 \\cdot 3 = 4 \\cdot 3 = 12"}</Mi></p>
                 </div>
                 <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm">
                   <p className="text-xs font-bold text-[#6d3a8e] uppercase tracking-wide mb-2">Przykład: NWD(18, 30)</p>
-                  <p className="font-mono text-sm text-stone-700">18 = 2 · 3²</p>
-                  <p className="font-mono text-sm text-stone-700">30 = 2 · 3 · 5</p>
+                  <p className="text-sm text-stone-700"><Mi>{"18 = 2 \\cdot 3^2"}</Mi></p>
+                  <p className="text-sm text-stone-700"><Mi>{"30 = 2 \\cdot 3 \\cdot 5"}</Mi></p>
                   <p className="text-stone-600 text-sm mt-3">
-                    Powtarza się <strong className="text-stone-800">2</strong> (potęga 1 w obu) i <strong className="text-stone-800">3</strong> (mniejsza potęga to 3¹). Piątka pojawia się tylko w 30, więc jej nie bierzemy:
+                    Powtarza się <strong className="text-stone-800">2</strong> (potęga 1 w obu) i <strong className="text-stone-800">3</strong> (mniejsza potęga to <Mi>{"3^1"}</Mi>). Piątka pojawia się tylko w 30, więc jej nie bierzemy:
                   </p>
-                  <p className="font-mono text-sm text-stone-700 mt-1">NWD = 2 · 3 = <strong>6</strong></p>
+                  <p className="text-sm text-stone-700 mt-1"><Mi>{"\\text{NWD} = 2 \\cdot 3 = 6"}</Mi></p>
                 </div>
               </div>
 
@@ -640,9 +661,9 @@ export default function UlamkiPage() {
               </p>
 
               <RuleBox title="Zasada rozszerzania">
-                <p className="text-center text-lg mt-1">
-                  <Frac top="a" bot="b" /> = <Frac top="a · k" bot="b · k" />
-                </p>
+                <div className="text-center mt-1">
+                  <Mb>{"\\frac{a}{b} = \\frac{a \\cdot k}{b \\cdot k}"}</Mb>
+                </div>
                 <p className="mt-2">Wartość ułamka się nie zmienia, piszemy ten sam ułamek w inny sposób.</p>
               </RuleBox>
 
@@ -661,16 +682,16 @@ export default function UlamkiPage() {
               <div className="grid sm:grid-cols-2 gap-4 mt-4">
                 <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm">
                   <p className="text-xs font-bold text-[#6d3a8e] uppercase tracking-wide mb-2">Przykład: NWW(6, 8)</p>
-                  <p className="font-mono text-sm text-stone-700">6 = 2 · 3</p>
-                  <p className="font-mono text-sm text-stone-700">8 = 2³</p>
-                  <p className="font-mono text-sm text-stone-700 mt-2">NWW = 2³ · 3 = <strong>24</strong></p>
+                  <p className="text-sm text-stone-700"><Mi>{"6 = 2 \\cdot 3"}</Mi></p>
+                  <p className="text-sm text-stone-700"><Mi>{"8 = 2^3"}</Mi></p>
+                  <p className="text-sm text-stone-700 mt-2"><Mi>{"\\text{NWW} = 2^3 \\cdot 3 = 24"}</Mi></p>
                 </div>
                 <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm">
                   <p className="text-xs font-bold text-[#6d3a8e] uppercase tracking-wide mb-2">Przykład: NWW(4, 6, 9)</p>
-                  <p className="font-mono text-sm text-stone-700">4 = 2²</p>
-                  <p className="font-mono text-sm text-stone-700">6 = 2 · 3</p>
-                  <p className="font-mono text-sm text-stone-700">9 = 3²</p>
-                  <p className="font-mono text-sm text-stone-700 mt-2">NWW = 2² · 3² = <strong>36</strong></p>
+                  <p className="text-sm text-stone-700"><Mi>{"4 = 2^2"}</Mi></p>
+                  <p className="text-sm text-stone-700"><Mi>{"6 = 2 \\cdot 3"}</Mi></p>
+                  <p className="text-sm text-stone-700"><Mi>{"9 = 3^2"}</Mi></p>
+                  <p className="text-sm text-stone-700 mt-2"><Mi>{"\\text{NWW} = 2^2 \\cdot 3^2 = 36"}</Mi></p>
                 </div>
               </div>
             </section>
@@ -681,9 +702,9 @@ export default function UlamkiPage() {
 
               <RuleBox title="Ten sam mianownik: łatwy przypadek">
                 <p>Gdy mianowniki są równe, dodajemy/odejmujemy tylko liczniki, mianownik zostaje:</p>
-                <p className="text-center mt-3 text-lg">
-                  <Frac top="a" bot="c" /> ± <Frac top="b" bot="c" /> = <Frac top="a ± b" bot="c" />
-                </p>
+                <div className="text-center mt-3">
+                  <Mb>{"\\frac{a}{c} \\pm \\frac{b}{c} = \\frac{a \\pm b}{c}"}</Mb>
+                </div>
               </RuleBox>
 
               <RuleBox title="Różne mianowniki: krok po kroku">
@@ -721,9 +742,9 @@ export default function UlamkiPage() {
               </p>
 
               <RuleBox title="Zasada mnożenia">
-                <p className="text-center text-lg mt-1">
-                  <Frac top="a" bot="b" /> · <Frac top="c" bot="d" /> = <Frac top="a · c" bot="b · d" />
-                </p>
+                <div className="text-center mt-1">
+                  <Mb>{"\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{a \\cdot c}{b \\cdot d}"}</Mb>
+                </div>
                 <p className="mt-2">Licznik przez licznik, mianownik przez mianownik.</p>
               </RuleBox>
 
@@ -793,9 +814,9 @@ export default function UlamkiPage() {
               </p>
 
               <RuleBox title="Zasada dzielenia: odwróć i mnóż">
-                <p className="text-center text-lg mt-1">
-                  <Frac top="a" bot="b" /> ÷ <Frac top="c" bot="d" /> = <Frac top="a" bot="b" /> · <Frac top="d" bot="c" /> = <Frac top="a · d" bot="b · c" />
-                </p>
+                <div className="text-center mt-1">
+                  <Mb>{"\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\cdot \\frac{d}{c} = \\frac{a \\cdot d}{b \\cdot c}"}</Mb>
+                </div>
               </RuleBox>
 
               <RuleBox title="Dlaczego to działa?" color="blue">
@@ -905,27 +926,41 @@ export default function UlamkiPage() {
                 {[
                   {
                     eq: <><Frac top="x" bot="3" /> + <Frac top="x" bot="4" /> = 7</>,
-                    nww: "NWW = 12",
-                    kroki: ["×12:  4x + 3x = 84", "7x = 84"],
-                    wynik: "x = 12",
+                    nww: <Mi>{"\\text{NWW} = 12"}</Mi>,
+                    kroki: [
+                      <><span className="text-stone-400">×12:</span> <Mi>{"4x + 3x = 84"}</Mi></>,
+                      <Mi>{"7x = 84"}</Mi>,
+                    ],
+                    wynik: <Mi>{"x = 12"}</Mi>,
                   },
                   {
                     eq: <><Frac top="x" bot="2" /> − <Frac top="x" bot="5" /> = 3</>,
-                    nww: "NWW = 10",
-                    kroki: ["×10:  5x − 2x = 30", "3x = 30"],
-                    wynik: "x = 10",
+                    nww: <Mi>{"\\text{NWW} = 10"}</Mi>,
+                    kroki: [
+                      <><span className="text-stone-400">×10:</span> <Mi>{"5x - 2x = 30"}</Mi></>,
+                      <Mi>{"3x = 30"}</Mi>,
+                    ],
+                    wynik: <Mi>{"x = 10"}</Mi>,
                   },
                   {
                     eq: <><Frac top="x+1" bot="3" /> + <Frac top="x" bot="6" /> = 2</>,
-                    nww: "NWW = 6",
-                    kroki: ["×6:  2(x+1) + x = 12", "2x + 2 + x = 12", "3x + 2 = 12  →  3x = 10"],
-                    wynik: <>x = <Frac top="10" bot="3" /></>,
+                    nww: <Mi>{"\\text{NWW} = 6"}</Mi>,
+                    kroki: [
+                      <><span className="text-stone-400">×6:</span> <Mi>{"2(x+1) + x = 12"}</Mi></>,
+                      <Mi>{"2x + 2 + x = 12"}</Mi>,
+                      <Mi>{"3x + 2 = 12 \\implies 3x = 10"}</Mi>,
+                    ],
+                    wynik: <Mi>{"x = \\tfrac{10}{3}"}</Mi>,
                   },
                   {
                     eq: <><Frac top="2x" bot="5" /> − <Frac top="3" bot="10" /> = <Frac top="x" bot="2" /></>,
-                    nww: "NWW = 10",
-                    kroki: ["×10:  4x − 3 = 5x", "4x − 5x = 3", "−x = 3"],
-                    wynik: "x = −3",
+                    nww: <Mi>{"\\text{NWW} = 10"}</Mi>,
+                    kroki: [
+                      <><span className="text-stone-400">×10:</span> <Mi>{"4x - 3 = 5x"}</Mi></>,
+                      <Mi>{"4x - 5x = 3"}</Mi>,
+                      <Mi>{"-x = 3"}</Mi>,
+                    ],
+                    wynik: <Mi>{"x = -3"}</Mi>,
                   },
                 ].map((r, i) => (
                   <div key={i} className="bg-white border border-stone-200 rounded-2xl px-5 py-4 shadow-sm">
@@ -935,7 +970,7 @@ export default function UlamkiPage() {
                     </div>
                     <div className="border-l-2 border-[#d4b8f0] pl-3 space-y-1">
                       {r.kroki.map((k, ki) => (
-                        <p key={ki} className="text-stone-600 text-sm font-mono">{k}</p>
+                        <p key={ki} className="text-stone-600 text-sm">{k}</p>
                       ))}
                       <p className="font-semibold text-[#6d3a8e] pt-1">{r.wynik}</p>
                     </div>

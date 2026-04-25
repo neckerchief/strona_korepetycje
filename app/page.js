@@ -16,7 +16,7 @@ const topics = [
   { icon: TrendingUp, label: "Równania liniowe", sub: "Matematyka, kl. 7–8", tag: "Algebra" },
   { icon: Zap, label: "Kinematyka intuicyjnie", sub: "Fizyka, kl. 7–8", tag: "Ruch" },
   { icon: Layers, label: "Potęgi i pierwiastki", sub: "Matematyka, SP–LO", tag: "Algebra" },
-  { icon: Atom, label: "Siły i Newton", sub: "Fizyka, kl. 7–8", tag: "Mechanika" },
+  { icon: Atom, label: "Wektory", sub: "Fizyka, LO", tag: "Mechanika", href: "/wektory" },
   { icon: FlaskConical, label: "Procenty praktycznie", sub: "Matematyka, kl. 6–8", tag: "Podstawy" },
 ];
 
@@ -184,6 +184,7 @@ export default function App() {
                   src="/meCV.jpg"
                   alt="Paulina"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 30vw"
                   className="object-cover object-top"
                 />
               </div>
