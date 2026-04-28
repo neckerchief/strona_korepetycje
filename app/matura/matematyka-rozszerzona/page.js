@@ -1,114 +1,63 @@
-"use client";
-import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ChevronDown, BookOpen } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 
-// ─── Działy matury rozszerzonej ───────────────────────────────
-// Aby dodać zadanie do działu: dopisz obiekt do tablicy `tasks` danego działu.
-// Przykład:
-// tasks: [
-//   {
-//     id: "2024-maj-1",
-//     source: "Maj 2024, zad. 1",
-//     content: "Treść zadania...",
-//     solution: "Rozwiązanie...",
-//   },
-// ],
+// ─── Działy ───────────────────────────────────────────────────
+// Aby otworzyć nowy dział jako podstronę, dodaj pole href oraz taskCount.
 
 const sections = [
-  { num: "1",  title: "Liczby rzeczywiste", tasks: [] },
-  { num: "2",  title: "Wyrażenia algebraiczne, równania i nierówności", tasks: [] },
-  { num: "3",  title: "Funkcje", tasks: [] },
-  { num: "4",  title: "Funkcja liniowa", tasks: [] },
-  { num: "5",  title: "Funkcja kwadratowa", tasks: [] },
-  { num: "6",  title: "Wielomiany", tasks: [] },
-  { num: "7",  title: "Funkcje wymierne", tasks: [] },
-  { num: "8",  title: "Funkcja wykładnicza", tasks: [] },
-  { num: "9",  title: "Funkcja logarytmiczna", tasks: [] },
-  { num: "10", title: "Trygonometria", tasks: [] },
-  { num: "11", title: "Ciągi", tasks: [] },
-  { num: "12", title: "Planimetria", tasks: [] },
-  { num: "13", title: "Geometria analityczna", tasks: [] },
-  { num: "14", title: "Stereometria", tasks: [] },
-  { num: "15", title: "Pochodna funkcji", tasks: [] },
-  { num: "16", title: "Zadania optymalizacyjne", tasks: [] },
-  { num: "17", title: "Rachunek prawdopodobieństwa i statystyka", tasks: [] },
+  { num: "1",  title: "Liczby rzeczywiste",                                        href: "/matura/matematyka-rozszerzona/liczby-rzeczywiste", taskCount: 1 },
+  { num: "2",  title: "Wyrażenia algebraiczne i równania i nierówności",            href: null },
+  { num: "3",  title: "Funkcje",                                                    href: null },
+  { num: "4",  title: "Funkcja liniowa",                                            href: null },
+  { num: "5",  title: "Funkcja kwadratowa",                                         href: null },
+  { num: "6",  title: "Wielomiany",                                                 href: null },
+  { num: "7",  title: "Funkcje wymierne",                                           href: null },
+  { num: "8",  title: "Funkcja wykładnicza",                                        href: null },
+  { num: "9",  title: "Funkcja logarytmiczna",                                      href: null },
+  { num: "10", title: "Trygonometria",                                              href: null },
+  { num: "11", title: "Ciągi",                                                      href: null },
+  { num: "12", title: "Planimetria",                                                href: null },
+  { num: "13", title: "Geometria analityczna",                                      href: null },
+  { num: "14", title: "Stereometria",                                               href: null },
+  { num: "15", title: "Pochodna funkcji",                                           href: null },
+  { num: "16", title: "Zadania optymalizacyjne",                                    href: null },
+  { num: "17", title: "Rachunek prawdopodobieństwa i statystyka",                   href: null },
 ];
 
-// ─── Sekcja (pojedynczy dział) ────────────────────────────────
+// ─── Karta sekcji ─────────────────────────────────────────────
 
-const Section = ({ num, title, tasks }) => {
-  const [open, setOpen] = useState(false);
-  const hasTasks = tasks.length > 0;
-
-  return (
-    <div className="border border-stone-200 rounded-2xl overflow-hidden bg-white">
-      <button
-        onClick={() => hasTasks && setOpen((v) => !v)}
-        className={cn(
-          "w-full flex items-center gap-4 px-6 py-5 text-left transition-colors",
-          hasTasks ? "hover:bg-[#f2ecfb]/40 cursor-pointer" : "cursor-default opacity-80"
-        )}
-        disabled={!hasTasks}
-      >
-        <span className="w-10 h-10 rounded-xl bg-[#f2ecfb] flex items-center justify-center flex-shrink-0 font-display font-semibold text-[#6d3a8e] text-sm">
-          {num}
-        </span>
-
-        {/* Tytuł i liczba zadań */}
-        <div className="flex-1 min-w-0">
-          <p className="font-display font-semibold text-stone-800 text-base leading-snug">
-            {title}
-          </p>
-          <p className="text-xs text-stone-400 mt-0.5">
-            {hasTasks ? `${tasks.length} ${tasks.length === 1 ? "zadanie" : tasks.length < 5 ? "zadania" : "zadań"}` : "Wkrótce"}
-          </p>
-        </div>
-
-        {/* Ikona rozwijania */}
-        {hasTasks && (
-          <ChevronDown
-            size={18}
-            className={cn(
-              "text-[#6d3a8e] flex-shrink-0 transition-transform duration-200",
-              open && "rotate-180"
-            )}
-          />
-        )}
-      </button>
-
-      {open && hasTasks && (
-        <div className="border-t border-stone-100 divide-y divide-stone-100">
-          {tasks.map((task) => (
-            <div key={task.id} className="px-6 py-5">
-              <p className="text-xs font-semibold text-[#6d3a8e] uppercase tracking-wide mb-2">
-                {task.source}
-              </p>
-              <p className="text-stone-700 text-sm leading-relaxed">{task.content}</p>
-              {task.solution && (
-                <details className="mt-3">
-                  <summary className="text-xs font-semibold text-stone-400 cursor-pointer hover:text-stone-600 transition-colors select-none">
-                    Pokaż rozwiązanie
-                  </summary>
-                  <div className="mt-2 text-stone-600 text-sm leading-relaxed bg-stone-50 rounded-xl p-4">
-                    {task.solution}
-                  </div>
-                </details>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+const SectionCard = ({ num, title, href, taskCount }) => {
+  const inner = (
+    <div className={cn(
+      "flex items-center gap-4 px-6 py-5 bg-white border border-stone-200 rounded-2xl transition-all duration-200",
+      href ? "hover:shadow-md hover:border-[#c4a8e8] cursor-pointer" : "opacity-60 cursor-default"
+    )}>
+      <span className="w-10 h-10 rounded-xl bg-[#f2ecfb] flex items-center justify-center flex-shrink-0 font-display font-semibold text-[#6d3a8e] text-sm">
+        {num}
+      </span>
+      <div className="flex-1 min-w-0">
+        <p className="font-display font-semibold text-stone-800 text-base leading-snug">
+          {title}
+        </p>
+        <p className="text-xs text-stone-400 mt-0.5">
+          {taskCount
+            ? `${taskCount} ${taskCount === 1 ? "zadanie" : taskCount < 5 ? "zadania" : "zadań"}`
+            : "Wkrótce"}
+        </p>
+      </div>
+      {href && <ArrowRight size={16} className="text-[#6d3a8e] flex-shrink-0" />}
     </div>
   );
+
+  return href ? <Link href={href}>{inner}</Link> : inner;
 };
 
 // ─── Strona ───────────────────────────────────────────────────
 
 export default function MatematykaRozszerzonaPage() {
-  const totalTasks = sections.reduce((sum, s) => sum + s.tasks.length, 0);
+  const totalTasks = sections.reduce((sum, s) => sum + (s.taskCount ?? 0), 0);
 
   return (
     <div className="min-h-screen bg-[#fffeeb] text-stone-800">
@@ -149,7 +98,7 @@ export default function MatematykaRozszerzonaPage() {
         {/* Działy */}
         <div className="space-y-3">
           {sections.map((s) => (
-            <Section key={s.num} {...s} />
+            <SectionCard key={s.num} {...s} />
           ))}
         </div>
       </main>
