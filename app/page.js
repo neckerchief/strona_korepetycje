@@ -413,9 +413,12 @@ export default function App() {
           </div>
 
           <div className="text-center mt-10">
-            <button className="inline-flex items-center gap-2 text-[#6d3a8e] hover:text-[#52297a] font-semibold text-base border border-[#d4b8f0] hover:border-[#6d3a8e] px-6 py-3 rounded-xl transition-all duration-200">
+            <Link
+              href="/tematy"
+              className="inline-flex items-center gap-2 text-[#6d3a8e] hover:text-[#52297a] font-semibold text-base border border-[#d4b8f0] hover:border-[#6d3a8e] px-6 py-3 rounded-xl transition-all duration-200"
+            >
               Pokaż wszystkie tematy <ArrowRight size={18} />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
