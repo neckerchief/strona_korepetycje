@@ -19,7 +19,7 @@ const sections = [
   { num: "10", title: "Trygonometria",                                              href: "/matura/matematyka-rozszerzona/trygonometria", taskCount: 1 },
   { num: "11", title: "Ciągi",                                                      href: null },
   { num: "12", title: "Planimetria",                                                href: null },
-  { num: "13", title: "Geometria analityczna",                                      href: null },
+  { num: "13", title: "Geometria analityczna",                                      href: "/matura/matematyka-rozszerzona/geometria-analityczna", taskCount: 1 },
   { num: "14", title: "Stereometria",                                               href: null },
   { num: "15", title: "Pochodna funkcji",                                           href: null },
   { num: "16", title: "Zadania optymalizacyjne",                                    href: null },
