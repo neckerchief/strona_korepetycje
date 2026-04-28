@@ -23,7 +23,7 @@ const sections = [
   { num: "14", title: "Stereometria",                                               href: null },
   { num: "15", title: "Pochodna funkcji",                                           href: null },
   { num: "16", title: "Zadania optymalizacyjne",                                    href: null },
-  { num: "17", title: "Rachunek prawdopodobieństwa i statystyka",                   href: null },
+  { num: "17", title: "Rachunek prawdopodobieństwa i statystyka",                   href: "/matura/matematyka-rozszerzona/rachunek-prawdopodobienstwa", taskCount: 1 },
 ];
 
 // ─── Karta sekcji ─────────────────────────────────────────────
