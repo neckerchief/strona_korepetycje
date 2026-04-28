@@ -16,7 +16,7 @@ const sections = [
   { num: "7",  title: "Funkcje wymierne",                                           href: null },
   { num: "8",  title: "Funkcja wykładnicza",                                        href: null },
   { num: "9",  title: "Funkcja logarytmiczna",                                      href: null },
-  { num: "10", title: "Trygonometria",                                              href: null },
+  { num: "10", title: "Trygonometria",                                              href: "/matura/matematyka-rozszerzona/trygonometria", taskCount: 1 },
   { num: "11", title: "Ciągi",                                                      href: null },
   { num: "12", title: "Planimetria",                                                href: null },
   { num: "13", title: "Geometria analityczna",                                      href: null },
