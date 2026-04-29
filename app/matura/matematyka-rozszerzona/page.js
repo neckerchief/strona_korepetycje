@@ -20,7 +20,7 @@ const sections = [
   { num: "11", title: "Ciągi",                                                      href: "/matura/matematyka-rozszerzona/ciagi", taskCount: 1 },
   { num: "12", title: "Planimetria",                                                href: "/matura/matematyka-rozszerzona/planimetria", taskCount: 1 },
   { num: "13", title: "Geometria analityczna",                                      href: "/matura/matematyka-rozszerzona/geometria-analityczna", taskCount: 1 },
-  { num: "14", title: "Stereometria",                                               href: null },
+  { num: "14", title: "Stereometria",                                               href: "/matura/matematyka-rozszerzona/stereometria", taskCount: 1 },
   { num: "15", title: "Pochodna funkcji",                                           href: null },
   { num: "16", title: "Zadania optymalizacyjne",                                    href: null },
   { num: "17", title: "Rachunek prawdopodobieństwa i statystyka",                   href: "/matura/matematyka-rozszerzona/rachunek-prawdopodobienstwa", taskCount: 1 },
