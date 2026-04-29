@@ -17,7 +17,7 @@ const sections = [
   { num: "8",  title: "Funkcja wykładnicza",                                        href: null },
   { num: "9",  title: "Funkcja logarytmiczna",                                      href: null },
   { num: "10", title: "Trygonometria",                                              href: "/matura/matematyka-rozszerzona/trygonometria", taskCount: 2 },
-  { num: "11", title: "Ciągi",                                                      href: null },
+  { num: "11", title: "Ciągi",                                                      href: "/matura/matematyka-rozszerzona/ciagi", taskCount: 1 },
   { num: "12", title: "Planimetria",                                                href: "/matura/matematyka-rozszerzona/planimetria", taskCount: 1 },
   { num: "13", title: "Geometria analityczna",                                      href: "/matura/matematyka-rozszerzona/geometria-analityczna", taskCount: 1 },
   { num: "14", title: "Stereometria",                                               href: null },
