@@ -11,7 +11,7 @@ const sections = [
   { num: "2",  title: "Wyrażenia algebraiczne, równania i nierówności",             href: "/matura/matematyka-rozszerzona/wyrazenia-algebraiczne", taskCount: 1 },
   { num: "3",  title: "Funkcje",                                                    href: null },
   { num: "4",  title: "Funkcja liniowa",                                            href: null },
-  { num: "5",  title: "Funkcja kwadratowa",                                         href: null },
+  { num: "5",  title: "Funkcja kwadratowa",                                         href: "/matura/matematyka-rozszerzona/funkcja-kwadratowa", taskCount: 1 },
   { num: "6",  title: "Wielomiany",                                                 href: "/matura/matematyka-rozszerzona/wielomiany", taskCount: 1 },
   { num: "7",  title: "Funkcje wymierne",                                           href: null },
   { num: "8",  title: "Funkcja wykładnicza",                                        href: null },

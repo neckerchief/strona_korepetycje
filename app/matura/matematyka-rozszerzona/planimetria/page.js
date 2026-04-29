@@ -3,61 +3,6 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
 
-// ─── Diagram ──────────────────────────────────────────────────
-
-// Wierzchołki: A(155,50) góra, B(290,130) prawo, C(185,215) dół, D(65,130) lewo
-// Okrąg wpisany: środek (173,131) r=68, punkty styczne obliczone analitycznie
-const DiagramCzworokatABCD = () => (
-  <svg viewBox="0 0 340 255" className="w-full max-w-sm mx-auto my-4 block">
-    {/* Okrąg wpisany */}
-    <circle cx="170" cy="131" r="67" fill="#f9f5ff" stroke="#c4a8e8" strokeWidth="1.5" strokeDasharray="5,3" />
-
-    {/* Boki czworokąta ABCD */}
-    <polygon points="155,50 290,130 185,215 65,130" fill="none" stroke="#9b7fd4" strokeWidth="1.8" />
-
-    {/* Przekątna AC - wyróżniona */}
-    <line x1="155" y1="50" x2="185" y2="215" stroke="#6d3a8e" strokeWidth="2" strokeDasharray="6,3" />
-
-    {/* Punkty styczne z okręgiem */}
-    <circle cx="204" cy="79"  r="3.5" fill="#c4a8e8" stroke="#9b7fd4" strokeWidth="1" />
-    <circle cx="219" cy="188" r="3.5" fill="#c4a8e8" stroke="#9b7fd4" strokeWidth="1" />
-    <circle cx="137" cy="181" r="3.5" fill="#c4a8e8" stroke="#9b7fd4" strokeWidth="1" />
-    <circle cx="125" cy="77"  r="3.5" fill="#c4a8e8" stroke="#9b7fd4" strokeWidth="1" />
-
-    {/* Łuk kąta ACB - sweep=1 (zgodnie ze wskazówkami zegara w SVG) */}
-    <path d="M 179,181 A 35,35 0 0,1 212,193" fill="none" stroke="#6d3a8e" strokeWidth="1.5" />
-
-    {/* Wierzchołki */}
-    <circle cx="155" cy="50"  r="3.5" fill="#6d3a8e" />
-    <circle cx="290" cy="130" r="3.5" fill="#6d3a8e" />
-    <circle cx="185" cy="215" r="3.5" fill="#6d3a8e" />
-    <circle cx="65"  cy="130" r="3.5" fill="#6d3a8e" />
-
-    {/* Etykiety wierzchołków */}
-    <text x="143" y="47"  fontSize="14" fontFamily="serif" fontStyle="italic" fill="#2d1458">A</text>
-    <text x="295" y="135" fontSize="14" fontFamily="serif" fontStyle="italic" fill="#2d1458">B</text>
-    <text x="186" y="233" fontSize="14" fontFamily="serif" fontStyle="italic" fill="#2d1458">C</text>
-    <text x="46"  y="135" fontSize="14" fontFamily="serif" fontStyle="italic" fill="#2d1458">D</text>
-
-    {/* Kąt 60° */}
-    <text x="203" y="173" fontSize="11" fill="#6d3a8e" textAnchor="middle">60°</text>
-
-    {/* |AC| = 2√3 - na lewo od przekątnej */}
-    <foreignObject x="72" y="123" width="78" height="22">
-      <div xmlns="http://www.w3.org/1999/xhtml" style={{fontSize:"11px",color:"#6d3a8e",whiteSpace:"nowrap"}}>
-        <Mi>{'|AC|=2\\sqrt{3}'}</Mi>
-      </div>
-    </foreignObject>
-
-    {/* |BC| = 4√3 - na prawo od boku BC */}
-    <foreignObject x="246" y="170" width="82" height="22">
-      <div xmlns="http://www.w3.org/1999/xhtml" style={{fontSize:"11px",color:"#2d1458",whiteSpace:"nowrap"}}>
-        <Mi>{'|BC|=4\\sqrt{3}'}</Mi>
-      </div>
-    </foreignObject>
-  </svg>
-);
-
 // ─── Zadania ──────────────────────────────────────────────────
 
 const tasks = [
@@ -126,8 +71,6 @@ const tasks = [
         <p>
           Z treści zadania <Mi>{"|BC| = 2|AC| = 2 \\cdot 2\\sqrt{3} = 4\\sqrt{3}"}</Mi>.
         </p>
-
-        <DiagramCzworokatABCD />
 
         <p className="font-semibold text-stone-800">Krok 2. Twierdzenie cosinusów w trójkącie ABC</p>
         <p>
