@@ -74,7 +74,7 @@ export default function ElementyAnalizyPage() {
           <h1 className="font-display text-4xl md:text-5xl text-stone-800 mb-4">Elementy analizy matematycznej</h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">{tasks.length} zadanie</p>
         </div>
-        <div className="space-y-8">
+        <div className="space-y-12">
           {tasks.map((task) => <TaskCard key={task.id} {...task} />)}
         </div>
       </main>

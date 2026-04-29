@@ -100,9 +100,11 @@ export default function StereometriaPage() {
             Stereometria
           </h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">
-            1 zadanie
+            2 zadania
           </p>
         </div>
+
+        <div className="space-y-12">
 
         {/* ── Zadanie 1 ─────────────────────────────────────── */}
         <div className="border border-[#c4a8e8] rounded-xl overflow-hidden">
@@ -362,6 +364,7 @@ export default function StereometriaPage() {
             </div>
           }
         />
+        </div>{/* end space-y-12 */}
       </main>
     </div>
   );

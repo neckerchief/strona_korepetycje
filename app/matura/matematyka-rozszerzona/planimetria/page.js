@@ -403,7 +403,7 @@ export default function PlanimetriaPage() {
           </p>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-12">
           {tasks.map((task) => (
             <TaskCard key={task.id} {...task} />
           ))}
