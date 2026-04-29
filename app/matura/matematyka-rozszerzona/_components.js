@@ -55,6 +55,38 @@ const ToggleBtn = ({ label, color, active, onClick }) => (
   </button>
 );
 
+// ─── Karta złożona: podpunkty (np. 1.1 / 1.2) ────────────────
+
+export const SubTask = ({ label, points, children, answer, hint, solution }) => {
+  const [open, setOpen] = useState(null);
+  const toggle = (key) => setOpen((prev) => (prev === key ? null : key));
+  const panelStyle = {
+    green:  "bg-emerald-50  border-t border-emerald-100",
+    amber:  "bg-amber-50    border-t border-amber-100",
+    purple: "bg-[#f9f5ff]   border-t border-[#e0d0f8]",
+  };
+  return (
+    <div className="border-t border-[#e8d8f8]">
+      <div className="bg-[#ece4f9] px-5 py-2">
+        <span className="font-semibold text-[#3b1a6e] text-sm">
+          Zadanie {label}. ({points})
+        </span>
+      </div>
+      <div className="bg-white px-5 py-4 text-sm text-stone-800 leading-relaxed">
+        {children}
+      </div>
+      <div className="bg-stone-50 border-t border-stone-100 px-5 py-3 flex flex-wrap gap-2">
+        {answer   && <ToggleBtn label="Odpowiedź"   color="green"  active={open === "answer"}   onClick={() => toggle("answer")} />}
+        {hint     && <ToggleBtn label="Wskazówka"   color="amber"  active={open === "hint"}     onClick={() => toggle("hint")} />}
+        {solution && <ToggleBtn label="Rozwiązanie" color="purple" active={open === "solution"} onClick={() => toggle("solution")} />}
+      </div>
+      {open === "answer"   && <div className={cn("px-5 py-5 text-stone-700 text-sm leading-relaxed", panelStyle.green)}>{answer}</div>}
+      {open === "hint"     && <div className={cn("px-5 py-5 text-stone-700 text-sm leading-relaxed", panelStyle.amber)}>{hint}</div>}
+      {open === "solution" && <div className={cn("px-5 py-5 text-stone-700 text-sm leading-relaxed", panelStyle.purple)}>{solution}</div>}
+    </div>
+  );
+};
+
 // ─── Karta zadania (styl maturalny) ──────────────────────────
 //
 // Pola zadania:

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeft, ChevronDown } from "lucide-react";
-import { Mi, Mb, FormulaBox } from "../_components";
+import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
 
 // ─── Helpers ──────────────────────────────────────────────────
 
@@ -302,6 +302,66 @@ export default function StereometriaPage() {
             <span className="text-xs text-stone-400 italic">{SOURCE}</span>
           </div>
         </div>
+
+        {/* ── Zadanie 2 ────────────────────────────────── */}
+        <TaskCard
+          number="2"
+          points="0–5"
+          source="Matura próbna SMWP, październik 2025, poziom rozszerzony"
+          instruction={
+            <span>
+              W ostrosłupie prawidłowym czworokątnym <Mi>{"ABCDS"}</Mi> o podstawie{" "}
+              <Mi>{"ABCD"}</Mi> kąt między sąsiednimi ścianami bocznymi ostrosłupa ma
+              miarę <Mi>{"120°"}</Mi>. Oblicz stosunek pola powierzchni bocznej tego
+              ostrosłupa do pola podstawy <Mi>{"ABCD"}</Mi>. Zapisz obliczenia.
+            </span>
+          }
+          answer={<p><Mi>{"\\sqrt{2}"}</Mi></p>}
+          hint={
+            <div className="space-y-3">
+              <p>
+                Niech bok podstawy to <Mi>{"a"}</Mi>, wysokość to <Mi>{"h"}</Mi>. Kąt
+                dwuścienny między sąsiednimi ścianami bocznymi (wzdłuż krawędzi bocznej np.{" "}
+                <Mi>{"SA"}</Mi>) wynosi <Mi>{"120°"}</Mi>. Wyznacz normalne do obu ścian i
+                oblicz cosinus kąta między nimi.
+              </p>
+              <p>
+                Wynik to relacja <Mi>{"h = \\frac{a}{2}"}</Mi>, z której oblicz wysokość
+                ściany bocznej (apotema) i pola.
+              </p>
+            </div>
+          }
+          solution={
+            <div className="space-y-4">
+              <p className="font-semibold text-stone-800">Krok 1. Układ współrzędnych</p>
+              <p>
+                Podstawa: kwadrat o boku <Mi>{"a"}</Mi>, środek w początku. Wierzchołki:{" "}
+                <Mi>{"A=(\\frac{a}{2},\\frac{a}{2},0)"}</Mi>,{" "}
+                <Mi>{"B=(-\\frac{a}{2},\\frac{a}{2},0)"}</Mi>,{" "}
+                <Mi>{"D=(\\frac{a}{2},-\\frac{a}{2},0)"}</Mi>, wierzchołek{" "}
+                <Mi>{"S=(0,0,h)"}</Mi>.
+              </p>
+
+              <p className="font-semibold text-stone-800">Krok 2. Normalne do ścian bocznych</p>
+              <p>Ściany <Mi>{"SAB"}</Mi> i <Mi>{"SAD"}</Mi> mają normalne (z iloczynu wektorowego):</p>
+              <Mb>{"\\vec{n}_1 = \\overrightarrow{SA}\\times\\overrightarrow{SB} = (0,\\,ah,\\,\\tfrac{a^2}{2})"}</Mb>
+              <Mb>{"\\vec{n}_2 = \\overrightarrow{SA}\\times\\overrightarrow{SD} = (-ah,\\,0,\\,-\\tfrac{a^2}{2})"}</Mb>
+              <Mb>{"\\cos 120° = \\frac{\\vec{n}_1\\cdot\\vec{n}_2}{|\\vec{n}_1||\\vec{n}_2|} = \\frac{-\\tfrac{a^4}{4}}{a^2(h^2+\\tfrac{a^2}{4})} = -\\frac{a^2/4}{h^2+a^2/4}"}</Mb>
+
+              <p className="font-semibold text-stone-800">Krok 3. Wyznaczamy <Mi>{"h"}</Mi></p>
+              <Mb>{"-\\frac{1}{2} = -\\frac{a^2/4}{h^2+a^2/4} \\quad\\Rightarrow\\quad h^2+\\frac{a^2}{4} = \\frac{a^2}{2} \\quad\\Rightarrow\\quad h = \\frac{a}{2}"}</Mb>
+
+              <p className="font-semibold text-stone-800">Krok 4. Pola</p>
+              <p>Apotema (wysokość ściany bocznej) = odległość od <Mi>{"S"}</Mi> do środka krawędzi podstawy:</p>
+              <Mb>{"l = \\sqrt{\\left(\\frac{a}{2}\\right)^2 + h^2} = \\sqrt{\\frac{a^2}{4}+\\frac{a^2}{4}} = \\frac{a}{\\sqrt{2}} = \\frac{a\\sqrt{2}}{2}"}</Mb>
+              <Mb>{"P_{\\text{boczna}} = 4 \\cdot \\frac{1}{2} \\cdot a \\cdot \\frac{a\\sqrt{2}}{2} = a^2\\sqrt{2}"}</Mb>
+              <Mb>{"P_{\\text{podstawa}} = a^2"}</Mb>
+              <FormulaBox>
+                <Mb>{"\\frac{P_{\\text{boczna}}}{P_{\\text{podstawa}}} = \\frac{a^2\\sqrt{2}}{a^2} = \\sqrt{2}"}</Mb>
+              </FormulaBox>
+            </div>
+          }
+        />
       </main>
     </div>
   );

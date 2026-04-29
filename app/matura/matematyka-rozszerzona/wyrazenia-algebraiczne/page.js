@@ -152,6 +152,147 @@ const tasks = [
       </div>
     ),
   },
+
+  // ── Zadanie 2 ─────────────────────────────────────────────
+  {
+    id: "smwp-2025-pazdziernik-zad5",
+    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    number: "2",
+    points: "0–3",
+    instruction: (
+      <span>
+        Wykaż, że dla wszystkich liczb rzeczywistych <Mi>{"a"}</Mi>, <Mi>{"b"}</Mi> i{" "}
+        <Mi>{"c"}</Mi> takich, że <Mi>{"2b = a - c"}</Mi> oraz <Mi>{"a^2 + b^2 = 1"}</Mi>{" "}
+        prawdziwa jest nierówność
+      </span>
+    ),
+    mathBlock: "2a^2 + 5b^2 > \\dfrac{1}{2}\\,c^2",
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Skorzystaj ze wzoru skróconego mnożenia na kwadrat sumy: z warunku{" "}
+          <Mi>{"2b = a-c"}</Mi> wyraź <Mi>{"c = a-2b"}</Mi> i podstaw do prawej strony.
+        </p>
+        <FormulaBox>
+          <Mb>{"(a-2b)^2 = a^2 - 4ab + 4b^2"}</Mb>
+        </FormulaBox>
+        <p>
+          Pokaż, że różnica LHS - RHS jest zawsze dodatnia (wyróżnik trójmianu względem
+          jednej zmiennej jest ujemny).
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Podstawiamy <Mi>{"c = a-2b"}</Mi></p>
+        <p>Z warunku <Mi>{"2b = a-c"}</Mi> mamy <Mi>{"c = a-2b"}</Mi>. Prawa strona:</p>
+        <Mb>{"\\frac{1}{2}c^2 = \\frac{1}{2}(a-2b)^2 = \\frac{1}{2}(a^2-4ab+4b^2)"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Obliczamy różnicę LHS - RHS</p>
+        <Mb>{"2a^2+5b^2 - \\frac{1}{2}(a^2-4ab+4b^2) = \\frac{3}{2}a^2 + 2ab + 3b^2"}</Mb>
+        <p>Mnożymy przez 2 (nie zmienia znaku):</p>
+        <Mb>{"3a^2 + 4ab + 6b^2"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Pokazujemy, że trójmian jest zawsze dodatni</p>
+        <p>
+          Traktujemy <Mi>{"3a^2 + 4ab + 6b^2"}</Mi> jako trójmian względem <Mi>{"a"}</Mi>:
+        </p>
+        <Mb>{"\\Delta = (4b)^2 - 4 \\cdot 3 \\cdot 6b^2 = 16b^2 - 72b^2 = -56b^2 \\leq 0"}</Mb>
+        <p>
+          Dla <Mi>{"b \\neq 0"}</Mi>: DELTA <Mi>{"< 0"}</Mi> i współczynnik wiodący{" "}
+          <Mi>{"3 > 0"}</Mi>, więc trójmian <Mi>{"> 0"}</Mi>.
+        </p>
+        <p>
+          Dla <Mi>{"b = 0"}</Mi>: z <Mi>{"a^2+b^2=1"}</Mi> mamy <Mi>{"a = \\pm 1 \\neq 0"}</Mi>,
+          więc <Mi>{"3a^2 = 3 > 0"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>{"\\text{Zatem } 2a^2+5b^2 - \\frac{1}{2}c^2 = \\frac{1}{2}(3a^2+4ab+6b^2) > 0 \\qquad \\blacksquare"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+  },
+
+  // ── Zadanie 3 ─────────────────────────────────────────────
+  {
+    id: "smwp-2025-pazdziernik-zad11",
+    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    number: "3",
+    points: "0–5",
+    instruction: <span>Rozwiąż nierówność</span>,
+    mathBlock: "\\frac{x+4}{x^2-9} - \\frac{x}{2x+6} \\geq \\frac{2x}{x-3} + 5",
+    noteItems: null,
+    answers: null,
+
+    answer: <p><Mi>{"x \\in \\left(-3,\\,-\\dfrac{14}{5}\\right] \\cup \\left[\\dfrac{7}{3},\\,3\\right)"}</Mi></p>,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Przenieś wszystko na lewą stronę i sprowadź do wspólnego mianownika{" "}
+          <Mi>{"2(x-3)(x+3)"}</Mi>. Licznik uprość do postaci:
+        </p>
+        <Mb>{"-15x^2-7x+98 = -(3x-7)(5x+14)"}</Mb>
+        <p>Rozwiąż nierówność wymierną, analizując znaki czynników.</p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Dziedzina</p>
+        <Mb>{"x^2-9 \\neq 0 \\;\\text{ i }\\; 2x+6 \\neq 0 \\;\\text{ i }\\; x-3 \\neq 0 \\quad\\Rightarrow\\quad x \\neq \\pm 3"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Przenosimy wszystko na lewą stronę</p>
+        <Mb>{"\\frac{x+4}{(x-3)(x+3)} - \\frac{x}{2(x+3)} - \\frac{2x}{x-3} - 5 \\geq 0"}</Mb>
+        <p>Wspólny mianownik: <Mi>{"2(x-3)(x+3)"}</Mi>.</p>
+        <Mb>{"\\frac{2(x+4) - x(x-3) - 4x(x+3) - 10(x-3)(x+3)}{2(x-3)(x+3)} \\geq 0"}</Mb>
+        <p>Licznik:</p>
+        <Mb>{"2x+8 - x^2+3x - 4x^2-12x - 10x^2+90 = -15x^2-7x+98"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Rozkład licznika</p>
+        <Mb>{"-15x^2-7x+98 = -(15x^2+7x-98)"}</Mb>
+        <p>DELTA <Mi>{"= 49 + 4 \\cdot 15 \\cdot 98 = 49 + 5880 = 5929 = 77^2"}</Mi></p>
+        <Mb>{"x = \\frac{-7 \\pm 77}{30}: \\quad x_1 = \\frac{7}{3},\\quad x_2 = -\\frac{14}{5}"}</Mb>
+        <Mb>{"15x^2+7x-98 = (3x-7)(5x+14)"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Nierówność wymierna</p>
+        <Mb>{"\\frac{-(3x-7)(5x+14)}{2(x-3)(x+3)} \\geq 0 \\quad\\Longleftrightarrow\\quad \\frac{(3x-7)(5x+14)}{2(x-3)(x+3)} \\leq 0"}</Mb>
+        <p>Punkty krytyczne (po wyłączeniu dziedziny): <Mi>{"-3,\\; -\\tfrac{14}{5},\\; \\tfrac{7}{3},\\; 3"}</Mi></p>
+        <div className="overflow-x-auto">
+          <table className="text-sm text-center w-full border-collapse my-2">
+            <thead>
+              <tr className="bg-[#f2ecfb]">
+                <th className="border border-[#d4b8f0] px-2 py-1">przedział</th>
+                <th className="border border-[#d4b8f0] px-2 py-1"><Mi>{"(3x{-}7)"}</Mi></th>
+                <th className="border border-[#d4b8f0] px-2 py-1"><Mi>{"(5x{+}14)"}</Mi></th>
+                <th className="border border-[#d4b8f0] px-2 py-1"><Mi>{"(x{-}3)"}</Mi></th>
+                <th className="border border-[#d4b8f0] px-2 py-1"><Mi>{"(x{+}3)"}</Mi></th>
+                <th className="border border-[#d4b8f0] px-2 py-1">ułamek</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td className="border border-[#d4b8f0] px-2 py-1"><Mi>{"x{<}-3"}</Mi></td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1 text-green-700 font-bold">+</td></tr>
+              <tr className="bg-emerald-50"><td className="border border-[#d4b8f0] px-2 py-1"><Mi>{"(-3,\\,-\\tfrac{14}{5})"}</Mi></td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1 text-red-700 font-bold">- ✓</td></tr>
+              <tr><td className="border border-[#d4b8f0] px-2 py-1"><Mi>{"(-\\tfrac{14}{5},\\,\\tfrac{7}{3})"}</Mi></td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1 text-green-700 font-bold">+</td></tr>
+              <tr className="bg-emerald-50"><td className="border border-[#d4b8f0] px-2 py-1"><Mi>{"(\\tfrac{7}{3},\\,3)"}</Mi></td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1">-</td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1 text-red-700 font-bold">- ✓</td></tr>
+              <tr><td className="border border-[#d4b8f0] px-2 py-1"><Mi>{"x{>}3"}</Mi></td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1">+</td><td className="border border-[#d4b8f0] px-2 py-1 text-green-700 font-bold">+</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Dołączamy punkty, gdzie licznik = 0 (<Mi>{"x=-\\tfrac{14}{5}"}</Mi> i <Mi>{"x=\\tfrac{7}{3}"}</Mi>).</p>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"x \\in \\left(-3,\\,-\\tfrac{14}{5}\\right] \\cup \\left[\\tfrac{7}{3},\\,3\\right)"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────

@@ -132,6 +132,78 @@ const tasks = [
       </div>
     ),
   },
+
+  // ── Zadanie 2 ─────────────────────────────────────────────
+  {
+    id: "smwp-2025-pazdziernik-zad4",
+    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    number: "2",
+    points: "0–3",
+    instruction: (
+      <span>
+        Franek kupuje porcję lodów. Do wyboru ma osiem smaków: śmietankowy, waniliowy,
+        czekoladowy, truskawkowy, ciasteczkowy, miętowy, karmelowy oraz pistacjowy.
+        Franek prosi sprzedawcę o nałożenie mu dokładnie czterech gałek o losowo
+        wybranym smaku. Oblicz prawdopodobieństwo zdarzenia polegającego na tym, że
+        Franek otrzyma co najmniej dwie gałki spośród smaków: śmietankowego,
+        truskawkowego, karmelowego albo pistacjowego, jeżeli wiadomo, że Franek
+        otrzyma dokładnie jedną gałkę o smaku czekoladowym, oraz żaden smak się nie
+        powtórzy. Zapisz obliczenia.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: <p><Mi>{"\\dfrac{22}{35}"}</Mi></p>,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Szukasz prawdopodobieństwa warunkowego: przy założeniu, że dokładnie
+          jedna gałka to czekolada, wybierasz 3 pozostałe z 7 smaków.
+        </p>
+        <FormulaBox>
+          <Mb>{"P(A|B) = \\frac{|A \\cap B|}{|B|}"}</Mb>
+        </FormulaBox>
+        <p>
+          Spośród 7 smaków (bez czekolady): "specjalne" <Mi>{"\\{\\text{S, T, K, P}\\}"}</Mi> to 4,
+          "zwykłe" <Mi>{"\\{\\text{W, Ci, M}\\}"}</Mi> to 3.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Zdarzenie B (warunek)</p>
+        <p>
+          B = "dokładnie jedna gałka czekoladowa". Przy 4 gałkach bez powtórzeń:
+          wybieramy czekoladę (1 sposób) i 3 spośród pozostałych 7 smaków.
+        </p>
+        <Mb>{"|B| = \\binom{7}{3} = 35"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Zdarzenie A∩B</p>
+        <p>
+          Smaków "specjalnych": śmietankowy (S), truskawkowy (T), karmelowy (K),
+          pistacjowy (P) - łącznie 4. Smaków "zwykłych" (bez czekolady): waniliowy,
+          ciasteczkowy, miętowy - łącznie 3.
+        </p>
+        <p>
+          Szukamy: co najmniej 2 z "specjalnych" spośród 3 wylosowanych (bez czekolady).
+        </p>
+        <p>Dokładnie 2 specjalne + 1 zwykły:</p>
+        <Mb>{"\\binom{4}{2}\\cdot\\binom{3}{1} = 6 \\cdot 3 = 18"}</Mb>
+        <p>Dokładnie 3 specjalne:</p>
+        <Mb>{"\\binom{4}{3}\\cdot\\binom{3}{0} = 4 \\cdot 1 = 4"}</Mb>
+        <Mb>{"|A \\cap B| = 18 + 4 = 22"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Prawdopodobieństwo warunkowe</p>
+        <FormulaBox>
+          <Mb>{"P(A|B) = \\frac{|A \\cap B|}{|B|} = \\frac{22}{35}"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────

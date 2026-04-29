@@ -179,6 +179,69 @@ const tasks = [
       </div>
     ),
   },
+
+  // ── Zadanie 2 ─────────────────────────────────────────────
+  {
+    id: "smwp-2025-pazdziernik-zad8",
+    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    number: "2",
+    points: "0–4",
+    instruction: (
+      <span>
+        W kartezjańskim układzie współrzędnych <Mi>{"(x,y)"}</Mi> parabole{" "}
+        <Mi>{"f(x) = x^2 + 8x"}</Mi> oraz <Mi>{"g(x) = 3x^2 + 5x + 1"}</Mi> przecinają
+        się w punktach <Mi>{"A"}</Mi> oraz <Mi>{"B"}</Mi>. Ponadto, wektory{" "}
+        <Mi>{"\\vec{u}"}</Mi>, <Mi>{"\\vec{v}"}</Mi> oraz <Mi>{"\\vec{w}"}</Mi> spełniają
+        zależności: <Mi>{"\\vec{v} = -8 \\cdot \\overrightarrow{AB}"}</Mi>,{" "}
+        <Mi>{"\\vec{u} = [-4,\\,23]"}</Mi> oraz <Mi>{"\\vec{w} = \\vec{u} + \\vec{v}"}</Mi>.
+        Oblicz długość wektora <Mi>{"\\vec{w}"}</Mi>. Rozważ wszystkie przypadki. Zapisz
+        obliczenia.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: <p><Mi>{"|\\vec{w}| = 17"}</Mi> lub <Mi>{"|\\vec{w}| = 61"}</Mi></p>,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Wyznacz punkty A i B, przyrównując <Mi>{"f(x) = g(x)"}</Mi>. Otrzymasz dwa
+          rozwiązania, więc mamy dwa przypadki przypisania <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>{"\\vec{w} = \\vec{u} + \\vec{v} = \\vec{u} - 8\\overrightarrow{AB}"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Punkty przecięcia parabolii</p>
+        <Mb>{"x^2+8x = 3x^2+5x+1 \\quad\\Rightarrow\\quad 2x^2-3x+1=0 \\quad\\Rightarrow\\quad (2x-1)(x-1)=0"}</Mb>
+        <Mb>{"x = \\tfrac{1}{2}: \\quad y = \\tfrac{1}{4}+4 = \\tfrac{17}{4} \\qquad x = 1: \\quad y = 1+8 = 9"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Przypadek 1: <Mi>{"A = (\\frac{1}{2}, \\frac{17}{4})"}</Mi>, <Mi>{"B = (1, 9)"}</Mi></p>
+        <Mb>{"\\overrightarrow{AB} = \\left(\\frac{1}{2},\\,\\frac{19}{4}\\right)"}</Mb>
+        <Mb>{"\\vec{v} = -8\\overrightarrow{AB} = \\left(-4,\\,-38\\right)"}</Mb>
+        <Mb>{"\\vec{w} = [-4,23]+(-4,-38) = (-8,-15)"}</Mb>
+        <Mb>{"|\\vec{w}| = \\sqrt{64+225} = \\sqrt{289} = 17"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Przypadek 2: <Mi>{"A = (1,9)"}</Mi>, <Mi>{"B = (\\frac{1}{2},\\frac{17}{4})"}</Mi></p>
+        <Mb>{"\\overrightarrow{AB} = \\left(-\\frac{1}{2},\\,-\\frac{19}{4}\\right)"}</Mb>
+        <Mb>{"\\vec{v} = -8\\overrightarrow{AB} = (4,\\,38)"}</Mb>
+        <Mb>{"\\vec{w} = [-4,23]+(4,38) = (0,61)"}</Mb>
+        <Mb>{"|\\vec{w}| = 61"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"|\\vec{w}| = 17"}</Mi> lub <Mi>{"|\\vec{w}| = 61"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────

@@ -1,0 +1,57 @@
+---
+description: Writing style conventions for this educational website
+globs: app/**/*.js
+alwaysApply: false
+---
+
+# Writing Style Rules
+
+## Dashes
+- **NEVER** use em dashes (`—`, U+2014). Use a comma, colon, or rephrase instead.
+  - ❌ `To wektor — ma kierunek`
+  - ✅ `To wektor, ma kierunek`
+  - ✅ `To wektor: posiada kierunek`
+
+## Math Rendering (KaTeX)
+- **ALWAYS** use KaTeX (`react-katex`) for all mathematical expressions on pages with math content.
+- CSS is imported globally in `app/layout.js` via `import "katex/dist/katex.min.css"`.
+- Two convenience components are defined at the top of each math page:
+  ```jsx
+  const Mi = ({ children }) => <InlineMath math={children} />;
+  const Mb = ({ children }) => <BlockMath math={children} />;
+  ```
+- Use `<Mi>` for inline math (within a sentence), `<Mb>` for display/block math (formula boxes).
+- Pass LaTeX strings as JS string children with double-escaped backslashes:
+  - ✅ `<Mi>{"\\vec{v}"}</Mi>`
+  - ✅ `<Mb>{"G = m \\cdot g = 20\\ \\text{N}"}</Mb>`
+  - ❌ `<V>v</V>` (old CSS component, removed)
+
+## Vector Notation
+- **ALWAYS** use `\vec{x}` in KaTeX for vectors, never the old `<V>` component.
+  - ✅ `<Mi>{"\\vec{v}"}</Mi>`
+  - ✅ `<Mi>{"\\vec{a} + \\vec{b}"}</Mi>`
+  - ❌ `<V>v</V>`
+- For modulus: `<Mi>{"| \\vec{v} |"}</Mi>`
+- **NEVER** use the combining arrow character U+20D7 (`⃗`) — it renders as a box on Windows.
+
+## Subscripts in Math
+- **ALWAYS** use KaTeX subscripts, never Unicode subscript characters or `<sub>` in math context.
+  - ✅ `<Mi>{"v_x"}</Mi>` (inline), or within a larger expression `<Mi>{"v_x = |\\vec{v}|\\cos\\alpha"}</Mi>`
+  - ❌ `vₓ` (Unicode subscript)
+  - ❌ `v<sub>x</sub>` in math context
+- Exception: SVG `<text>` elements may still use `<tspan dy="3" fontSize="0.8em">y</tspan>` since KaTeX cannot render inside SVG.
+
+## Polish Decimal Notation in KaTeX
+- Use `{,}` inside math mode to get a comma decimal separator without extra spacing:
+  - ✅ `<Mi>{"0{,}5"}</Mi>` renders as 0,5
+  - ❌ `<Mi>{"0.5"}</Mi>` (uses dot, not Polish convention)
+
+## Colored Math
+- To color a math symbol, wrap `<Mi>` in a colored span (KaTeX inherits `color`):
+  - ✅ `<span className="text-[#f97316]"><Mi>{"v_x"}</Mi></span>`
+- Alternatively use `\textcolor{#hex}{expr}` directly in KaTeX:
+  - ✅ `<Mi>{"\\textcolor{#f97316}{v_x}"}</Mi>`
+
+## SVG Diagrams
+- Leave SVG text content unchanged; KaTeX cannot render inside SVG.
+- SVG labels may keep Unicode subscripts (e.g. `vₓ`) or `<tspan>` subscripts.

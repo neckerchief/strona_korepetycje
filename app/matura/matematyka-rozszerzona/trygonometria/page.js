@@ -249,6 +249,143 @@ const tasks = [
       </div>
     ),
   },
+
+  // ── Zadanie 3 ─────────────────────────────────────────────
+  {
+    id: "smwp-2025-pazdziernik-zad6",
+    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    number: "3",
+    points: "0–3",
+    instruction: (
+      <span>
+        Na trójkącie <Mi>{"ABC"}</Mi>, w którym <Mi>{"|AB| = b"}</Mi> oraz{" "}
+        <Mi>{"|\\angle ACB| = \\alpha"}</Mi> i <Mi>{"|\\angle BAC| = 3\\alpha"}</Mi>{" "}
+        opisano okrąg o promieniu <Mi>{"R"}</Mi>.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Zastosuj twierdzenie sinusów do odcinka <Mi>{"b = |AB|"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\frac{b}{\\sin(\\angle ACB)} = 2R \\quad\\Rightarrow\\quad b = 2R\\sin\\alpha"}</Mb>
+        </FormulaBox>
+        <p>
+          Następnie skorzystaj z wzoru na <Mi>{"\\sin 3\\alpha"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\sin 3\\alpha = 3\\sin\\alpha - 4\\sin^3\\alpha"}</Mb>
+        </FormulaBox>
+        <p>
+          Wykaż, że <Mi>{"3\\sin\\alpha - \\sin 3\\alpha = 4\\sin^3\\alpha"}</Mi>, a
+          następnie uprość <Mi>{"R\\sqrt{\\dfrac{3\\sin\\alpha-\\sin 3\\alpha}{\\sin\\alpha}}"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Twierdzenie sinusów</p>
+        <p>
+          Kąt <Mi>{"\\angle ACB = \\alpha"}</Mi>, a bok naprzeciwległy to <Mi>{"b = |AB|"}</Mi>.
+          Z twierdzenia sinusów:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\frac{b}{\\sin\\alpha} = 2R \\quad\\Rightarrow\\quad b = 2R\\sin\\alpha"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 2. Upraszczamy wyrażenie pod pierwiastkiem</p>
+        <p>Korzystamy z wzoru:</p>
+        <FormulaBox>
+          <Mb>{"\\sin 3\\alpha = 3\\sin\\alpha - 4\\sin^3\\alpha"}</Mb>
+        </FormulaBox>
+        <Mb>{"3\\sin\\alpha - \\sin 3\\alpha = 3\\sin\\alpha - (3\\sin\\alpha - 4\\sin^3\\alpha) = 4\\sin^3\\alpha"}</Mb>
+        <p>Zatem:</p>
+        <Mb>{"\\frac{3\\sin\\alpha - \\sin 3\\alpha}{\\sin\\alpha} = \\frac{4\\sin^3\\alpha}{\\sin\\alpha} = 4\\sin^2\\alpha"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Finał dowodu</p>
+        <Mb>{"R\\sqrt{\\frac{3\\sin\\alpha-\\sin 3\\alpha}{\\sin\\alpha}} = R\\sqrt{4\\sin^2\\alpha} = R \\cdot 2\\sin\\alpha = 2R\\sin\\alpha = b \\qquad \\blacksquare"}</Mb>
+      </div>
+    ),
+  },
+
+  // ── Zadanie 4 ─────────────────────────────────────────────
+  {
+    id: "smwp-2025-pazdziernik-zad9",
+    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    number: "4",
+    points: "0–4",
+    instruction: <span>Rozwiąż równanie</span>,
+    mathBlock: "\\sin 6x - \\cos 4x = 2\\sin\\frac{\\pi}{4}\\cdot(\\cos x - \\sin x)",
+    noteItems: [{ text: "w przedziale " }, { math: "\\left[-\\dfrac{\\pi}{3},\\,\\dfrac{2\\pi}{3}\\right]" }, { text: ". Zapisz obliczenia." }],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"x \\in \\left\\{-\\dfrac{\\pi}{4},\\;\\dfrac{3\\pi}{20},\\;\\dfrac{\\pi}{4},\\;\\dfrac{11\\pi}{20}\\right\\}"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Zauważ, że <Mi>{"2\\sin\\frac{\\pi}{4} = \\sqrt{2}"}</Mi> i prawa strona to{" "}
+          <Mi>{"2\\cos\\left(x+\\frac{\\pi}{4}\\right)"}</Mi>.
+        </p>
+        <p>
+          Lewa strona: zamień <Mi>{"\\cos 4x = \\sin\\left(\\frac{\\pi}{2}-4x\\right)"}</Mi>{" "}
+          i zastosuj wzór na różnicę sinusów:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\sin A - \\sin B = 2\\cos\\frac{A+B}{2}\\sin\\frac{A-B}{2}"}</Mb>
+        </FormulaBox>
+        <p>
+          Otrzymasz iloczyn <Mi>{"2\\cos(x+\\frac{\\pi}{4})\\sin(5x-\\frac{\\pi}{4})"}</Mi>.
+          Rozwiąż dwa przypadki.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Upraszczamy obie strony</p>
+        <p>Prawa strona: <Mi>{"2\\sin\\frac{\\pi}{4} = \\sqrt{2}"}</Mi>, a</p>
+        <Mb>{"\\sqrt{2}(\\cos x - \\sin x) = 2\\left(\\cos\\frac{\\pi}{4}\\cos x - \\sin\\frac{\\pi}{4}\\sin x\\right) = 2\\cos\\left(x+\\frac{\\pi}{4}\\right)"}</Mb>
+        <p>Lewa strona: <Mi>{"\\cos 4x = \\sin\\left(\\frac{\\pi}{2}-4x\\right)"}</Mi>, więc:</p>
+        <FormulaBox>
+          <Mb>{"\\sin A - \\sin B = 2\\cos\\frac{A+B}{2}\\sin\\frac{A-B}{2}"}</Mb>
+        </FormulaBox>
+        <Mb>{"\\sin 6x - \\sin\\left(\\frac{\\pi}{2}-4x\\right) = 2\\cos\\left(x+\\frac{\\pi}{4}\\right)\\sin\\left(5x-\\frac{\\pi}{4}\\right)"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Równanie po uproszczeniu</p>
+        <Mb>{"2\\cos\\left(x+\\frac{\\pi}{4}\\right)\\sin\\left(5x-\\frac{\\pi}{4}\\right) = 2\\cos\\left(x+\\frac{\\pi}{4}\\right)"}</Mb>
+        <Mb>{"2\\cos\\left(x+\\frac{\\pi}{4}\\right)\\left[\\sin\\left(5x-\\frac{\\pi}{4}\\right) - 1\\right] = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Przypadek 1: <Mi>{"\\cos(x+\\pi/4) = 0"}</Mi></p>
+        <Mb>{"x + \\frac{\\pi}{4} = \\frac{\\pi}{2} + k\\pi \\quad\\Rightarrow\\quad x = \\frac{\\pi}{4} + k\\pi"}</Mb>
+        <p>Na przedziale: <Mi>{"k=0: x = \\frac{\\pi}{4}"}</Mi> ✓</p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Przypadek 2: <Mi>{"\\sin(5x-\\pi/4) = 1"}</Mi></p>
+        <Mb>{"5x - \\frac{\\pi}{4} = \\frac{\\pi}{2} + 2k\\pi \\quad\\Rightarrow\\quad x = \\frac{3\\pi}{20} + \\frac{2k\\pi}{5}"}</Mb>
+        <p>Na przedziale <Mi>{"\\left[-\\tfrac{\\pi}{3},\\tfrac{2\\pi}{3}\\right]"}</Mi>:</p>
+        <p><Mi>{"k{=}-1"}</Mi>: <Mi>{"x = \\frac{3\\pi}{20} - \\frac{2\\pi}{5} = -\\frac{\\pi}{4}"}</Mi> ✓</p>
+        <p><Mi>{"k{=}0"}</Mi>: <Mi>{"x = \\frac{3\\pi}{20}"}</Mi> ✓</p>
+        <p><Mi>{"k{=}1"}</Mi>: <Mi>{"x = \\frac{3\\pi}{20} + \\frac{2\\pi}{5} = \\frac{11\\pi}{20}"}</Mi> ✓</p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"x \\in \\left\\{-\\dfrac{\\pi}{4},\\;\\dfrac{3\\pi}{20},\\;\\dfrac{\\pi}{4},\\;\\dfrac{11\\pi}{20}\\right\\}"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────

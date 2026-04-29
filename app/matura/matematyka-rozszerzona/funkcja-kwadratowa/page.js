@@ -172,6 +172,89 @@ const tasks = [
       </div>
     ),
   },
+
+  // ── Zadanie 2 ─────────────────────────────────────────────
+  {
+    id: "smwp-2025-pazdziernik-zad10",
+    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    number: "2",
+    points: "0–5",
+    instruction: (
+      <span>
+        Funkcja <Mi>{"f"}</Mi> jest określona wzorem
+      </span>
+    ),
+    mathBlock: "f(x) = (2m+1)\\cdot x^2 - 6x + m - 3",
+    noteItems: [
+      { text: "dla każdej liczby rzeczywistej " }, { math: "x" }, { text: ". Wyznacz wszystkie wartości parametru " }, { math: "m" }, { text: ", dla których funkcja " }, { math: "f" }, { text: " ma dokładnie dwa miejsca zerowe " }, { math: "x_1" }, { text: " oraz " }, { math: "x_2" }, { text: " przeciwnych znaków, które spełniają warunek " },
+    ],
+    answers: null,
+    mathBlock2: "x_1^3 + x_2^3 > (x_1 + x_2)^4",
+
+    answer: <p><Mi>{"m \\in \\left(\\dfrac{3}{2},\\, 3\\right)"}</Mi></p>,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Dwa miejsca zerowe przeciwnych znaków <Mi>{"\\Leftrightarrow x_1 x_2 < 0"}</Mi>.
+          Ze wzorów Viète'a:
+        </p>
+        <FormulaBox>
+          <Mb>{"x_1 + x_2 = \\frac{6}{2m+1}, \\qquad x_1 x_2 = \\frac{m-3}{2m+1}"}</Mb>
+        </FormulaBox>
+        <p>
+          Warunek <Mi>{"x_1 x_2 < 0"}</Mi> daje <Mi>{"m \\in (-\\frac{1}{2}, 3)"}</Mi>.
+          Następnie uprość <Mi>{"x_1^3 + x_2^3 = (x_1+x_2)^3 - 3x_1 x_2(x_1+x_2)"}</Mi>
+          i rozwiąż nierówność.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Warunek na dwa miejsca zerowe przeciwnych znaków</p>
+        <p>Potrzebujemy: <Mi>{"2m+1 \\neq 0"}</Mi> i <Mi>{"x_1 x_2 < 0"}</Mi>.</p>
+        <p>Wzory Viète'a: <Mi>{"s = x_1+x_2 = \\frac{6}{2m+1}"}</Mi>, <Mi>{"p = x_1 x_2 = \\frac{m-3}{2m+1}"}</Mi></p>
+        <Mb>{"p < 0 \\quad\\Leftrightarrow\\quad \\frac{m-3}{2m+1} < 0 \\quad\\Leftrightarrow\\quad m \\in \\left(-\\frac{1}{2},\\, 3\\right)"}</Mb>
+        <p>Na tym przedziale DELTA <Mi>{"= 36-4(2m+1)(m-3) = -8m^2+20m+48 > 0"}</Mi> ✓</p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Nierówność <Mi>{"x_1^3+x_2^3 > (x_1+x_2)^4"}</Mi></p>
+        <Mb>{"x_1^3+x_2^3 = s^3-3ps"}</Mb>
+        <p>Nierówność: <Mi>{"s^3-3ps > s^4"}</Mi>. Ponieważ <Mi>{"s = \\frac{6}{2m+1} > 0"}</Mi>, dzielimy przez <Mi>{"s > 0"}</Mi>:</p>
+        <Mb>{"s^2(1-s) > 3p"}</Mb>
+        <p>Podstawiamy i upraszczamy (mnożąc przez <Mi>{"(2m+1)^2 > 0"}</Mi>):</p>
+        <Mb>{"12(2m-5) > (m-3)(2m+1)^2"}</Mb>
+        <Mb>{"24m-60 > 4m^3-8m^2-11m-3"}</Mb>
+        <Mb>{"4m^3-8m^2-35m+57 < 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Rozkład trójmianu</p>
+        <p>Sprawdzamy <Mi>{"m = \\frac{3}{2}"}</Mi>: <Mi>{"4\\cdot\\frac{27}{8}-8\\cdot\\frac{9}{4}-35\\cdot\\frac{3}{2}+57 = \\frac{27}{2}-18-\\frac{105}{2}+57 = 0"}</Mi> ✓</p>
+        <Mb>{"4m^3-8m^2-35m+57 = (2m-3)(2m^2-m-19)"}</Mb>
+        <p>Pierwiastki <Mi>{"2m^2-m-19=0"}</Mi>: <Mi>{"m = \\frac{1\\pm\\sqrt{153}}{4} = \\frac{1\\pm 3\\sqrt{17}}{4}"}</Mi></p>
+        <p><Mi>{"m_1 \\approx 3{,}34"}</Mi> (poza <Mi>{"(-\\frac{1}{2},3)"}</Mi>), <Mi>{"m_2 \\approx -2{,}84"}</Mi> (poza <Mi>{"(-\\frac{1}{2},3)"}</Mi>)</p>
+        <p>Na przedziale <Mi>{"(-\\frac{1}{2},3)"}</Mi>: <Mi>{"2m^2-m-19 < 0"}</Mi>, więc znak <Mi>{"(2m-3)\\cdot(-)"}</Mi>:</p>
+        <div className="overflow-x-auto my-2">
+          <table className="text-sm text-center w-full border-collapse">
+            <thead><tr className="bg-[#f2ecfb]">
+              <th className="border border-[#d4b8f0] px-3 py-1">przedział</th>
+              <th className="border border-[#d4b8f0] px-3 py-1"><Mi>{"(2m-3)"}</Mi></th>
+              <th className="border border-[#d4b8f0] px-3 py-1">iloczyn</th>
+            </tr></thead>
+            <tbody>
+              <tr><td className="border border-[#d4b8f0] px-3 py-1"><Mi>{"(-\\tfrac{1}{2},\\,\\tfrac{3}{2})"}</Mi></td><td className="border border-[#d4b8f0] px-3 py-1 text-red-700">-</td><td className="border border-[#d4b8f0] px-3 py-1 text-green-700 font-bold">+ (niespeł.)</td></tr>
+              <tr className="bg-emerald-50"><td className="border border-[#d4b8f0] px-3 py-1"><Mi>{"(\\tfrac{3}{2},\\,3)"}</Mi></td><td className="border border-[#d4b8f0] px-3 py-1 text-green-700">+</td><td className="border border-[#d4b8f0] px-3 py-1 text-red-700 font-bold">- ✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"m \\in \\left(\\dfrac{3}{2},\\, 3\\right)"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────

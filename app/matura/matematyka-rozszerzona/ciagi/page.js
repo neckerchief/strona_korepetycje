@@ -140,6 +140,79 @@ const tasks = [
       </div>
     ),
   },
+
+  // ── Zadanie 2 ─────────────────────────────────────────────
+  {
+    id: "smwp-2025-pazdziernik-zad7",
+    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    number: "2",
+    points: "0–4",
+    instruction: (
+      <span>
+        Nieskończony ciąg geometryczny <Mi>{"(a_n)"}</Mi> jest określony dla każdej
+        liczby naturalnej <Mi>{"n \\geq 1"}</Mi>. Suma wszystkich wyrazów ciągu{" "}
+        <Mi>{"(a_n)"}</Mi> o numerach parzystych jest równa <Mi>{"444{,}(4)"}</Mi>, tj.
+      </span>
+    ),
+    mathBlock: "a_2 + a_4 + a_6 + \\ldots = 444{,}(4)",
+    noteItems: [{ text: "Ponadto " }, { math: "\\sqrt{a_1 \\cdot a_3} = 160" }, { text: " oraz ciąg " }, { math: "(a_n)" }, { text: " jest monotoniczny. Oblicz sumę wszystkich wyrazów tego ciągu. Zapisz obliczenia." }],
+    answers: null,
+
+    answer: <p><Mi>{"S = 1000"}</Mi></p>,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Zauważ, że <Mi>{"\\sqrt{a_1 \\cdot a_3} = \\sqrt{a_1^2 q^2} = a_1 q = a_2"}</Mi>,
+          więc <Mi>{"a_2 = 160"}</Mi>.
+        </p>
+        <p>
+          Suma wyrazów parzystych to ciąg geometryczny z pierwszym wyrazem <Mi>{"a_1 q"}</Mi>
+          i ilorazem <Mi>{"q^2"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\frac{a_1 q}{1-q^2} = \\frac{4000}{9}"}</Mb>
+        </FormulaBox>
+        <p>
+          Monotoniczność eliminuje jeden przypadek <Mi>{"q"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Wyznaczamy <Mi>{"a_1 q"}</Mi></p>
+        <Mb>{"\\sqrt{a_1 \\cdot a_3} = \\sqrt{a_1 \\cdot a_1 q^2} = a_1|q| = 160"}</Mb>
+        <p>
+          Suma wyrazów parzystych: <Mi>{"\\frac{4000}{9}"}</Mi>{" "}
+          (<Mi>{"444{,}(4) = \\frac{4000}{9}"}</Mi>) jest dodatnia, więc <Mi>{"a_1 q > 0"}</Mi>,
+          zatem <Mi>{"a_2 = a_1 q = 160"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Wyznaczamy iloraz <Mi>{"q"}</Mi></p>
+        <p>Suma wyrazów parzystych (ciąg geometryczny z wyrazem pierwszym <Mi>{"a_1 q"}</Mi> i ilorazem <Mi>{"q^2"}</Mi>):</p>
+        <FormulaBox>
+          <Mb>{"\\frac{a_1 q}{1-q^2} = \\frac{4000}{9} \\quad\\Rightarrow\\quad \\frac{160}{1-q^2} = \\frac{4000}{9}"}</Mb>
+        </FormulaBox>
+        <Mb>{"1-q^2 = \\frac{160 \\cdot 9}{4000} = \\frac{9}{25} \\quad\\Rightarrow\\quad q^2 = \\frac{16}{25} \\quad\\Rightarrow\\quad q = \\pm\\frac{4}{5}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Monotoniczność</p>
+        <p>
+          Dla <Mi>{"q = -\\tfrac{4}{5}"}</Mi>: <Mi>{"a_1 = -200"}</Mi>,
+          ciąg zmienia znaki - nie jest monotoniczny. Odrzucamy.
+        </p>
+        <p>
+          Dla <Mi>{"q = \\tfrac{4}{5}"}</Mi>: <Mi>{"a_1 = 200"}</Mi>,
+          ciąg malejący. ✓
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Suma całkowita</p>
+        <FormulaBox>
+          <Mb>{"S = \\frac{a_1}{1-q} = \\frac{200}{1-\\tfrac{4}{5}} = \\frac{200}{\\tfrac{1}{5}} = 1000"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────
