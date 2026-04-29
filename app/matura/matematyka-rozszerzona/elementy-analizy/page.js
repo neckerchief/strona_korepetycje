@@ -56,7 +56,7 @@ const tasks = [
   },
 ];
 
-export default function PochodnaPage() {
+export default function ElementyAnalizyPage() {
   return (
     <div className="min-h-screen bg-[#fffeeb] text-stone-800">
       <div className="border-b border-stone-200 bg-white/90 backdrop-blur-md sticky top-0 z-40">
@@ -65,13 +65,13 @@ export default function PochodnaPage() {
             <ArrowLeft size={15} /> Matematyka PR
           </Link>
           <span className="text-stone-300">|</span>
-          <span className="text-sm text-stone-400">Pochodna funkcji</span>
+          <span className="text-sm text-stone-400">Elementy analizy matematycznej</span>
         </div>
       </div>
       <main className="max-w-4xl mx-auto px-5 py-16">
         <div className="mb-14">
           <p className="text-sm font-semibold text-[#6d3a8e] uppercase tracking-widest mb-2">Dział 15</p>
-          <h1 className="font-display text-4xl md:text-5xl text-stone-800 mb-4">Pochodna funkcji</h1>
+          <h1 className="font-display text-4xl md:text-5xl text-stone-800 mb-4">Elementy analizy matematycznej</h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">{tasks.length} zadanie</p>
         </div>
         <div className="space-y-8">

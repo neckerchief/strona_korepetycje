@@ -21,8 +21,8 @@ const sections = [
   { num: "12", title: "Planimetria",                                                href: "/matura/matematyka-rozszerzona/planimetria", taskCount: 3 },
   { num: "13", title: "Geometria analityczna",                                      href: "/matura/matematyka-rozszerzona/geometria-analityczna", taskCount: 2 },
   { num: "14", title: "Stereometria",                                               href: "/matura/matematyka-rozszerzona/stereometria", taskCount: 2 },
-  { num: "15", title: "Pochodna funkcji",                                           href: "/matura/matematyka-rozszerzona/pochodna-funkcji", taskCount: 1 },
-  { num: "16", title: "Zadania optymalizacyjne",                                    href: null },
+  { num: "15", title: "Elementy analizy matematycznej",                             href: "/matura/matematyka-rozszerzona/elementy-analizy", taskCount: 1 },
+  { num: "16", title: "Zadania optymalizacyjne",                                    href: "/matura/matematyka-rozszerzona/zadania-optymalizacyjne", taskCount: 1 },
   { num: "17", title: "Rachunek prawdopodobieństwa i statystyka",                   href: "/matura/matematyka-rozszerzona/rachunek-prawdopodobienstwa", taskCount: 2 },
 ];
 
