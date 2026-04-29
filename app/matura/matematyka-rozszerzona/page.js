@@ -8,7 +8,7 @@ const cn = (...classes) => classes.filter(Boolean).join(" ");
 
 const sections = [
   { num: "1",  title: "Liczby rzeczywiste",                                        href: "/matura/matematyka-rozszerzona/liczby-rzeczywiste", taskCount: 1 },
-  { num: "2",  title: "Wyrażenia algebraiczne i równania i nierówności",            href: null },
+  { num: "2",  title: "Wyrażenia algebraiczne, równania i nierówności",             href: "/matura/matematyka-rozszerzona/wyrazenia-algebraiczne", taskCount: 1 },
   { num: "3",  title: "Funkcje",                                                    href: null },
   { num: "4",  title: "Funkcja liniowa",                                            href: null },
   { num: "5",  title: "Funkcja kwadratowa",                                         href: null },
