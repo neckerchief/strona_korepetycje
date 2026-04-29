@@ -171,6 +171,84 @@ const tasks = [
       </div>
     ),
   },
+  {
+    id: "smwp-2026-styczen-zad7",
+    source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
+    number: "2",
+    points: "0–5",
+    instruction: (
+      <span>
+        <span className="block font-normal mb-3">
+          Twierdzenie tangensów pozwala na określenie zależności między kątami i bokami trójkąta.
+        </span>
+        <span className="block italic text-[#52297a] mb-1">Twierdzenie tangensów:</span>
+        <span className="block font-normal">
+          Jeśli <Mi>{"a"}</Mi> i <Mi>{"b"}</Mi> są długościami boków trójkąta oraz{" "}
+          <Mi>{"\\alpha"}</Mi> i <Mi>{"\\beta"}</Mi> są miarami kątów leżących odpowiednio
+          naprzeciwko tych boków, to zachodzi równość
+        </span>
+      </span>
+    ),
+    mathBlock:
+      "\\dfrac{a-b}{a+b} = \\dfrac{\\operatorname{tg}\\dfrac{\\alpha-\\beta}{2}}{\\operatorname{tg}\\dfrac{\\alpha+\\beta}{2}}",
+    noteItems: [{ text: "Udowodnij powyższe twierdzenie." }],
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Skorzystaj z twierdzenia sinusów, żeby wyrazić <Mi>{"a"}</Mi> i <Mi>{"b"}</Mi> przez
+          sinusy kątów <Mi>{"\\alpha"}</Mi> i <Mi>{"\\beta"}</Mi>. Po uproszczeniu zostaje{" "}
+          <Mi>{"\\dfrac{\\sin\\alpha - \\sin\\beta}{\\sin\\alpha + \\sin\\beta}"}</Mi>.
+        </p>
+        <p>Następnie użyj wzorów na różnicę i sumę sinusów:</p>
+        <FormulaBox>
+          <Mb>{"\\sin\\alpha - \\sin\\beta = 2\\cos\\frac{\\alpha+\\beta}{2}\\sin\\frac{\\alpha-\\beta}{2}"}</Mb>
+        </FormulaBox>
+        <FormulaBox>
+          <Mb>{"\\sin\\alpha + \\sin\\beta = 2\\sin\\frac{\\alpha+\\beta}{2}\\cos\\frac{\\alpha-\\beta}{2}"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Twierdzenie sinusów</p>
+        <FormulaBox>
+          <Mb>{"\\frac{a}{\\sin\\alpha} = \\frac{b}{\\sin\\beta} = 2R"}</Mb>
+        </FormulaBox>
+        <p>
+          Stąd <Mi>{"a = 2R\\sin\\alpha"}</Mi> oraz <Mi>{"b = 2R\\sin\\beta"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Podstawiamy do wyrażenia po lewej stronie</p>
+        <Mb>{"\\frac{a-b}{a+b} = \\frac{2R\\sin\\alpha - 2R\\sin\\beta}{2R\\sin\\alpha + 2R\\sin\\beta} = \\frac{\\sin\\alpha - \\sin\\beta}{\\sin\\alpha + \\sin\\beta}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Wzory na różnicę i sumę sinusów</p>
+        <FormulaBox>
+          <Mb>{"\\sin\\alpha - \\sin\\beta = 2\\cos\\frac{\\alpha+\\beta}{2}\\sin\\frac{\\alpha-\\beta}{2}"}</Mb>
+        </FormulaBox>
+        <FormulaBox>
+          <Mb>{"\\sin\\alpha + \\sin\\beta = 2\\sin\\frac{\\alpha+\\beta}{2}\\cos\\frac{\\alpha-\\beta}{2}"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 4. Podstawiamy wzory</p>
+        <Mb>{"\\frac{\\sin\\alpha - \\sin\\beta}{\\sin\\alpha + \\sin\\beta} = \\frac{2\\cos\\dfrac{\\alpha+\\beta}{2}\\cdot\\sin\\dfrac{\\alpha-\\beta}{2}}{2\\sin\\dfrac{\\alpha+\\beta}{2}\\cdot\\cos\\dfrac{\\alpha-\\beta}{2}}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Upraszczamy</p>
+        <p>Czynniki 2 skracają się. Grupujemy licznik i mianownik:</p>
+        <Mb>{"= \\frac{\\sin\\dfrac{\\alpha-\\beta}{2}}{\\cos\\dfrac{\\alpha-\\beta}{2}} \\cdot \\frac{\\cos\\dfrac{\\alpha+\\beta}{2}}{\\sin\\dfrac{\\alpha+\\beta}{2}} = \\frac{\\operatorname{tg}\\dfrac{\\alpha-\\beta}{2}}{\\operatorname{tg}\\dfrac{\\alpha+\\beta}{2}}"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p>
+            Zatem <Mi>{"\\dfrac{a-b}{a+b} = \\dfrac{\\operatorname{tg}\\dfrac{\\alpha-\\beta}{2}}{\\operatorname{tg}\\dfrac{\\alpha+\\beta}{2}}"}</Mi>,
+            co kończy dowód. <Mi>{"\\blacksquare"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────

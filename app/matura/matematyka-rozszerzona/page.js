@@ -16,7 +16,7 @@ const sections = [
   { num: "7",  title: "Funkcje wymierne",                                           href: null },
   { num: "8",  title: "Funkcja wykładnicza",                                        href: null },
   { num: "9",  title: "Funkcja logarytmiczna",                                      href: null },
-  { num: "10", title: "Trygonometria",                                              href: "/matura/matematyka-rozszerzona/trygonometria", taskCount: 1 },
+  { num: "10", title: "Trygonometria",                                              href: "/matura/matematyka-rozszerzona/trygonometria", taskCount: 2 },
   { num: "11", title: "Ciągi",                                                      href: null },
   { num: "12", title: "Planimetria",                                                href: null },
   { num: "13", title: "Geometria analityczna",                                      href: "/matura/matematyka-rozszerzona/geometria-analityczna", taskCount: 1 },
@@ -85,7 +85,7 @@ export default function MatematykaRozszerzonaPage() {
             Matematyka
           </h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">
-            Zadania z arkuszy CKE, posegregowane według działów.
+            Zadania z arkuszy CKE, posegregowane według działów, z rozwiązaniami do każdego z nich.
           </p>
           {totalTasks > 0 && (
             <div className="mt-4 inline-flex items-center gap-2 bg-[#f2ecfb] border border-[#d4b8f0] rounded-full px-4 py-1.5 text-sm text-[#52297a]">
