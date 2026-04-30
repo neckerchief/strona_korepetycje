@@ -326,6 +326,62 @@ const DiagramMonotonicznosc = () => (
   </svg>
 );
 
+// ─── SVG: wielokąt (figury geometryczne) ────────────────────
+const PolygonDiagram = ({ vertices, xRange = [0, 6], yRange = [0, 5], className = "" }) => {
+  const W = 200, H = 180;
+  const PL = 30, PR = 18, PT = 16, PB = 22;
+  const DW = W - PL - PR, DH = H - PT - PB;
+  const [xMin, xMax] = xRange;
+  const [yMin, yMax] = yRange;
+  const sx = DW / (xMax - xMin), sy = DH / (yMax - yMin);
+  const tx = (x) => PL + (x - xMin) * sx;
+  const ty = (y) => PT + (yMax - y) * sy;
+  const ox = tx(0), oy = ty(0);
+  const inViewX = ox >= PL - 1 && ox <= W - PR + 1;
+  const inViewY = oy >= PT - 1 && oy <= H - PB + 1;
+  const gridXs = [], gridYs = [];
+  for (let gx = Math.ceil(xMin); gx <= Math.floor(xMax); gx++) gridXs.push(gx);
+  for (let gy = Math.ceil(yMin); gy <= Math.floor(yMax); gy++) gridYs.push(gy);
+  const polyPoints = vertices.map(v => `${tx(v.x)},${ty(v.y)}`).join(" ");
+  const xLabelY = inViewY ? oy + 11 : H - PB + 13;
+  const yLabelX = inViewX ? ox - 5 : PL - 5;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className={`w-full max-w-[220px] mx-auto block ${className}`}>
+      {gridXs.map(x => <line key={`gx${x}`} x1={tx(x)} y1={PT} x2={tx(x)} y2={H - PB} stroke="#e2e8f0" strokeWidth="0.8" />)}
+      {gridYs.map(y => <line key={`gy${y}`} x1={PL} y1={ty(y)} x2={W - PR} y2={ty(y)} stroke="#e2e8f0" strokeWidth="0.8" />)}
+      {inViewY && <line x1={PL - 4} y1={oy} x2={W - PR + 4} y2={oy} stroke="#94a3b8" strokeWidth="1.2" />}
+      {inViewX && <line x1={ox} y1={PT - 4} x2={ox} y2={H - PB + 4} stroke="#94a3b8" strokeWidth="1.2" />}
+      {gridXs.filter(x => x !== 0).map(x => (
+        <text key={`lx${x}`} x={tx(x)} y={xLabelY} textAnchor="middle" fill="#94a3b8" fontSize="8">{x}</text>
+      ))}
+      {gridYs.filter(y => y !== 0).map(y => (
+        <text key={`ly${y}`} x={yLabelX} y={ty(y) + 3} textAnchor="end" fill="#94a3b8" fontSize="8">{y}</text>
+      ))}
+      {inViewX && inViewY && (
+        <text x={ox - 4} y={oy + 11} textAnchor="end" fill="#94a3b8" fontSize="8">0</text>
+      )}
+      <polygon points={polyPoints} fill="#ede9fe" stroke="#7c3aed" strokeWidth="2" fillOpacity="0.35" />
+      {vertices.map((v, i) => (
+        <g key={i}>
+          <circle cx={tx(v.x)} cy={ty(v.y)} r="3" fill="#7c3aed" />
+          {v.label && (
+            <text
+              x={tx(v.x) + (v.dx ?? 6)}
+              y={ty(v.y) + (v.dy ?? 4)}
+              fill="#4c1d95"
+              fontSize="8.5"
+              fontWeight="bold"
+              textAnchor={v.anchor ?? "start"}
+            >
+              {v.label}
+            </text>
+          )}
+        </g>
+      ))}
+    </svg>
+  );
+};
+
 // ─── Strona główna ───────────────────────────────────────────
 export default function FunkcjaLiniowaPage() {
   const toc = [
@@ -335,6 +391,8 @@ export default function FunkcjaLiniowaPage() {
     { id: "monotonicznosc", label: "Monotoniczność" },
     { id: "punkt",          label: "Punkt na prostej" },
     { id: "wspolliniowosc", label: "Współliniowość" },
+    { id: "ogolne",          label: "Równanie ogólne prostej" },
+    { id: "poziome-pionowe", label: "Proste poziome i pionowe" },
   ];
 
   return (
@@ -1264,6 +1322,517 @@ export default function FunkcjaLiniowaPage() {
                 <Mi>{"1 = 2 + b \\Rightarrow b = -1"}</Mi>. Prosta AB: <Mi>{"y = 2x - 1"}</Mi>.<br />
                 Dla C: <Mi>{"2 \\cdot 4 - 1 = 7 \\neq 8"}</Mi>. <strong>NIE.</strong>
               </span>
+            }
+          />
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════
+            SCHEMAT 7 – RÓWNANIE OGÓLNE PROSTEJ
+        ══════════════════════════════════════════════════════════ */}
+        <SectionHead
+          id="ogolne"
+          eyebrow="Schemat 7"
+          title="Równanie ogólne prostej"
+        />
+
+        <p className="text-stone-600 leading-relaxed">
+          Prosta nie zawsze jest podana w postaci <Mi>{"y = ax + b"}</Mi>. Ogólne
+          równanie prostej ma postać <Mi>{"Ax + By + C = 0"}</Mi>. Gdy{" "}
+          <Mi>{"B \\neq 0"}</Mi>, możemy je przekształcić do postaci kierunkowej,
+          izolując <Mi>{"y"}</Mi>.
+        </p>
+
+        <RuleBox title="Jak sprowadzić Ax + By + C = 0 do y = ax + b?" color="blue">
+          <ol className="list-decimal ml-5 space-y-1">
+            <li>
+              Przenieś wyrazy z <Mi>{"x"}</Mi> i stałą na prawą stronę:{" "}
+              <Mi>{"By = {-}Ax - C"}</Mi>.
+            </li>
+            <li>
+              Podziel obie strony przez <Mi>{"B"}</Mi> (przy <Mi>{"B \\neq 0"}</Mi>):{" "}
+              <Mi>{"y = -\\dfrac{A}{B}x - \\dfrac{C}{B}"}</Mi>.
+            </li>
+          </ol>
+        </RuleBox>
+
+        <WorkedExample
+          title="Sprowadź 2x − 3y + 6 = 0 do postaci y = ax + b"
+          steps={[
+            {
+              label: "Przenieś 2x i 6 na prawą stronę",
+              content: (
+                <span>
+                  <Mi>{"2x - 3y + 6 = 0"}</Mi> →{" "}
+                  <Mi>{"-3y = -2x - 6"}</Mi>
+                </span>
+              ),
+              formula: <Mi>{"-3y = -2x - 6"}</Mi>,
+            },
+            {
+              label: "Podziel obie strony przez −3",
+              content: (
+                <span>
+                  <Mi>{"y = \\dfrac{-2x - 6}{-3} = \\dfrac{2}{3}x + 2"}</Mi>
+                </span>
+              ),
+              formula: <Mi>{"y = \\dfrac{2}{3}x + 2"}</Mi>,
+            },
+            {
+              label: "Odczytaj współczynniki",
+              content: (
+                <span>
+                  <Mi>{"a = \\dfrac{2}{3}"}</Mi>, <Mi>{"b = 2"}</Mi>.
+                </span>
+              ),
+            },
+          ]}
+        />
+
+        <MultiExercise
+          title="Sprowadź do postaci kierunkowej y = ax + b:"
+          parts={[
+            {
+              question: <span><Mi>{"4x - 2y + 8 = 0"}</Mi></span>,
+              answer: (
+                <span>
+                  <Mi>{"-2y = -4x - 8"}</Mi>, dzielimy przez <Mi>{"-2"}</Mi>:{" "}
+                  <strong><Mi>{"y = 2x + 4"}</Mi></strong>.{" "}
+                  <Mi>{"a = 2"}</Mi>, <Mi>{"b = 4"}</Mi>.
+                </span>
+              ),
+            },
+            {
+              question: <span><Mi>{"3x + 2y - 6 = 0"}</Mi></span>,
+              answer: (
+                <span>
+                  <Mi>{"2y = -3x + 6"}</Mi>, dzielimy przez <Mi>{"2"}</Mi>:{" "}
+                  <strong><Mi>{"y = -\\dfrac{3}{2}x + 3"}</Mi></strong>.{" "}
+                  <Mi>{"a = -\\dfrac{3}{2}"}</Mi>, <Mi>{"b = 3"}</Mi>.
+                </span>
+              ),
+            },
+            {
+              question: <span><Mi>{"-x + 4y + 4 = 0"}</Mi></span>,
+              answer: (
+                <span>
+                  <Mi>{"4y = x - 4"}</Mi>, dzielimy przez <Mi>{"4"}</Mi>:{" "}
+                  <strong><Mi>{"y = \\dfrac{1}{4}x - 1"}</Mi></strong>.{" "}
+                  <Mi>{"a = \\dfrac{1}{4}"}</Mi>, <Mi>{"b = -1"}</Mi>.
+                </span>
+              ),
+            },
+          ]}
+        />
+
+        {/* ══════════════════════════════════════════════════════════
+            SCHEMAT 8 – PROSTE POZIOME I PIONOWE
+        ══════════════════════════════════════════════════════════ */}
+        <SectionHead
+          id="poziome-pionowe"
+          eyebrow="Schemat 8"
+          title="Proste poziome i pionowe"
+        />
+
+        <p className="text-stone-600 leading-relaxed">
+          Dwa szczególne przypadki prostych nie mieszczą się w schemacie{" "}
+          <Mi>{"y = ax + b"}</Mi>. Pojawiają się często przy opisywaniu boków figur
+          geometrycznych.
+        </p>
+
+        <RuleBox title="Równania prostych szczególnych" color="blue">
+          <div className="space-y-2">
+            <p>
+              <strong><Mi>{"y = c"}</Mi></strong> to prosta <strong>pozioma</strong>,
+              równoległa do osi OX (funkcja stała, <Mi>{"a = 0"}</Mi>).
+            </p>
+            <p>
+              <strong><Mi>{"x = c"}</Mi></strong> to prosta <strong>pionowa</strong>,
+              równoległa do osi OY. <strong>Nie jest funkcją</strong>: każdemu{" "}
+              <Mi>{"x = c"}</Mi> odpowiadają wszystkie wartości y.
+            </p>
+          </div>
+        </RuleBox>
+
+        {/* WE1 — prostokąt */}
+        <WorkedExample
+          title="Prostokąt ABCD: A(1,1), B(5,1), C(5,4), D(1,4). Wyznacz równania boków."
+          steps={[
+            {
+              label: "Narysuj prostokąt",
+              content: <span>Zaznacz wierzchołki i połącz je bokami.</span>,
+              diagram: (
+                <PolygonDiagram
+                  vertices={[
+                    { x: 1, y: 1, label: "A(1,1)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 5, y: 1, label: "B(5,1)", dx: 5, dy: 12 },
+                    { x: 5, y: 4, label: "C(5,4)", dx: 5, dy: -4 },
+                    { x: 1, y: 4, label: "D(1,4)", dx: -4, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[0, 6]}
+                  yRange={[0, 5]}
+                />
+              ),
+            },
+            {
+              label: "Boki poziome AB i CD",
+              content: (
+                <span>
+                  A(1,1) i B(5,1) mają tę samą y-współrzędną →{" "}
+                  <strong>AB: <Mi>{"y = 1"}</Mi></strong>.<br />
+                  C(5,4) i D(1,4) mają tę samą y-współrzędną →{" "}
+                  <strong>CD: <Mi>{"y = 4"}</Mi></strong>.
+                </span>
+              ),
+            },
+            {
+              label: "Boki pionowe BC i DA",
+              content: (
+                <span>
+                  B(5,1) i C(5,4) mają tę samą x-współrzędną →{" "}
+                  <strong>BC: <Mi>{"x = 5"}</Mi></strong>.<br />
+                  D(1,4) i A(1,1) mają tę samą x-współrzędną →{" "}
+                  <strong>DA: <Mi>{"x = 1"}</Mi></strong>.
+                </span>
+              ),
+            },
+          ]}
+        />
+
+        {/* WE2 — równoległobok */}
+        <WorkedExample
+          title="Równoległobok ABCD: A(0,0), B(4,0), C(6,3), D(2,3). Wyznacz równania boków."
+          steps={[
+            {
+              label: "Narysuj równoległobok",
+              content: <span>Zaznacz wierzchołki i połącz je bokami.</span>,
+              diagram: (
+                <PolygonDiagram
+                  vertices={[
+                    { x: 0, y: 0, label: "A(0,0)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 4, y: 0, label: "B(4,0)", dx: 5, dy: 12 },
+                    { x: 6, y: 3, label: "C(6,3)", dx: 5, dy: -4 },
+                    { x: 2, y: 3, label: "D(2,3)", dx: -4, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[-1, 7]}
+                  yRange={[-1, 4]}
+                />
+              ),
+            },
+            {
+              label: "Boki poziome AB i CD",
+              content: (
+                <span>
+                  A(0,0) i B(4,0) mają <Mi>{"y = 0"}</Mi> →{" "}
+                  <strong>AB: <Mi>{"y = 0"}</Mi></strong>.<br />
+                  C(6,3) i D(2,3) mają <Mi>{"y = 3"}</Mi> →{" "}
+                  <strong>CD: <Mi>{"y = 3"}</Mi></strong>.
+                </span>
+              ),
+            },
+            {
+              label: "Bok BC",
+              content: (
+                <span>
+                  <Mi>{"a_{BC} = \\dfrac{3 - 0}{6 - 4} = \\dfrac{3}{2}"}</Mi>. Prosta:{" "}
+                  <Mi>{"y = \\dfrac{3}{2}x + b"}</Mi>. Podstaw B(4, 0):{" "}
+                  <Mi>{"0 = 6 + b \\Rightarrow b = -6"}</Mi>.<br />
+                  <strong>BC: <Mi>{"y = \\dfrac{3}{2}x - 6"}</Mi></strong>.
+                </span>
+              ),
+            },
+            {
+              label: "Bok DA",
+              content: (
+                <span>
+                  <Mi>{"a_{DA} = \\dfrac{3 - 0}{2 - 0} = \\dfrac{3}{2}"}</Mi>. Prosta:{" "}
+                  <Mi>{"y = \\dfrac{3}{2}x + b"}</Mi>. Podstaw A(0, 0):{" "}
+                  <Mi>{"0 = 0 + b \\Rightarrow b = 0"}</Mi>.<br />
+                  <strong>DA: <Mi>{"y = \\dfrac{3}{2}x"}</Mi></strong>.
+                </span>
+              ),
+              hint: "Sprawdź: BC ∥ DA, bo oba mają a = 3/2. AB ∥ CD, bo oba poziome. To potwierdza, że to równoległobok.",
+            },
+          ]}
+        />
+
+        {/* WE3 — trójkąt */}
+        <WorkedExample
+          title="Trójkąt ABC: A(0,0), B(6,0), C(2,4). Wyznacz równania boków."
+          steps={[
+            {
+              label: "Narysuj trójkąt",
+              content: <span>Zaznacz wierzchołki i połącz je bokami.</span>,
+              diagram: (
+                <PolygonDiagram
+                  vertices={[
+                    { x: 0, y: 0, label: "A(0,0)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 6, y: 0, label: "B(6,0)", dx: 5, dy: 12 },
+                    { x: 2, y: 4, label: "C(2,4)", dx: 5, dy: -4 },
+                  ]}
+                  xRange={[-1, 7]}
+                  yRange={[-1, 5]}
+                />
+              ),
+            },
+            {
+              label: "Bok AB",
+              content: (
+                <span>
+                  A(0,0) i B(6,0) mają <Mi>{"y = 0"}</Mi> →{" "}
+                  <strong>AB: <Mi>{"y = 0"}</Mi></strong>.
+                </span>
+              ),
+            },
+            {
+              label: "Bok BC",
+              content: (
+                <span>
+                  <Mi>{"a_{BC} = \\dfrac{4 - 0}{2 - 6} = -1"}</Mi>. Prosta:{" "}
+                  <Mi>{"y = -x + b"}</Mi>. Podstaw B(6, 0):{" "}
+                  <Mi>{"0 = -6 + b \\Rightarrow b = 6"}</Mi>.<br />
+                  <strong>BC: <Mi>{"y = -x + 6"}</Mi></strong>.
+                </span>
+              ),
+            },
+            {
+              label: "Bok CA",
+              content: (
+                <span>
+                  <Mi>{"a_{CA} = \\dfrac{4 - 0}{2 - 0} = 2"}</Mi>. Prosta:{" "}
+                  <Mi>{"y = 2x + b"}</Mi>. Podstaw A(0, 0):{" "}
+                  <Mi>{"0 = 0 + b \\Rightarrow b = 0"}</Mi>.<br />
+                  <strong>CA: <Mi>{"y = 2x"}</Mi></strong>.
+                </span>
+              ),
+            },
+          ]}
+        />
+
+        {/* Ćwiczenia — trójkąty */}
+        <p className="text-stone-500 text-sm font-semibold mt-8 mb-2">Ćwiczenia: trójkąty</p>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <ExerciseCard
+            number="1"
+            question={
+              <span>
+                Trójkąt <Mi>{"ABC"}</Mi>:{" "}
+                <Mi>{"A(0,\\,0)"}</Mi>, <Mi>{"B(4,\\,0)"}</Mi>, <Mi>{"C(0,\\,3)"}</Mi>.{" "}
+                Napisz równania prostych zawierających każdy bok.
+              </span>
+            }
+            answer={
+              <div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: 0, y: 0, label: "A(0,0)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 4, y: 0, label: "B(4,0)", dx: 5, dy: 12 },
+                    { x: 0, y: 3, label: "C(0,3)", dx: -4, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[-1, 5]}
+                  yRange={[-1, 4]}
+                  className="mb-3"
+                />
+                <div className="space-y-0.5 text-xs">
+                  <div>AB: <Mi>{"y = 0"}</Mi></div>
+                  <div>
+                    BC: <Mi>{"a = -\\dfrac{3}{4}"}</Mi>, podstaw B(4,0):{" "}
+                    <Mi>{"b = 3"}</Mi> →{" "}
+                    <strong><Mi>{"y = -\\dfrac{3}{4}x + 3"}</Mi></strong>
+                  </div>
+                  <div>CA: <Mi>{"x = 0"}</Mi></div>
+                </div>
+              </div>
+            }
+          />
+          <ExerciseCard
+            number="2"
+            question={
+              <span>
+                Trójkąt <Mi>{"ABC"}</Mi>:{" "}
+                <Mi>{"A(1,\\,1)"}</Mi>, <Mi>{"B(5,\\,1)"}</Mi>, <Mi>{"C(3,\\,5)"}</Mi>.{" "}
+                Napisz równania prostych zawierających każdy bok.
+              </span>
+            }
+            answer={
+              <div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: 1, y: 1, label: "A(1,1)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 5, y: 1, label: "B(5,1)", dx: 5, dy: 12 },
+                    { x: 3, y: 5, label: "C(3,5)", dx: 5, dy: -4 },
+                  ]}
+                  xRange={[0, 6]}
+                  yRange={[0, 6]}
+                  className="mb-3"
+                />
+                <div className="space-y-0.5 text-xs">
+                  <div>AB: <Mi>{"y = 1"}</Mi></div>
+                  <div>
+                    BC: <Mi>{"a = -2"}</Mi>, podstaw B(5,1):{" "}
+                    <Mi>{"b = 11"}</Mi> →{" "}
+                    <strong><Mi>{"y = -2x + 11"}</Mi></strong>
+                  </div>
+                  <div>
+                    CA: <Mi>{"a = 2"}</Mi>, podstaw A(1,1):{" "}
+                    <Mi>{"b = -1"}</Mi> →{" "}
+                    <strong><Mi>{"y = 2x - 1"}</Mi></strong>
+                  </div>
+                </div>
+              </div>
+            }
+          />
+        </div>
+
+        {/* Ćwiczenia — prostokąty */}
+        <p className="text-stone-500 text-sm font-semibold mt-6 mb-2">Ćwiczenia: prostokąty</p>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <ExerciseCard
+            number="3"
+            question={
+              <span>
+                Prostokąt <Mi>{"ABCD"}</Mi>:{" "}
+                <Mi>{"A(0,\\,0)"}</Mi>, <Mi>{"B(4,\\,0)"}</Mi>,{" "}
+                <Mi>{"C(4,\\,3)"}</Mi>, <Mi>{"D(0,\\,3)"}</Mi>.{" "}
+                Napisz równania prostych zawierających każdy bok.
+              </span>
+            }
+            answer={
+              <div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: 0, y: 0, label: "A(0,0)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 4, y: 0, label: "B(4,0)", dx: 5, dy: 12 },
+                    { x: 4, y: 3, label: "C(4,3)", dx: 5, dy: -4 },
+                    { x: 0, y: 3, label: "D(0,3)", dx: -4, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[-1, 5]}
+                  yRange={[-1, 4]}
+                  className="mb-3"
+                />
+                <div className="space-y-0.5 text-xs">
+                  <div>AB: <Mi>{"y = 0"}</Mi></div>
+                  <div>BC: <Mi>{"x = 4"}</Mi></div>
+                  <div>CD: <Mi>{"y = 3"}</Mi></div>
+                  <div>DA: <Mi>{"x = 0"}</Mi></div>
+                </div>
+              </div>
+            }
+          />
+          <ExerciseCard
+            number="4"
+            question={
+              <span>
+                Prostokąt <Mi>{"ABCD"}</Mi>:{" "}
+                <Mi>{"A({-}1,\\,0)"}</Mi>, <Mi>{"B(3,\\,0)"}</Mi>,{" "}
+                <Mi>{"C(3,\\,4)"}</Mi>, <Mi>{"D({-}1,\\,4)"}</Mi>.{" "}
+                Napisz równania prostych zawierających każdy bok.
+              </span>
+            }
+            answer={
+              <div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: -1, y: 0, label: "A(-1,0)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 3, y: 0, label: "B(3,0)", dx: 5, dy: 12 },
+                    { x: 3, y: 4, label: "C(3,4)", dx: 5, dy: -4 },
+                    { x: -1, y: 4, label: "D(-1,4)", dx: -4, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[-2, 4]}
+                  yRange={[-1, 5]}
+                  className="mb-3"
+                />
+                <div className="space-y-0.5 text-xs">
+                  <div>AB: <Mi>{"y = 0"}</Mi></div>
+                  <div>BC: <Mi>{"x = 3"}</Mi></div>
+                  <div>CD: <Mi>{"y = 4"}</Mi></div>
+                  <div>DA: <Mi>{"x = -1"}</Mi></div>
+                </div>
+              </div>
+            }
+          />
+        </div>
+
+        {/* Ćwiczenia — równoległoboki */}
+        <p className="text-stone-500 text-sm font-semibold mt-6 mb-2">Ćwiczenia: równoległoboki</p>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <ExerciseCard
+            number="5"
+            question={
+              <span>
+                Równoległobok <Mi>{"ABCD"}</Mi>:{" "}
+                <Mi>{"A(0,\\,0)"}</Mi>, <Mi>{"B(5,\\,0)"}</Mi>,{" "}
+                <Mi>{"C(7,\\,3)"}</Mi>, <Mi>{"D(2,\\,3)"}</Mi>.{" "}
+                Napisz równania prostych zawierających każdy bok.
+              </span>
+            }
+            answer={
+              <div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: 0, y: 0, label: "A(0,0)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 5, y: 0, label: "B(5,0)", dx: 5, dy: 12 },
+                    { x: 7, y: 3, label: "C(7,3)", dx: 5, dy: -4 },
+                    { x: 2, y: 3, label: "D(2,3)", dx: -4, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[-1, 8]}
+                  yRange={[-1, 4]}
+                  className="mb-3"
+                />
+                <div className="space-y-0.5 text-xs">
+                  <div>AB: <Mi>{"y = 0"}</Mi></div>
+                  <div>
+                    BC: <Mi>{"a = \\dfrac{3}{2}"}</Mi>, podstaw B(5,0):{" "}
+                    <Mi>{"b = -\\dfrac{15}{2}"}</Mi> →{" "}
+                    <strong><Mi>{"y = \\dfrac{3}{2}x - \\dfrac{15}{2}"}</Mi></strong>
+                  </div>
+                  <div>CD: <Mi>{"y = 3"}</Mi></div>
+                  <div>
+                    DA: <Mi>{"a = \\dfrac{3}{2}"}</Mi>, podstaw A(0,0):{" "}
+                    <Mi>{"b = 0"}</Mi> →{" "}
+                    <strong><Mi>{"y = \\dfrac{3}{2}x"}</Mi></strong>
+                  </div>
+                </div>
+              </div>
+            }
+          />
+          <ExerciseCard
+            number="6"
+            question={
+              <span>
+                Równoległobok <Mi>{"ABCD"}</Mi>:{" "}
+                <Mi>{"A(1,\\,0)"}</Mi>, <Mi>{"B(4,\\,0)"}</Mi>,{" "}
+                <Mi>{"C(5,\\,3)"}</Mi>, <Mi>{"D(2,\\,3)"}</Mi>.{" "}
+                Napisz równania prostych zawierających każdy bok.
+              </span>
+            }
+            answer={
+              <div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: 1, y: 0, label: "A(1,0)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 4, y: 0, label: "B(4,0)", dx: 5, dy: 12 },
+                    { x: 5, y: 3, label: "C(5,3)", dx: 5, dy: -4 },
+                    { x: 2, y: 3, label: "D(2,3)", dx: -4, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[0, 6]}
+                  yRange={[-1, 4]}
+                  className="mb-3"
+                />
+                <div className="space-y-0.5 text-xs">
+                  <div>AB: <Mi>{"y = 0"}</Mi></div>
+                  <div>
+                    BC: <Mi>{"a = 3"}</Mi>, podstaw B(4,0):{" "}
+                    <Mi>{"b = -12"}</Mi> →{" "}
+                    <strong><Mi>{"y = 3x - 12"}</Mi></strong>
+                  </div>
+                  <div>CD: <Mi>{"y = 3"}</Mi></div>
+                  <div>
+                    DA: <Mi>{"a = 3"}</Mi>, podstaw A(1,0):{" "}
+                    <Mi>{"b = -3"}</Mi> →{" "}
+                    <strong><Mi>{"y = 3x - 3"}</Mi></strong>
+                  </div>
+                </div>
+              </div>
             }
           />
         </div>
