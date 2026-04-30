@@ -221,7 +221,16 @@ const MultiExercise = ({ title, parts }) => {
 // ─── SVG: generyczny diagram wykresu liniowego ──────────────
 // props: id (uniq string), a, b (współczynniki), pts (tablica punktów),
 //        xRange, yRange, className
-const LineDiagram = ({ id, a, b, pts = [], xRange = [-3, 4], yRange = [-3, 4], className }) => {
+const LineDiagram = ({
+  id,
+  a,
+  b,
+  pts = [],
+  xRange = [-3, 4],
+  yRange = [-3, 4],
+  className,
+  showQuadrants = false,
+}) => {
   const W = 200, H = 200;
   const PL = 30, PR = 22, PT = 20, PB = 22;
   const DW = W - PL - PR;
@@ -253,6 +262,14 @@ const LineDiagram = ({ id, a, b, pts = [], xRange = [-3, 4], yRange = [-3, 4], c
       {yGrid.filter(y => y !== 0).map(y => (
         <line key={`gy${y}`} x1={PL} y1={ty(y)} x2={W - PR} y2={ty(y)} stroke="#e2e8f0" strokeWidth="0.8" />
       ))}
+      {showQuadrants && xMin < 0 && xMax > 0 && yMin < 0 && yMax > 0 && (
+        <g opacity="0.42" fill="#6d3a8e" fontFamily="Georgia, serif" fontSize="17" fontWeight="bold" textAnchor="middle">
+          <text x={tx(xMax / 2)} y={ty(yMax / 2)} dominantBaseline="middle">I</text>
+          <text x={tx(xMin / 2)} y={ty(yMax / 2)} dominantBaseline="middle">II</text>
+          <text x={tx(xMin / 2)} y={ty(yMin / 2)} dominantBaseline="middle">III</text>
+          <text x={tx(xMax / 2)} y={ty(yMin / 2)} dominantBaseline="middle">IV</text>
+        </g>
+      )}
       {/* Znaczniki i etykiety osi */}
       {xGrid.filter(x => x !== 0).map(x => (
         <g key={`xt${x}`}>
@@ -562,13 +579,12 @@ const DiagramCwiartki = () => (
   <svg viewBox="0 0 260 176" className="w-full max-w-[320px] mx-auto block">
     <defs>
       <marker id="qc-arr-x" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8" /></marker>
-      <marker id="qc-arr-x2" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto-start-reverse"><path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8" /></marker>
       <marker id="qc-arr-y" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8" /></marker>
-      <marker id="qc-arr-y2" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto-start-reverse"><path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8" /></marker>
     </defs>
     <rect x="4" y="4" width="252" height="168" rx="10" fill="#fafaf9" stroke="#e7e5e4" strokeWidth="1.2" />
-    <line x1="129" y1="16" x2="129" y2="160" stroke="#94a3b8" strokeWidth="1.4" markerEnd="url(#qc-arr-y)" markerStart="url(#qc-arr-y2)" />
-    <line x1="16" y1="87" x2="244" y2="87" stroke="#94a3b8" strokeWidth="1.4" markerEnd="url(#qc-arr-x)" markerStart="url(#qc-arr-x2)" />
+    {/* Oś Oy: dodatnie y w górę (koniec linii przy mniejszym SVG-y), pojedyncza strzałka */}
+    <line x1="129" y1="160" x2="129" y2="16" stroke="#94a3b8" strokeWidth="1.4" markerEnd="url(#qc-arr-y)" />
+    <line x1="16" y1="87" x2="244" y2="87" stroke="#94a3b8" strokeWidth="1.4" markerEnd="url(#qc-arr-x)" />
     <text x="188" y="52" textAnchor="middle" fill="#6d3a8e" fontSize="15" fontWeight="bold" fontFamily="Georgia, serif">I</text>
     <text x="70" y="52" textAnchor="middle" fill="#6d3a8e" fontSize="15" fontWeight="bold" fontFamily="Georgia, serif">II</text>
     <text x="70" y="130" textAnchor="middle" fill="#6d3a8e" fontSize="15" fontWeight="bold" fontFamily="Georgia, serif">III</text>
@@ -592,7 +608,7 @@ export default function FunkcjaLiniowaPage() {
     { id: "poziome-pionowe", label: "Proste poziome i pionowe" },
     { id: "wierzcholki-figur", label: "Wierzchołki i pola figur" },
     { id: "rownol-prostop",     label: "Równoległość i prostopadłość" },
-    { id: "rozne-inne", label: "Różne inne rzeczy" },
+    { id: "rozne-inne", label: "Ćwiartki układu współrzędnych" },
   ];
 
   return (
@@ -2733,7 +2749,7 @@ export default function FunkcjaLiniowaPage() {
         />
 
         <MultiExercise
-          title="Wyznacz prostą równoległą i prostopadłą do podanej, obie przez podany punkt:"
+          title="Wyznacz prostą równoległą i prostopadłą do podanej prostej, obie przechodzące przez podany punkt:"
           parts={[
             {
               question: (
@@ -2781,118 +2797,147 @@ export default function FunkcjaLiniowaPage() {
           ]}
         />
 
-        {/* Schemat 11 */}
+        {/* ══════════════════════════════════════════════════════════
+            SCHEMAT 11 – CWARTKI UKLADU WSPÓLRZEDNYCH
+        ══════════════════════════════════════════════════════════ */}
         <SectionHead
           id="rozne-inne"
           eyebrow="Schemat 11"
-          title="Różne inne rzeczy"
+          title="Ćwiartki układu współrzędnych"
         />
 
         <RuleBox title="Ćwiartki układu współrzędnych" color="blue">
           <p className="mb-4">
-            Oś dodatnia <Mi>{"x"}</Mi> jest w prawo, oś dodatnia <Mi>{"y"}</Mi> — w górę. Ćwiartki liczy się obiegowo od obszaru, gdzie obie zmienne są dodatnie:
+            Oś dodatnią <Mi>{"x"}</Mi> prowadzimy w prawo, oś dodatnią <Mi>{"y"}</Mi> w górę.
+            Ćwiartki numeruje się od obszaru, gdzie obie współrzędne są dodatnie, i dalej w kierunku przeciwnym do ruchu wskazówek zegara:
           </p>
           <ul className="list-disc ml-5 space-y-1 mb-6">
-            <li><strong>I</strong> — <Mi>{"x > 0"}</Mi>, <Mi>{"y > 0"}</Mi></li>
-            <li><strong>II</strong> — <Mi>{"x < 0"}</Mi>, <Mi>{"y > 0"}</Mi></li>
-            <li><strong>III</strong> — <Mi>{"x < 0"}</Mi>, <Mi>{"y < 0"}</Mi></li>
-            <li><strong>IV</strong> — <Mi>{"x > 0"}</Mi>, <Mi>{"y < 0"}</Mi></li>
+            <li><strong>I</strong>: <Mi>{"x > 0"}</Mi>, <Mi>{"y > 0"}</Mi></li>
+            <li><strong>II</strong>: <Mi>{"x < 0"}</Mi>, <Mi>{"y > 0"}</Mi></li>
+            <li><strong>III</strong>: <Mi>{"x < 0"}</Mi>, <Mi>{"y < 0"}</Mi></li>
+            <li><strong>IV</strong>: <Mi>{"x > 0"}</Mi>, <Mi>{"y < 0"}</Mi></li>
           </ul>
           <DiagramCwiartki />
-          <p className="text-stone-600 text-sm mt-4">
-            W zadaniu „przez którą ćwiartkę prosta nie przechodzi” chodzi o środek ćwiartki: punkt, w którym obie współrzędne mają zgodny znak z definicją (np. w II musi być <Mi>{"x < 0"}</Mi> i <Mi>{"y > 0"}</Mi> jednocześnie).
-            Jeśli prosta ma punkt spełniający ten warunek, mówimy, że <strong>przechodzi</strong> przez tę ćwiartkę. Pomagają przecięcia z osiami i sprawdzenie znaków „na bardzo ujemnych / bardzo dodatnich’’ <Mi>{"x"}</Mi>.
-          </p>
         </RuleBox>
 
         <WorkedExample
           title={
             <span>
-              Którymi ćwiartkami <strong>przechodzi</strong>, a którą <strong>mija</strong> prosta <Mi>{"y = {-}x + 2"}</Mi> —
-              rozumowanie tylko z równania (bez rysowania dokładnego wykresu)?
+              Przez które ćwiartki <strong>przechodzi</strong> prosta <Mi>{"y = {-}x + 2"}</Mi>, a przez które{" "}
+              <strong>nie przechodzi</strong>?
             </span>
           }
           steps={[
             {
-              label: "Przecięcia z osiami",
+              label: "Krok 1: wykonaj rysunek prostej i zaznacz ćwiartki",
               content: (
                 <span>
-                  Podstaw <Mi>{"x = 0"}</Mi>: dostajesz{" "}<Mi>{"(0,\\ 2)"}</Mi> na dodatniej półosi OY.
-                  Podstaw <Mi>{"y = 0"}</Mi>:{" "}<Mi>{"x = 2"}</Mi>, więc <Mi>{"(2,\\ 0)"}</Mi> na dodatniej półosi OX.
-                  Odcinek między tymi punktami wchodzi w głąb pierwszej ćwiartki (np. punkt{" "}<Mi>{"(1,\\ 1)"}</Mi> jest na tej linii — obie współrzędne dodatnie).
+                  Narysuj układ z osiami, nanieś prostą (np. przez przecięcia z osiami) i oznacz na rysunku ćwiartki{" "}
+                  <strong>I–IV</strong>, tak jak w schemacie wyżej.
                 </span>
+              ),
+              diagram: (
+                <LineDiagram
+                  id="cw-we-1"
+                  a={-1}
+                  b={2}
+                  showQuadrants
+                  xRange={[-3, 5]}
+                  yRange={[-5, 6]}
+                  pts={[
+                    { x: 0, y: 2, label: "(0, 2)", dx: 7, dy: -8 },
+                    { x: 2, y: 0, label: "(2, 0)", dx: 7, dy: 5 },
+                  ]}
+                  className="w-full max-w-[260px] mx-auto block"
+                />
               ),
             },
             {
-              label: "Ujemne i duże dodatnie argumenty",
+              label: "Krok 2: odpowiedź",
               content: (
                 <span>
-                  Dla dużego ujemnego <Mi>{"x"}</Mi>, np. <Mi>{"x = {-}5"}</Mi>, wyjdzie{" "}
-                  <Mi>{"y = {-}({-}5) + 2 = 7 > 0"}</Mi> — oba warunki II ćwiartki spełnione.
-                  Dla dużego dodatniego <Mi>{"x"}</Mi>, np. <Mi>{"x = 6"}</Mi>, jest{" "}
-                  <Mi>{"y = {-}4"}</Mi> — jesteś w IV ćwiartce (<Mi>{"x > 0"}</Mi>, <Mi>{"y < 0"}</Mi>).
-                </span>
-              ),
-            },
-            {
-              label: "Czy odwiedza III?",
-              content: (
-                <span>
-                  W III ćwiartce trzeba <Mi>{"x < 0"}</Mi> i <Mi>{"y < 0"}</Mi>.
-                  Tu <Mi>{"y < 0"}</Mi> znaczy <Mi>{"{-}x + 2 < 0 \\Rightarrow x > 2"}</Mi> — sprzeczne z{" "}<Mi>{"x < 0"}</Mi>.
-                  Żaden punkt prostej nie leży ściśle w III ćwiartce.
-                </span>
-              ),
-            },
-            {
-              label: "Podsumowanie",
-              content: (
-                <span>
-                  Łącznie: przez <strong>I, II, IV</strong> prosta przechodzi; <strong>III</strong> zostaje pusta dla tego równania.
+                  <strong>Przechodzi</strong> przez ćwiartki <strong>I, II i IV</strong>;{" "}
+                  <strong>nie przechodzi</strong> przez <strong>III</strong>.
                 </span>
               ),
             },
           ]}
         />
 
-        <p className="text-stone-500 text-sm font-semibold mt-8 mb-2">Ćwiczenia — tylko podany jest wzór prostej</p>
+        <p className="text-stone-500 text-sm font-semibold mt-8 mb-2">
+          Ćwiczenia (w rozwiązaniu: najpierw rysunek z ćwiartkami, potem odpowiedź słowna)
+        </p>
         <div className="space-y-4">
           <ExerciseCard
             number={1}
             question={
               <span>
-                Przez które ćwiartki przechodzi prosta z równania <Mi>{"y = 2x - 4"}</Mi>, a którą ćwiartkę środkową pomija?
+                Przez które ćwiartki przechodzi prosta z równania <Mi>{"y = 2x - 4"}</Mi>, a przez którą nie?
               </span>
             }
             answer={
-              <span>
-                Oś <Mi>{"x"}</Mi>: <Mi>{"(2,\\,0)"}</Mi>; oś <Mi>{"y"}</Mi>: <Mi>{"(0,\\,{-}4)"}</Mi>.
-                Gdy <Mi>{"x < 0"}</Mi>, to <Mi>{"y < {-}4"}</Mi> — czysta III.
-                Gdy <Mi>{"0 < x < 2"}</Mi>, przy <Mi>{"y"}</Mi> ujemnym mamy dodatnie <Mi>{"x"}</Mi> — IV.
-                Gdy <Mi>{"x > 2"}</Mi>, obie współrzędne dodatnie — I.
-                Dla II potrzebne <Mi>{"x < 0"}</Mi> i jednocześnie <Mi>{"y > 0"}</Mi>; przy <Mi>{"x < 0"}</Mi> zawsze <Mi>{"y < {-}4"}</Mi> —{" "}
-                <strong>II jest ominięta</strong>.
-                {" "}<strong>Odpowiedź: przechodzi przez III, IV, I; nie przechodzi przez II.</strong>
-              </span>
+              <div className="space-y-4 font-normal text-sm text-stone-700">
+                <div>
+                  <p className="font-semibold text-stone-800 mb-2">
+                    Krok 1. Wykonaj rysunek prostej i zaznacz ćwiartki
+                  </p>
+                  <LineDiagram
+                    id="ex-cw-a1"
+                    a={2}
+                    b={-4}
+                    showQuadrants
+                    xRange={[-2, 4]}
+                    yRange={[-6, 2]}
+                    pts={[
+                      { x: 2, y: 0, label: "(2, 0)", dx: 7, dy: 5 },
+                      { x: 0, y: -4, label: "(0, -4)", dx: 8, dy: -6 },
+                    ]}
+                    className="w-full max-w-[260px] mx-auto block"
+                  />
+                </div>
+                <div>
+                  <p className="font-semibold text-stone-800 mb-1">Krok 2. Odpowiedź</p>
+                  <p className="font-semibold text-[#52297a]">
+                    Przechodzi przez III, IV i I; nie przechodzi przez II.
+                  </p>
+                </div>
+              </div>
             }
           />
           <ExerciseCard
             number={2}
             question={
               <span>
-                To samo dla prostej <Mi>{"y ={-}\\dfrac{1}{3}x + 1"}</Mi>.
+                Przez które ćwiartki przechodzi prosta z równania <Mi>{"y ={-}\\dfrac{1}{3}x + 1"}</Mi>, a przez którą nie?
               </span>
             }
             answer={
-              <span>
-                <Mi>{"(0,\\,1)"}</Mi>, <Mi>{"(3,\\,0)"}</Mi>.
-                Przy <Mi>{"x < 0"}</Mi> mamy <Mi>{"y = 1 - x/3 > 1"}</Mi> — II.
-                Przy <Mi>{"0 < x < 3"}</Mi> obie współrzędne dodatnie — I.
-                Przy <Mi>{"x > 3"}</Mi> mamy <Mi>{"y < 0"}</Mi> przy dodatnim <Mi>{"x"}</Mi> — IV.
-                Nie da się mieć <Mi>{"x < 0"}</Mi> i <Mi>{"y < 0"}</Mi> jednocześnie: wyraz <Mi>{"-x/3"}</Mi> byłby dodatni, więc <Mi>{"y > 1"}</Mi>.
-                <strong>III jest pusta.</strong>{" "}
-                <strong>Odpowiedź: przechodzi przez II, I, IV; nie przechodzi przez III.</strong>
-              </span>
+              <div className="space-y-4 font-normal text-sm text-stone-700">
+                <div>
+                  <p className="font-semibold text-stone-800 mb-2">
+                    Krok 1. Wykonaj rysunek prostej i zaznacz ćwiartki
+                  </p>
+                  <LineDiagram
+                    id="ex-cw-a2"
+                    a={-1 / 3}
+                    b={1}
+                    showQuadrants
+                    xRange={[-3, 6]}
+                    yRange={[-3, 3]}
+                    pts={[
+                      { x: 0, y: 1, label: "(0, 1)", dx: 7, dy: -8 },
+                      { x: 3, y: 0, label: "(3, 0)", dx: 7, dy: 5 },
+                    ]}
+                    className="w-full max-w-[260px] mx-auto block"
+                  />
+                </div>
+                <div>
+                  <p className="font-semibold text-stone-800 mb-1">Krok 2. Odpowiedź</p>
+                  <p className="font-semibold text-[#52297a]">
+                    Przechodzi przez II, I i IV; nie przechodzi przez III.
+                  </p>
+                </div>
+              </div>
             }
           />
         </div>
@@ -2901,17 +2946,17 @@ export default function FunkcjaLiniowaPage() {
           <RuleBox title="Słowniczek pojęć" color="green">
             <ul className="list-disc ml-5 space-y-2">
               <li>
-                <strong>Odcięta</strong> punktu (albo mówimy o odciętej na osi) — to jego współrzędna{" "}
-                <Mi>{"x"}</Mi> (odległość ze znakiem od osi OY wzdłuż OX).
+                <strong>Odcięta</strong> punktu (albo odcięta na osi): to jego współrzędna{" "}
+                <Mi>{"x"}</Mi>
               </li>
               <li>
-                <strong>Rzędna</strong> — współrzędna <Mi>{"y"}</Mi> (odległość ze znakiem od osi OX wzdłuż OY).
+                <strong>Rzędna:</strong> współrzędna <Mi>{"y"}</Mi>.
               </li>
               <li>
-                <strong>Argument</strong> funkcji <Mi>{"f"}</Mi> — wartość <Mi>{"x"}</Mi>, którą „wkładasz’’ do wzoru, np. w <Mi>{"f(5)"}</Mi> argumentem jest <Mi>{"5"}</Mi>.
+                <strong>Argument</strong> funkcji <Mi>{"f"}</Mi> to wartość <Mi>{"x"}</Mi>, którą podstawiasz do wzoru (np. w <Mi>{"f(5)"}</Mi> argumentem jest <Mi>{"5"}</Mi>).
               </li>
               <li>
-                <strong>Wartość funkcji</strong> dla danego argumentu — wynik <Mi>{"f(x)"}</Mi>, zwykle oznaczany też literą <Mi>{"y"}</Mi> na wykresie; np. dla <Mi>{"f(x)=2x+1"}</Mi> wartością w <Mi>{"x=3"}</Mi> jest <Mi>{"f(3)=7"}</Mi>.
+                <strong>Wartość funkcji</strong> dla danego argumentu to wynik <Mi>{"f(x)"}</Mi>, często oznaczony na wykresie literą <Mi>{"y"}</Mi>. Dla <Mi>{"f(x)=2x+1"}</Mi> wartością w <Mi>{"x=3"}</Mi> jest <Mi>{"f(3)=7"}</Mi>, czyli <Mi>{"y=7"}</Mi>.
               </li>
             </ul>
           </RuleBox>
