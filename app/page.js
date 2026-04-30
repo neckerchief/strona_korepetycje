@@ -13,6 +13,7 @@ const cn = (...classes) => classes.filter(Boolean).join(" ");
 // ─── Topic card ──────────────────────────────────────────────
 const topics = [
   { icon: Calculator, label: "Ułamki od zera", sub: "Matematyka, kl. 5–7", tag: "Podstawy", href: "/ulamki" },
+  { icon: TrendingUp, label: "Funkcja liniowa", sub: "Matematyka, 1 klasa LO, PP", tag: "Algebra", href: "/funkcja-liniowa" },
   { icon: TrendingUp, label: "Równania liniowe", sub: "Matematyka, kl. 7–8", tag: "Algebra" },
   { icon: Zap, label: "Kinematyka intuicyjnie", sub: "Fizyka, kl. 7–8", tag: "Ruch" },
   { icon: Layers, label: "Potęgi i pierwiastki", sub: "Matematyka, SP–LO", tag: "Algebra" },

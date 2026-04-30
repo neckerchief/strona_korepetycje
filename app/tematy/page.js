@@ -141,6 +141,7 @@ const MaturaAccordion = () => {
 
 const availableTopics = [
   { icon: Calculator, label: "Ułamki od zera", sub: "Matematyka, kl. 5–7", tag: "Podstawy", href: "/ulamki" },
+  { icon: TrendingUp, label: "Funkcja liniowa", sub: "Matematyka, 1 klasa LO, PP", tag: "Algebra", href: "/funkcja-liniowa" },
   { icon: Atom, label: "Wektory", sub: "Fizyka, LO", tag: "Mechanika", href: "/wektory" },
 ];
 
@@ -188,7 +189,7 @@ export default function TemtyPage() {
             Wszystkie tematy
           </h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">
-            Materiały do samodzielnej nauki — przeglądaj, ćwicz we własnym tempie
+            Materiały do samodzielnej nauki. Przeglądaj, ćwicz we własnym tempie
             i wracaj kiedy chcesz.
           </p>
         </div>
