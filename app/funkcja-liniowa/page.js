@@ -382,6 +382,203 @@ const PolygonDiagram = ({ vertices, xRange = [0, 6], yRange = [0, 5], className 
   );
 };
 
+// ─── SVG: dana + równoległa + prostopadła przez P ───────────
+// Jednakowa skala osi (= kwadraty siatki). variant: slope | horizontal | vertical
+const ThreeLinesDiagram = ({
+  id = "tri",
+  variant = "slope",
+  a,
+  b,
+  xv,
+  px,
+  py,
+  xRange = [-2, 5],
+  yRange = [-1, 6],
+  className,
+}) => {
+  const W = 220, H = 220;
+  const PL = 32, PR = 24, PT = 20, PB = 26;
+  const DW = W - PL - PR, DH = H - PT - PB;
+  const [xMin, xMax] = xRange;
+  const [yMin, yMax] = yRange;
+  const rx = Math.max(xMax - xMin, 1e-9);
+  const ry = Math.max(yMax - yMin, 1e-9);
+  const scale = Math.min(DW / rx, DH / ry);
+  const plotW = scale * rx;
+  const plotH = scale * ry;
+  const leftPlot = PL + (DW - plotW) / 2;
+  const topPlot = PT + (DH - plotH) / 2;
+
+  const tx = (x) => leftPlot + (x - xMin) * scale;
+  const ty = (y) => topPlot + (yMax - y) * scale;
+
+  const ox = tx(0);
+  const oy = ty(0);
+  const cxP = tx(px), cyP = ty(py);
+
+  const xGrid = []; const yGrid = [];
+  for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) xGrid.push(x);
+  for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) yGrid.push(y);
+  const mid = `arr-${id}`;
+  const colOrig = "#6d3a8e";
+  const colPar = "#f97316";
+  const colPerp = "#3b82f6";
+
+  const isSlope = variant === "slope";
+  const isHorizontal = variant === "horizontal";
+  const isVertical = variant === "vertical";
+
+  const bParSlope = isSlope ? py - (a ?? 0) * px : undefined;
+
+  const segXY = (coefA, coefB) => {
+    const xLo = xMin - 0.6;
+    const xHi = xMax + 0.6;
+    return {
+      x1: tx(xLo),
+      y1: ty(coefA * xLo + coefB),
+      x2: tx(xHi),
+      y2: ty(coefA * xHi + coefB),
+    };
+  };
+
+  /* Kąt prosty przy P: przecięcie pomarańczowej i niebieskiej */
+  const rightAngleMark = () => {
+    const r = 12;
+    if (isSlope && a != null && Math.abs(a) > 1e-9) {
+      const aP = -1 / a;
+      let ux = scale, uy = -a * scale;
+      let vx = scale, vy = -aP * scale;
+      const nu = Math.hypot(ux, uy) || 1;
+      ux /= nu; uy /= nu;
+      const nv = Math.hypot(vx, vy) || 1;
+      vx /= nv; vy /= nv;
+      if (ux * vx + uy * vy < 0) { vx *= -1; vy *= -1; }
+      const ax = cxP + r * ux;
+      const ay = cyP + r * uy;
+      const bx = cxP + r * vx;
+      const by = cyP + r * vy;
+      const zx = cxP + r * ux + r * vx;
+      const zy = cyP + r * uy + r * vy;
+      const d = `M ${ax} ${ay} L ${zx} ${zy} L ${bx} ${by}`;
+      return <path d={d} fill="none" stroke="#1c1917" strokeWidth="1.35" strokeLinecap="square" strokeLinejoin="miter" />;
+    }
+    const d = `M ${cxP + r} ${cyP} L ${cxP + r} ${cyP - r} L ${cxP} ${cyP - r}`;
+    return <path d={d} fill="none" stroke="#1c1917" strokeWidth="1.35" strokeLinecap="square" strokeLinejoin="miter" />;
+  };
+
+  /* Wyłącznie podpis „P” przesuwamy od symbolu kąta; kółko zostaje przy geometrycznym P */
+  const pLabelOnlyOffset = () => {
+    if (isSlope && a != null && Math.abs(a) > 1e-9) {
+      const aP = -1 / a;
+      let ux = scale, uy = -a * scale;
+      let vx = scale, vy = -aP * scale;
+      const nu = Math.hypot(ux, uy) || 1;
+      ux /= nu; uy /= nu;
+      const nv = Math.hypot(vx, vy) || 1;
+      vx /= nv; vy /= nv;
+      if (ux * vx + uy * vy < 0) { vx *= -1; vy *= -1; }
+      let bx = -(ux + vx), by = -(uy + vy);
+      const nb = Math.hypot(bx, by) || 1;
+      bx /= nb; by /= nb;
+      const d = 15;
+      return { ldx: bx * d, ldy: by * d };
+    }
+    return { ldx: -14, ldy: -12 };
+  };
+  const pLo = pLabelOnlyOffset();
+
+  const clipId = `clip-${id}`;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className={className ?? "w-full max-w-[260px] mx-auto block"}>
+      <defs>
+        <marker id={mid} markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+          <path d="M0,0.5 L0,6.5 L6,3.5 z" fill="#94a3b8" />
+        </marker>
+        <clipPath id={clipId}>
+          <rect x={leftPlot} y={topPlot} width={plotW} height={plotH} />
+        </clipPath>
+      </defs>
+      <rect x={leftPlot} y={topPlot} width={plotW} height={plotH} fill="none" stroke="#e7e5e4" strokeWidth="0.6" />
+      <g clipPath={`url(#${clipId})`}>
+        {xGrid.filter(x => x !== 0).map(x => (
+          <line key={`gx${x}`} x1={tx(x)} y1={topPlot} x2={tx(x)} y2={topPlot + plotH} stroke="#e8e8e6" strokeWidth="0.9" />
+        ))}
+        {yGrid.filter(y => y !== 0).map(y => (
+          <line key={`gy${y}`} x1={leftPlot} y1={ty(y)} x2={leftPlot + plotW} y2={ty(y)} stroke="#e8e8e6" strokeWidth="0.9" />
+        ))}
+      </g>
+      <text x={ox - 8} y={oy + 14} textAnchor="end" fill="#94a3b8" fontSize="9">0</text>
+      <line x1={PL - 6} y1={oy} x2={W - PR + 9} y2={oy} stroke="#94a3b8" strokeWidth="1.5" markerEnd={`url(#${mid})`} />
+      <line x1={ox} y1={H - PB + 6} x2={ox} y2={PT - 9} stroke="#94a3b8" strokeWidth="1.5" markerEnd={`url(#${mid})`} />
+      <text x={W - PR + 12} y={oy + 4} fill="#94a3b8" fontSize="10">x</text>
+      <text x={ox - 4} y={PT - 12} fill="#94a3b8" fontSize="10">y</text>
+
+      <g clipPath={`url(#${clipId})`}>
+        {isHorizontal && b != null && (
+          <>
+            <line x1={leftPlot - 8} y1={ty(b)} x2={leftPlot + plotW + 8} y2={ty(b)} stroke={colOrig} strokeWidth="2.5" />
+            <line x1={leftPlot - 8} y1={ty(py)} x2={leftPlot + plotW + 8} y2={ty(py)} stroke={colPar} strokeWidth="2.5" />
+            <line x1={tx(px)} y1={topPlot - 4} x2={tx(px)} y2={topPlot + plotH + 4} stroke={colPerp} strokeWidth="2.5" />
+          </>
+        )}
+        {isVertical && xv != null && (
+          <>
+            <line x1={tx(xv)} y1={topPlot - 4} x2={tx(xv)} y2={topPlot + plotH + 4} stroke={colOrig} strokeWidth="2.5" />
+            <line x1={tx(px)} y1={topPlot - 4} x2={tx(px)} y2={topPlot + plotH + 4} stroke={colPar} strokeWidth="2.5" />
+            <line x1={leftPlot - 8} y1={ty(py)} x2={leftPlot + plotW + 8} y2={ty(py)} stroke={colPerp} strokeWidth="2.5" />
+          </>
+        )}
+        {isSlope && a != null && b != null && Math.abs(a) > 1e-9 && (
+          <>
+            {(() => {
+              const s0 = segXY(a, b);
+              const sPar = segXY(a, bParSlope);
+              const aP = -1 / a;
+              const bP = py - aP * px;
+              const sP = segXY(aP, bP);
+              return (
+                <>
+                  <line x1={s0.x1} y1={s0.y1} x2={s0.x2} y2={s0.y2} stroke={colOrig} strokeWidth="2.5" />
+                  <line x1={sPar.x1} y1={sPar.y1} x2={sPar.x2} y2={sPar.y2} stroke={colPar} strokeWidth="2.5" />
+                  <line x1={sP.x1} y1={sP.y1} x2={sP.x2} y2={sP.y2} stroke={colPerp} strokeWidth="2.5" />
+                </>
+              );
+            })()}
+          </>
+        )}
+      </g>
+
+      {rightAngleMark()}
+
+      <circle cx={cxP} cy={cyP} r="4.5" fill="#fff" stroke="#1c1917" strokeWidth="1.7" />
+      <text x={cxP + pLo.ldx} y={cyP + pLo.ldy} fill="#1c1917" fontSize="10" fontWeight="bold">P</text>
+    </svg>
+  );
+};
+
+// ─── SVG: nazwy ćwiartek ────────────────────────────────────
+const DiagramCwiartki = () => (
+  <svg viewBox="0 0 260 176" className="w-full max-w-[320px] mx-auto block">
+    <defs>
+      <marker id="qc-arr-x" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8" /></marker>
+      <marker id="qc-arr-x2" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto-start-reverse"><path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8" /></marker>
+      <marker id="qc-arr-y" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8" /></marker>
+      <marker id="qc-arr-y2" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto-start-reverse"><path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8" /></marker>
+    </defs>
+    <rect x="4" y="4" width="252" height="168" rx="10" fill="#fafaf9" stroke="#e7e5e4" strokeWidth="1.2" />
+    <line x1="129" y1="16" x2="129" y2="160" stroke="#94a3b8" strokeWidth="1.4" markerEnd="url(#qc-arr-y)" markerStart="url(#qc-arr-y2)" />
+    <line x1="16" y1="87" x2="244" y2="87" stroke="#94a3b8" strokeWidth="1.4" markerEnd="url(#qc-arr-x)" markerStart="url(#qc-arr-x2)" />
+    <text x="188" y="52" textAnchor="middle" fill="#6d3a8e" fontSize="15" fontWeight="bold" fontFamily="Georgia, serif">I</text>
+    <text x="70" y="52" textAnchor="middle" fill="#6d3a8e" fontSize="15" fontWeight="bold" fontFamily="Georgia, serif">II</text>
+    <text x="70" y="130" textAnchor="middle" fill="#6d3a8e" fontSize="15" fontWeight="bold" fontFamily="Georgia, serif">III</text>
+    <text x="188" y="130" textAnchor="middle" fill="#6d3a8e" fontSize="15" fontWeight="bold" fontFamily="Georgia, serif">IV</text>
+    <text x="236" y="102" fill="#78716c" fontSize="11">x</text>
+    <text x="124" y="28" fill="#78716c" fontSize="11">y</text>
+    <text x="125" y="99" textAnchor="middle" fill="#a8a29e" fontSize="9">0</text>
+  </svg>
+);
+
 // ─── Strona główna ───────────────────────────────────────────
 export default function FunkcjaLiniowaPage() {
   const toc = [
@@ -394,6 +591,8 @@ export default function FunkcjaLiniowaPage() {
     { id: "ogolne",          label: "Równanie ogólne prostej" },
     { id: "poziome-pionowe", label: "Proste poziome i pionowe" },
     { id: "wierzcholki-figur", label: "Wierzchołki i pola figur" },
+    { id: "rownol-prostop",     label: "Równoległość i prostopadłość" },
+    { id: "rozne-inne", label: "Różne inne rzeczy" },
   ];
 
   return (
@@ -2211,6 +2410,511 @@ export default function FunkcjaLiniowaPage() {
               </div>
             }
           />
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════
+            SCHEMAT 10 – ROWNOLGLOSC I PROSTOPADLOSC
+        ══════════════════════════════════════════════════════════ */}
+        <SectionHead
+          id="rownol-prostop"
+          eyebrow="Schemat 10"
+          title="Równoległość i prostopadłość prostych"
+        />
+
+        <p className="text-stone-600 leading-relaxed">
+          W postaci kierunkowej <Mi>{"y = ax + b"}</Mi> proste są ze sobą{" "}
+          <strong>równoległe</strong>, jeśli mają ten sam współczynnik kierunkowy <Mi>{"a"}</Mi>. Są{" "}
+          <strong>prostopadłe</strong>, jeśli jedna ma współczynnik{" "}
+          <Mi>{"a"}</Mi>, a druga <Mi>{"{-}\\frac{1}{a}"}</Mi>, o ile{" "}
+          <Mi>{"a \\neq 0"}</Mi>. Gdy dana prosta jest pozioma{" "}
+          <Mi>{"y = \\text{stała }(a = 0)"}</Mi>, prostopadła do niej jest prosta pionowa o równaniu <Mi>{"x = \\text{stała}"}</Mi>.
+          Gdy dana prosta jest pionowa <Mi>{"x = \\text{stała }(a = 0)"}</Mi>, równoległa do niej jest prosta pozioma o równaniu <Mi>{"y = \\text{stała}"}</Mi>.
+        </p>
+
+        <RuleBox title="Znajdź prostą równoległą lub prostopadłą do danej przechodzącą przez punkt P." color="purple">
+          <ol className="list-decimal ml-5 space-y-2">
+            <li>
+              Zapisz daną prostą jako <Mi>{"y = ax + b"}</Mi> (jeśli jest w innej postaci,
+              przekształć).
+            </li>
+            <li>
+              <strong>Równoległa przez</strong> <Mi>{"P(x_0,\\ y_0)"}</Mi>: ta sama wartość{" "}
+              <Mi>{"a"}</Mi>, prosta ma postać <Mi>{"y = ax + b'"}</Mi>.
+              Podstaw <Mi>{"x_0"}</Mi> i <Mi>{"y_0"}</Mi> i policz <Mi>{"b'"}</Mi>.
+            </li>
+            <li>
+              <strong>Prostopadła przez P</strong> (gdy{" "}
+              <Mi>{"a \\neq 0"}</Mi>): wybierasz{" "}
+              <Mi>{"a'' ={-}\\dfrac{1}{a}"}</Mi>. Znowu piszesz{" "}
+              <Mi>{"y = a'' x + b''"}</Mi> i dobierasz{" "}
+              <Mi>{"b''"}</Mi> tak, żeby spełniał punkt{" "}
+              <Mi>{"P"}</Mi>.
+            </li>
+            <li className="text-sm text-stone-500">
+              Gdy dana prosta jest pozioma (<Mi>{"y = b"}</Mi>), prostą równoległą dostajesz jako <Mi>{"y = y_0"}</Mi>, a prostopadłą jako{" "}
+              <Mi>{"x = x_0"}</Mi>.
+            </li>
+            <li className="text-sm text-stone-500">
+              Gdy dana jest pionowa (<Mi>{"x = c"}</Mi>), równoległą zapisujesz jako<Mi>{"x = x_0"}</Mi>, prostopadłą{" "}
+              <Mi>{"y = y_0"}</Mi>.
+            </li>
+          </ol>
+        </RuleBox>
+
+        <WorkedExample
+          title={
+            <span>
+              Dane: prosta k: <Mi>{"y = 2x - 1"}</Mi> oraz punkt{" "}
+              <Mi>{"P(1,\\ 3)"}</Mi>. Znajdź prostą równoległą oraz prostą prostopadłą do k,
+              obie przechodzące przez P.
+            </span>
+          }
+          steps={[
+            {
+              label: "Równoległa do k przez P",
+              content: (
+                <span>
+                  Mają mieć takie samo <Mi>{"a = 2"}</Mi>: <Mi>{"y = 2x + b'"}</Mi>.
+                  Punkt{" "}<Mi>{"P(1,\\ 3)"}</Mi>:
+                  <Mi>{"3 = 2 \\cdot 1 + b' \\Rightarrow b' = 1"}</Mi>.
+                </span>
+              ),
+              formula: <Mi>{"y = 2x + 1"}</Mi>,
+            },
+            {
+              label: "Prostopadła do k przez P",
+              content: (
+                <span>
+                  Współczynnik: <Mi>{"a'' = {-}\\dfrac{1}{2}"}</Mi>, więc{" "}
+                  <Mi>{"y ={-}\\dfrac{1}{2}x + b''"}</Mi>.
+                  Podstaw <Mi>{"P"}</Mi>:{" "}
+                  <Mi>{"3 = {-}\\dfrac{1}{2}\\cdot 1 + b'' \\Rightarrow b'' = \\dfrac{7}{2}"}</Mi>.
+                </span>
+              ),
+              formula: <Mi>{"y = {-}\\dfrac{1}{2}x + \\dfrac{7}{2}"}</Mi>,
+            },
+            {
+              label: "Rysunek",
+              content: (
+                <div className="text-sm text-stone-700 leading-relaxed space-y-2">
+                  <p>
+                    Kolory dopasujesz tak samo jak na rysunku poniżej. Przy każdej pozycji masz nazwę koloru, rolę w zadaniu oraz równanie prostej, której na wykresie odpowiada ten sam kolor:
+                  </p>
+                  <ul className="list-none space-y-1.5 pl-0 ml-1">
+                    <li className="flex flex-wrap gap-x-2 gap-y-0.5 items-baseline">
+                      <span className="font-semibold whitespace-nowrap" style={{ color: "#6d3a8e" }}>
+                        Fioletowy
+                      </span>
+                      <span>
+                        (<strong>dana prosta z polecenia</strong>, oznaczamy ją przez k):{" "}
+                        <Mi>{"y = 2x - 1"}</Mi>
+                      </span>
+                    </li>
+                    <li className="flex flex-wrap gap-x-2 gap-y-0.5 items-baseline">
+                      <span className="font-semibold whitespace-nowrap" style={{ color: "#f97316" }}>
+                        Pomarańczowy
+                      </span>
+                      <span>
+                        (<strong>równoległa do k przez P</strong>):{" "}
+                        <Mi>{"y = 2x + 1"}</Mi>
+                      </span>
+                    </li>
+                    <li className="flex flex-wrap gap-x-2 gap-y-0.5 items-baseline">
+                      <span className="font-semibold whitespace-nowrap" style={{ color: "#3b82f6" }}>
+                        Niebieski
+                      </span>
+                      <span>
+                        (<strong>prostopadła do k przez P</strong>):{" "}
+                        <Mi>{"y = {-}\\dfrac{1}{2}x + \\dfrac{7}{2}"}</Mi>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              ),
+              diagram: (
+                <div className="mt-3">
+                  <ThreeLinesDiagram
+                    id="ex-pp"
+                    variant="slope"
+                    a={2}
+                    b={-1}
+                    px={1}
+                    py={3}
+                    xRange={[-1, 4]}
+                    yRange={[-1, 6]}
+                  />
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center mt-4 text-xs text-stone-600 px-2">
+                    <span className="inline-flex flex-wrap items-baseline gap-2 gap-y-1">
+                      <span className="inline-flex items-center gap-2 shrink-0">
+                        <span className="inline-block w-8 h-[3px] rounded-sm shrink-0" style={{ background: "#6d3a8e" }} />
+                        <strong className="text-stone-700">k:</strong>
+                      </span>
+                      <Mi>{"y = 2x - 1"}</Mi>
+                    </span>
+                    <span className="inline-flex flex-wrap items-baseline gap-2 gap-y-1">
+                      <span className="inline-flex items-center gap-2 shrink-0">
+                        <span className="inline-block w-8 h-[3px] rounded-sm shrink-0" style={{ background: "#f97316" }} />
+                        <strong className="text-stone-700">równoległa:</strong>
+                      </span>
+                      <Mi>{"y = 2x + 1"}</Mi>
+                    </span>
+                    <span className="inline-flex flex-wrap items-baseline gap-2 gap-y-1">
+                      <span className="inline-flex items-center gap-2 shrink-0">
+                        <span className="inline-block w-8 h-[3px] rounded-sm shrink-0" style={{ background: "#3b82f6" }} />
+                        <strong className="text-stone-700">prostopadła:</strong>
+                      </span>
+                      <Mi>{"y = {-}\\dfrac{1}{2}x + \\dfrac{7}{2}"}</Mi>
+                    </span>
+                  </div>
+                </div>
+              ),
+            },
+          ]}
+        />
+
+        <WorkedExample
+          title={
+            <span>
+              <strong>Przypadek prostej poziomej:</strong> prosta k ma równanie{" "}
+              <Mi>{"y = 2"}</Mi>, punkt{" "}
+              <Mi>{"P(1,\\ 4)"}</Mi>. Znajdź prostą równoległą i prostą prostopadłą do k przechodzącą przez punkt P.
+            </span>
+          }
+          steps={[
+            {
+              label: "Równoległa przez P",
+              content: (
+                <span>
+                  Równoległa do poziomej jest znów pozioma, na wysokości y punktu P:{" "}
+                  <Mi>{"y = 4"}</Mi>.
+                </span>
+              ),
+              formula: <Mi>{"y = 4"}</Mi>,
+            },
+            {
+              label: "Prostopadła przez P",
+              content: (
+                <span>
+                  Prostopadła do poziomej jest <strong>pionowa</strong> i ma równanie{" "}
+                  <Mi>{"x = 1"}</Mi> (takie samo x jak w punkcie P).
+                </span>
+              ),
+              formula: <Mi>{"x = 1"}</Mi>,
+            },
+            {
+              label: "Rysunek",
+              content: (
+                <div className="text-sm text-stone-700 space-y-2">
+                  <ul className="list-none space-y-1 ml-1">
+                    <li>
+                      <span className="font-semibold" style={{ color: "#6d3a8e" }}>Fiolet</span>:
+                      {" "}k: <Mi>{"y = 2"}</Mi>
+                    </li>
+                    <li>
+                      <span className="font-semibold" style={{ color: "#f97316" }}>Pomarańcz</span>:
+                      {" "}równoległa: <Mi>{"y = 4"}</Mi>
+                    </li>
+                    <li>
+                      <span className="font-semibold" style={{ color: "#3b82f6" }}>Niebieski</span>:
+                      {" "}prostopadła: <Mi>{"x = 1"}</Mi>
+                    </li>
+                  </ul>
+                </div>
+              ),
+              diagram: (
+                <div className="mt-3">
+                  <ThreeLinesDiagram
+                    id="ex-pp-h"
+                    variant="horizontal"
+                    b={2}
+                    px={1}
+                    py={4}
+                    xRange={[-1, 4]}
+                    yRange={[0, 6]}
+                  />
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 justify-center mt-4 text-xs text-stone-600 px-2">
+                    <span className="inline-flex flex-wrap gap-2 items-baseline">
+                      <span className="inline-block w-8 h-[3px] shrink-0 self-center rounded-sm" style={{ background: "#6d3a8e" }} />
+                      <strong>k:</strong> <Mi>{"y = 2"}</Mi>
+                    </span>
+                    <span className="inline-flex flex-wrap gap-2 items-baseline">
+                      <span className="inline-block w-8 h-[3px] shrink-0 self-center rounded-sm" style={{ background: "#f97316" }} />
+                      <strong>równoległa:</strong> <Mi>{"y = 4"}</Mi>
+                    </span>
+                    <span className="inline-flex flex-wrap gap-2 items-baseline">
+                      <span className="inline-block w-8 h-[3px] shrink-0 self-center rounded-sm" style={{ background: "#3b82f6" }} />
+                      <strong>prostopadła:</strong> <Mi>{"x = 1"}</Mi>
+                    </span>
+                  </div>
+                </div>
+              ),
+            },
+          ]}
+        />
+
+        <WorkedExample
+          title={
+            <span>
+              <strong>Przypadek prostej pionowej:</strong> prosta k ma równanie{" "}
+              <Mi>{"x = 2"}</Mi>, punkt{" "}
+              <Mi>{"P(4,\\ 1)"}</Mi>. Znajdź prostą równoległą i prostą prostopadłą do k przechodzącą przez punkt P.
+            </span>
+          }
+          steps={[
+            {
+              label: "Równoległa przez P",
+              content: (
+                <span>
+                  Równoległa do pionowej jest znów pionowa, na współrzędnej x punktu P:{" "}
+                  <Mi>{"x = 4"}</Mi>.
+                </span>
+              ),
+              formula: <Mi>{"x = 4"}</Mi>,
+            },
+            {
+              label: "Prostopadła przez P",
+              content: (
+                <span>
+                  Prostopadła do pionowej jest <strong>pozioma</strong>:{" "}
+                  <Mi>{"y = 1"}</Mi>.
+                </span>
+              ),
+              formula: <Mi>{"y = 1"}</Mi>,
+            },
+            {
+              label: "Rysunek",
+              content: (
+                <div className="text-sm text-stone-700 space-y-2">
+                  <ul className="list-none space-y-1 ml-1">
+                    <li>
+                      <span className="font-semibold" style={{ color: "#6d3a8e" }}>Fiolet</span>:
+                      {" "}k: <Mi>{"x = 2"}</Mi>
+                    </li>
+                    <li>
+                      <span className="font-semibold" style={{ color: "#f97316" }}>Pomarańcz</span>:
+                      {" "}równoległa: <Mi>{"x = 4"}</Mi>
+                    </li>
+                    <li>
+                      <span className="font-semibold" style={{ color: "#3b82f6" }}>Niebieski</span>:
+                      {" "}prostopadła: <Mi>{"y = 1"}</Mi>
+                    </li>
+                  </ul>
+                </div>
+              ),
+              diagram: (
+                <div className="mt-3">
+                  <ThreeLinesDiagram
+                    id="ex-pp-v"
+                    variant="vertical"
+                    xv={2}
+                    px={4}
+                    py={1}
+                    xRange={[0, 6]}
+                    yRange={[-1, 4]}
+                  />
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 justify-center mt-4 text-xs text-stone-600 px-2">
+                    <span className="inline-flex flex-wrap gap-2 items-baseline">
+                      <span className="inline-block w-8 h-[3px] shrink-0 self-center rounded-sm" style={{ background: "#6d3a8e" }} />
+                      <strong>k:</strong> <Mi>{"x = 2"}</Mi>
+                    </span>
+                    <span className="inline-flex flex-wrap gap-2 items-baseline">
+                      <span className="inline-block w-8 h-[3px] shrink-0 self-center rounded-sm" style={{ background: "#f97316" }} />
+                      <strong>równoległa:</strong> <Mi>{"x = 4"}</Mi>
+                    </span>
+                    <span className="inline-flex flex-wrap gap-2 items-baseline">
+                      <span className="inline-block w-8 h-[3px] shrink-0 self-center rounded-sm" style={{ background: "#3b82f6" }} />
+                      <strong>prostopadła:</strong> <Mi>{"y = 1"}</Mi>
+                    </span>
+                  </div>
+                </div>
+              ),
+            },
+          ]}
+        />
+
+        <MultiExercise
+          title="Wyznacz prostą równoległą i prostopadłą do podanej, obie przez podany punkt:"
+          parts={[
+            {
+              question: (
+                <span>
+                  <strong>a)</strong> <Mi>{"y = 3x - 5"}</Mi>, punkt{" "}
+                  <Mi>{"P(2,\\;4)"}</Mi>
+                </span>
+              ),
+              answer: (
+                <span>
+                  Równoległa: <strong><Mi>{"y = 3x - 2"}</Mi></strong>.
+                  {" "}Prostopadła:{" "}<strong><Mi>{"y ={-}\\dfrac{1}{3}x + \\dfrac{14}{3}"}</Mi></strong>.
+                </span>
+              ),
+            },
+            {
+              question: (
+                <span>
+                  <strong>b)</strong> <Mi>{"x - 2y + 4 = 0"}</Mi>, punkt{" "}
+                  <Mi>{"P(0,\\ 0)"}</Mi>
+                </span>
+              ),
+              answer: (
+                <span>
+                  Sprowadź do <Mi>{"y = \\tfrac{1}{2}x + 2"}</Mi>.
+                  Równoległa:{" "}<strong><Mi>{"y = \\tfrac{1}{2}x"}</Mi></strong>.
+                  Prostopadła: <strong><Mi>{"y = -2x"}</Mi></strong>.
+                </span>
+              ),
+            },
+            {
+              question: (
+                <span>
+                  <strong>c)</strong> <Mi>{"y = 4"}</Mi>, punkt{" "}
+                  <Mi>{"P({-}1,\\ 2)"}</Mi>
+                </span>
+              ),
+              answer: (
+                <span>
+                  Równoległa poziomo:{" "}<strong><Mi>{"y = 2"}</Mi></strong>.
+                  Prostopadła pionowo:{" "}<strong><Mi>{"x = -1"}</Mi></strong>.
+                </span>
+              ),
+            },
+          ]}
+        />
+
+        {/* Schemat 11 */}
+        <SectionHead
+          id="rozne-inne"
+          eyebrow="Schemat 11"
+          title="Różne inne rzeczy"
+        />
+
+        <RuleBox title="Ćwiartki układu współrzędnych" color="blue">
+          <p className="mb-4">
+            Oś dodatnia <Mi>{"x"}</Mi> jest w prawo, oś dodatnia <Mi>{"y"}</Mi> — w górę. Ćwiartki liczy się obiegowo od obszaru, gdzie obie zmienne są dodatnie:
+          </p>
+          <ul className="list-disc ml-5 space-y-1 mb-6">
+            <li><strong>I</strong> — <Mi>{"x > 0"}</Mi>, <Mi>{"y > 0"}</Mi></li>
+            <li><strong>II</strong> — <Mi>{"x < 0"}</Mi>, <Mi>{"y > 0"}</Mi></li>
+            <li><strong>III</strong> — <Mi>{"x < 0"}</Mi>, <Mi>{"y < 0"}</Mi></li>
+            <li><strong>IV</strong> — <Mi>{"x > 0"}</Mi>, <Mi>{"y < 0"}</Mi></li>
+          </ul>
+          <DiagramCwiartki />
+          <p className="text-stone-600 text-sm mt-4">
+            W zadaniu „przez którą ćwiartkę prosta nie przechodzi” chodzi o środek ćwiartki: punkt, w którym obie współrzędne mają zgodny znak z definicją (np. w II musi być <Mi>{"x < 0"}</Mi> i <Mi>{"y > 0"}</Mi> jednocześnie).
+            Jeśli prosta ma punkt spełniający ten warunek, mówimy, że <strong>przechodzi</strong> przez tę ćwiartkę. Pomagają przecięcia z osiami i sprawdzenie znaków „na bardzo ujemnych / bardzo dodatnich’’ <Mi>{"x"}</Mi>.
+          </p>
+        </RuleBox>
+
+        <WorkedExample
+          title={
+            <span>
+              Którymi ćwiartkami <strong>przechodzi</strong>, a którą <strong>mija</strong> prosta <Mi>{"y = {-}x + 2"}</Mi> —
+              rozumowanie tylko z równania (bez rysowania dokładnego wykresu)?
+            </span>
+          }
+          steps={[
+            {
+              label: "Przecięcia z osiami",
+              content: (
+                <span>
+                  Podstaw <Mi>{"x = 0"}</Mi>: dostajesz{" "}<Mi>{"(0,\\ 2)"}</Mi> na dodatniej półosi OY.
+                  Podstaw <Mi>{"y = 0"}</Mi>:{" "}<Mi>{"x = 2"}</Mi>, więc <Mi>{"(2,\\ 0)"}</Mi> na dodatniej półosi OX.
+                  Odcinek między tymi punktami wchodzi w głąb pierwszej ćwiartki (np. punkt{" "}<Mi>{"(1,\\ 1)"}</Mi> jest na tej linii — obie współrzędne dodatnie).
+                </span>
+              ),
+            },
+            {
+              label: "Ujemne i duże dodatnie argumenty",
+              content: (
+                <span>
+                  Dla dużego ujemnego <Mi>{"x"}</Mi>, np. <Mi>{"x = {-}5"}</Mi>, wyjdzie{" "}
+                  <Mi>{"y = {-}({-}5) + 2 = 7 > 0"}</Mi> — oba warunki II ćwiartki spełnione.
+                  Dla dużego dodatniego <Mi>{"x"}</Mi>, np. <Mi>{"x = 6"}</Mi>, jest{" "}
+                  <Mi>{"y = {-}4"}</Mi> — jesteś w IV ćwiartce (<Mi>{"x > 0"}</Mi>, <Mi>{"y < 0"}</Mi>).
+                </span>
+              ),
+            },
+            {
+              label: "Czy odwiedza III?",
+              content: (
+                <span>
+                  W III ćwiartce trzeba <Mi>{"x < 0"}</Mi> i <Mi>{"y < 0"}</Mi>.
+                  Tu <Mi>{"y < 0"}</Mi> znaczy <Mi>{"{-}x + 2 < 0 \\Rightarrow x > 2"}</Mi> — sprzeczne z{" "}<Mi>{"x < 0"}</Mi>.
+                  Żaden punkt prostej nie leży ściśle w III ćwiartce.
+                </span>
+              ),
+            },
+            {
+              label: "Podsumowanie",
+              content: (
+                <span>
+                  Łącznie: przez <strong>I, II, IV</strong> prosta przechodzi; <strong>III</strong> zostaje pusta dla tego równania.
+                </span>
+              ),
+            },
+          ]}
+        />
+
+        <p className="text-stone-500 text-sm font-semibold mt-8 mb-2">Ćwiczenia — tylko podany jest wzór prostej</p>
+        <div className="space-y-4">
+          <ExerciseCard
+            number={1}
+            question={
+              <span>
+                Przez które ćwiartki przechodzi prosta z równania <Mi>{"y = 2x - 4"}</Mi>, a którą ćwiartkę środkową pomija?
+              </span>
+            }
+            answer={
+              <span>
+                Oś <Mi>{"x"}</Mi>: <Mi>{"(2,\\,0)"}</Mi>; oś <Mi>{"y"}</Mi>: <Mi>{"(0,\\,{-}4)"}</Mi>.
+                Gdy <Mi>{"x < 0"}</Mi>, to <Mi>{"y < {-}4"}</Mi> — czysta III.
+                Gdy <Mi>{"0 < x < 2"}</Mi>, przy <Mi>{"y"}</Mi> ujemnym mamy dodatnie <Mi>{"x"}</Mi> — IV.
+                Gdy <Mi>{"x > 2"}</Mi>, obie współrzędne dodatnie — I.
+                Dla II potrzebne <Mi>{"x < 0"}</Mi> i jednocześnie <Mi>{"y > 0"}</Mi>; przy <Mi>{"x < 0"}</Mi> zawsze <Mi>{"y < {-}4"}</Mi> —{" "}
+                <strong>II jest ominięta</strong>.
+                {" "}<strong>Odpowiedź: przechodzi przez III, IV, I; nie przechodzi przez II.</strong>
+              </span>
+            }
+          />
+          <ExerciseCard
+            number={2}
+            question={
+              <span>
+                To samo dla prostej <Mi>{"y ={-}\\dfrac{1}{3}x + 1"}</Mi>.
+              </span>
+            }
+            answer={
+              <span>
+                <Mi>{"(0,\\,1)"}</Mi>, <Mi>{"(3,\\,0)"}</Mi>.
+                Przy <Mi>{"x < 0"}</Mi> mamy <Mi>{"y = 1 - x/3 > 1"}</Mi> — II.
+                Przy <Mi>{"0 < x < 3"}</Mi> obie współrzędne dodatnie — I.
+                Przy <Mi>{"x > 3"}</Mi> mamy <Mi>{"y < 0"}</Mi> przy dodatnim <Mi>{"x"}</Mi> — IV.
+                Nie da się mieć <Mi>{"x < 0"}</Mi> i <Mi>{"y < 0"}</Mi> jednocześnie: wyraz <Mi>{"-x/3"}</Mi> byłby dodatni, więc <Mi>{"y > 1"}</Mi>.
+                <strong>III jest pusta.</strong>{" "}
+                <strong>Odpowiedź: przechodzi przez II, I, IV; nie przechodzi przez III.</strong>
+              </span>
+            }
+          />
+        </div>
+
+        <div className="mt-12">
+          <RuleBox title="Słowniczek pojęć" color="green">
+            <ul className="list-disc ml-5 space-y-2">
+              <li>
+                <strong>Odcięta</strong> punktu (albo mówimy o odciętej na osi) — to jego współrzędna{" "}
+                <Mi>{"x"}</Mi> (odległość ze znakiem od osi OY wzdłuż OX).
+              </li>
+              <li>
+                <strong>Rzędna</strong> — współrzędna <Mi>{"y"}</Mi> (odległość ze znakiem od osi OX wzdłuż OY).
+              </li>
+              <li>
+                <strong>Argument</strong> funkcji <Mi>{"f"}</Mi> — wartość <Mi>{"x"}</Mi>, którą „wkładasz’’ do wzoru, np. w <Mi>{"f(5)"}</Mi> argumentem jest <Mi>{"5"}</Mi>.
+              </li>
+              <li>
+                <strong>Wartość funkcji</strong> dla danego argumentu — wynik <Mi>{"f(x)"}</Mi>, zwykle oznaczany też literą <Mi>{"y"}</Mi> na wykresie; np. dla <Mi>{"f(x)=2x+1"}</Mi> wartością w <Mi>{"x=3"}</Mi> jest <Mi>{"f(3)=7"}</Mi>.
+              </li>
+            </ul>
+          </RuleBox>
         </div>
 
         {/* Stopka */}
