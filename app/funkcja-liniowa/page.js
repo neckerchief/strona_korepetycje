@@ -393,6 +393,7 @@ export default function FunkcjaLiniowaPage() {
     { id: "wspolliniowosc", label: "Współliniowość" },
     { id: "ogolne",          label: "Równanie ogólne prostej" },
     { id: "poziome-pionowe", label: "Proste poziome i pionowe" },
+    { id: "wierzcholki-figur", label: "Wierzchołki i pola figur" },
   ];
 
   return (
@@ -1832,6 +1833,381 @@ export default function FunkcjaLiniowaPage() {
                     <strong><Mi>{"y = 3x - 3"}</Mi></strong>
                   </div>
                 </div>
+              </div>
+            }
+          />
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════
+            SCHEMAT 9 – WIERZCHOLKI I POLA FIGUR
+        ══════════════════════════════════════════════════════════ */}
+        <SectionHead
+          id="wierzcholki-figur"
+          eyebrow="Schemat 9"
+          title="Wyznaczanie wierzchołków i pól figur"
+        />
+
+        <p className="text-stone-600 leading-relaxed">
+          Jeśli znamy równania prostych tworzących boki figury, możemy wyznaczyć
+          wierzchołki, szukając miejsc, w których proste się przecinają. Każdy
+          wierzchołek to przecięcie dwóch boków: przyrównujemy ich wzory do siebie,
+          wyznaczamy x, a potem y. Na koniec rysujemy figurę i obliczamy jej pole.
+        </p>
+
+        <RuleBox title="Wzór na pole trójkąta (wzór Gaussa)" color="blue">
+          <p>
+            Dla wierzchołków{" "}
+            <Mi>{"A(x_{A},\\ y_{A})"}</Mi>, <Mi>{"B(x_{B},\\ y_{B})"}</Mi>,{" "}
+            <Mi>{"C(x_{C},\\ y_{C})"}</Mi>:
+          </p>
+          <div className="mt-2">
+            <Mb>{"P = \\tfrac{1}{2}\\bigl|x_A(y_B - y_C) + x_B(y_C - y_A) + x_C(y_A - y_B)\\bigr|"}</Mb>
+          </div>
+          <p className="text-sm text-stone-500 mt-1">
+            Jeśli jeden bok jest poziomy, łatwiej:{" "}
+            <Mi>{"P = \\tfrac{1}{2} \\cdot \\text{podstawa} \\cdot \\text{wysokość}"}</Mi>.
+          </p>
+        </RuleBox>
+
+        <WorkedExample
+          title={
+            <span>
+              Dane są proste:<br />
+              <Mi>{"l_1\\colon x - 2y - 4 = 0"}</Mi><br />
+              <Mi>{"l_2\\colon 3x + 4y - 28 = 0"}</Mi><br />
+              <Mi>{"l_3\\colon x + 2 = 0"}</Mi><br />
+              Zapisujemy je jak w ćwiczeniach ze Schematu 7, jeśli łatwiej:{" "}
+              <Mi>{"l_1\\colon y = \\tfrac{1}{2}x - 2"}</Mi>,{" "}
+              <Mi>{"l_2\\colon y = -\\tfrac{3}{4}x + 7"}</Mi>. Prosta{" "}
+              <Mi>{"l_3"}</Mi> nie ma postaci{" "}
+              <Mi>{"y = \\ldots"}</Mi> (jest pionowa).<br />
+              Wyznacz wierzchołki trójkąta, narysuj go i oblicz pole.
+            </span>
+          }
+          steps={[
+            {
+              label: "Punkt A: gdzie przecinają się l₁ i l₃?",
+              content: (
+                <span>
+                  Na <Mi>{"l_3"}</Mi> mamy stale <Mi>{"x = -2"}</Mi>. Podstawiamy ten x
+                  do równania <Mi>{"l_1"}</Mi>:
+                  <Mi>{"{-}2 - 2y - 4 = 0"}</Mi>, więc <Mi>{"{-}2y = 6"}</Mi>,
+                  <Mi>{"y = -3"}</Mi>.
+                </span>
+              ),
+              formula: <Mi>{"A(-2,\\ {-}3)"}</Mi>,
+            },
+            {
+              label: "Punkt B: gdzie przecinają się l₂ i l₃?",
+              content: (
+                <span>
+                  Znowu <Mi>{"x = -2"}</Mi>. Do <Mi>{"l_2"}</Mi>:{" "}
+                  <Mi>{"3(-2) + 4y - 28 = 0 \\Rightarrow{-}6 + 4y = 28 \\Rightarrow"}</Mi>{" "}
+                  <Mi>{"4y = 34 \\Rightarrow y = \\tfrac{17}{2}"}</Mi>.
+                </span>
+              ),
+              formula: <Mi>{"B\\left(-2,\\ \\tfrac{17}{2}\\right)"}</Mi>,
+            },
+            {
+              label: "Punkt C: gdzie przecinają się l₁ i l₂?",
+              content: (
+                <span>
+                  Przyrównujemy y z obu prostych (albo wstawiamy{" "}
+                  <Mi>{"x = 2y + 4"}</Mi> z <Mi>{"l_1"}</Mi> do <Mi>{"l_2"}</Mi>). Otrzymujemy{" "}
+                  <Mi>{"10y = 16 \\Rightarrow y = \\tfrac{8}{5},\\quad x = \\tfrac{36}{5}"}</Mi>.
+                </span>
+              ),
+              formula: <Mi>{"C\\left(\\tfrac{36}{5},\\ \\tfrac{8}{5}\\right)"}</Mi>,
+            },
+            {
+              label: "Narysuj trójkąt i oblicz pole",
+              content: (
+                <span>
+                  Bok AB jest na prostej pionowej <Mi>{"x = {-}2"}</Mi>, więc łatwiej przez
+                  podstawę i wysokość: podstawa{" "}
+                  <Mi>{"|y_B-y_A| = \\tfrac{17}{2}-({-}3)=\\tfrac{23}{2}"}</Mi>, wysokość to
+                  odległość <Mi>{"C"}</Mi> od tej prostej, czyli{" "}
+                  <Mi>{"\\bigl|\\tfrac{36}{5}-({-}2)\\bigr|= \\tfrac{46}{5}"}</Mi>:
+                  <br />
+                  <Mi>{"P = \\tfrac{1}{2} \\cdot \\tfrac{23}{2} \\cdot \\tfrac{46}{5} = \\tfrac{529}{10}"}</Mi>.
+                </span>
+              ),
+              formula: <Mi>{"P = \\tfrac{529}{10}"}</Mi>,
+              diagram: (
+                <PolygonDiagram
+                  vertices={[
+                    { x: -2, y: -3, label: "A(-2,-3)", dx: -6, dy: 12, anchor: "end" },
+                    { x: -2, y: 8.5, label: "B(-2, 17/2)", dx: -8, dy: -4, anchor: "end" },
+                    { x: 7.2, y: 1.6, label: "C(36/5, 8/5)", dx: 5, dy: 12 },
+                  ]}
+                  xRange={[-3, 10]}
+                  yRange={[-4, 11]}
+                  className="max-w-[280px]"
+                />
+              ),
+            },
+          ]}
+        />
+
+        <div className="grid sm:grid-cols-2 gap-4 mt-4">
+          <ExerciseCard
+            number="1"
+            question={
+              <span>
+                Dane są proste:<br />
+                <Mi>{"l_1\\colon y = 2x - 1"}</Mi><br />
+                <Mi>{"l_2\\colon y = -x + 5"}</Mi><br />
+                <Mi>{"l_3\\colon y = 1"}</Mi><br />
+                Wyznacz wierzchołki trójkąta, narysuj go i oblicz pole.
+              </span>
+            }
+            answer={
+              <div>
+                <div className="space-y-1 text-xs mb-2">
+                  <div>
+                    <strong>Punkt A</strong> (l₁ i l₃): <Mi>{"y=1"}</Mi>, więc{" "}
+                    <Mi>{"2x-1=1 \\Rightarrow x=1"}</Mi>.{" "}
+                    <strong><Mi>{"A(1,1)"}</Mi></strong>
+                  </div>
+                  <div>
+                    <strong>Punkt B</strong> (l₂ i l₃): <Mi>{"y=1"}</Mi>, więc{" "}
+                    <Mi>{"-x+5=1 \\Rightarrow x=4"}</Mi>.{" "}
+                    <strong><Mi>{"B(4,1)"}</Mi></strong>
+                  </div>
+                  <div>
+                    <strong>Punkt C</strong> (l₁ i l₂): <Mi>{"2x-1=-x+5 \\Rightarrow x=2,\\quad y=3"}</Mi>.{" "}
+                    <strong><Mi>{"C(2,3)"}</Mi></strong>
+                  </div>
+                </div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: 1, y: 1, label: "A(1,1)", dx: -4, dy: 12, anchor: "end" },
+                    { x: 4, y: 1, label: "B(4,1)", dx: 5, dy: 12 },
+                    { x: 2, y: 3, label: "C(2,3)", dx: 5, dy: -4 },
+                  ]}
+                  xRange={[0, 5]}
+                  yRange={[0, 4]}
+                  className="mb-2"
+                />
+                <div className="text-xs">
+                  Bok AB jest poziomy: podstawa <Mi>{"= 3"}</Mi>, wysokość{" "}
+                  <Mi>{"= 2"}</Mi>.{" "}
+                  <strong><Mi>{"P = \\tfrac{1}{2} \\cdot 3 \\cdot 2 = 3"}</Mi></strong>
+                </div>
+              </div>
+            }
+          />
+          <ExerciseCard
+            number="2"
+            question={
+              <span>
+                Dane są proste:<br />
+                <Mi>{"l_1\\colon 2x - y + 6 = 0"}</Mi><br />
+                <Mi>{"l_2\\colon 3x - 4y + 4 = 0"}</Mi><br />
+                <Mi>{"l_3\\colon y - 4 = 0"}</Mi><br />
+                Wyznacz wierzchołki trójkąta, narysuj go i oblicz pole.
+              </span>
+            }
+            answer={
+              <div>
+                <div className="space-y-1 text-xs mb-2">
+                  <div>
+                    Sprowadzamy do postaci kierunkowej:{" "}
+                    <Mi>{"l_1\\colon y = 2x+6"}</Mi>,{" "}
+                    <Mi>{"l_2\\colon y = \\tfrac{3}{4}x+1"}</Mi>,{" "}
+                    <Mi>{"l_3\\colon y = 4"}</Mi>.
+                  </div>
+                  <div>
+                    <strong>Punkt A</strong> (l₁ i l₃): <Mi>{"2x+6=4 \\Rightarrow x=-1"}</Mi>.{" "}
+                    <strong><Mi>{"A(-1,4)"}</Mi></strong>
+                  </div>
+                  <div>
+                    <strong>Punkt B</strong> (l₂ i l₃): <Mi>{"\\tfrac{3}{4}x+1=4 \\Rightarrow x=4"}</Mi>.{" "}
+                    <strong><Mi>{"B(4,4)"}</Mi></strong>
+                  </div>
+                  <div>
+                    <strong>Punkt C</strong> (l₁ i l₂): <Mi>{"2x+6=\\tfrac{3}{4}x+1 \\Rightarrow x=-4,\\quad y=-2"}</Mi>.{" "}
+                    <strong><Mi>{"C(-4,-2)"}</Mi></strong>
+                  </div>
+                </div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: -1, y: 4, label: "A(-1,4)", dx: -4, dy: -4, anchor: "end" },
+                    { x: 4, y: 4, label: "B(4,4)", dx: 5, dy: -4 },
+                    { x: -4, y: -2, label: "C(-4,-2)", dx: -4, dy: 12, anchor: "end" },
+                  ]}
+                  xRange={[-5, 5]}
+                  yRange={[-3, 5]}
+                  className="mb-2"
+                />
+                <div className="text-xs">
+                  Bok AB jest poziomy: podstawa <Mi>{"= 5"}</Mi>, wysokość{" "}
+                  <Mi>{"= 6"}</Mi>.{" "}
+                  <strong><Mi>{"P = \\tfrac{1}{2} \\cdot 5 \\cdot 6 = 15"}</Mi></strong>
+                </div>
+              </div>
+            }
+          />
+        </div>
+
+        <p className="text-stone-500 text-sm font-semibold mt-10 mb-2">Romb</p>
+        <p className="text-stone-600 text-sm leading-relaxed mb-4">
+          W rombie dwie pary boków jest równoległych. Podaje się zwykle dwie proste przekątne
+          przecinające się w środku figury oraz dwie równoległe proste na przeciwległych bokach.
+          Każdy wierzchołek to przecięcie dwóch wskazanych prostych, tak jak przy trójkącie wyżej.
+        </p>
+
+        <WorkedExample
+          title={
+            <span>
+              Przekątne rombu leżą na prostych:<br />
+              <Mi>{"3x + 4y = 10"}</Mi><br />
+              <Mi>{"4x - 3y = 5"}</Mi><br />
+              dwa przeciwległe boki na prostych:<br />
+              <Mi>{"x - 2y - 5 = 0"}</Mi><br />
+              <Mi>{"x - 2y + 5 = 0"}</Mi>.<br />
+              Wyznacz wierzchołki, nanieś krótki szkic rombu na układzie i zapisz równania dwóch pozostałych boków.
+            </span>
+          }
+          steps={[
+            {
+              label: "Krok 1: przecięcie przekątnych",
+              content: (
+                <span>
+                  Zestawiamy oba równania przekątnych naprzeciwko siebie i rozwiązujemy.
+                  Otrzymany punkt jest środkiem symetrii rombu.
+                </span>
+              ),
+              formula: <Mi>{"O(2,\\ 1)"}</Mi>,
+            },
+            {
+              label: "Krok 2: dwa punkty przy pierwszej przekątnej",
+              content: (
+                <span>
+                  Szukamy punktu wspólnego prostej <Mi>{"3x+4y=10"}</Mi> z{" "}
+                  <Mi>{"x-2y-5=0"}</Mi> — podstawiamy albo wyrównujemy niewiadome.
+                  Potem to samo dla tej samej przekątnej i drugiej prostej z pary
+                  boków <Mi>{"x-2y+5=0"}</Mi>. Otrzymujesz{" "}
+                  <Mi>{"\\left(4,\\;-\\tfrac{1}{2}\\right)"}</Mi> oraz{" "}
+                  <Mi>{"\\left(0,\\;\\tfrac{5}{2}\\right)"}</Mi>.
+                </span>
+              ),
+            },
+            {
+              label: "Krok 3: dwa punkty przy drugiej przekątnej",
+              content: (
+                <span>
+                  Łączymy <Mi>{"4x-3y=5"}</Mi> z <Mi>{"x-2y-5=0"}</Mi> oraz z{" "}
+                  <Mi>{"x-2y+5=0"}</Mi>. Wychodzi <Mi>{"(-1,\\;-3)"}</Mi> i{" "}
+                  <Mi>{"(5,\\;5)"}</Mi>.
+                </span>
+              ),
+            },
+            {
+              label: "Krok 4: dwa brakujące boki",
+              content: (
+                <span>
+                  Łączysz dwa sąsiednie wierzchołki, które nie leżą na tej samej
+                  prostej z pary <Mi>{"x-2y=\\pm5"}</Mi>, i zapisujesz prostą.
+                  Potem rownoległą prostą przez drugą parę wierzchołków. W tym
+                  zadaniu wychodzi para <Mi>{"11x - 2y - 45 = 0"}</Mi> oraz{" "}
+                  <Mi>{"11x - 2y + 5 = 0"}</Mi>.
+                </span>
+              ),
+              diagram: (
+                <PolygonDiagram
+                  vertices={[
+                    { x: -1, y: -3, label: "(-1,-3)", dx: -18, dy: 12, anchor: "end" },
+                    { x: 4, y: -0.5, label: "(4, -½)", dx: 5, dy: 12 },
+                    { x: 5, y: 5, label: "(5,5)", dx: 6, dy: -4 },
+                    { x: 0, y: 2.5, label: "(0, 5/2)", dx: -22, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[-2, 7]}
+                  yRange={[-4, 6]}
+                  className="max-w-[280px]"
+                />
+              ),
+            },
+          ]}
+        />
+
+        <div className="grid sm:grid-cols-2 gap-4 mt-4">
+          <ExerciseCard
+            number="R1"
+            question={
+              <span>
+                Te same dane co w przykładzie (przekątne i para równoległych
+                boków). Powtórz samodzielnie: wierzchołki, szkic, dwa pozostałe
+                boki.
+              </span>
+            }
+            answer={
+              <div className="text-xs space-y-1">
+                <div>
+                  Środek <Mi>{"O(2,1)"}</Mi>. Wierzchołki:{" "}
+                  <Mi>{"\\left(4,-\\tfrac{1}{2}\\right)"}</Mi>,{" "}
+                  <Mi>{"\\left(0,\\tfrac{5}{2}\\right)"}</Mi>,{" "}
+                  <Mi>{"(-1,-3)"}</Mi>, <Mi>{"(5,5)"}</Mi>.
+                </div>
+                <div>
+                  Pozostałe boki: <Mi>{"11x - 2y - 45 = 0"}</Mi>,{" "}
+                  <Mi>{"11x - 2y + 5 = 0"}</Mi>.
+                </div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: -1, y: -3, label: "A", dx: -6, dy: 12, anchor: "end" },
+                    { x: 4, y: -0.5, label: "B", dx: 5, dy: 12 },
+                    { x: 5, y: 5, label: "C", dx: 6, dy: -4 },
+                    { x: 0, y: 2.5, label: "D", dx: -10, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[-2, 7]}
+                  yRange={[-4, 6]}
+                  className="mt-2 max-w-[240px]"
+                />
+              </div>
+            }
+          />
+          <ExerciseCard
+            number="R2"
+            question={
+              <span>
+                Przekątne:<br />
+                <Mi>{"3x + 4y = 0"}</Mi><br />
+                <Mi>{"4x - 3y = 0"}</Mi><br />
+                Przeciwległe boki:<br />
+                <Mi>{"x - 2y - 5 = 0"}</Mi><br />
+                <Mi>{"x - 2y + 5 = 0"}</Mi>.<br />
+                Wyznacz wierzchołki, równania dwóch pozostałych boków i pole rombu
+                (pole rombu to połowa iloczynu długości przekątnych).
+              </span>
+            }
+            answer={
+              <div className="text-xs space-y-1">
+                <div>
+                  Środek <Mi>{"O(0,0)"}</Mi>. Wierzchołki:{" "}
+                  <Mi>{"(2,\\;-\\tfrac{3}{2})"}</Mi>,{" "}
+                  <Mi>{"(-2,\\;\\tfrac{3}{2})"}</Mi>, <Mi>{"(-3,\\;-4)"}</Mi>,{" "}
+                  <Mi>{"(3,\\;4)"}</Mi>.
+                </div>
+                <div>
+                  Pozostałe boki: <Mi>{"11x - 2y - 25 = 0"}</Mi>,{" "}
+                  <Mi>{"11x - 2y + 25 = 0"}</Mi>.
+                </div>
+                <div>
+                  Przekątne mają długości <Mi>{"5"}</Mi> i <Mi>{"10"}</Mi>, więc{" "}
+                  <Mi>{"P = \\tfrac{1}{2} \\cdot 5 \\cdot 10 = 25"}</Mi>.
+                </div>
+                <PolygonDiagram
+                  vertices={[
+                    { x: -3, y: -4, label: "A", dx: -6, dy: 12, anchor: "end" },
+                    { x: 2, y: -1.5, label: "B", dx: 5, dy: 12 },
+                    { x: 3, y: 4, label: "C", dx: 6, dy: -4 },
+                    { x: -2, y: 1.5, label: "D", dx: -10, dy: -4, anchor: "end" },
+                  ]}
+                  xRange={[-4, 5]}
+                  yRange={[-5, 5]}
+                  className="mt-2 max-w-[240px]"
+                />
               </div>
             }
           />
