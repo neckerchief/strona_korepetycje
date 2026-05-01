@@ -1445,8 +1445,8 @@ const maturaStyleTasks = [
             a={1 / 3}
             b={2}
             squareGrid
-            xRange={[-8, 5]}
-            yRange={[-2, 6]}
+            xRange={[-7, 2]}
+            yRange={[-3, 6]}
             pts={[
               { x: -6, y: 0, label: "(-6, 0)", dx: -44, dy: 14 },
               { x: 0, y: 2, label: "(0, 2)", dx: 8, dy: -8 },
