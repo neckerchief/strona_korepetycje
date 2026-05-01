@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { InlineMath, BlockMath } from "react-katex";
+import { TaskCard, FormulaBox } from "../matura/matematyka-rozszerzona/_components";
 import {
   ArrowLeft, ChevronRight, CheckCircle, RotateCcw,
   Eye, EyeOff, BookOpen, Lightbulb,
@@ -220,7 +221,7 @@ const MultiExercise = ({ title, parts }) => {
 
 // ─── SVG: generyczny diagram wykresu liniowego ──────────────
 // props: id (uniq string), a, b (współczynniki), pts (tablica punktów),
-//        xRange, yRange, className
+//        xRange, yRange, className, squareGrid, svgSize (np. 280), vizScale (większe podpisy i kreski)
 const LineDiagram = ({
   id,
   a,
@@ -230,40 +231,92 @@ const LineDiagram = ({
   yRange = [-3, 4],
   className,
   showQuadrants = false,
+  squareGrid = false,
+  svgSize = 200,
+  vizScale = 1,
 }) => {
-  const W = 200, H = 200;
-  const PL = 30, PR = 22, PT = 20, PB = 22;
+  const kBase = svgSize / 200;
+  const W = 200 * kBase;
+  const H = 200 * kBase;
+  const PL = 30 * kBase;
+  const PR = 22 * kBase;
+  const PT = 20 * kBase;
+  const PB = 22 * kBase;
+  const vs = vizScale;
+  const fz = (n) => n * kBase * vs;
+  const sw = (w) => Math.max(0.65, w * kBase * vs);
   const DW = W - PL - PR;
   const DH = H - PT - PB;
   const [xMin, xMax] = xRange;
   const [yMin, yMax] = yRange;
-  const sx = DW / (xMax - xMin);
-  const sy = DH / (yMax - yMin);
-  const tx = (x) => PL + (x - xMin) * sx;
-  const ty = (y) => PT + (yMax - y) * sy;
+  const xSpan = xMax - xMin;
+  const ySpan = yMax - yMin;
+  let sx = DW / xSpan;
+  let sy = DH / ySpan;
+  let padX = 0;
+  let padY = 0;
+  if (squareGrid) {
+    const s = Math.min(DW / xSpan, DH / ySpan);
+    sx = sy = s;
+    padX = (DW - xSpan * s) / 2;
+    padY = (DH - ySpan * s) / 2;
+  }
+  const tx = (x) => PL + padX + (x - xMin) * sx;
+  const ty = (y) => PT + padY + (yMax - y) * sy;
   const ox = tx(0);
   const oy = ty(0);
   const xGrid = [];
   for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) xGrid.push(x);
   const yGrid = [];
   for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) yGrid.push(y);
+  /** Prostokąt pola kratek (jak w zeszycie), nie na cały margines SVG */
+  const plotLeft = tx(xMin);
+  const plotRight = tx(xMax);
+  const plotTop = ty(yMax);
+  const plotBottom = ty(yMin);
   const mid = `arr-${id}`;
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className={className ?? "w-full max-w-[230px] mx-auto block"}>
       <defs>
-        <marker id={mid} markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
-          <path d="M0,0.5 L0,6.5 L6,3.5 z" fill="#94a3b8" />
+        <marker
+          id={mid}
+          markerWidth={7 * kBase * vs}
+          markerHeight={7 * kBase * vs}
+          refX={5.5 * kBase * vs}
+          refY={3.5 * kBase * vs}
+          orient="auto"
+        >
+          <path
+            d={`M0,${0.5 * kBase * vs} L0,${6.5 * kBase * vs} L${6 * kBase * vs},${3.5 * kBase * vs} z`}
+            fill="#94a3b8"
+          />
         </marker>
       </defs>
-      {/* Siatka */}
+      {/* Siatka: tylko wewnątrz prostokąta zakresu (xMin,xMax)×(yMin,yMax) */}
       {xGrid.filter(x => x !== 0).map(x => (
-        <line key={`gx${x}`} x1={tx(x)} y1={PT} x2={tx(x)} y2={H - PB} stroke="#e2e8f0" strokeWidth="0.8" />
+        <line key={`gx${x}`} x1={tx(x)} y1={plotTop} x2={tx(x)} y2={plotBottom} stroke="#e2e8f0" strokeWidth={sw(0.8)} />
       ))}
       {yGrid.filter(y => y !== 0).map(y => (
-        <line key={`gy${y}`} x1={PL} y1={ty(y)} x2={W - PR} y2={ty(y)} stroke="#e2e8f0" strokeWidth="0.8" />
+        <line key={`gy${y}`} x1={plotLeft} y1={ty(y)} x2={plotRight} y2={ty(y)} stroke="#e2e8f0" strokeWidth={sw(0.8)} />
       ))}
+      <rect
+        x={plotLeft}
+        y={plotTop}
+        width={plotRight - plotLeft}
+        height={plotBottom - plotTop}
+        fill="none"
+        stroke="#d6d3d1"
+        strokeWidth={sw(1)}
+      />
       {showQuadrants && xMin < 0 && xMax > 0 && yMin < 0 && yMax > 0 && (
-        <g opacity="0.42" fill="#6d3a8e" fontFamily="Georgia, serif" fontSize="17" fontWeight="bold" textAnchor="middle">
+        <g
+          opacity="0.42"
+          fill="#6d3a8e"
+          fontFamily="Georgia, serif"
+          fontSize={fz(17)}
+          fontWeight="bold"
+          textAnchor="middle"
+        >
           <text x={tx(xMax / 2)} y={ty(yMax / 2)} dominantBaseline="middle">I</text>
           <text x={tx(xMin / 2)} y={ty(yMax / 2)} dominantBaseline="middle">II</text>
           <text x={tx(xMin / 2)} y={ty(yMin / 2)} dominantBaseline="middle">III</text>
@@ -273,38 +326,57 @@ const LineDiagram = ({
       {/* Znaczniki i etykiety osi */}
       {xGrid.filter(x => x !== 0).map(x => (
         <g key={`xt${x}`}>
-          <line x1={tx(x)} y1={oy - 3} x2={tx(x)} y2={oy + 3} stroke="#94a3b8" strokeWidth="1" />
-          <text x={tx(x)} y={oy + 13} textAnchor="middle" fill="#94a3b8" fontSize="9">{x}</text>
+          <line x1={tx(x)} y1={oy - fz(3)} x2={tx(x)} y2={oy + fz(3)} stroke="#94a3b8" strokeWidth={sw(1)} />
+          <text x={tx(x)} y={oy + fz(13)} textAnchor="middle" fill="#94a3b8" fontSize={fz(9)}>{x}</text>
         </g>
       ))}
       {yGrid.filter(y => y !== 0).map(y => (
         <g key={`yt${y}`}>
-          <line x1={ox - 3} y1={ty(y)} x2={ox + 3} y2={ty(y)} stroke="#94a3b8" strokeWidth="1" />
-          <text x={ox - 7} y={ty(y) + 3.5} textAnchor="end" fill="#94a3b8" fontSize="9">{y}</text>
+          <line x1={ox - fz(3)} y1={ty(y)} x2={ox + fz(3)} y2={ty(y)} stroke="#94a3b8" strokeWidth={sw(1)} />
+          <text x={ox - fz(7)} y={ty(y) + fz(3.5)} textAnchor="end" fill="#94a3b8" fontSize={fz(9)}>{y}</text>
         </g>
       ))}
-      <text x={ox - 7} y={oy + 13} textAnchor="end" fill="#94a3b8" fontSize="9">0</text>
+      <text x={ox - fz(7)} y={oy + fz(13)} textAnchor="end" fill="#94a3b8" fontSize={fz(9)}>0</text>
       {/* Osie ze strzałkami */}
-      <line x1={PL - 6} y1={oy} x2={W - PR + 9} y2={oy} stroke="#94a3b8" strokeWidth="1.5" markerEnd={`url(#${mid})`} />
-      <line x1={ox} y1={H - PB + 6} x2={ox} y2={PT - 9} stroke="#94a3b8" strokeWidth="1.5" markerEnd={`url(#${mid})`} />
-      <text x={W - PR + 13} y={oy + 4} fill="#94a3b8" fontSize="10">x</text>
-      <text x={ox - 4} y={PT - 12} fill="#94a3b8" fontSize="10">y</text>
+      <line
+        x1={PL - 6 * kBase * vs}
+        y1={oy}
+        x2={W - PR + 9 * kBase * vs}
+        y2={oy}
+        stroke="#94a3b8"
+        strokeWidth={sw(1.5)}
+        markerEnd={`url(#${mid})`}
+      />
+      <line
+        x1={ox}
+        y1={H - PB + 6 * kBase * vs}
+        x2={ox}
+        y2={PT - 9 * kBase * vs}
+        stroke="#94a3b8"
+        strokeWidth={sw(1.5)}
+        markerEnd={`url(#${mid})`}
+      />
+      <text x={W - PR + fz(13)} y={oy + fz(4)} fill="#94a3b8" fontSize={fz(10)}>x</text>
+      <text x={ox - fz(4)} y={PT - fz(12)} fill="#94a3b8" fontSize={fz(10)}>y</text>
       {/* Prosta f(x) = ax + b */}
       <line
-        x1={tx(xMin - 0.4)} y1={ty(a * (xMin - 0.4) + b)}
-        x2={tx(xMax + 0.4)} y2={ty(a * (xMax + 0.4) + b)}
-        stroke="#6d3a8e" strokeWidth="2.5"
+        x1={tx(xMin - 0.4)}
+        y1={ty(a * (xMin - 0.4) + b)}
+        x2={tx(xMax + 0.4)}
+        y2={ty(a * (xMax + 0.4) + b)}
+        stroke="#6d3a8e"
+        strokeWidth={sw(2.5)}
       />
       {/* Punkty */}
       {pts.map((pt, i) => (
         <g key={i}>
-          <circle cx={tx(pt.x)} cy={ty(pt.y)} r="4.5" fill={pt.color ?? "#6d3a8e"} />
+          <circle cx={tx(pt.x)} cy={ty(pt.y)} r={fz(4.5)} fill={pt.color ?? "#6d3a8e"} />
           {pt.label && (
             <text
-              x={tx(pt.x) + (pt.dx ?? 7)}
-              y={ty(pt.y) + (pt.dy ?? 4)}
+              x={tx(pt.x) + (pt.dx ?? 7) * kBase * vs}
+              y={ty(pt.y) + (pt.dy ?? 4) * kBase * vs}
               fill={pt.color ?? "#6d3a8e"}
-              fontSize="9.5"
+              fontSize={fz(9.5)}
               fontWeight="bold"
             >
               {pt.label}
@@ -595,21 +667,859 @@ const DiagramCwiartki = () => (
   </svg>
 );
 
+const MATURA_SECTION_ID = "zadania-maturalne";
+
+const tocSchemes = [
+  { id: "wykres", label: "Rysunek wykresu" },
+  { id: "zero", label: "Miejsce zerowe" },
+  { id: "osie", label: "Przecięcia z osiami" },
+  { id: "monotonicznosc", label: "Monotoniczność" },
+  { id: "punkt", label: "Punkt na prostej" },
+  { id: "wspolliniowosc", label: "Współliniowość" },
+  { id: "ogolne", label: "Równanie ogólne prostej" },
+  { id: "poziome-pionowe", label: "Proste poziome i pionowe" },
+  { id: "wierzcholki-figur", label: "Wierzchołki i pola figur" },
+  { id: "rownol-prostop", label: "Równoległość i prostopadłość" },
+  { id: "rozne-inne", label: "Ćwiartki układu współrzędnych" },
+];
+
+/** Zadania w stylu arkusza maturalnego, uzupełniane na stronie (jak TaskCard na PR). */
+const maturaStyleTasks = [
+  {
+    id: "fl-m-graf-rownolegla-prostopadla-1",
+    number: "1",
+    points: "0–2",
+    instruction: (
+      <span>
+        Znajdź te liczby <Mi>{"m"}</Mi>, dla których proste o równaniach{" "}
+        <Mi>{"y = -3x + 7"}</Mi> oraz <Mi>{"y = (4m - 5)x - 7"}</Mi> są
+        <span className="block mt-3 font-normal">
+          a) równoległe,
+        </span>
+        <span className="block font-normal">b) prostopadłe.</span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-2">
+        <p>
+          a) <Mi>{"m = \\dfrac{1}{2}"}</Mi>
+        </p>
+        <p>
+          b) <Mi>{"m = \\dfrac{4}{3}"}</Mi>
+        </p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Dla prostych <Mi>{"y = a_1 x + b_1"}</Mi> oraz <Mi>{"y = a_2 x + b_2"}</Mi> ze współczynnikami kierunkowymi{" "}
+          <Mi>{"a_1"}</Mi> i <Mi>{"a_2"}</Mi>:
+        </p>
+        <ul className="list-disc ml-5 space-y-2">
+          <li>
+            <strong>równoległość:</strong> <Mi>{"a_1 = a_2"}</Mi> (przy różnych wyrazach wolnych dostajesz dwie różne proste);
+          </li>
+          <li>
+            <strong>prostopadłość:</strong> <Mi>{"a_1 \\cdot a_2 = -1"}</Mi> (gdy żadna prosta nie jest pionowa).
+          </li>
+        </ul>
+        <p className="text-stone-600 text-sm">
+          Odczytaj <Mi>{"a_1"}</Mi> i <Mi>{"a_2"}</Mi> z równań, podstaw do warunku i rozwiąż proste równanie liniowe względem{" "}
+          <Mi>{"m"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p>
+          Współczynniki kierunkowe: <Mi>{"a_1 = -3"}</Mi>, <Mi>{"a_2 = 4m - 5"}</Mi>. Wyrazy wolne to{" "}
+          <Mi>{"7"}</Mi> oraz <Mi>{"-7"}</Mi>, więc przy równych nachyleniach proste się nie pokrywają.
+        </p>
+
+        <p className="font-semibold text-stone-800">a) Warunek równoległości</p>
+        <Mb>{"a_1 = a_2 \\quad \\Rightarrow \\quad -3 = 4m - 5"}</Mb>
+        <Mb>{"4m = 2 \\quad \\Rightarrow \\quad m = \\dfrac{1}{2}"}</Mb>
+
+        <p className="font-semibold text-stone-800">b) Warunek prostopadłości</p>
+        <FormulaBox>
+          <Mb>{"a_1 \\cdot a_2 = -1"}</Mb>
+        </FormulaBox>
+        <Mb>{"(-3)(4m - 5) = -1 \\quad \\Rightarrow \\quad 4m - 5 = \\dfrac{1}{3}"}</Mb>
+        <Mb>{"4m = \\dfrac{16}{3} \\quad \\Rightarrow \\quad m = \\dfrac{4}{3}"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"m = \\dfrac{1}{2}"}</Mi>; b) <Mi>{"m = \\dfrac{4}{3}"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "fl-m-cwiartki-f-liniowa-2",
+    number: "2",
+    points: "0–4",
+    instruction: (
+      <div className="space-y-4">
+        <p className="font-semibold">
+          Przez które ćwiartki płaszczyzny z układem współrzędnych przechodzi wykres funkcji{" "}
+          <Mi>{"f(x)=ax+b"}</Mi>, jeżeli:
+        </p>
+        <div className="rounded-xl border border-stone-200 bg-[#fafaf9] p-4 max-w-[340px] mx-auto shadow-sm">
+          <DiagramCwiartki />
+          <p className="text-center text-xs text-stone-500 mt-2 font-normal">
+            Ćwiartki oznaczone jak w ćwiczeniach, możesz nanieść szkic prostej na kartce obok.
+          </p>
+        </div>
+        <ul className="list-none space-y-2 pl-0 m-0 font-normal">
+          <li>
+            a) <Mi>{"a>0"}</Mi> i <Mi>{"b=0"}</Mi>
+          </li>
+          <li>
+            b) <Mi>{"a=0"}</Mi> i <Mi>{"b>0"}</Mi>
+          </li>
+          <li>
+            c) <Mi>{"a>0"}</Mi> i <Mi>{"b<0"}</Mi>
+          </li>
+          <li>
+            d) <Mi>{"a<0"}</Mi> i <Mi>{"b>0"}</Mi>
+          </li>
+        </ul>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-2 text-sm">
+        <p>
+          a) przez <strong>I</strong> i <strong>III</strong> (prosta przechodzi przez początek układu),
+        </p>
+        <p>
+          b) przez <strong>I</strong> i <strong>II</strong>,
+        </p>
+        <p>
+          c) przez <strong>I</strong>, <strong>III</strong> i <strong>IV</strong>,
+        </p>
+        <p>
+          d) przez <strong>I</strong>, <strong>II</strong> i <strong>IV</strong>.
+        </p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>Zastanów się nad geometrycznym znaczeniem warunków:</p>
+        <ul className="list-disc ml-5 space-y-2">
+          <li>
+            <Mi>{"b=0"}</Mi>: wykres przechodzi przez początek; <Mi>{"a>0"}</Mi>: prosta „idzie w górę” od lewej do prawej.
+          </li>
+          <li>
+            <Mi>{"a=0"}</Mi>: funkcja stała, pozioma prosta; <Mi>{"b>0"}</Mi>: nad osią <Mi>{"Ox"}</Mi>.
+          </li>
+          <li>
+            <Mi>{"a>0"}</Mi> i <Mi>{"b<0"}</Mi>: przecina oś <Mi>{"Oy"}</Mi> pod zerem, „wspina się” w prawo.
+          </li>
+          <li>
+            <Mi>{"a<0"}</Mi> i <Mi>{"b>0"}</Mi>: zaczyna wysoko przy małych <Mi>{"x"}</Mi>, „schodzi” w prawo.
+          </li>
+        </ul>
+        <p className="text-stone-600 text-sm">
+          Zaznacz na szkicu jeden typowy przykład (np. konkretne <Mi>{"a,b"}</Mi> spełniające warunek) i odczytaj ćwiartki.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">a) <Mi>{"a>0"}</Mi>, <Mi>{"b=0"}</Mi></p>
+        <p className="text-sm text-stone-700 leading-relaxed">
+          Pomocniczy rysunek spełniający warunki: np. <Mi>{"a=1"}</Mi>, <Mi>{"b=0"}</Mi>, czyli <Mi>{"y=x"}</Mi>. Patrząc na
+          wykres, prosta przechodzi przez ćwiartki <strong>I</strong> i <strong>III</strong>.
+        </p>
+        <div className="rounded-xl border border-stone-200 bg-white p-4 max-w-[280px] mx-auto shadow-sm">
+          <LineDiagram
+            id="fl-m2-a"
+            a={1}
+            b={0}
+            showQuadrants
+            xRange={[-3.5, 4]}
+            yRange={[-3.5, 4]}
+            className="w-full max-w-[260px] mx-auto block"
+          />
+          <p className="text-center text-xs text-stone-500 mt-3 font-normal">
+            <Mi>{"y=x"}</Mi>
+          </p>
+        </div>
+
+        <p className="font-semibold text-stone-800">b) <Mi>{"a=0"}</Mi>, <Mi>{"b>0"}</Mi></p>
+        <p className="text-sm text-stone-700 leading-relaxed">
+          Pomocniczy rysunek: np. <Mi>{"b=2"}</Mi> (<Mi>{"a=0"}</Mi>), czyli <Mi>{"y=2"}</Mi>. Z rysunku widać ćwiartki{" "}
+          <strong>I</strong> i <strong>II</strong>.
+        </p>
+        <div className="rounded-xl border border-stone-200 bg-white p-4 max-w-[280px] mx-auto shadow-sm">
+          <LineDiagram
+            id="fl-m2-b"
+            a={0}
+            b={2}
+            showQuadrants
+            xRange={[-5, 5]}
+            yRange={[-2, 4]}
+            className="w-full max-w-[260px] mx-auto block"
+          />
+          <p className="text-center text-xs text-stone-500 mt-3 font-normal">
+            <Mi>{"y=2"}</Mi>
+          </p>
+        </div>
+
+        <p className="font-semibold text-stone-800">c) <Mi>{"a>0"}</Mi>, <Mi>{"b<0"}</Mi></p>
+        <p className="text-sm text-stone-700 leading-relaxed">
+          Pomocniczy rysunek: np. <Mi>{"a=1"}</Mi>, <Mi>{"b=-2"}</Mi>, czyli <Mi>{"y=x-2"}</Mi>. Patrząc na wykres:
+          ćwiartki <strong>I</strong>, <strong>III</strong> i <strong>IV</strong>.
+        </p>
+        <div className="rounded-xl border border-stone-200 bg-white p-4 max-w-[280px] mx-auto shadow-sm">
+          <LineDiagram
+            id="fl-m2-c"
+            a={1}
+            b={-2}
+            showQuadrants
+            xRange={[-4, 5]}
+            yRange={[-4, 4]}
+            className="w-full max-w-[260px] mx-auto block"
+          />
+          <p className="text-center text-xs text-stone-500 mt-3 font-normal">
+            <Mi>{"y=x-2"}</Mi>
+          </p>
+        </div>
+
+        <p className="font-semibold text-stone-800">d) <Mi>{"a<0"}</Mi>, <Mi>{"b>0"}</Mi></p>
+        <p className="text-sm text-stone-700 leading-relaxed">
+          Pomocniczy rysunek: np. <Mi>{"a=-1"}</Mi>, <Mi>{"b=2"}</Mi>, czyli <Mi>{"y=-x+2"}</Mi>. Z rysunku:
+          ćwiartki <strong>I</strong>, <strong>II</strong> i <strong>IV</strong>.
+        </p>
+        <div className="rounded-xl border border-stone-200 bg-white p-4 max-w-[280px] mx-auto shadow-sm">
+          <LineDiagram
+            id="fl-m2-d"
+            a={-1}
+            b={2}
+            showQuadrants
+            xRange={[-5, 6]}
+            yRange={[-4, 5]}
+            className="w-full max-w-[260px] mx-auto block"
+          />
+          <p className="text-center text-xs text-stone-500 mt-3 font-normal">
+            <Mi>{"y=-x+2"}</Mi>
+          </p>
+        </div>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) I i III; b) I i II; c) I, III i IV; d) I, II i IV.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-podr-152-rownolegla-przez-punkt",
+    number: "3",
+    points: "0–2",
+    instruction: (
+      <span>
+        Punkt <Mi>{"S = \\left(\\dfrac{3}{4},\\, \\dfrac{1}{2}\\right)"}</Mi> należy do prostej{" "}
+        <Mi>{"k"}</Mi>, która jest równoległa do prostej o równaniu <Mi>{"y = -2x - 7"}</Mi>. Znajdź równanie prostej{" "}
+        <Mi>{"k"}</Mi>.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"k \\colon y = -2x + 2"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Prosta równoległa ma ten sam współczynnik kierunkowy. Wyraz wolny dobierz tak, żeby wykres przechodził przez{" "}
+        <Mi>{"S"}</Mi>.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <p>
+          Dana prosta ma <Mi>{"a = -2"}</Mi>, więc <Mi>{"k \\colon y = -2x + b"}</Mi>.
+        </p>
+        <p>
+          Punkt <Mi>{"S"}</Mi> należy do <Mi>{"k"}</Mi>:
+        </p>
+        <Mb>{"\\dfrac{1}{2} = -2 \\cdot \\dfrac{3}{4} + b \\quad \\Rightarrow \\quad \\dfrac{1}{2} = -\\dfrac{3}{2} + b \\quad \\Rightarrow \\quad b = 2"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"y = -2x + 2"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-podr-153-prostopadla-przez-punkt-oy",
+    number: "4",
+    points: "0–2",
+    instruction: (
+      <span>
+        Prosta <Mi>{"k"}</Mi> przecina oś <Mi>{"OY"}</Mi> w punkcie <Mi>{"P = (0,\\, 7)"}</Mi> i jest prostopadła do prostej o
+        równaniu <Mi>{"y = 0{,}4x + 0{,}6"}</Mi>. Znajdź równanie prostej <Mi>{"k"}</Mi>.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"k \\colon y = -\\dfrac{5}{2}x + 7"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Współczynniki kierunkowe prostych prostopadłych (niepionowych) spełniają <Mi>{"a_1 a_2 = -1"}</Mi>. Punkt{" "}
+        <Mi>{"(0,7)"}</Mi> to przecięcie z <Mi>{"Oy"}</Mi>, czyli wyraz wolny w postaci <Mi>{"y = ax + b"}</Mi>.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <p>
+          Dana prosta ma <Mi>{"a_2 = 0{,}4 = \\dfrac{2}{5}"}</Mi>. Prostopadłość:{" "}
+          <Mi>{"a_1 \\cdot \\dfrac{2}{5} = -1"}</Mi>, stąd <Mi>{"a_1 = -\\dfrac{5}{2}"}</Mi>.
+        </p>
+        <p>
+          Prosta <Mi>{"k"}</Mi> ma postać <Mi>{"y = -\\dfrac{5}{2}x + b"}</Mi> i przechodzi przez <Mi>{"(0,7)"}</Mi>, więc{" "}
+          <Mi>{"b = 7"}</Mi>.
+        </p>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"y = -\\dfrac{5}{2}x + 7"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-podr-154-prosta-przez-dwa-punkty",
+    number: "5",
+    points: "0–2",
+    instruction: (
+      <span>
+        Prosta <Mi>{"k"}</Mi> zawiera odcinek, którego końcami są punkty <Mi>{"A = (0,\\, -3)"}</Mi> oraz{" "}
+        <Mi>{"B = (1,\\, 1)"}</Mi>. Znajdź równanie prostej <Mi>{"k"}</Mi>.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"k \\colon y = 4x - 3"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Wyznacz współczynnik kierunkowy z punktów <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>, potem podstaw jeden z punktów do{" "}
+        <Mi>{"y = ax + b"}</Mi>.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <Mb>{"a = \\dfrac{y_B - y_A}{x_B - x_A} = \\dfrac{1 - (-3)}{1 - 0} = 4"}</Mb>
+        <p>
+          Prosta <Mi>{"y = 4x + b"}</Mi>; punkt <Mi>{"A(0,-3)"}</Mi> daje <Mi>{"b = -3"}</Mi>.
+        </p>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"y = 4x - 3"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-podr-155-wspolliniowosc",
+    number: "6",
+    points: "0–2",
+    instruction: (
+      <span>
+        Sprawdź, czy punkty <Mi>{"A = (0,\\, -4)"}</Mi>, <Mi>{"B = (2,\\, 0)"}</Mi>,{" "}
+        <Mi>{"C = (202,\\, 400)"}</Mi> są współliniowe.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        Tak, punkty są współliniowe (lezą na jednej prostej).
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Najpierw wyznacz równanie prostej przechodzącej przez <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>, potem sprawdź, czy współrzędne{" "}
+        <Mi>{"C"}</Mi> spełniają to równanie (czy <Mi>{"C"}</Mi> leży na tej prostej).
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <p className="font-semibold text-stone-800">Krok 1. Prosta przechodząca przez <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi></p>
+        <p>
+          Współczynnik kierunkowy:
+        </p>
+        <Mb>{"a = \\dfrac{0 - (-4)}{2 - 0} = 2"}</Mb>
+        <p>
+          Szukamy <Mi>{"y = 2x + b"}</Mi>. Punkt <Mi>{"A(0,\\,-4)"}</Mi>:
+        </p>
+        <Mb>{"-4 = 2 \\cdot 0 + b \\quad \\Rightarrow \\quad b = -4"}</Mb>
+        <p>
+          Prosta <Mi>{"AB"}</Mi>: <Mi>{"y = 2x - 4"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Czy <Mi>{"C"}</Mi> leży na prostej <Mi>{"AB"}</Mi>?</p>
+        <p>
+          Podstawiamy <Mi>{"x = 202"}</Mi> do <Mi>{"y = 2x - 4"}</Mi>:
+        </p>
+        <Mb>{"y = 2 \\cdot 202 - 4 = 404 - 4 = 400"}</Mb>
+        <p>
+          Rzędna punktu <Mi>{"C"}</Mi> też wynosi <Mi>{"400"}</Mi>, więc <Mi>{"C"}</Mi> należy do prostej <Mi>{"AB"}</Mi>. Punkty{" "}
+          <Mi>{"A,B,C"}</Mi> są współliniowe.
+        </p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">Odpowiedź: tak, są współliniowe.</p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-podr-156-punkt-rzedna-wieksza",
+    number: "7",
+    points: "0–2",
+    instruction: (
+      <span>
+        Znajdź współrzędne takiego punktu należącego do prostej o równaniu <Mi>{"y = 3x + 2"}</Mi>, którego rzędna jest o 10
+        większa od odciętej.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"(4,\\, 14)"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        „Rzędna o 10 większa od odciętej” zapisz jako zależność między <Mi>{"x"}</Mi> i <Mi>{"y"}</Mi>, potem połącz z{" "}
+        <Mi>{"y = 3x + 2"}</Mi>.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <p>
+          Warunek: <Mi>{"y = x + 10"}</Mi>. Jednocześnie <Mi>{"y = 3x + 2"}</Mi>:
+        </p>
+        <Mb>{"3x + 2 = x + 10 \\quad \\Rightarrow \\quad 2x = 8 \\quad \\Rightarrow \\quad x = 4"}</Mb>
+        <Mb>{"y = 4 + 10 = 14"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"(4,\\, 14)"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-zad-167-trzy-proste-jeden-punkt",
+    number: "8",
+    points: "0–2",
+    instruction: (
+      <span>
+        Dane są funkcje <Mi>{"f(x) = 3x - 2"}</Mi>, <Mi>{"g(x) = -\\dfrac{1}{2}x + 5"}</Mi> oraz{" "}
+        <Mi>{"h(x) = ax + 3"}</Mi>. Dla jakiej liczby <Mi>{"a"}</Mi> wykresy <Mi>{"f"}</Mi>, <Mi>{"g"}</Mi> i <Mi>{"h"}</Mi>{" "}
+        przecinają się w jednym wspólnym punkcie (wszystkie trzy proste przechodzą przez ten sam punkt)?
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"a = \\dfrac{1}{2}"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Najpierw znajdź punkt przecięcia dwóch prostych o znanych wzorach (<Mi>{"f"}</Mi> i <Mi>{"g"}</Mi>). Potem dobierz{" "}
+        <Mi>{"a"}</Mi> tak, żeby trzecia prosta (<Mi>{"h"}</Mi>) też przechodziła przez ten punkt.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <p className="font-semibold text-stone-800">Wspólny punkt <Mi>{"f"}</Mi> i <Mi>{"g"}</Mi></p>
+        <Mb>{"3x - 2 = -\\dfrac{1}{2}x + 5"}</Mb>
+        <Mb>{"6x - 4 = -x + 10 \\quad \\Rightarrow \\quad 7x = 14 \\quad \\Rightarrow \\quad x = 2"}</Mb>
+        <Mb>{"y = f(2) = 3 \\cdot 2 - 2 = 4"}</Mb>
+        <p>
+          Punkt przecięcia: <Mi>{"(2,\\, 4)"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Warunek na <Mi>{"h"}</Mi>
+        </p>
+        <p>
+          Wykres <Mi>{"h"}</Mi> musi przechodzić przez <Mi>{"(2,\\, 4)"}</Mi>:
+        </p>
+        <Mb>{"4 = a \\cdot 2 + 3 \\quad \\Rightarrow \\quad 2a = 1 \\quad \\Rightarrow \\quad a = \\dfrac{1}{2}"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"a = \\dfrac{1}{2}"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-zad-168-odcinek-przeciecie-oy",
+    number: "9",
+    points: "0–2",
+    instruction: (
+      <span>
+        Odcinek o końcach <Mi>{"A = (-2,\\, 5)"}</Mi> i <Mi>{"B = (3,\\, 1)"}</Mi> jest wykresem funkcji <Mi>{"f"}</Mi>. Znajdź
+        współrzędne punktu wspólnego wykresu funkcji <Mi>{"f"}</Mi> i osi <Mi>{"OY"}</Mi>.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"\\left(0,\\, \\dfrac{17}{5}\\right)"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Wyznacz równanie prostej przez <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>, potem podstaw <Mi>{"x = 0"}</Mi> (oś <Mi>{"OY"}</Mi>).
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <Mb>{"a = \\dfrac{1 - 5}{3 - (-2)} = \\dfrac{-4}{5}"}</Mb>
+        <p>
+          Prosta <Mi>{"y = -\\dfrac{4}{5}x + b"}</Mi>; punkt <Mi>{"A(-2,\\, 5)"}</Mi>:
+        </p>
+        <Mb>{"5 = -\\dfrac{4}{5} \\cdot (-2) + b = \\dfrac{8}{5} + b \\quad \\Rightarrow \\quad b = \\dfrac{17}{5}"}</Mb>
+        <p>
+          <Mi>{"f(x) = -\\dfrac{4}{5}x + \\dfrac{17}{5}"}</Mi>. Na osi <Mi>{"OY"}</Mi> jest <Mi>{"x = 0"}</Mi>:
+        </p>
+        <Mb>{"y = \\dfrac{17}{5}"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"\\left(0,\\, \\dfrac{17}{5}\\right)"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-zad-169-miejsce-zero-wlasnosc",
+    number: "10",
+    points: "0–3",
+    instruction: (
+      <span>
+        Miejscem zerowym funkcji <Mi>{"f(x) = -2x + b"}</Mi> jest liczba <Mi>{"1{,}5"}</Mi>.
+        <span className="block mt-3 font-normal">a) Wyznacz wartość współczynnika <Mi>{"b"}</Mi>.</span>
+        <span className="block font-normal mt-1">
+          b) Dla jakich argumentów wartości funkcji <Mi>{"f"}</Mi> są większe od wartości funkcji{" "}
+          <Mi>{"g(x) = 3x - 7"}</Mi>?
+        </span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <div className="space-y-2">
+        <p>
+          a) <Mi>{"b = 3"}</Mi>
+        </p>
+        <p>
+          b) <Mi>{"x < 2"}</Mi>
+        </p>
+      </div>
+    ),
+    hint: (
+      <div className="space-y-2 text-sm">
+        <p>
+          a) Miejsce zerowe to taki argument, przy którym wartość funkcji wynosi zero.
+        </p>
+        <p>
+          b) Rozwiąż nierówność <Mi>{"f(x) > g(x)"}</Mi> dla już znanego <Mi>{"b"}</Mi>.
+        </p>
+      </div>
+    ),
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">a)</p>
+        <Mb>{"f(1{,}5) = 0 \\quad \\Rightarrow \\quad -2 \\cdot 1{,}5 + b = 0 \\quad \\Rightarrow \\quad b = 3"}</Mb>
+        <p>
+          Zatem <Mi>{"f(x) = -2x + 3"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">b)</p>
+        <Mb>{"-2x + 3 > 3x - 7"}</Mb>
+        <Mb>{"10 > 5x \\quad \\Rightarrow \\quad x < 2"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"b = 3"}</Mi>; b) dla <Mi>{"x < 2"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-zad-parametr-b-nierownosci",
+    number: "11",
+    points: "0–3",
+    instruction: (
+      <span>
+        Funkcja jest określona wzorem <Mi>{"f(x) = 3x + b"}</Mi>.
+        <span className="block mt-3 font-normal">
+          a) Wyznacz te wartości współczynnika <Mi>{"b"}</Mi>, dla których wartość funkcji <Mi>{"f"}</Mi> przyjmowana dla
+          argumentu <Mi>{"5"}</Mi> jest mniejsza od <Mi>{"2"}</Mi>.
+        </span>
+        <span className="block font-normal mt-1">
+          b) Wyznacz te wartości współczynnika <Mi>{"b"}</Mi>, dla których miejsce zerowe funkcji <Mi>{"f"}</Mi> jest większe
+          od <Mi>{"3{,}5"}</Mi>.
+        </span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <div className="space-y-2">
+        <p>
+          a) <Mi>{"b < -13"}</Mi>
+        </p>
+        <p>
+          b) <Mi>{"b < -\\dfrac{21}{2}"}</Mi> (czyli <Mi>{"b < -10{,}5"}</Mi>)
+        </p>
+      </div>
+    ),
+    hint: (
+      <div className="space-y-2 text-sm">
+        <p>
+          a) Zapisz <Mi>{"f(5)"}</Mi> przez <Mi>{"b"}</Mi> i rozwiąż nierówność <Mi>{"f(5) < 2"}</Mi>.
+        </p>
+        <p>
+          b) Wyraź miejsce zerowe (argument, przy którym <Mi>{"f(x)=0"}</Mi>) przez <Mi>{"b"}</Mi>, potem porównaj z{" "}
+          <Mi>{"3{,}5"}</Mi>.
+        </p>
+      </div>
+    ),
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">a)</p>
+        <Mb>{"f(5) = 3 \\cdot 5 + b = 15 + b"}</Mb>
+        <Mb>{"15 + b < 2 \\quad \\Rightarrow \\quad b < -13"}</Mb>
+
+        <p className="font-semibold text-stone-800">b)</p>
+        <p>
+          Miejsce zerowe <Mi>{"x_0"}</Mi>: <Mi>{"3x_0 + b = 0"}</Mi>, stąd <Mi>{"x_0 = -\\dfrac{b}{3}"}</Mi>.
+        </p>
+        <Mb>{"-\\dfrac{b}{3} > 3{,}5 = \\dfrac{7}{2}"}</Mb>
+        <p>Mnożymy obie strony przez <Mi>{"3"}</Mi>:</p>
+        <Mb>{"-b > \\dfrac{21}{2}"}</Mb>
+        <p>Po pomnożeniu przez <Mi>{"(-1)"}</Mi> nierówność zmienia zwrot:</p>
+        <Mb>{"b < -\\dfrac{21}{2}"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"b < -13"}</Mi>; b) <Mi>{"b < -\\dfrac{21}{2}"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-mc-znaki-ab-wykres",
+    number: "12",
+    points: "0–1",
+    instruction: (
+      <div className="space-y-4 font-normal">
+        <p>
+          Niech <Mi>{"f"}</Mi> będzie funkcją liniową <Mi>{"f(x) = ax + b"}</Mi>, gdzie <Mi>{"a"}</Mi> i <Mi>{"b"}</Mi> są liczbami
+          rzeczywistymi. Na rysunku w kartezjańskim układzie <Mi>{"(x,y)"}</Mi> zaznaczono prostą będącą wykresem{" "}
+          <Mi>{"f"}</Mi>.
+        </p>
+        <div className="rounded-xl border border-stone-200 bg-white p-4 max-w-[300px] mx-auto shadow-sm">
+          <LineDiagram
+            id="fl-m12-znaki"
+            a={-1}
+            b={4}
+            xRange={[-2, 7]}
+            yRange={[-2, 7]}
+            className="w-full max-w-[260px] mx-auto block"
+          />
+          <p className="text-center text-xs text-stone-500 mt-2">Na rysunku fioletowa prosta to wykres <Mi>{"f"}</Mi>.</p>
+        </div>
+        <p className="font-semibold text-stone-800">
+          Dokończ zdanie. Wybierz właściwą odpowiedź. Współczynniki <Mi>{"a"}</Mi> i <Mi>{"b"}</Mi> we wzorze funkcji{" "}
+          <Mi>{"f"}</Mi> spełniają warunki
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: [
+      "A. a > 0 i b > 0",
+      "B. a > 0 i b < 0",
+      "C. a < 0 i b > 0",
+      "D. a < 0 i b < 0",
+    ],
+    answer: (
+      <p>
+        Prawidłowa odpowiedź: <strong>C</strong>.
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Z samego rysunku odczytaj: czy funkcja rośnie, czy maleje (to znak <Mi>{"a"}</Mi>), oraz gdzie prosta przecina oś{" "}
+        <Mi>{"Oy"}</Mi> (to pomaga ustalić znak <Mi>{"b"}</Mi>).
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <p>
+          Prosta idzie „w dół” przy większym <Mi>{"x"}</Mi>, więc jest malejąca i <Mi>{"a < 0"}</Mi>.
+        </p>
+        <p>
+          Przecięcie z osią <Mi>{"Oy"}</Mi> leży ponad początkiem układu (dodatnia rzędna punktu przecięcia), więc{" "}
+          <Mi>{"b > 0"}</Mi>.
+        </p>
+        <p>
+          Pasuje odpowiedź <strong>C</strong>.
+        </p>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-wykres-prosta-trojkat-osiowe",
+    number: "13",
+    points: "0–2",
+    instruction: (
+      <div className="space-y-4 font-normal">
+        <p>
+          Funkcja liniowa <Mi>{"f"}</Mi> ma wykres w postaci prostej jak na rysunku. Wiadomo, że przecina ona oś <Mi>{"Oy"}</Mi>{" "}
+          w punkcie <Mi>{"(0,\\, 2)"}</Mi>, a oś <Mi>{"Ox"}</Mi> w punkcie <Mi>{"(-6,\\, 0)"}</Mi>.
+        </p>
+        <div className="rounded-xl border border-stone-200 bg-white p-4 max-w-[300px] mx-auto shadow-sm">
+          <LineDiagram
+            id="fl-m13-prosta"
+            a={1 / 3}
+            b={2}
+            squareGrid
+            xRange={[-8, 5]}
+            yRange={[-2, 6]}
+            pts={[
+              { x: -6, y: 0, label: "(-6, 0)", dx: -44, dy: 14 },
+              { x: 0, y: 2, label: "(0, 2)", dx: 8, dy: -8 },
+            ]}
+            className="w-full max-w-[260px] mx-auto block"
+          />
+          <p className="text-center text-xs text-stone-500 mt-2">wykres <Mi>{"f"}</Mi></p>
+        </div>
+        <span className="block font-semibold text-stone-800 mt-3">
+          a) Wyznacz współczynnik kierunkowy prostej będącej wykresem <Mi>{"f"}</Mi>.
+        </span>
+        <span className="block font-semibold text-stone-800 mt-3">
+          b) Oblicz pole trójkąta ograniczonego osiami <Mi>{"Ox"}</Mi>, <Mi>{"Oy"}</Mi> oraz wykresem funkcji <Mi>{"f"}</Mi>.
+        </span>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <div className="space-y-2">
+        <p>
+          a) <Mi>{"a = \\dfrac{1}{3}"}</Mi>
+        </p>
+        <p>
+          b) <Mi>{"P = 6"}</Mi>
+        </p>
+      </div>
+    ),
+    hint: (
+      <div className="space-y-2 text-sm">
+        <p>
+          a) Współczynnik kierunkowy znajdziesz np. z dwóch punktów leżących na prostej (np. przecięć z osiami).
+        </p>
+        <p>
+          b) Trójkąt przy początku układu jest prostokątny: obie przyprostokątne leżą na osiach. Ich długości to wartości
+          bezwzględne odciętych punktów przecięcia z <Mi>{"Ox"}</Mi> i <Mi>{"Oy"}</Mi>.
+        </p>
+      </div>
+    ),
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">a)</p>
+        <p>
+          Z punktów <Mi>{"(-6,\\,0)"}</Mi> i <Mi>{"(0,\\,2)"}</Mi>:
+        </p>
+        <Mb>{"a = \\dfrac{2 - 0}{0 - (-6)} = \\dfrac{2}{6} = \\dfrac{1}{3}"}</Mb>
+        <p>
+          (Zgodnie z tym <Mi>{"f(x) = \\dfrac{1}{3}x + 2"}</Mi>.)
+        </p>
+
+        <p className="font-semibold text-stone-800">b)</p>
+        <p>
+          Trójkąt ma wierzchołki <Mi>{"O = (0,0)"}</Mi>, <Mi>{"(-6,\\,0)"}</Mi>, <Mi>{"(0,\\,2)"}</Mi>. Kąt prosty jest w{" "}
+          <Mi>{"O"}</Mi>, więc
+        </p>
+        <Mb>{"P = \\dfrac{1}{2} \\cdot |-6| \\cdot 2 = 6"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"a = \\dfrac{1}{3}"}</Mi>; b) <Mi>{"P = 6"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+];
+
+const tocBlobClass =
+  "inline-flex text-xs font-semibold text-[#6d3a8e] bg-[#f2ecfb] border border-[#d4b8f0] rounded-full px-3 py-1.5 hover:bg-[#ead5fb] transition-colors";
+
 // ─── Strona główna ───────────────────────────────────────────
 export default function FunkcjaLiniowaPage() {
-  const toc = [
-    { id: "wykres",         label: "Rysunek wykresu" },
-    { id: "zero",           label: "Miejsce zerowe" },
-    { id: "osie",           label: "Przecięcia z osiami" },
-    { id: "monotonicznosc", label: "Monotoniczność" },
-    { id: "punkt",          label: "Punkt na prostej" },
-    { id: "wspolliniowosc", label: "Współliniowość" },
-    { id: "ogolne",          label: "Równanie ogólne prostej" },
-    { id: "poziome-pionowe", label: "Proste poziome i pionowe" },
-    { id: "wierzcholki-figur", label: "Wierzchołki i pola figur" },
-    { id: "rownol-prostop",     label: "Równoległość i prostopadłość" },
-    { id: "rozne-inne", label: "Ćwiartki układu współrzędnych" },
-  ];
 
   return (
     <div className="min-h-screen bg-[#fffeeb] text-stone-800">
@@ -628,6 +1538,27 @@ export default function FunkcjaLiniowaPage() {
       </div>
 
       <main className="max-w-4xl mx-auto px-5 py-16">
+        {/* Słowniczek — na początku */}
+        <div className="mb-12">
+          <RuleBox title="Słowniczek pojęć" color="green">
+            <ul className="list-disc ml-5 space-y-2">
+              <li>
+                <strong>Odcięta</strong> punktu (albo odcięta na osi): to jego współrzędna{" "}
+                <Mi>{"x"}</Mi>
+              </li>
+              <li>
+                <strong>Rzędna:</strong> współrzędna <Mi>{"y"}</Mi>.
+              </li>
+              <li>
+                <strong>Argument</strong> funkcji <Mi>{"f"}</Mi> to wartość <Mi>{"x"}</Mi>, którą podstawiasz do wzoru (np. w <Mi>{"f(5)"}</Mi> argumentem jest <Mi>{"5"}</Mi>).
+              </li>
+              <li>
+                <strong>Wartość funkcji</strong> dla danego argumentu to wynik <Mi>{"f(x)"}</Mi>, często oznaczony na wykresie literą <Mi>{"y"}</Mi>. Dla <Mi>{"f(x)=2x+1"}</Mi> wartością w <Mi>{"x=3"}</Mi> jest <Mi>{"f(3)=7"}</Mi>, czyli <Mi>{"y=7"}</Mi>.
+              </li>
+            </ul>
+          </RuleBox>
+        </div>
+
         {/* Nagłówek */}
         <div className="mb-12">
           <p className="text-xs font-bold text-[#6d3a8e] uppercase tracking-widest mb-2">
@@ -637,22 +1568,46 @@ export default function FunkcjaLiniowaPage() {
             Funkcja liniowa
           </h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">
-            Schematy postępowania przy typowych zadaniach: wykres, miejsce zerowe,
-            monotoniczność, punkt na prostej i współliniowość.
+            Schematy postępowania przy typowych zadaniach z funkcją liniową, m.in. wykres i miejsce zerowe,
+            monotoniczność, punkt na prostej, proste na płaszczyźnie, figury w układzie współrzędnych oraz wiele innych.
+            Na końcu strony jest też większy zbiór zadań prowadzonych w stylu maturalnym.
           </p>
         </div>
 
         {/* Spis treści */}
-        <nav className="flex flex-wrap gap-2 mb-14">
-          {toc.map(({ id, label }) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              className="text-xs font-semibold text-[#6d3a8e] bg-[#f2ecfb] border border-[#d4b8f0] rounded-full px-3 py-1.5 hover:bg-[#ead5fb] transition-colors"
-            >
-              {label}
-            </a>
-          ))}
+        <nav aria-label="Spis treści" className="mb-14 space-y-8">
+          <div>
+            <h2 className="text-xs font-bold text-[#52297a] uppercase tracking-widest mb-3">
+              Schematy zadań
+            </h2>
+            <ol className="list-none space-y-2 pl-0 m-0">
+              {tocSchemes.map(({ id, label }, idx) => (
+                <li key={id} className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span className="text-xs font-semibold text-stone-500 tabular-nums w-7 shrink-0">
+                    {idx + 1}.
+                  </span>
+                  <a href={`#${id}`} className={tocBlobClass}>
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div>
+            <h2 className="text-xs font-bold text-[#52297a] uppercase tracking-widest mb-3">
+              Zadania maturalne
+            </h2>
+            <ol className="list-none space-y-2 pl-0 m-0">
+              <li className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span className="text-xs font-semibold text-stone-500 tabular-nums w-7 shrink-0">
+                  1.
+                </span>
+                <a href={`#${MATURA_SECTION_ID}`} className={tocBlobClass}>
+                  Zadania w stylu maturalnym
+                </a>
+              </li>
+            </ol>
+          </div>
         </nav>
 
         {/* Wzór wstępny */}
@@ -2942,24 +3897,23 @@ export default function FunkcjaLiniowaPage() {
           />
         </div>
 
+        {/* Zadania w stylu maturalnym (jak na PR) */}
         <div className="mt-12">
-          <RuleBox title="Słowniczek pojęć" color="green">
-            <ul className="list-disc ml-5 space-y-2">
-              <li>
-                <strong>Odcięta</strong> punktu (albo odcięta na osi): to jego współrzędna{" "}
-                <Mi>{"x"}</Mi>
-              </li>
-              <li>
-                <strong>Rzędna:</strong> współrzędna <Mi>{"y"}</Mi>.
-              </li>
-              <li>
-                <strong>Argument</strong> funkcji <Mi>{"f"}</Mi> to wartość <Mi>{"x"}</Mi>, którą podstawiasz do wzoru (np. w <Mi>{"f(5)"}</Mi> argumentem jest <Mi>{"5"}</Mi>).
-              </li>
-              <li>
-                <strong>Wartość funkcji</strong> dla danego argumentu to wynik <Mi>{"f(x)"}</Mi>, często oznaczony na wykresie literą <Mi>{"y"}</Mi>. Dla <Mi>{"f(x)=2x+1"}</Mi> wartością w <Mi>{"x=3"}</Mi> jest <Mi>{"f(3)=7"}</Mi>, czyli <Mi>{"y=7"}</Mi>.
-              </li>
-            </ul>
-          </RuleBox>
+          <SectionHead id={MATURA_SECTION_ID} eyebrow="Praktyka" title="Zadania maturalne" />
+          <p className="text-stone-500 text-base leading-relaxed mb-8 max-w-2xl">
+            Poniżej zadania prowadzone jak na arkuszu maturalnym.
+          </p>
+          {maturaStyleTasks.length > 0 ? (
+            <div className="space-y-12">
+              {maturaStyleTasks.map((task) => (
+                <TaskCard key={task.id} {...task} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-stone-400 text-sm italic">
+              Treść zadań zostanie dodana.
+            </p>
+          )}
         </div>
 
         {/* Stopka */}

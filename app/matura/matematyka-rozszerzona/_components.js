@@ -121,7 +121,7 @@ export const TaskCard = ({
       {/* Treść */}
       <div className="bg-white px-5 py-5">
         {instruction && (
-          <p className="font-semibold text-stone-800 text-base mb-3">{instruction}</p>
+          <div className="font-semibold text-stone-800 text-base mb-3">{instruction}</div>
         )}
         {mathBlock && (
           <div className="text-center my-4">
@@ -160,10 +160,12 @@ export const TaskCard = ({
       {open === "hint"     && <Panel color="amber">{hint}</Panel>}
       {open === "solution" && <Panel color="purple">{solution}</Panel>}
 
-      {/* Stopka ze źródłem */}
-      <div className="bg-stone-50 border-t border-stone-100 px-5 py-3">
-        <span className="text-xs text-stone-400 italic">{source}</span>
-      </div>
+      {/* Stopka ze źródłem (tylko gdy podano, np. zadanie z matury) */}
+      {source ? (
+        <div className="bg-stone-50 border-t border-stone-100 px-5 py-3">
+          <span className="text-xs text-stone-400 italic">{source}</span>
+        </div>
+      ) : null}
     </div>
   );
 };
