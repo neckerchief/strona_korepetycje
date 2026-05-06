@@ -185,7 +185,7 @@ const ComingSoon = ({ description }) => (
 
 // ─── SVG diagrams ────────────────────────────────────────────────────────────
 //
-// Shared inclined plane geometry — α = 30° exactly:
+// Shared inclined plane geometry (α = 30° exactly):
 //   viewBox "0 0 300 175"
 //   Ground: y=158, x=10..290
 //   Slope: A=(15,158) → C=(169,70), rise=88, run=154, tan(α)=88/154≈0.571→α≈30°
@@ -201,20 +201,20 @@ const ComingSoon = ({ description }) => (
 // Chapter 1: basic inclined plane with block and F_g
 // Plane: A=(50,158) C=(204,70) B=(204,158), rise=88 run=154, α≈30°
 // slope_dir=(0.866,−0.500)  into_slope=(0.500,0.866)  outward=(−0.500,−0.866)
-// Block at 60% up slope — BL/BR on slope surface:
-//   slope_pt=(142,105)  half_w=15  half_h=9
-//   BL = slope_pt − slope_dir·15 = (129,113)  [on slope ✓ y=112.9]
-//   BR = slope_pt + slope_dir·15 = (155, 98)  [on slope ✓ y=98.1]
-//   TL = BL + outward·18         = (120, 97)  [above slope ✓]
-//   TR = BR + outward·18         = (146, 82)  [above slope ✓]
-//   centre=(138,98)
-// F_g=50px down → (138,148)
-// α label inside arc: bisector at 15° from horizontal, r≈16 → (66,154)
+// Block at 60% up slope; BL/BR on slope surface:
+//   slope_pt=(142,105)  half_w=22  half_h=12
+//   BL = slope_pt − slope_dir·22 = (123,116)  [on slope ✓ y=116.3]
+//   BR = slope_pt + slope_dir·22 = (161, 94)  [on slope ✓ y=94.6]
+//   TL = BL + outward·24         = (111, 95)  [above slope ✓]
+//   TR = BR + outward·24         = (149, 73)  [above slope ✓]
+//   centre=(136,95)
+// F_g=60px down → (136,155)
+// α label inside arc: bisector at 15° from horizontal, r≈26 → (75,151)
 const DiagramRowniaPochyla = () => (
   <svg viewBox="0 0 300 175" className="w-full max-w-[320px] mx-auto block">
     <defs>
       {/* slim arrowhead: width=4, length=11, ratio 1:2.75 */}
-      <marker id="rp-fg" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+      <marker id="rp-fg" markerWidth="12" markerHeight="4" refX="8" refY="2" orient="auto">
         <path d="M0,0 L0,4 L11,2 z" fill="#6d3a8e" />
       </marker>
     </defs>
@@ -231,14 +231,14 @@ const DiagramRowniaPochyla = () => (
     <line x1="204" y1="70" x2="204" y2="158" stroke="#94a3b8" strokeWidth="1.5" />
     {/* Right angle at B=(204,158) */}
     <path d="M 197,158 L 197,151 L 204,151" fill="none" stroke="#94a3b8" strokeWidth="1" />
-    {/* Angle arc at A=(50,158): label inside at bisector 15°, r≈16 → (66,154) */}
-    <path d="M 78,158 A 28,28 0 0 0 74,144" fill="none" stroke="#f97316" strokeWidth="1.5" />
-    <SvgMi x={64} y={155} math="\alpha" fill="#f97316" fontSize={12} />
-    {/* Block: TR(146,82) TL(120,97) BL(129,113) BR(155,98) — bottom face ON slope */}
-    <polygon points="146,82 120,97 129,113 155,98" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
-    {/* F_g arrow: centre=(138,98) → (138,148), 50px */}
-    <line x1="138" y1="98" x2="138" y2="146" stroke="#6d3a8e" strokeWidth="1.5" markerEnd="url(#rp-fg)" />
-    <SvgMi x={142} y={124} math="F_g" fill="#6d3a8e" fontSize={12} />
+    {/* Angle arc at A=(50,158): r=35, label inside at bisector 15°, r≈26 → (75,151) */}
+    <path d="M 85,158 A 35,35 0 0 0 80,141" fill="none" stroke="#f97316" strokeWidth="1.5" />
+    <SvgMi x={70} y={154} math="\alpha" fill="#f97316" fontSize={13} />
+    {/* Block: TR(149,73) TL(111,95) BL(123,116) BR(161,94); bottom face ON slope */}
+    <polygon points="149,73 111,95 123,116 161,94" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
+    {/* F_g arrow: centre=(136,95) → (136,155), 60px */}
+    <line x1="136" y1="95" x2="136" y2="153" stroke="#6d3a8e" strokeWidth="1.5" markerEnd="url(#rp-fg)" />
+    <SvgMi x={140} y={127} math="F_g" fill="#6d3a8e" fontSize={13} />
     {/* Height label alongside vertical */}
     <line x1="211" y1="73" x2="211" y2="155" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2" />
     <SvgMi x={214} y={115} math="h" fill="#94a3b8" fontSize={11} />
@@ -255,18 +255,18 @@ const DiagramTrygonometria = () => (
     {/* Height a (blue) */}
     <line x1="145" y1="120" x2="145" y2="28" stroke="#3b82f6" strokeWidth="1.5" />
 
-    {/* Right angle at (145,120) — kwadracik */}
+    {/* Right angle at (145,120): kwadracik */}
     <polyline
       points="145,110 135,110 135,120"
       fill="none" stroke="#6b7280" strokeWidth="1.5"
     />
 
-    {/* Angle α at (20,120) — łuk od poziomej do przeciwprostokątnej */}
+    {/* Angle α at (20,120): łuk od poziomej do przeciwprostokątnej */}
     <path
       d="M 46,120 A 26,26 0 0,0 40.9,104.6"
       fill="none" stroke="#374151" strokeWidth="1.5"
     />
-    <SvgMi x={47} y={116} math="\alpha" fill="#374151" fontSize={13} />
+    <SvgMi x={33} y={116} math="\alpha" fill="#374151" fontSize={13} />
 
     {/* Side labels */}
     <SvgMi x={64} y={62} math="c" fill="#f97316" fontSize={13} />
@@ -275,7 +275,7 @@ const DiagramTrygonometria = () => (
   </svg>
 );
 
-// Chapter 3: force decomposition — ENLARGED & CORRECTED, α≈30°
+// Chapter 3: force decomposition (ENLARGED & CORRECTED, α≈30°)
 // Same plane as Ch.1: A=(65,255) C=(273,135) B=(273,255), rise=120 run=208, |AC|≈240
 // slope_dir=(0.866,−0.500)  into_slope=(0.500,0.866)  outward=(−0.500,−0.866)
 //
@@ -328,16 +328,16 @@ const DiagramRozkladSil = () => (
     {/* Height dashed */}
     <line x1="280" y1="137" x2="280" y2="252" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2" />
     <SvgMi x={283} y={196} math="h" fill="#94a3b8" fontSize={11} />
-    {/* Block: TL(148,179) TR(186,157) BR(198,178) BL(160,200) — bottom face ON slope */}
+    {/* Block: TL(148,179) TR(186,157) BR(198,178) BL(160,200); bottom face ON slope */}
     <polygon points="148,179 186,157 198,178 160,200" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
     {/* F_g: straight down from centre (173,179) → (173,299) */}
-    <line x1="173" y1="179" x2="173" y2="297" stroke="#6d3a8e" strokeWidth="2" markerEnd="url(#rd-fg)" />
+    <line x1="173" y1="179" x2="173" y2="297" stroke="#6d3a8e" strokeWidth="1.5" markerEnd="url(#rd-fg)" />
     <SvgMi x={177} y={242} math="F_g" fill="#6d3a8e" fontSize={13} />
     {/* S: down-slope (173,179)→(121,209) */}
-    <line x1="173" y1="179" x2="121" y2="209" stroke="#f97316" strokeWidth="2" markerEnd="url(#rd-s)" />
+    <line x1="173" y1="179" x2="121" y2="209" stroke="#f97316" strokeWidth="1.5" markerEnd="url(#rd-s)" />
     <SvgMi x={98} y={202} math="S" fill="#f97316" fontSize={14} />
     {/* N: into-slope (173,179)→(225,269) */}
-    <line x1="173" y1="179" x2="225" y2="269" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#rd-n)" />
+    <line x1="173" y1="179" x2="225" y2="269" stroke="#3b82f6" strokeWidth="1.5" markerEnd="url(#rd-n)" />
     <SvgMi x={226} y={221} math="N" fill="#3b82f6" fontSize={14} />
     {/* Dashed parallelogram closures */}
     <line x1="121" y1="209" x2="173" y2="299" stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="5,3" />
@@ -364,7 +364,7 @@ const toc = [
   { id: "rozklad-sil",   label: "Rozkład siły grawitacji" },
   { id: "sila-normalna", label: "Siła reakcji" },
   { id: "bez-tarcia",    label: "Równia bez tarcia" },
-  { id: "tarcie",        label: "Tarcie na równni" },
+  { id: "tarcie",        label: "Tarcie na równi" },
   { id: "ruch-w-dol",   label: "Ruch w dół z tarciem" },
   { id: "ruch-w-gore",   label: "Ruch w górę" },
   { id: "sila-zewn",     label: "Siła zewnętrzna" },
@@ -379,7 +379,7 @@ const exampleRozklad = [
     label: "Zadanie",
     content: (
       <>
-        Klocek o masie <strong>m = 3 kg</strong> leży na równni pochyłej nachylonej pod kątem{" "}
+        Klocek o masie <strong>m = 3 kg</strong> leży na równi pochyłej nachylonej pod kątem{" "}
         <strong>α = 30°</strong> do poziomu. Oblicz siłę grawitacji oraz jej dwie składowe:
         składową wzdłuż zbocza S i składową nacisku N. Przyjmij g = 10 m/s².
       </>
@@ -391,7 +391,7 @@ const exampleRozklad = [
     label: "Siła grawitacji",
     content: "Ciężar ciała działa pionowo w dół:",
     formula: <Mb>{"F_g = m \\cdot g = 3 \\cdot 10 = 30\\ \\text{N}"}</Mb>,
-    hint: "F_g zawsze działa pionowo w dół, niezależnie od kąta nachylenia równni.",
+    hint: "F_g zawsze działa pionowo w dół, niezależnie od kąta nachylenia równi.",
   },
   {
     label: "Składowa S (wzdłuż zbocza)",
@@ -407,7 +407,7 @@ const exampleRozklad = [
     label: "Składowa nacisku N",
     content: (
       <>
-        Składowa ciężaru prostopadła do zbocza — naciska na powierzchnię równni.
+        Składowa ciężaru prostopadła do zbocza: naciska na powierzchnię równi.
         Podłoże odpowiada siłą reakcji R = N.
       </>
     ),
@@ -492,7 +492,7 @@ export default function RowniaPochylaPage() {
               <SectionHead id="czym-jest" eyebrow="Rozdział 1" title="Czym jest równia pochyła?" />
 
               <p className="text-stone-600 text-base leading-relaxed mt-3 mb-4">
-                Równnia pochyła to pochylona, płaska powierzchnia, po której ciała mogą się ślizgać lub toczyć.
+                Równia pochyła to pochylona, płaska powierzchnia, po której ciała mogą się ślizgać lub toczyć.
                 Kąt nachylenia α decyduje o tym, jak silnie ciężar ciała „ciągnie" je w dół zbocza.
                 To jeden z klasycznych układów w mechanice, bo w prosty sposób pokazuje rozkład sił.
               </p>
@@ -549,7 +549,7 @@ export default function RowniaPochylaPage() {
                   <DiagramRowniaPochyla />
                   <div className="flex-1 text-sm text-stone-600 leading-relaxed space-y-2">
                     <p>
-                      Równnia pochyła to trójkąt: pochyłe zbocze (kąt <strong className="text-[#f97316]">α</strong> z poziomem),
+                      Równia pochyła to trójkąt: pochyłe zbocze (kąt <strong className="text-[#f97316]">α</strong> z poziomem),
                       poziome podłoże i pionowa ściana.
                     </p>
                     <p>
@@ -570,7 +570,7 @@ export default function RowniaPochylaPage() {
               <SectionHead id="trygonometria" eyebrow="Rozdział 2" title="Powtórka: trygonometria" />
 
               <p className="text-stone-600 text-base leading-relaxed mt-3 mb-4">
-                Rozkład sił na równni pochyłej opiera się na funkcjach trygonometrycznych. Szybka powtórka
+                Rozkład sił na równi pochyłej opiera się na funkcjach trygonometrycznych. Szybka powtórka
                 przed przejściem do fizyki.
               </p>
 
@@ -651,12 +651,21 @@ export default function RowniaPochylaPage() {
             <section>
               <SectionHead id="rozklad-sil" eyebrow="Rozdział 3" title="Rozkład siły grawitacji na składowe" />
 
-              <p className="text-stone-600 text-base leading-relaxed mt-3 mb-4">
-                Ciężar <Mi>{"F_g"}</Mi> zawsze działa pionowo w dół. Na równni pochyłej rozkładamy go
-                na dwie prostopadłe składowe: <strong>S</strong> — wzdłuż zbocza (ciągnie ciało w dół),
-                i <strong>N</strong> — prostopadłą do zbocza, naciskającą na powierzchnię.
-                Podłoże odpowiada na ten nacisk siłą reakcji <strong>R = N</strong>.
-                To kluczowy krok w każdym zadaniu z równni pochyłej.
+              <p className="text-stone-600 text-base leading-relaxed mt-3 mb-2">
+                Ciężar <Mi>{"F_g"}</Mi> zawsze działa pionowo w dół. Na równi pochyłej rozkładamy go
+                na dwie prostopadłe składowe:
+              </p>
+              <ul className="list-disc pl-5 text-stone-600 text-base leading-relaxed space-y-1 mb-3 marker:text-stone-400">
+                <li>
+                  <strong>S</strong>: wzdłuż zbocza (ciągnie ciało w dół)
+                </li>
+                <li>
+                  <strong>N</strong>: prostopadła do zbocza, naciskająca na powierzchnię
+                </li>
+              </ul>
+              <p className="text-stone-600 text-base leading-relaxed mb-4">
+                Podłoże odpowiada na ten nacisk siłą reakcji <strong>R = N</strong>. Rozkład sił to kluczowy krok w
+                każdym zadaniu z równi pochyłej.
               </p>
 
               <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 my-5">
@@ -675,7 +684,7 @@ export default function RowniaPochylaPage() {
                       zwana „spadkiem". Ciągnie ciało w dół zbocza.
                     </p>
                     <p>
-                      <strong className="text-[#3b82f6]">N</strong> (niebieski): składowa nacisku — prasuje prostopadle
+                      <strong className="text-[#3b82f6]">N</strong> (niebieski): składowa nacisku, prasuje prostopadle
                       w powierzchnię zbocza. Podłoże odpowiada siłą reakcji <strong>R&nbsp;=&nbsp;N</strong>.
                     </p>
                     <p className="text-stone-400 text-xs">
@@ -748,7 +757,7 @@ export default function RowniaPochylaPage() {
               </div>
 
               <WorkedExample
-                title="Przykład: Rozkład ciężaru na równni pochyłej"
+                title="Przykład: Rozkład ciężaru na równi pochyłej"
                 steps={exampleRozklad}
               />
             </section>
@@ -777,7 +786,7 @@ export default function RowniaPochylaPage() {
 
             {/* ── Rozdział 6: Tarcie ── */}
             <section>
-              <SectionHead id="tarcie" eyebrow="Rozdział 6" title="Tarcie na równni" />
+              <SectionHead id="tarcie" eyebrow="Rozdział 6" title="Tarcie na równi" />
               <p className="text-stone-600 text-base leading-relaxed mt-3">
                 Tarcie statyczne i kinetyczne na pochyłej powierzchni. Kiedy ciało zaczyna się ślizgać?
                 Warunek ześlizgnięcia, wzory na siłę tarcia i jej wpływ na ruch ciała po zboczu.
@@ -789,7 +798,7 @@ export default function RowniaPochylaPage() {
             <section>
               <SectionHead id="ruch-w-dol" eyebrow="Rozdział 7" title="Ruch przyspieszony w dół (z tarciem)" />
               <p className="text-stone-600 text-base leading-relaxed mt-3">
-                Ciało ześlizguje się po równni z tarciem. Tarcie działa w górę zbocza (hamuje), S ciągnie
+                Ciało ześlizguje się po równi z tarciem. Tarcie działa w górę zbocza (hamuje), S ciągnie
                 w dół. Wypadkowa: <Mi>{"F_{wyp} = S - T = mg(\\sin\\alpha - \\mu\\cos\\alpha)"}</Mi>,
                 skąd przyspieszenie <Mi>{"a = g(\\sin\\alpha - \\mu\\cos\\alpha)"}</Mi>.
               </p>
@@ -800,7 +809,7 @@ export default function RowniaPochylaPage() {
             <section>
               <SectionHead id="ruch-w-gore" eyebrow="Rozdział 8" title="Ruch opóźniony (ciało jedzie w górę)" />
               <p className="text-stone-600 text-base leading-relaxed mt-3">
-                Ciało wyrzucone w górę po równni: zarówno S jak i tarcie T działają w tym samym kierunku
+                Ciało wyrzucone w górę po równi: zarówno S jak i tarcie T działają w tym samym kierunku
                 (oba hamują ciało). Przyspieszenie hamowania:{" "}
                 <Mi>{"a = g(\\sin\\alpha + \\mu\\cos\\alpha)"}</Mi>.
                 Ważne: przyspieszenie w górę jest większe niż przy ruchu w dół!
@@ -810,7 +819,7 @@ export default function RowniaPochylaPage() {
 
             {/* ── Rozdział 9: Siła zewnętrzna ── */}
             <section>
-              <SectionHead id="sila-zewn" eyebrow="Rozdział 9" title="Siła zewnętrzna na równni" />
+              <SectionHead id="sila-zewn" eyebrow="Rozdział 9" title="Siła zewnętrzna na równi" />
               <p className="text-stone-600 text-base leading-relaxed mt-3">
                 Co się dzieje, gdy ktoś pcha lub ciągnie ciało? Siła zewnętrzna może być równoległa
                 do zbocza, pozioma lub skierowana pod dowolnym kątem. Każdy przypadek inaczej wpływa
@@ -823,7 +832,7 @@ export default function RowniaPochylaPage() {
             <section>
               <SectionHead id="bloczek" eyebrow="Rozdział 10" title="Układ z bloczkiem (ciała połączone liną)" />
               <p className="text-stone-600 text-base leading-relaxed mt-3">
-                Klasyczny układ: ciało na równni połączone liną przez bloczek z ciałem wiszącym swobodnie.
+                Klasyczny układ: ciało na równi połączone liną przez bloczek z ciałem wiszącym swobodnie.
                 Równania Newtona piszemy dla każdego ciała osobno, a napięcie liny jest wspólne.
               </p>
               <ComingSoon description="Ten rozdział jest w przygotowaniu. Omówimy: warunki równowagi i ruchu układu, przykłady z tarciem i bez, wyznaczanie przyspieszenia i napięcia liny." />
