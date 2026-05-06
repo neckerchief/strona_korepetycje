@@ -48,7 +48,7 @@ const RuleBox = ({ title, color = "green", children }) => {
   return (
     <div className={cn("border-l-4 rounded-xl px-5 py-4 my-5", border)}>
       {title && (
-        <p className={cn("text-xs font-bold uppercase tracking-widest mb-2", titleColor)}>
+        <p className={cn("text-xs font-bold tracking-widest mb-2", titleColor)}>
           {title}
         </p>
       )}
@@ -291,10 +291,11 @@ const DiagramTrygonometria = () => (
 //   F_g=120px down → F_g_end=(173,299)
 //   S=60px (120·sin30°) down-slope (-0.866,+0.500)·60 → S_end=(121,209)
 //   N=104px (120·cos30°) into-slope (+0.500,+0.866)·104 → N_end=(225,269)
+//   R=104px reaction: outward from slope = −N_vec → R_end=(173−52,179−90)=(121,89)
 //   S_vec+N_vec=(−52+52, 30+74)=(0,104)≠120... fix below
 //
 // Corrected: N_vec = into_slope · (120·cos30°) = (0.500,0.866)·104 = (52,90)
-//   S_vec+N_vec=(−52+52, 30+90)=(0,120)=F_g_vec ✓  N_end=(173+52,179+90)=(225,269)
+//   S_vec+N_vec=(−52+52, 30+90)=(0,120)=F_g_vec ✓  N_end=(225,269), R_end=(121,89)
 const DiagramRozkladSil = () => (
   <svg viewBox="0 0 380 330" className="w-full max-w-[420px] mx-auto block">
     <defs>
@@ -307,6 +308,9 @@ const DiagramRozkladSil = () => (
       </marker>
       <marker id="rd-n" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
         <path d="M0,0 L0,4 L11,2 z" fill="#3b82f6" />
+      </marker>
+      <marker id="rd-r" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#16a34a" />
       </marker>
     </defs>
     {/* Ground */}
@@ -339,6 +343,9 @@ const DiagramRozkladSil = () => (
     {/* N: into-slope (173,179)→(225,269) */}
     <line x1="173" y1="179" x2="225" y2="269" stroke="#3b82f6" strokeWidth="1.5" markerEnd="url(#rd-n)" />
     <SvgMi x={226} y={221} math="N" fill="#3b82f6" fontSize={14} />
+    {/* R: reaction on block, opposite to N (173,179)→(121,89), |R|=|N| */}
+    <line x1="173" y1="179" x2="121" y2="89" stroke="#16a34a" strokeWidth="1.5" markerEnd="url(#rd-r)" />
+    <SvgMi x={100} y={92} math="R" fill="#16a34a" fontSize={14} anchor="end" />
     {/* Dashed parallelogram closures */}
     <line x1="121" y1="209" x2="173" y2="299" stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="5,3" />
     <line x1="225" y1="269" x2="173" y2="299" stroke="#f97316" strokeWidth="1.2" strokeDasharray="5,3" />
@@ -353,6 +360,98 @@ const DiagramRozkladSil = () => (
     <path d="M 192,213 A 22,22 0 0 1 174,218" fill="none" stroke="#f97316" strokeWidth="1.5" />
     <SvgMi x={176} y={211} math="\alpha" fill="#f97316" fontSize={12} />
   
+  </svg>
+);
+
+// Przykład „docisk zewnętrzny”, krok 1: F oraz F_∥, F_⊥ wszystkie od O; |F|=100 px, α=30°
+// F_∥=(75,-43), F_⊥=(25,43), wypadkowa (100,0); koniec F (273,179)
+const DiagramRozkladFPozioma = () => (
+  <svg viewBox="0 0 380 330" className="w-full max-w-[420px] mx-auto block">
+    <defs>
+      <marker id="fd-f" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#c2410c" />
+      </marker>
+      <marker id="fd-fp" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#f97316" />
+      </marker>
+      <marker id="fd-fq" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#3b82f6" />
+      </marker>
+    </defs>
+    <line x1="10" y1="255" x2="370" y2="255" stroke="#cbd5e1" strokeWidth="1.5" />
+    {[0,1,2,3,4,5,6,7,8,9,10,11,12,13].map(i => (
+      <line key={i} x1={26+i*25} y1="255" x2={10+i*25} y2="269" stroke="#e2e8f0" strokeWidth="1.3" />
+    ))}
+    <polygon points="65,255 273,135 273,255" fill="#f2ecfb" stroke="none" />
+    <line x1="65" y1="255" x2="273" y2="135" stroke="#6d3a8e" strokeWidth="1.5" />
+    <line x1="273" y1="135" x2="273" y2="255" stroke="#94a3b8" strokeWidth="1.5" />
+    <path d="M 266,255 L 266,248 L 273,248" fill="none" stroke="#94a3b8" strokeWidth="1" />
+    <path d="M 100,255 A 35,35 0 0 0 95,238" fill="none" stroke="#f97316" strokeWidth="1.5" />
+    <SvgMi x={84} y={251} math="\alpha" fill="#f97316" fontSize={13} />
+    <polygon points="148,179 186,157 198,178 160,200" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
+    {/* Pomocnicze: poziom (kierunek F), pion */}
+    <line x1="108" y1="179" x2="298" y2="179" stroke="#d6d3d1" strokeWidth="1" strokeDasharray="4,3" />
+    <line x1="173" y1="118" x2="173" y2="278" stroke="#a8a29e" strokeWidth="1" strokeDasharray="4,3" opacity="0.75" />
+    {/* Kierunek równoległy do zbocza (tylko pomoc) */}
+    <line x1="173" y1="179" x2="268" y2="125" stroke="#f97316" strokeWidth="1" strokeDasharray="5,4" opacity="0.45" />
+    {/* α przy O: pion a kierunek F_⊥ (jak kąt nachylenia) */}
+    <path d="M 240 180 A 31 31 0 0 0 244 195" fill="none" stroke="#f97316" strokeWidth="1.5" />
+    <SvgMi x={243} y={190} math="\alpha" fill="#f97316" fontSize={11} />
+    {/* α przy O: poziom vs F_∥ */}
+    <path d="M 205 179 A 32 32 0 0 0 201 163" fill="none" stroke="#f97316" strokeWidth="1.5" />
+    <SvgMi x={190} y={176} math="\alpha" fill="#f97316" fontSize={11} />
+    {/* Zamknięcie równoległoboku składowych */}
+    <line x1="248" y1="136" x2="273" y2="179" stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="5,3" opacity="0.85" />
+    <line x1="198" y1="222" x2="273" y2="179" stroke="#f97316" strokeWidth="1.2" strokeDasharray="5,3" opacity="0.85" />
+    {/* Kąt prosty przy O między F_∥ a F_⊥ */}
+    <path
+      d="M 182.5 173.5 L 188.1 183 L 178.4 188.4"
+      fill="none"
+      stroke="#78716c"
+      strokeWidth="1.2"
+    />
+    {/* Składowe od tego samego O; potem wypadkowa F na wierzchu */}
+    <line x1="173" y1="179" x2="248" y2="136" stroke="#f97316" strokeWidth="1.75" markerEnd="url(#fd-fp)" />
+    <SvgMi x={238} y={124} math={"F_{\\parallel}"} fill="#f97316" fontSize={13} anchor="middle" />
+    <line x1="173" y1="179" x2="198" y2="222" stroke="#3b82f6" strokeWidth="1.75" markerEnd="url(#fd-fq)" />
+    <SvgMi x={206} y={232} math={"F_{\\perp}"} fill="#3b82f6" fontSize={13} />
+    <line x1="173" y1="179" x2="273" y2="179" stroke="#c2410c" strokeWidth="2.25" markerEnd="url(#fd-f)" />
+    <SvgMi x={218} y={166} math="F" fill="#c2410c" fontSize={15} anchor="middle" />
+  </svg>
+);
+
+// Chapter 4: reaction force R and normal balance (same geometry as Ch.1, compact)
+// A=(50,158) C=(204,70), block centre ≈(136,95); into-slope for N: (0.5, 0.866), |N|=|R|=44 px
+const DiagramReakcjaPodloza = () => (
+  <svg viewBox="0 0 300 175" className="w-full max-w-[320px] mx-auto block">
+    <defs>
+      <marker id="rp-n" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#3b82f6" />
+      </marker>
+      <marker id="rp-r" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#16a34a" />
+      </marker>
+    </defs>
+    <line x1="10" y1="158" x2="290" y2="158" stroke="#cbd5e1" strokeWidth="1.5" />
+    {[0,1,2,3,4,5,6,7,8,9,10,11,12].map(i => (
+      <line key={i} x1={22+i*22} y1="158" x2={10+i*22} y2="170" stroke="#e2e8f0" strokeWidth="1.3" />
+    ))}
+    <polygon points="50,158 204,70 204,158" fill="#f2ecfb" stroke="none" />
+    <line x1="50" y1="158" x2="204" y2="70" stroke="#6d3a8e" strokeWidth="1.5" />
+    <line x1="204" y1="70" x2="204" y2="158" stroke="#94a3b8" strokeWidth="1.5" />
+    <path d="M 197,158 L 197,151 L 204,151" fill="none" stroke="#94a3b8" strokeWidth="1" />
+    <path d="M 85,158 A 35,35 0 0 0 80,141" fill="none" stroke="#f97316" strokeWidth="1.5" />
+    <SvgMi x={70} y={154} math="\alpha" fill="#f97316" fontSize={13} />
+    <polygon points="149,73 111,95 123,116 161,94" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
+    {/* N: nacisk (składowa ciężaru), od środka w stronę powierzchni */}
+    <line x1="136" y1="95" x2="158" y2="133" stroke="#3b82f6" strokeWidth="1.5" markerEnd="url(#rp-n)" />
+    <SvgMi x={160} y={125} math="N" fill="#3b82f6" fontSize={13} />
+    {/* R: reakcja podłoża na klocek, przeciwnie do N */}
+    <line x1="136" y1="95" x2="114" y2="57" stroke="#16a34a" strokeWidth="1.5" markerEnd="url(#rp-r)" />
+    <SvgMi x={102} y={56} math="R" fill="#16a34a" fontSize={13} anchor="end" />
+    <text x="148" y="168" className="text-[9px] fill-stone-400" style={{ fontFamily: "system-ui, sans-serif" }}>
+      prostopadle do zbocza
+    </text>
   </svg>
 );
 
@@ -384,14 +483,25 @@ const exampleRozklad = [
         składową wzdłuż zbocza S i składową nacisku N. Przyjmij g = 10 m/s².
       </>
     ),
-    hint: "Najpierw oblicz ciężar F_g = m·g, a potem rozłóż: S = F_g·sinα, N = F_g·cosα.",
+    hint: (
+      <>
+        Najpierw oblicz ciężar <Mi>{"F_g = m\\cdot g"}</Mi>, a potem rozłóż:{" "}
+        <Mi>{"S = F_g\\sin\\alpha"}</Mi>
+        {", "}
+        <Mi>{"N = F_g\\cos\\alpha"}</Mi>.
+      </>
+    ),
     formula: null,
   },
   {
     label: "Siła grawitacji",
     content: "Ciężar ciała działa pionowo w dół:",
     formula: <Mb>{"F_g = m \\cdot g = 3 \\cdot 10 = 30\\ \\text{N}"}</Mb>,
-    hint: "F_g zawsze działa pionowo w dół, niezależnie od kąta nachylenia równi.",
+    hint: (
+      <>
+        <Mi>{"F_g"}</Mi> zawsze działa pionowo w dół, niezależnie od kąta nachylenia równi.
+      </>
+    ),
   },
   {
     label: "Składowa S (wzdłuż zbocza)",
@@ -414,11 +524,113 @@ const exampleRozklad = [
     formula: <Mb>{"N = F_g \\cdot \\cos\\alpha = 30 \\cdot \\cos 30^\\circ = 30 \\cdot \\frac{\\sqrt{3}}{2} \\approx 26\\ \\text{N}"}</Mb>,
     hint: "cos30° = √3/2 ≈ 0,866. Im bardziej pionowa równia (większe α), tym mniejszy nacisk na powierzchnię.",
   },
+];
+
+const exampleReakcja = [
   {
-    label: "Sprawdzenie",
-    content: "Twierdzenie Pitagorasa: składowe S i N muszą odtworzyć F_g:",
-    formula: <Mb>{"\\sqrt{S^2 + N^2} = \\sqrt{15^2 + 26^2} = \\sqrt{225 + 676} = \\sqrt{901} \\approx 30\\ \\text{N}\\ \\checkmark"}</Mb>,
-    hint: "√901 ≈ 30,02 ≈ 30 N. Małe odchylenie wynika z zaokrąglenia cos30°. Pitagoras to dobry sposób na sprawdzenie.",
+    label: "Zadanie",
+    content: (
+      <>
+        Klocek o masie <strong>m = 4 kg</strong> spoczywa na równi pochyłej pod kątem{" "}
+        <strong>α = 30°</strong>. Oblicz wartość siły reakcji podłoża <strong>R</strong>, jeśli
+        na klocek nie działa żadna dodatkowa siła (poza ciężarem i reakcją). Przyjmij{" "}
+        <strong>g = 10 m/s²</strong>.
+      </>
+    ),
+    hint: (
+      <>
+        Najpierw <Mi>{"F_g"}</Mi>, potem składowa prostopadła do zbocza{" "}
+        <Mi>{"N = F_g\\cos\\alpha"}</Mi>. Przy spoczynku, w kierunku prostopadłym do zbocza,{" "}
+        <Mi>{"R = N"}</Mi>.
+      </>
+    ),
+    formula: null,
+  },
+  {
+    label: "Ciężar",
+    content: "Siła grawitacji działa pionowo w dół:",
+    formula: <Mb>{"F_g = m \\cdot g = 4 \\cdot 10 = 40\\ \\text{N}"}</Mb>,
+  },
+  {
+    label: "Nacisk na równię",
+    content: (
+      <>
+        Składowa ciężaru prostopadła do zbocza (nacisk) wynosi{" "}
+        <Mi>{"N = F_g \\cos\\alpha"}</Mi>:
+      </>
+    ),
+    formula: (
+      <Mb>
+        {"N = 40 \\cdot \\cos 30^\\circ = 40 \\cdot \\frac{\\sqrt{3}}{2} = 20\\sqrt{3} \\approx 35\\ \\text{N}"}
+      </Mb>
+    ),
+  },
+  {
+    label: "Siła reakcji",
+    content: (
+      <>
+        Klocek nie przyspiesza w kierunku „w głąb" ani „z powierzchni" zbocza, więc w tym kierunku
+        siły się równoważą: wartość reakcji podłoża jest równa naciskowi.
+      </>
+    ),
+    formula: <Mb>{"R = N \\approx 35\\ \\text{N}"}</Mb>,
+  },
+];
+
+const exampleReakcjaDodatkowa = [
+  {
+    label: "Zadanie",
+    content: (
+      <>
+        <div className="rounded-xl border border-stone-200 bg-white p-3 mb-4 overflow-x-auto">
+          <DiagramRozkladFPozioma />
+        </div>
+        <p className="mb-0">
+          Do poprzedniego klocka (<strong>m = 4 kg</strong>, <strong>α = 30°</strong>) przyłożono{" "}
+          jeszcze <strong>poziomo w prawo</strong> siłę <strong>F = 20 N</strong>. Na rysunku
+          widać rozkład <strong>F</strong> na składową równoległą do zbocza{" "}
+          <Mi>{"F_{\\parallel}"}</Mi> oraz prostopadłą{" "}
+          <Mi>{"F_{\\perp}"}</Mi> (w głąb powierzchni). Przy tym kącie{" "}
+          <Mi>{"F_{\\perp} = F\\sin\\alpha = 10\\ \\text{N}"}</Mi>. Ile wynosi teraz{" "}
+          <strong>R</strong>?
+          Przyjmij <strong>g = 10 m/s²</strong>.
+        </p>
+      </>
+    ),
+    hint: (
+      <>
+        Najpierw <Mi>{"N"}</Mi> od ciężaru, potem dodaj <Mi>{"F_{\\perp}"}</Mi> do nacisku w
+        kierunku prostopadłym do zbocza.
+      </>
+    ),
+    formula: null,
+  },
+  {
+    label: "Nacisk bez siły zewnętrznej",
+    content: "Z poprzedniego przykładu wiemy, że bez dodatkowej siły nacisk od ciężaru daje około:",
+    formula: <Mb>{"N = F_g \\cos\\alpha \\approx 35\\ \\text{N}"}</Mb>,
+  },
+  {
+    label: "Nacisk całkowity",
+    content: (
+      <>
+        Składowa siły <strong>F</strong> prostopadła do zbocza, skierowana w głąb powierzchni,
+        zwiększa nacisk:{" "}
+        <Mi>{"N_c = N + F_\\perp"}</Mi>.
+      </>
+    ),
+    formula: <Mb>{"N_c = 35\\ \\text{N} + 10\\ \\text{N} = 45\\ \\text{N}"}</Mb>,
+  },
+  {
+    label: "Reakcja i tarcie",
+    content: (
+      <>
+        Teraz <Mi>{"R = N_c"}</Mi> w kierunku prostopadłym do zbocza przy braku przyspieszenia w tym
+        kierunku. Większy nacisk oznacza większy maksymalny moduł tarcia:{" "}
+        <Mi>{"T = \\mu N_c"}</Mi>.
+      </>
+    ),
+    formula: <Mb>{"R = 45\\ \\text{N}"}</Mb>,
   },
 ];
 
@@ -525,6 +737,7 @@ export default function RowniaPochylaPage() {
                       { sym: "S",       name: "Spadek",         desc: <>składowa <Mi>{"F_g"}</Mi> wzdłuż zbocza: <Mi>{"S = F_g\\sin\\alpha"}</Mi></> },
                       { sym: "N",       name: "Nacisk",         desc: <>składowa <Mi>{"F_g"}</Mi> prostopadle do zbocza: <Mi>{"N = F_g\\cos\\alpha"}</Mi></> },
                       { sym: "R",       name: "Siła reakcji",   desc: <>odpowiedź podłoża na nacisk <Mi>{"N"}</Mi>, prostopadła do zbocza, <Mi>{"R = N"}</Mi></> },
+                      { sym: "\\mu",   name: "Współczynnik tarcia", desc: <>liczba bezwymiarowa, mówi jak mocno para ciał lub materiałów ślizga się lub obciera przy sobie</> },
                       { sym: "T",       name: "Tarcie",         desc: <><Mi>{"T = \\mu\\cdot N"}</Mi>{", równolegle do zbocza"}</> },
                     ].map(item => (
                       <div key={item.name} className="flex items-start gap-2">
@@ -672,9 +885,11 @@ export default function RowniaPochylaPage() {
                 <p className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-3">
                   Rozkład ciężaru na składowe S i N
                 </p>
-                <div className="flex flex-col sm:flex-row gap-6 items-center">
-                  <DiagramRozkladSil />
-                  <div className="flex-1 text-sm text-stone-600 leading-relaxed space-y-3">
+                <div className="flex flex-col gap-6">
+                  <div className="w-full">
+                    <DiagramRozkladSil />
+                  </div>
+                  <div className="w-full text-sm text-stone-600 leading-relaxed space-y-3">
                     <p>
                       Wektor <strong className="text-[#6d3a8e]"><Mi>{"F_g"}</Mi></strong> (fioletowy) działa pionowo w dół.
                       Rozkładamy go na dwa prostopadłe wektory:
@@ -684,42 +899,23 @@ export default function RowniaPochylaPage() {
                       zwana „spadkiem". Ciągnie ciało w dół zbocza.
                     </p>
                     <p>
-                      <strong className="text-[#3b82f6]">N</strong> (niebieski): składowa nacisku, prasuje prostopadle
-                      w powierzchnię zbocza. Podłoże odpowiada siłą reakcji <strong>R&nbsp;=&nbsp;N</strong>.
+                      <strong className="text-[#3b82f6]">N</strong> (niebieski): składowa ciężaru prostopadła do zbocza.
+                      Na rysunku biegnie od środka klocka w stronę powierzchni: to nacisk na równię w ujęciu rozkładu ciężaru.
+                    </p>
+                    <p>
+                      <strong className="text-[#16a34a]">R</strong> (zielony): siła reakcji podłoża na klocek,
+                      przyłożona w tym samym środku co pozostałe wektory, ze zwrotem przeciwnym do{" "}
+                      <strong className="text-[#3b82f6]">N</strong>. Z III zasady dynamiki Newtona para nacisk-reakcja
+                      ma równe moduły i przeciwne zwroty, stąd <Mi>{"|R| = |N|"}</Mi>. Przy nieruchomej równi, na
+                      rozważanym klocku w kierunku normalnym nie ma przyspieszenia, więc te siły się równoważą.
                     </p>
                     <p className="text-stone-400 text-xs">
                       Przerywane linie zamykają równoległobok: <Mi>{"\\vec{S}+\\vec{N}=\\vec{F}_g"}</Mi>.
-                      Mały łuk przy końcu <Mi>{"F_g"}</Mi> zaznacza kąt α między <Mi>{"F_g"}</Mi> a kierunkiem N.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <h3 className="font-display text-lg text-stone-800 mt-6 mb-2">Skąd sinα i cosα?</h3>
-              <p className="text-stone-600 text-sm leading-relaxed mb-3">
-                Kluczowe pytanie: dlaczego akurat sinα i cosα? Odpowiedź tkwi w podobieństwie kątów.
-              </p>
-
-              <RuleBox title="Geometria: dlaczego kąt = α" color="blue">
-                <p>
-                  Kąt nachylenia zbocza do poziomu wynosi α. Prostopadła do zbocza tworzy z pionem
-                  taki sam kąt α. Dlaczego? Bo zbocze i pion są prostopadłe do odpowiednio:
-                  poziomu i prostopadłej do zbocza. Kąty między nimi są równe (kąty naprzemianległe).
-                </p>
-                <p className="mt-2">
-                  W trójkącie sił (F_g jako przeciwprostokątna) kąt przy wierzchołku F_g = α. Stąd:
-                </p>
-                <div className="mt-2 grid sm:grid-cols-2 gap-3 text-sm text-center">
-                  <div className="bg-white rounded-lg px-4 py-2 border border-blue-200">
-                    bok naprzeciwko kąta α = S{" "}
-                    <span className="text-stone-400 text-xs block">→ S = F_g · sinα</span>
-                  </div>
-                  <div className="bg-white rounded-lg px-4 py-2 border border-blue-200">
-                    bok przyległy do kąta α = N{" "}
-                    <span className="text-stone-400 text-xs block">→ N = F_g · cosα</span>
-                  </div>
-                </div>
-              </RuleBox>
 
               <RuleBox title="Wzory na składowe siły grawitacji">
                 <div className="grid sm:grid-cols-2 gap-4 mt-2">
@@ -765,12 +961,125 @@ export default function RowniaPochylaPage() {
             {/* ── Rozdział 4: Siła reakcji ── */}
             <section>
               <SectionHead id="sila-normalna" eyebrow="Rozdział 4" title="Siła reakcji podłoża" />
-              <p className="text-stone-600 text-base leading-relaxed mt-3">
-                Siła reakcji R to odpowiedź podłoża na nacisk ciała, prostopadła do powierzchni zbocza.
-                Jej wartość zależy od kąta α, masy ciała i ewentualnej dodatkowej siły prostopadłej
-                do zbocza (np. dociskającej lub odrywającej). R wpływa bezpośrednio na siłę tarcia.
+
+              <p className="text-stone-600 text-base leading-relaxed mt-3 mb-4">
+                Siła reakcji <strong>R</strong> to siła, jaką podłoże działa na ciało, gdy ciało na nie
+                naciska. Na równi pochyłej reakcja ma kierunek prostopadły do powierzchni zbocza. Jej
+                wartość wynika z równowagi w kierunku „prostopadłym do zbocza" oraz z III zasady
+                dynamiki Newtona (para: nacisk ciała na równię i nacisk równi na ciało).
               </p>
-              <ComingSoon description="Ten rozdział jest w przygotowaniu. Omówimy: N = F_g·cosα, wpływ siły dodatkowej prostopadłej na N i R, a co za tym idzie na tarcie T = μ·N." />
+
+              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 my-5">
+                <p className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-3">
+                  N i R na jednym schemacie
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                  <DiagramReakcjaPodloza />
+                  <div className="flex-1 text-sm text-stone-600 leading-relaxed space-y-2">
+                    <p>
+                      <strong className="text-[#3b82f6]">N</strong> rysujemy jako składową ciężaru
+                      od środka klocka <em>w stronę powierzchni</em> (to nacisk w ujęciu rozkładu{" "}
+                      <Mi>{"F_g"}</Mi>).
+                    </p>
+                    <p>
+                      <strong className="text-[#16a34a]">R</strong> to odpowiedź podłoża na ten
+                      nacisk: ten sam moduł, przeciwny zwrot, punkt przyłożenia w środku
+                      klocka.
+                    </p>
+                    <p>
+                      Klocek nie odrywa się od równi i nie „wchodzi" w podłoże. W kierunku
+                      prostopadłym do zbocza przyspieszenie jest zerowe, więc siły
+                      w tym kierunku się równoważą: <Mi>{"R = N"}</Mi>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <RuleBox title="Wzór na reakcję w najprostszym przypadku" color="blue">
+                <p className="text-sm mb-3">
+                  Jeśli poza ciężarem nie ma innych sił z istotną składową prostopadłą do zbocza,
+                  nacisk wynika wyłącznie z rozkładu <Mi>{"F_g"}</Mi>:
+                </p>
+                <div className="bg-white rounded-xl px-4 py-3 border border-blue-200 text-center">
+                  <Mb>{"N = F_g \\cos\\alpha = m g \\cos\\alpha"}</Mb>
+                  <p className="text-xs text-stone-500 mt-2">
+                    Przy braku przyspieszenia prostopadle do zbocza:{" "}
+                    <Mi>{"R = N"}</Mi>
+                  </p>
+                </div>
+                <p className="text-sm mt-3">
+                  <strong>Uwaga językowa:</strong> w podręcznikach spotkasz też określenie „siła
+                  normalna" na <strong>R</strong>. W tym materiale <strong>N</strong>{" "}
+                  oznacza składową ciężaru (nacisk w wyniku masy i kąta), a <strong>R</strong>, siłę
+                  reakcji podłoża na ciało.
+                </p>
+              </RuleBox>
+
+              <WorkedExample title="Przykład: reakcja przy spoczynku" steps={exampleReakcja} />
+
+              <WorkedExample
+                title="Przykład: docisk zewnętrzny zwiększa całkowity nacisk i reakcję podłoża"
+                steps={exampleReakcjaDodatkowa}
+              />
+
+              <h3 className="font-display text-lg text-stone-800 mt-8 mb-3">Szybkie ćwiczenia</h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <ExerciseCard
+                  number={1}
+                  question={
+                    <>
+                      Klocek <Mi>{"m = 2"}</Mi> kg leży na równi <Mi>{"\\alpha = 0^\\circ"}</Mi>{" "}
+                      (poziom). Ile wynosi <Mi>{"R"}</Mi> (przy <Mi>{"g = 10"}</Mi> m/s², bez innych
+                      sił)?
+                    </>
+                  }
+                  answer={<Mi>{"R = N = m g = 20\\ \\text{N}"}</Mi>}
+                />
+                <ExerciseCard
+                  number={2}
+                  question={
+                    <>
+                      Dla <Mi>{"m = 5"}</Mi> kg i <Mi>{"\\alpha = 37^\\circ"}</Mi> oblicz{" "}
+                      <Mi>{"N"}</Mi> i <Mi>{"R"}</Mi>, jeśli{" "}
+                      <Mi>{"\\cos 37^\\circ = 0{,}8"}</Mi>, <Mi>{"g = 10"}</Mi> m/s².
+                    </>
+                  }
+                  answer={
+                    <>
+                      <Mi>{"N = R = 5 \\cdot 10 \\cdot 0{,}8 = 40\\ \\text{N}"}</Mi>
+                    </>
+                  }
+                />
+                <ExerciseCard
+                  number={3}
+                  question={
+                    <>
+                      Ten sam układ co w przykładzie „docisk zewnętrzny”: pozioma siła{" "}
+                      <Mi>{"F = 20\\ \\text{N}"}</Mi> (kierunek i rozkład jak na rysunku w kroku 1 tego
+                      przykładu), klocek <Mi>{"m = 4\\ \\text{kg}"}</Mi>,{" "}
+                      <Mi>{"g = 10\\ \\text{m}/\\text{s}^2"}</Mi>. Tym razem{" "}
+                      <Mi>{"\\alpha = 60^\\circ"}</Mi>. Oblicz siłę reakcji{" "}
+                      <Mi>{"R"}</Mi> (przyjmij{" "}
+                      <Mi>{"\\sin 60^\\circ = \\frac{\\sqrt{3}}{2}"}</Mi>,{" "}
+                      <Mi>{"\\cos 60^\\circ = 0{,}5"}</Mi>).
+                    </>
+                  }
+                  answer={
+                    <>
+                      <Mi>{"N = m g \\cos\\alpha = 4 \\cdot 10 \\cdot 0{,}5 = 20\\ \\text{N}"}</Mi>
+                      {", "}
+                      <Mi>
+                        {"F_{\\perp} = F \\sin\\alpha = 20 \\cdot \\frac{\\sqrt{3}}{2} = 10\\sqrt{3}\\ \\text{N}"}
+                      </Mi>
+                      {", "}
+                      <Mi>
+                        {"R = N_c = N + F_{\\perp} = \\bigl(20 + 10\\sqrt{3}\\bigr)\\ \\text{N} \\approx 37\\ \\text{N}"}
+                      </Mi>
+                      .
+                    </>
+                  }
+                />
+              </div>
             </section>
 
             {/* ── Rozdział 5: Bez tarcia ── */}

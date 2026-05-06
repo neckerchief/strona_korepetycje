@@ -29,7 +29,7 @@ const RuleBox = ({ title, color = "purple", children }) => {
   return (
     <div className={cn("border-l-4 rounded-xl px-5 py-4 my-5", border)}>
       {title && (
-        <p className={cn("text-xs font-bold uppercase tracking-widest mb-2", titleColor)}>
+        <p className={cn("text-xs font-bold tracking-widest mb-2", titleColor)}>
           {title}
         </p>
       )}
