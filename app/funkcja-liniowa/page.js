@@ -688,7 +688,6 @@ const maturaStyleTasks = [
   {
     id: "fl-m-graf-rownolegla-prostopadla-1",
     number: "1",
-    points: "0–2",
     instruction: (
       <span>
         Znajdź te liczby <Mi>{"m"}</Mi>, dla których proste o równaniach{" "}
@@ -764,7 +763,6 @@ const maturaStyleTasks = [
   {
     id: "fl-m-cwiartki-f-liniowa-2",
     number: "2",
-    points: "0–4",
     instruction: (
       <div className="space-y-4">
         <p className="font-semibold">
@@ -931,7 +929,6 @@ const maturaStyleTasks = [
   {
     id: "fl-podr-152-rownolegla-przez-punkt",
     number: "3",
-    points: "0–2",
     instruction: (
       <span>
         Punkt <Mi>{"S = \\left(\\dfrac{3}{4},\\, \\dfrac{1}{2}\\right)"}</Mi> należy do prostej{" "}
@@ -974,7 +971,6 @@ const maturaStyleTasks = [
   {
     id: "fl-podr-153-prostopadla-przez-punkt-oy",
     number: "4",
-    points: "0–2",
     instruction: (
       <span>
         Prosta <Mi>{"k"}</Mi> przecina oś <Mi>{"OY"}</Mi> w punkcie <Mi>{"P = (0,\\, 7)"}</Mi> i jest prostopadła do prostej o
@@ -1017,7 +1013,6 @@ const maturaStyleTasks = [
   {
     id: "fl-podr-154-prosta-przez-dwa-punkty",
     number: "5",
-    points: "0–2",
     instruction: (
       <span>
         Prosta <Mi>{"k"}</Mi> zawiera odcinek, którego końcami są punkty <Mi>{"A = (0,\\, -3)"}</Mi> oraz{" "}
@@ -1056,7 +1051,6 @@ const maturaStyleTasks = [
   {
     id: "fl-podr-155-wspolliniowosc",
     number: "6",
-    points: "0–2",
     instruction: (
       <span>
         Sprawdź, czy punkty <Mi>{"A = (0,\\, -4)"}</Mi>, <Mi>{"B = (2,\\, 0)"}</Mi>,{" "}
@@ -1112,7 +1106,6 @@ const maturaStyleTasks = [
   {
     id: "fl-podr-156-punkt-rzedna-wieksza",
     number: "7",
-    points: "0–2",
     instruction: (
       <span>
         Znajdź współrzędne takiego punktu należącego do prostej o równaniu <Mi>{"y = 3x + 2"}</Mi>, którego rzędna jest o 10
@@ -1152,7 +1145,6 @@ const maturaStyleTasks = [
   {
     id: "fl-zad-167-trzy-proste-jeden-punkt",
     number: "8",
-    points: "0–2",
     instruction: (
       <span>
         Dane są funkcje <Mi>{"f(x) = 3x - 2"}</Mi>, <Mi>{"g(x) = -\\dfrac{1}{2}x + 5"}</Mi> oraz{" "}
@@ -1202,7 +1194,6 @@ const maturaStyleTasks = [
   {
     id: "fl-zad-168-odcinek-przeciecie-oy",
     number: "9",
-    points: "0–2",
     instruction: (
       <span>
         Odcinek o końcach <Mi>{"A = (-2,\\, 5)"}</Mi> i <Mi>{"B = (3,\\, 1)"}</Mi> jest wykresem funkcji <Mi>{"f"}</Mi>. Znajdź
@@ -1245,7 +1236,6 @@ const maturaStyleTasks = [
   {
     id: "fl-zad-169-miejsce-zero-wlasnosc",
     number: "10",
-    points: "0–3",
     instruction: (
       <span>
         Miejscem zerowym funkcji <Mi>{"f(x) = -2x + b"}</Mi> jest liczba <Mi>{"1{,}5"}</Mi>.
@@ -1303,7 +1293,6 @@ const maturaStyleTasks = [
   {
     id: "fl-zad-parametr-b-nierownosci",
     number: "11",
-    points: "0–3",
     instruction: (
       <span>
         Funkcja jest określona wzorem <Mi>{"f(x) = 3x + b"}</Mi>.
@@ -1369,7 +1358,6 @@ const maturaStyleTasks = [
   {
     id: "fl-mc-znaki-ab-wykres",
     number: "12",
-    points: "0–1",
     instruction: (
       <div className="space-y-4 font-normal">
         <p>
@@ -1432,7 +1420,6 @@ const maturaStyleTasks = [
   {
     id: "fl-wykres-prosta-trojkat-osiowe",
     number: "13",
-    points: "0–2",
     instruction: (
       <div className="space-y-4 font-normal">
         <p>
@@ -1508,6 +1495,458 @@ const maturaStyleTasks = [
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
           <p className="font-semibold text-stone-800">
             Odpowiedź: a) <Mi>{"a = \\dfrac{1}{3}"}</Mi>; b) <Mi>{"P = 6"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-m-schem-monotonicznosc-parametr-m",
+    number: "14",
+    instruction: (
+      <span>
+        Funkcja liniowa jest określona wzorem <Mi>{"f(x) = (m + 1)x - 4"}</Mi>, gdzie <Mi>{"m"}</Mi> jest parametrem.
+        <span className="block mt-3 font-normal">
+          a) Wyznacz wszystkie wartości <Mi>{"m"}</Mi>, dla których funkcja <Mi>{"f"}</Mi> jest ściśle malejąca w zbiorze liczb rzeczywistych.
+        </span>
+        <span className="block font-normal mt-1">
+          b) Czy istnieje wartość <Mi>{"m"}</Mi>, dla której funkcja <Mi>{"f"}</Mi> jest stała? Jeśli tak, podaj takie{" "}
+          <Mi>{"m"}</Mi> oraz wzór funkcji <Mi>{"f"}</Mi>.
+        </span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <div className="space-y-2">
+        <p>
+          a) <Mi>{"m < -1"}</Mi>
+        </p>
+        <p>
+          b) tak: <Mi>{"m = -1"}</Mi>, <Mi>{"f(x) = -4"}</Mi>
+        </p>
+      </div>
+    ),
+    hint: (
+      <div className="space-y-2 text-sm">
+        <p>
+          Dla <Mi>{"f(x)=ax+b"}</Mi> funkcja jest ściśle malejąca, gdy <Mi>{"a < 0"}</Mi>, ściśle rosnąca, gdy <Mi>{"a > 0"}</Mi>, a stała,
+          gdy <Mi>{"a = 0"}</Mi>. U Ciebie <Mi>{"a = m + 1"}</Mi>.
+        </p>
+      </div>
+    ),
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">a)</p>
+        <p>
+          Współczynnik kierunkowy to <Mi>{"m + 1"}</Mi>. Ścisła malejącość na <Mi>{"\\mathbb{R}"}</Mi> oznacza <Mi>{"m + 1 < 0"}</Mi>, czyli{" "}
+          <Mi>{"m < -1"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">b)</p>
+        <p>
+          Funkcja liniowa jest stała, gdy współczynnik przy <Mi>{"x"}</Mi> znika: <Mi>{"m + 1 = 0"}</Mi>, stąd <Mi>{"m = -1"}</Mi>. Wtedy{" "}
+          <Mi>{"f(x) = 0 \\cdot x - 4 = -4"}</Mi>.
+        </p>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"m < -1"}</Mi>; b) tak, <Mi>{"m = -1"}</Mi>, <Mi>{"f(x) = -4"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-m-schem-ogolne-osie-postac-kierunkowa",
+    number: "15",
+    instruction: (
+      <span>
+        Prosta <Mi>{"k"}</Mi> ma równanie ogólne <Mi>{"3x + 2y - 12 = 0"}</Mi>.
+        <span className="block mt-3 font-normal">
+          a) Zapisz równanie prostej <Mi>{"k"}</Mi> w postaci kierunkowej <Mi>{"y = ax + b"}</Mi>.
+        </span>
+        <span className="block font-normal mt-1">
+          b) Podaj współrzędne punktów przecięcia prostej <Mi>{"k"}</Mi> z osiami układu <Mi>{"Ox"}</Mi> oraz <Mi>{"Oy"}</Mi>.
+        </span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <div className="space-y-2">
+        <p>
+          a) <Mi>{"y = -\\dfrac{3}{2}x + 6"}</Mi>
+        </p>
+        <p>
+          b) z <Mi>{"Ox"}</Mi>: <Mi>{"(4,\\, 0)"}</Mi>; z <Mi>{"Oy"}</Mi>: <Mi>{"(0,\\, 6)"}</Mi>
+        </p>
+      </div>
+    ),
+    hint: (
+      <div className="space-y-2 text-sm">
+        <p>
+          Wyraź <Mi>{"y"}</Mi> z równania ogólnego. Na osi <Mi>{"Ox"}</Mi> podstaw <Mi>{"y = 0"}</Mi>, na osi <Mi>{"Oy"}</Mi> podstaw{" "}
+          <Mi>{"x = 0"}</Mi>.
+        </p>
+      </div>
+    ),
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">a)</p>
+        <Mb>{"3x + 2y - 12 = 0 \\quad \\Rightarrow \\quad 2y = -3x + 12 \\quad \\Rightarrow \\quad y = -\\dfrac{3}{2}x + 6"}</Mb>
+        <p className="font-semibold text-stone-800">b)</p>
+        <p>
+          Przecięcie z <Mi>{"Ox"}</Mi> (<Mi>{"y = 0"}</Mi>): <Mi>{"3x - 12 = 0"}</Mi>, stąd <Mi>{"x = 4"}</Mi>, punkt <Mi>{"(4,\\, 0)"}</Mi>.
+        </p>
+        <p>
+          Przecięcie z <Mi>{"Oy"}</Mi> (<Mi>{"x = 0"}</Mi>): <Mi>{"2y - 12 = 0"}</Mi>, stąd <Mi>{"y = 6"}</Mi>, punkt <Mi>{"(0,\\, 6)"}</Mi>.
+        </p>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"y = -\\dfrac{3}{2}x + 6"}</Mi>; b) <Mi>{"(4,\\, 0)"}</Mi> oraz <Mi>{"(0,\\, 6)"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-m-schem-pion-poziom-odleglosc-rownolegla",
+    number: "16",
+    instruction: (
+      <span>
+        W kartezjańskim układzie współrzędnych dane są proste <Mi>{"p \\colon x = -1"}</Mi> oraz <Mi>{"q \\colon y = 4"}</Mi>. Zapisz równanie
+        prostej przechodzącej przez punkt przecięcia prostych <Mi>{"p"}</Mi> i <Mi>{"q"}</Mi>, która jest równoległa do prostej{" "}
+        <Mi>{"y = 2x"}</Mi>.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"y = 2x + 6"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Prosta <Mi>{"p"}</Mi> jest pionowa, <Mi>{"q"}</Mi> pozioma: ich punkt wspólny ma odciętę jak dla <Mi>{"p"}</Mi> i rzędną jak dla{" "}
+        <Mi>{"q"}</Mi>. Równoległość do <Mi>{"y = 2x"}</Mi> oznacza ten sam współczynnik kierunkowy <Mi>{"2"}</Mi>.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <p>
+          Punkt przecięcia prostych <Mi>{"x = -1"}</Mi> i <Mi>{"y = 4"}</Mi> to <Mi>{"(-1,\\, 4)"}</Mi>.
+        </p>
+        <p>
+          Szukana prosta ma postać <Mi>{"y = 2x + b"}</Mi> (równoległość do <Mi>{"y = 2x"}</Mi>). Punkt <Mi>{"(-1,\\, 4)"}</Mi> leży na niej:
+        </p>
+        <Mb>{"4 = 2 \\cdot (-1) + b \\quad \\Rightarrow \\quad b = 6"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"y = 2x + 6"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-m-schem-ogolne-rownolegla-prostopadla-parametr-a",
+    number: "17",
+    instruction: (
+      <span>
+        Dane są proste <Mi>{"k \\colon 4x + 2y - 1 = 0"}</Mi> oraz <Mi>{"\\ell \\colon ax + 8y + 3 = 0"}</Mi>, gdzie{" "}
+        <Mi>{"a"}</Mi> jest parametrem rzeczywistym.
+        <span className="block mt-3 font-normal">
+          a) Wyznacz wartość <Mi>{"a"}</Mi>, przy której proste <Mi>{"k"}</Mi> i <Mi>{"\\ell"}</Mi> są równoległe.
+        </span>
+        <span className="block font-normal mt-1">
+          b) Wyznacz wartość <Mi>{"a"}</Mi>, przy której proste <Mi>{"k"}</Mi> i <Mi>{"\\ell"}</Mi> są prostopadłe.
+        </span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <div className="space-y-2">
+        <p>
+          a) <Mi>{"a = 16"}</Mi>
+        </p>
+        <p>
+          b) <Mi>{"a = -4"}</Mi>
+        </p>
+      </div>
+    ),
+    hint: (
+      <p className="text-sm">
+        Przekształć oba równania do postaci <Mi>{"y = \\ldots"}</Mi>, odczytaj współczynniki kierunkowe i zastosuj warunki na równoległość oraz
+        prostopadłość prostych niepionowych.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-4">
+        <p>
+          Z <Mi>{"k"}</Mi>:
+        </p>
+        <Mb>{"4x + 2y - 1 = 0 \\quad \\Rightarrow \\quad y = -2x + \\dfrac{1}{2}"}</Mb>
+        <p>
+          Z <Mi>{"\\ell"}</Mi>:
+        </p>
+        <Mb>{"ax + 8y + 3 = 0 \\quad \\Rightarrow \\quad y = -\\dfrac{a}{8}x - \\dfrac{3}{8}"}</Mb>
+        <p className="font-semibold text-stone-800">a) Równoległość</p>
+        <Mb>{"-\\dfrac{a}{8} = -2 \\quad \\Rightarrow \\quad a = 16"}</Mb>
+        <p className="font-semibold text-stone-800">b) Prostopadłość</p>
+        <Mb>{"(-2) \\cdot \\left(-\\dfrac{a}{8}\\right) = -1 \\quad \\Rightarrow \\quad \\dfrac{a}{4} = -1 \\quad \\Rightarrow \\quad a = -4"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"a = 16"}</Mi>; b) <Mi>{"a = -4"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-m-schem-wierzcholki-trapez-rownolegle-boki",
+    number: "18",
+    instruction: (
+      <span>
+        Punkty <Mi>{"A = (-2,\\, 0)"}</Mi>, <Mi>{"B = (4,\\, 0)"}</Mi>, <Mi>{"C = (6,\\, 5)"}</Mi>,{" "}
+        <Mi>{"D = (0,\\, 5)"}</Mi> są wierzchołkami czworokąta <Mi>{"ABCD"}</Mi> (w kolejności podanej na liście).
+        <span className="block mt-3 font-normal">
+          a) Udowodnij, że odcinki <Mi>{"AB"}</Mi> oraz <Mi>{"CD"}</Mi> są do siebie równoległe (wykorzystaj nachylenia prostych{" "}
+          przechodzących przez te odcinki).
+        </span>
+        <span className="block font-normal mt-1">
+          b) Oblicz pole czworokąta <Mi>{"ABCD"}</Mi>.
+        </span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <div className="space-y-2">
+        <p>a) oba odcinki mają nachylenie <Mi>{"0"}</Mi> (proste poziome), więc <Mi>{"AB \\parallel CD"}</Mi>.</p>
+        <p>
+          b) <Mi>{"P = 30"}</Mi>
+        </p>
+      </div>
+    ),
+    hint: (
+      <div className="space-y-2 text-sm">
+        <p>
+          Nachylenie prostej przez <Mi>{"(x_1,y_1)"}</Mi> i <Mi>{"(x_2,y_2)"}</Mi> (gdy <Mi>{"x_1 \\neq x_2"}</Mi>):{" "}
+          <Mi>{"\\dfrac{y_2 - y_1}{x_2 - x_1}"}</Mi>. Pole wielokąta możesz policzyć wzorami na wektorze lub metodą „sznurową”.
+        </p>
+      </div>
+    ),
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">a)</p>
+        <Mb>{"a_{AB} = \\dfrac{0 - 0}{4 - (-2)} = 0"}</Mb>
+        <Mb>{"a_{CD} = \\dfrac{5 - 5}{0 - 6} = 0"}</Mb>
+        <p>
+          Ponieważ nachylenia są równe, proste zawierające <Mi>{"AB"}</Mi> oraz <Mi>{"CD"}</Mi> są równoległe, więc{" "}
+          <Mi>{"AB \\parallel CD"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">b)</p>
+        <p>
+          Metoda sznurowa dla <Mi>{"(-2,0)"}</Mi>, <Mi>{"(4,0)"}</Mi>, <Mi>{"(6,5)"}</Mi>, <Mi>{"(0,5)"}</Mi> i powrót do pierwszego punktu:
+        </p>
+        <Mb>
+          {"P = \\dfrac{1}{2}\\left| (-2)\\cdot 0 + 4\\cdot 5 + 6\\cdot 5 + 0\\cdot 0 - \\bigl(0\\cdot 4 + 0\\cdot 6 + 5\\cdot 0 + 5\\cdot (-2)\\bigr) \\right|"}
+        </Mb>
+        <Mb>{" = \\dfrac{1}{2}\\left| 20 + 30 + 10 \\right| = \\dfrac{60}{2} = 30"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"AB \\parallel CD"}</Mi>; b) <Mi>{"P = 30"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-m-schem-punkt-postac-ogolna-parametr-k",
+    number: "19",
+    instruction: (
+      <span>
+        Punkt <Mi>{"P = (4,\\, -3)"}</Mi> należy do prostej danej równaniem{" "}
+        <Mi>{"2x + ky + 1 = 0"}</Mi>, gdzie <Mi>{"k"}</Mi> jest liczbą rzeczywistą.
+        <span className="block mt-3 font-normal">
+          a) Wyznacz <Mi>{"k"}</Mi>.
+        </span>
+        <span className="block font-normal mt-1">
+          b) Zapisz równanie tej samej prostej w postaci kierunkowej <Mi>{"y = ax + b"}</Mi>.
+        </span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <div className="space-y-2">
+        <p>
+          a) <Mi>{"k = 3"}</Mi>
+        </p>
+        <p>
+          b) <Mi>{"y = -\\dfrac{2}{3}x - \\dfrac{1}{3}"}</Mi>
+        </p>
+      </div>
+    ),
+    hint: (
+      <p className="text-sm">
+        Podstaw współrzędne <Mi>{"P"}</Mi> do równania z niewiadomą <Mi>{"k"}</Mi>, potem wyraź <Mi>{"y"}</Mi>.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">a)</p>
+        <Mb>{"2 \\cdot 4 + k \\cdot (-3) + 1 = 0 \\quad \\Rightarrow \\quad 9 - 3k = 0 \\quad \\Rightarrow \\quad k = 3"}</Mb>
+        <p className="font-semibold text-stone-800">b)</p>
+        <p>
+          Równanie prostej: <Mi>{"2x + 3y + 1 = 0"}</Mi>, stąd <Mi>{"3y = -2x - 1"}</Mi>.
+        </p>
+        <Mb>{"y = -\\dfrac{2}{3}x - \\dfrac{1}{3}"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"k = 3"}</Mi>; b) <Mi>{"y = -\\dfrac{2}{3}x - \\dfrac{1}{3}"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-m-schem-cwiartki-monotonicznosc-przeciecie-oy-parametr-t",
+    number: "20",
+    instruction: (
+      <span>
+        Niech <Mi>{"f"}</Mi> będzie funkcją liniową <Mi>{"f(x) = (t - 3)x + t"}</Mi>, gdzie <Mi>{"t"}</Mi> jest parametrem
+        rzeczywistym.
+        <span className="block mt-3 font-normal">
+          Wyznacz wszystkie wartości <Mi>{"t"}</Mi>, dla których jednocześnie spełnione są warunki: wykres <Mi>{"f"}</Mi> przecina
+          oś <Mi>{"Oy"}</Mi> w punkcie leżącym powyżej początku układu (rzędna punktu przecięcia jest dodatnia), oraz funkcja{" "}
+          <Mi>{"f"}</Mi> jest ściśle rosnąca na zbiorze liczb rzeczywistych.
+        </span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"t > 3"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Rzędna przecięcia z <Mi>{"Oy"}</Mi> to <Mi>{"f(0)"}</Mi>. Ścisła rosnącość liniowej funkcji to dodatni współczynnik przy{" "}
+        <Mi>{"x"}</Mi>.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <p>
+          <Mi>{"f(0) = t"}</Mi>. Warunek „powyżej początku” na osi <Mi>{"Oy"}</Mi> oznacza <Mi>{"t > 0"}</Mi>.
+        </p>
+        <p>
+          Ścisła rosnącość: <Mi>{"t - 3 > 0"}</Mi>, czyli <Mi>{"t > 3"}</Mi>.
+        </p>
+        <p>
+          Część wspólna warunków <Mi>{"t > 0"}</Mi> i <Mi>{"t > 3"}</Mi> to <Mi>{"t > 3"}</Mi>.
+        </p>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"t \\in (3,\\, +\\infty)"}</Mi>, krócej <Mi>{"t > 3"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-m-schem-zero-monotonicznosc-nierownosc-wykresy",
+    number: "21",
+    instruction: (
+      <span>
+        Funkcja liniowa <Mi>{"f"}</Mi> jest określona wzorem <Mi>{"f(x) = -\\dfrac{1}{2}x + b"}</Mi>. Wyznacz zbiór wartości parametru{" "}
+        <Mi>{"b"}</Mi>, dla którego miejsce zerowe funkcji <Mi>{"f"}</Mi> jest mniejsze od <Mi>{"4"}</Mi>.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"b < 2"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Rozwiąż <Mi>{"f(x) = 0"}</Mi> względem <Mi>{"x"}</Mi>, wyraź miejsce zerowe przez <Mi>{"b"}</Mi>, następnie użyj warunku „mniejsze niż{" "}
+        <Mi>{"4"}</Mi>”.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <Mb>{"-\\dfrac{1}{2}x + b = 0 \\quad \\Rightarrow \\quad x = 2b"}</Mb>
+        <Mb>{"2b < 4 \\quad \\Rightarrow \\quad b < 2"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"b \\in (-\\infty,\\, 2)"}</Mi>, krócej <Mi>{"b < 2"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "fl-m-schem-wspolliniowosc-warunek-parametr",
+    number: "22",
+    instruction: (
+      <span>
+        Punkty <Mi>{"A = (1,\\, m)"}</Mi>, <Mi>{"B = (4,\\, -2)"}</Mi> oraz <Mi>{"C = (10,\\, k)"}</Mi> są współliniowe.
+        Wiadomo dodatkowo, że prosta przez <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi> ma miejsce zerowe równe <Mi>{"7"}</Mi>.
+        <span className="block mt-3 font-normal">
+          Wyznacz liczby <Mi>{"m"}</Mi> oraz <Mi>{"k"}</Mi>.
+        </span>
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: (
+      <p>
+        <Mi>{"m = -4"}</Mi>, <Mi>{"k = 2"}</Mi>
+      </p>
+    ),
+    hint: (
+      <p className="text-sm">
+        Prosta o miejscu zerowym <Mi>{"7"}</Mi> ma postać <Mi>{"y = a(x - 7)"}</Mi> przy pewnych <Mi>{"a \\neq 0"}</Mi>. Wyznacz{" "}
+        <Mi>{"a"}</Mi> z punktu <Mi>{"B"}</Mi>, potem podstaw <Mi>{"x = 1"}</Mi> oraz <Mi>{"x = 10"}</Mi>.
+      </p>
+    ),
+    solution: (
+      <div className="space-y-3">
+        <p>
+          Niech <Mi>{"y = a(x - 7)"}</Mi> będzie prostą przez <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>. Punkt <Mi>{"B(4,\\, -2)"}</Mi>:
+        </p>
+        <Mb>{"-2 = a(4 - 7) = -3a \\quad \\Rightarrow \\quad a = \\dfrac{2}{3}"}</Mb>
+        <p>
+          Zatem <Mi>{"y = \\dfrac{2}{3}(x - 7)"}</Mi>.
+        </p>
+        <Mb>{"m = \\dfrac{2}{3}(1 - 7) = -4, \\qquad k = \\dfrac{2}{3}(10 - 7) = 2"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"m = -4"}</Mi>, <Mi>{"k = 2"}</Mi>.
           </p>
         </div>
       </div>
