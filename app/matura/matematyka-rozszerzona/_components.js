@@ -114,7 +114,7 @@ export const TaskCard = ({
       {/* Nagłówek fioletowy */}
       <div className="bg-[#d4bef5] px-5 py-2.5">
         <span className="font-bold text-[#2d1458] text-sm">
-          Zadanie {number}. ({points})
+          Zadanie {number}.{points ? ` (${points})` : ""}
         </span>
       </div>
 

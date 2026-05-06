@@ -143,6 +143,7 @@ const availableTopics = [
   { icon: Calculator, label: "Ułamki od zera", sub: "Matematyka, kl. 5–7", tag: "Podstawy", href: "/ulamki" },
   { icon: TrendingUp, label: "Funkcja liniowa", sub: "Matematyka, 1 klasa LO, PP", tag: "Algebra", href: "/funkcja-liniowa" },
   { icon: Atom, label: "Wektory", sub: "Fizyka, LO", tag: "Mechanika", href: "/wektory" },
+  { icon: Layers, label: "Równia pochyła", sub: "Fizyka, LO", tag: "Mechanika", href: "/rownia-pochyla" },
 ];
 
 // ─── Tematy wkrótce ───────────────────────────────────────────
