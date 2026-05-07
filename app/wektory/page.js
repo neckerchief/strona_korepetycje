@@ -1,184 +1,17 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
 import { InlineMath, BlockMath } from "react-katex";
 import {
   ArrowLeft, ChevronRight, CheckCircle, RotateCcw,
   Eye, EyeOff, BookOpen, Lightbulb,
 } from "lucide-react";
+import { SvgMi } from "@/components/svg/SvgMi";
+import { TriangleTrigDiagram } from "@/components/diagrams/TriangleTrigDiagram";
+import { RuleBox, SectionHead, WorkedExample, ExerciseCard } from "@/components/lesson";
 
-const cn = (...classes) => classes.filter(Boolean).join(" ");
 
 const Mi = ({ children }) => <InlineMath math={children} />;
 const Mb = ({ children }) => <BlockMath math={children} />;
-
-// KaTeX label inside an SVG element (via foreignObject)
-const SvgMi = ({ x, y, math, fill = "#000", fontSize = 12, anchor = "start" }) => {
-  const w = 100;
-  const h = Math.ceil(fontSize * 2);
-  const ox = anchor === "middle" ? x - w / 2 : anchor === "end" ? x - w : x;
-  return (
-    <foreignObject x={ox} y={y - fontSize} width={w} height={h} style={{ overflow: "visible" }}>
-      <div style={{
-        color: fill,
-        fontSize: `${fontSize}px`,
-        lineHeight: 1,
-        whiteSpace: "nowrap",
-        textAlign: anchor === "middle" ? "center" : anchor === "end" ? "right" : "left",
-      }}>
-        <InlineMath math={math} />
-      </div>
-    </foreignObject>
-  );
-};
-
-// ─── Highlighted rule / definition box ──────────────────────
-const RuleBox = ({ title, color = "green", children }) => {
-  const border = {
-    green: "border-[#6d3a8e] bg-[#f2ecfb]",
-    amber: "border-[#f97316] bg-[#fff3e6]",
-    blue:  "border-[#3b82f6] bg-[#eff6ff]",
-    red:   "border-[#ef4444] bg-[#fef2f2]",
-  }[color];
-  const titleColor = {
-    green: "text-[#52297a]",
-    amber: "text-[#9a3412]",
-    blue:  "text-[#1d4ed8]",
-    red:   "text-[#b91c1c]",
-  }[color];
-  return (
-    <div className={cn("border-l-4 rounded-xl px-5 py-4 my-5", border)}>
-      {title && (
-        <p className={cn("text-xs font-bold tracking-widest mb-2", titleColor)}>
-          {title}
-        </p>
-      )}
-      <div className="text-stone-700 text-base leading-relaxed space-y-1">{children}</div>
-    </div>
-  );
-};
-
-// ─── Section heading with anchor ────────────────────────────
-const SectionHead = ({ id, eyebrow, title }) => (
-  <div id={id} className="pt-4 pb-2 scroll-mt-20">
-    <p className="text-xs font-bold text-[#6d3a8e] uppercase tracking-widest mb-1">{eyebrow}</p>
-    <h2 className="font-display text-2xl md:text-3xl text-stone-800">{title}</h2>
-  </div>
-);
-
-// ─── Worked example (step-by-step interactive) ───────────────
-const WorkedExample = ({ title, steps }) => {
-  const [revealed, setRevealed] = useState(0);
-  const [showHint, setShowHint] = useState(false);
-  const reset = () => { setRevealed(0); setShowHint(false); };
-  const next = () => { setRevealed(r => Math.min(r + 1, steps.length - 1)); setShowHint(false); };
-
-  return (
-    <div className="bg-[#f4eef3] border border-stone-200 rounded-2xl overflow-hidden shadow-sm my-6">
-      <div className="px-5 py-3 border-b border-stone-200 flex items-center gap-2">
-        <BookOpen size={14} className="text-[#6d3a8e]" />
-        <p className="font-display text-stone-600 text-sm">{title}</p>
-      </div>
-      <div className="p-5 space-y-3">
-        {steps.map((step, i) => (
-          <div
-            key={i}
-            className={cn(
-              "rounded-xl border transition-all duration-500 overflow-hidden",
-              i <= revealed
-                ? "border-stone-200 bg-white opacity-100"
-                : "border-transparent bg-transparent opacity-0 h-0 pointer-events-none"
-            )}
-          >
-            <div className="px-4 pt-3 pb-3">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="w-5 h-5 rounded-full bg-[#6d3a8e] text-white text-xs flex items-center justify-center font-bold flex-shrink-0">
-                  {i + 1}
-                </span>
-                <span className="text-xs font-semibold text-[#6d3a8e] uppercase tracking-wide">{step.label}</span>
-              </div>
-              <div className="text-stone-700 text-sm leading-relaxed">{step.content}</div>
-              {step.formula && (
-                <div className="mt-2 px-5 py-2 bg-[#f4eef3] rounded-lg border border-stone-200 text-stone-800 text-center text-base leading-loose">
-                  {step.formula}
-                </div>
-              )}
-              {i === revealed && showHint && step.hint && (
-                <div className="mt-2 flex items-start gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                  <Lightbulb size={12} className="mt-0.5 flex-shrink-0" />
-                  <span>{step.hint}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="px-5 pb-5 flex items-center gap-3">
-        {steps[revealed]?.hint && (
-          <button
-            onClick={() => setShowHint(h => !h)}
-            className="flex items-center gap-1.5 text-xs text-stone-500 border border-stone-300 rounded-lg px-3 py-2 hover:bg-stone-50 transition-colors"
-          >
-            {showHint ? <EyeOff size={12} /> : <Eye size={12} />}
-            {showHint ? "Ukryj wskazówkę" : "Wskazówka"}
-          </button>
-        )}
-        <div className="flex-1" />
-        <button onClick={reset} className="text-stone-400 hover:text-stone-600 transition-colors p-2" title="Zacznij od nowa">
-          <RotateCcw size={15} />
-        </button>
-        {revealed < steps.length - 1 ? (
-          <button
-            onClick={next}
-            className="flex items-center gap-2 bg-[#ffd166] hover:bg-[#f0b429] text-[#220b2d] text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
-          >
-            Następny krok <ChevronRight size={15} />
-          </button>
-        ) : (
-          <button
-            onClick={reset}
-            className="flex items-center gap-2 bg-[#ffd166] hover:bg-[#f0b429] text-[#220b2d] text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
-          >
-            <CheckCircle size={15} /> Gotowe!
-          </button>
-        )}
-      </div>
-      <div className="flex justify-center gap-2 pb-4">
-        {steps.map((_, i) => (
-          <span key={i} className={cn("w-2 h-2 rounded-full transition-all duration-300", i <= revealed ? "bg-[#6d3a8e]" : "bg-stone-200")} />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// ─── Exercise card with hidden answer ───────────────────────
-const ExerciseCard = ({ number, question, answer }) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm">
-      <div className="flex items-start gap-3 mb-3">
-        <span className="w-7 h-7 rounded-full bg-[#f2ecfb] text-[#6d3a8e] text-sm font-bold flex items-center justify-center flex-shrink-0">
-          {number}
-        </span>
-        <p className="text-stone-700 text-base leading-snug">{question}</p>
-      </div>
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="flex items-center gap-1.5 text-xs text-stone-500 border border-stone-300 rounded-lg px-3 py-1.5 hover:bg-stone-50 transition-colors"
-      >
-        {open ? <EyeOff size={11} /> : <Eye size={11} />}
-        {open ? "Ukryj odpowiedź" : "Pokaż odpowiedź"}
-      </button>
-      {open && (
-        <div className="mt-3 flex items-start gap-2 text-sm text-[#52297a] bg-[#f2ecfb] border border-[#d4b8f0] rounded-lg px-4 py-2 font-semibold">
-          <CheckCircle size={14} className="mt-0.5 flex-shrink-0" />
-          <span>{answer}</span>
-        </div>
-      )}
-    </div>
-  );
-};
 
 // ─── SVG vector diagrams ─────────────────────────────────────
 
@@ -437,28 +270,6 @@ const DiagramRowneWektory = () => (
     {/* Equal annotation */}
     <SvgMi x={145} y={96} math="\vec{v}_1 = \vec{v}_2" fill="#16a34a" fontSize={10} />
     <SvgMi x={145} y={109} math="\Delta x{=}2,\,\Delta y{=}2" fill="#9ca3af" fontSize={8} />
-  </svg>
-);
-
-// ─── Right triangle for trig recap ───────────────────────────
-const DiagramTrygonometria = () => (
-  <svg viewBox="0 0 185 148" className="w-full max-w-[200px] mx-auto block">
-    {/* Hypotenuse A-C (orange) */}
-    <line x1="20" y1="120" x2="145" y2="28" stroke="#f97316" strokeWidth="2.5" />
-    {/* Adjacent A-B base (purple) */}
-    <line x1="20" y1="120" x2="145" y2="120" stroke="#6d3a8e" strokeWidth="2.5" />
-    {/* Opposite B-C vertical (blue) */}
-    <line x1="145" y1="120" x2="145" y2="28" stroke="#3b82f6" strokeWidth="2.5" />
-    {/* Right angle at B */}
-    <path d="M 132,120 A 13,13 0 0,0 145,107" stroke="#6b7280" strokeWidth="1.5" fill="none" />
-    <circle cx="136" cy="112" r="2" fill="#6b7280" />
-    {/* Angle α at A */}
-    <path d="M 46,120 A 26,26 0 0,0 41,100" stroke="#374151" strokeWidth="1.5" fill="none" />
-    <SvgMi x={47} y={116} math="\alpha" fill="#374151" fontSize={13} />
-    {/* Side labels */}
-    <SvgMi x={64} y={62} math="c" fill="#f97316" fontSize={13} />
-    <SvgMi x={81} y={138} math="b" fill="#6d3a8e" fontSize={13} anchor="middle" />
-    <SvgMi x={150} y={80} math="a" fill="#3b82f6" fontSize={13} />
   </svg>
 );
 
@@ -952,7 +763,7 @@ export default function WektoryPage() {
                   <span className="text-[#f97316]"><Mi>{"c"}</Mi></span>:
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
-                  <DiagramTrygonometria />
+                  <TriangleTrigDiagram variant="bold" />
                   <div className="flex-1 text-sm space-y-2">
                     <div className="bg-white rounded-lg px-4 py-2 border border-red-200">
                       <Mi>{"\\sin\\alpha = \\textcolor{#3b82f6}{a} / \\textcolor{#f97316}{c}"}</Mi>

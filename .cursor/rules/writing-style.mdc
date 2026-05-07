@@ -32,7 +32,7 @@ alwaysApply: false
   - ✅ `<Mi>{"\\vec{a} + \\vec{b}"}</Mi>`
   - ❌ `<V>v</V>`
 - For modulus: `<Mi>{"| \\vec{v} |"}</Mi>`
-- **NEVER** use the combining arrow character U+20D7 (`⃗`) — it renders as a box on Windows.
+- **NEVER** use the combining arrow character U+20D7 (`⃗`); on Windows it renders as a box.
 
 ## Subscripts in Math
 - **ALWAYS** use KaTeX subscripts, never Unicode subscript characters or `<sub>` in math context.
@@ -55,3 +55,9 @@ alwaysApply: false
 ## SVG Diagrams
 - Leave SVG text content unchanged; KaTeX cannot render inside SVG.
 - SVG labels may keep Unicode subscripts (e.g. `vₓ`) or `<tspan>` subscripts.
+
+## Styl tekstu na stronie (język polski)
+
+- **Odbiorca:** uczniowie liceum, w tym osoby **bez** wcześniejszej styczności z omawianymi zagadnieniami (materiał musi być zrozumiały także „od zera”).
+- **Cel:** prosty, konkretny język i **wystarczająco szczegółowe** wyjaśnienia (krok po kroku tam, gdzie to pomaga), **bez** lania wody i **bez** pomijania kroków rozumowania tylko dlatego, że wydają się „oczywiste” (dla kogoś uczącego się od zera zwykle **nie** są).
+- **Priorytet:** przejrzystość i wyłącznie treści, które **realnie uczą**, zamiast rozwodzić się we wstępach i dygresjach.
