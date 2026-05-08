@@ -221,8 +221,78 @@ const DiagramBezTarciaRuch = () => (
   </svg>
 );
 
-// Rozdział 5 kinetyka: cztery warianty osi x wzdłuż zbocza (fiolet) + v_0 (niebieski) + a (brąz)
-// Geometry: zbocze jak DiagramBezTarciaRuch, środek klocka (173,179); jednostka „w górę zbocza” → (ux, uy)
+// Przykład kinetyka: gładka równia, L wzdłuż zbocza, klocek u góry (spoczynek), kąt α
+// Współrzędne odcinka L: prawie cała przeciwprostokątna od A=(65,255) do C=(273,135),
+// przesunięte o d px w głąb trójkąta (wektor (120, 208)/240 prostopadle do zbocza)
+const ZeslizgLGeom = (() => {
+  const Ax = 65;
+  const Ay = 255;
+  const Tx = 208;
+  const Ty = -120;
+  const d = 5;
+  const ox = (d * 120) / 240;
+  const oy = (d * 208) / 240;
+  const tBottom = 0.038;
+  const tTop = 0.987;
+  const xb = Ax + tBottom * Tx;
+  const yb = Ay + tBottom * Ty;
+  const xt = Ax + tTop * Tx;
+  const yt = Ay + tTop * Ty;
+  const x1 = xt + ox;
+  const y1 = yt + oy;
+  const x2 = xb + ox;
+  const y2 = yb + oy;
+  const lx = (x1 + x2) / 2 + ox * 0.5;
+  const ly = (y1 + y2) / 2 + oy * 0.5;
+  return { x1, y1, x2, y2, lx, ly };
+})();
+
+const DiagramZeslizgKinetyka = () => (
+  <svg viewBox="0 0 380 300" className="w-full max-w-[380px] mx-auto block">
+    <defs>
+      <marker id="zsk-d0" markerWidth="8" markerHeight="4" refX="7" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L7,2 z" fill="#c2410c" />
+      </marker>
+      <marker id="zsk-d1" markerWidth="8" markerHeight="4" refX="1" refY="2" orient="auto">
+        <path d="M7,0 L7,4 L0,2 z" fill="#c2410c" />
+      </marker>
+    </defs>
+    <line x1="10" y1="255" x2="370" y2="255" stroke="#cbd5e1" strokeWidth="1.5" />
+    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(i => (
+      <line key={i} x1={26 + i * 25} y1="255" x2={10 + i * 25} y2="269" stroke="#e2e8f0" strokeWidth="1.3" />
+    ))}
+    <polygon points="65,255 273,135 273,255" fill="#f2ecfb" stroke="none" />
+    {/* L równolegle do zbocza, nieco pod powierzchnią (w środku trójkąta), niemal od dołu do góry */}
+    <line
+      x1={ZeslizgLGeom.x1}
+      y1={ZeslizgLGeom.y1}
+      x2={ZeslizgLGeom.x2}
+      y2={ZeslizgLGeom.y2}
+      stroke="#c2410c"
+      strokeWidth="1.5"
+      strokeDasharray="6,4"
+      markerStart="url(#zsk-d1)"
+      markerEnd="url(#zsk-d0)"
+    />
+    <line x1="65" y1="255" x2="273" y2="135" stroke="#6d3a8e" strokeWidth="1.5" />
+    <line x1="273" y1="135" x2="273" y2="255" stroke="#94a3b8" strokeWidth="1.5" />
+    <path d="M 266,255 L 266,248 L 273,248" fill="none" stroke="#94a3b8" strokeWidth="1" />
+    <path d="M 100,255 A 35,35 0 0 0 95,238" fill="none" stroke="#f97316" strokeWidth="1.5" />
+    <SvgMi x={84} y={251} math={"\\alpha"} fill="#f97316" fontSize={13} />
+    <polygon points="258,118 230,132 242,151 270,137" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
+    <SvgMi
+      x={1.1*ZeslizgLGeom.lx}
+      y={1.1*ZeslizgLGeom.ly}
+      math={"L = 10\\ \\text{m}"}
+      fill="#c2410c"
+      fontSize={13}
+      anchor="middle"
+    />
+  </svg>
+);
+
+// Rozdział 5 kinetyka: oś x wzdłuż zbocza (fiolet, rysowana nad v_0 i a) + v_0 (niebieski) + a (brąz)
+// Jednostka „w górę zbocza” → (KX_UX, KX_UY); odsunięcie osi wzdłuż normalnej (KX_UY, -KX_UX) — nad wektorami na rysunku
 const KX_UX = 208 / 240;
 const KX_UY = -120 / 240;
 
@@ -247,35 +317,6 @@ const DiagramKinetykaOsiX = ({ markerSuffix, v0PointsUp, xPositivePointsUp }) =>
     <line x1="65" y1="255" x2="273" y2="135" stroke="#6d3a8e" strokeWidth="1.5" />
     <line x1="273" y1="135" x2="273" y2="255" stroke="#94a3b8" strokeWidth="1.5" />
     <polygon points="148,179 186,157 198,178 160,200" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
-    {(() => {
-      const cx = 173;
-      const cy = 179;
-      const sx = xPositivePointsUp ? KX_UX : -KX_UX;
-      const sy = xPositivePointsUp ? KX_UY : -KX_UY;
-      const ox = 20 * (-KX_UY);
-      const oy = 20 * KX_UX;
-      const x1 = cx - 118 * sx + ox;
-      const y1 = cy - 118 * sy + oy;
-      const x2 = cx + 108 * sx + ox;
-      const y2 = cy - 108 * sy + oy;
-      const lx = x2 + 8 * (-KX_UY) + (xPositivePointsUp ? 2 : -6);
-      const ly = y2 + 8 * KX_UX + (xPositivePointsUp ? -14 : 6);
-      return (
-        <>
-          <line
-            x1={x1}
-            y1={y1}
-            x2={x2}
-            y2={y2}
-            stroke="#9333ea"
-            strokeWidth="3.25"
-            strokeLinecap="round"
-            markerEnd={`url(#kxx-${markerSuffix})`}
-          />
-          <SvgMi x={lx} y={ly} math="x" fill="#9333ea" fontSize={15} />
-        </>
-      );
-    })()}
     {(() => {
       const cx = 173;
       const cy = 179;
@@ -304,6 +345,38 @@ const DiagramKinetykaOsiX = ({ markerSuffix, v0PointsUp, xPositivePointsUp }) =>
     })()}
     <line x1="218" y1="122" x2="168" y2="151" stroke="#c2410c" strokeWidth="2.25" markerEnd={`url(#ka-${markerSuffix})`} />
     <SvgMi x={182} y={114} math="a" fill="#c2410c" fontSize={14} />
+    {(() => {
+      const cx = 173;
+      const cy = 179;
+      const sx = xPositivePointsUp ? KX_UX : -KX_UX;
+      const sy = xPositivePointsUp ? KX_UY : -KX_UY;
+      const nx = KX_UY;
+      const ny = -KX_UX;
+      const nLen = Math.hypot(nx, ny);
+      const ox = (44 / nLen) * nx;
+      const oy = (44 / nLen) * ny;
+      const x1 = cx - 118 * sx + ox;
+      const y1 = cy - 118 * sy + oy;
+      const x2 = cx + 108 * sx + ox;
+      const y2 = cy + 108 * sy + oy;
+      const lx = x2 + (10 / nLen) * nx + (xPositivePointsUp ? 0 : -4);
+      const ly = y2 + (10 / nLen) * ny + (xPositivePointsUp ? -12 : 4);
+      return (
+        <>
+          <line
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke="#9333ea"
+            strokeWidth="1"
+            strokeLinecap="round"
+            markerEnd={`url(#kxx-${markerSuffix})`}
+          />
+          <SvgMi x={lx} y={ly} math="x" fill="#9333ea" fontSize={15} />
+        </>
+      );
+    })()}
   </svg>
 );
 
@@ -603,7 +676,6 @@ const exampleBezTarciaPrzyspieszenie = [
       </>
     ),
     formula: <Mb>{"m a = S = m g \\sin\\alpha"}</Mb>,
-    hint: "Zwrot „w dół\" zbocza musi się zgadzać ze zwrotem ruchu, jeśli klocek naprawdę ześlizguje się w dół.",
   },
   {
     label: "Przyspieszenie",
@@ -618,7 +690,6 @@ const exampleBezTarciaPrzyspieszenie = [
     label: "Nacisk prostopadły N",
     content: (
       <>
-        W kierunku prostopadłym do zbocza przyspieszenie jest zerowe, więc jak w rozdziale o reakcji:{" "}
         <Mi>{"N = m g \\cos\\alpha"}</Mi>. To ta sama wielkość co składowa nacisku z rozkładu ciężaru:
       </>
     ),
@@ -635,17 +706,21 @@ const exampleBezTarciaKinetyka = [
     label: "Zadanie",
     content: (
       <>
-        Klocek na <strong>gładkiej</strong> równi <strong>α = 30°</strong>, <strong>g = 10 m/s²</strong>. W
-        chwili początkowej <strong>v_0 = 0</strong>. Odcinek po zboczu do „dołu" ma długość{" "}
-        <strong>L = 10 m</strong>. Jak długo trwa ześlizg i z jaką prędkością dociera na dół? Zacznij od{" "}
-        <Mi>{"a = g\\sin\\alpha"}</Mi>, potem użyj kinetyki z prędkością początkową.
+        <div className="mb-4">
+          <DiagramZeslizgKinetyka />
+        </div>
+        Klocek znajduje się na gładkiej równi o długości <Mi>{"L = 10\\ \\text{m}"}</Mi>{" "}
+        i kącie nachylenia <Mi>{"\\alpha = 30^\\circ"}</Mi> i porusza się po niej <strong>bez tarcia</strong>.
+        W chwili początkowej klocek <strong>spoczywał</strong>. Jak długo zajmie klockowi zsunięcie się z
+        równi i z jaką prędkością dotrze na dół? Przyjmij{" "}
+        <Mi>{"g = 10\\ \\text{m}/\\text{s}^2"}</Mi>.
       </>
     ),
     hint: (
       <>
         Najpierw <Mi>{"a = g\\sin\\alpha"}</Mi>, potem{" "}
         <Mi>{"L = v_0 t + \\tfrac{1}{2} a t^2"}</Mi> oraz <Mi>{"v = v_0 + a t"}</Mi>. Przy{" "}
-        <Mi>{"v_0 = 0"}</Mi> upraszcza się do <Mi>{"L = \\tfrac{1}{2} a t^2"}</Mi>.
+        <Mi>{"v_0 = 0"}</Mi> mamy <Mi>{"L = \\tfrac{1}{2} a t^2"}</Mi>.
       </>
     ),
     formula: null,
