@@ -499,13 +499,14 @@ export default function UlamkiPage() {
       {/* ── Top bar ── */}
       <div className="border-b border-stone-200 bg-white/90 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-5 h-14 flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 text-sm text-[#6d3a8e] hover:text-[#52297a] transition-colors">
-            <ArrowLeft size={15} /> Powrót
+          <Link
+            href="/tematy"
+            className="flex items-center gap-2 text-sm text-[#6d3a8e] hover:text-[#52297a] transition-colors"
+          >
+            <ArrowLeft size={15} /> Tematy
           </Link>
           <span className="text-stone-300">|</span>
-          <span className="text-sm text-stone-400">Materiały</span>
-          <span className="text-stone-300">/</span>
-          <span className="text-sm text-stone-600 font-medium">Ułamki od zera</span>
+          <span className="text-sm text-stone-400">Ułamki od zera</span>
         </div>
       </div>
 
@@ -533,7 +534,9 @@ export default function UlamkiPage() {
 
             {/* Header */}
             <div>
-              <p className="text-xs font-bold text-[#6d3a8e] uppercase tracking-widest mb-2">Materiały · Matematyka · kl. 5–8 i LO</p>
+              <p className="text-xs font-bold text-[#6d3a8e] uppercase tracking-widest mb-2">
+                Matematyka, kl. 5–8 i LO
+              </p>
               <h1 className="font-display text-4xl md:text-5xl text-stone-800 mb-4">Ułamki od zera</h1>
               <p className="text-stone-500 text-lg leading-relaxed max-w-2xl">
                 Definicje, działania, przykłady i zadania do ćwiczenia.

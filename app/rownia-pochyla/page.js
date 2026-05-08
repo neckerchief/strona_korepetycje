@@ -70,7 +70,7 @@ const DiagramRowniaPochyla = () => (
     <path d="M 197,158 L 197,151 L 204,151" fill="none" stroke="#94a3b8" strokeWidth="1" />
     {/* Angle arc at A=(50,158): r=35, label inside at bisector 15°, r≈26 → (75,151) */}
     <path d="M 85,158 A 35,35 0 0 0 80,141" fill="none" stroke="#f97316" strokeWidth="1.5" />
-    <SvgMi x={70} y={154} math="\alpha" fill="#f97316" fontSize={13} />
+    <SvgMi x={70} y={154} math={"\\alpha"} fill="#f97316" fontSize={13} />
     {/* Block: TR(149,73) TL(111,95) BL(123,116) BR(161,94); bottom face ON slope */}
     <polygon points="149,73 111,95 123,116 161,94" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
     {/* F_g arrow: centre=(136,95) → (136,155), 60px */}
@@ -135,7 +135,7 @@ const DiagramRozkladSil = () => (
     <path d="M 266,255 L 266,248 L 273,248" fill="none" stroke="#94a3b8" strokeWidth="1" />
     {/* Angle arc at A=(65,255): label inside angle at bisector 15°, r≈20 → (84,250) */}
     <path d="M 100,255 A 35,35 0 0 0 95,238" fill="none" stroke="#f97316" strokeWidth="1.5" />
-    <SvgMi x={84} y={251} math="\alpha" fill="#f97316" fontSize={13} />
+    <SvgMi x={84} y={251} math={"\\alpha"} fill="#f97316" fontSize={13} />
     {/* Height dashed */}
     <line x1="280" y1="137" x2="280" y2="252" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2" />
     <SvgMi x={283} y={196} math="h" fill="#94a3b8" fontSize={11} />
@@ -160,13 +160,150 @@ const DiagramRozkladSil = () => (
          r=22: arm up→(173,277), arm in -into_slope→(162,280)
          label inside angle at bisector (-0.259,−0.966)·12 → (170,287) */}
     <path d="M 172,263 A 22,22 0 0 0 155,270" fill="none" stroke="#f97316" strokeWidth="1.5" />
-    <SvgMi x={160} y={275} math="\alpha" fill="#f97316" fontSize={12} />
+    <SvgMi x={160} y={275} math={"\\alpha"} fill="#f97316" fontSize={12} />
     {/* Angle α between F_g and N at F_g_end (173,299):
          r=22: arm up→(173,277), arm in -into_slope→(162,280)
          label inside angle at bisector (-0.259,−0.966)·12 → (170,287) */}
     <path d="M 192,213 A 22,22 0 0 1 174,218" fill="none" stroke="#f97316" strokeWidth="1.5" />
-    <SvgMi x={176} y={211} math="\alpha" fill="#f97316" fontSize={12} />
+    <SvgMi x={176} y={211} math={"\\alpha"} fill="#f97316" fontSize={12} />
   
+  </svg>
+);
+
+// Chapter 5: layout jak DiagramRozkladSil; wektor a narysowany osobno nad klockiem (ten sam kierunek co S)
+const DiagramBezTarciaRuch = () => (
+  <svg viewBox="0 0 380 330" className="w-full max-w-[420px] mx-auto block">
+    <defs>
+      <marker id="bt-fg" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#6d3a8e" />
+      </marker>
+      <marker id="bt-s" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#f97316" />
+      </marker>
+      <marker id="bt-n" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#3b82f6" />
+      </marker>
+      <marker id="bt-r" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#16a34a" />
+      </marker>
+      <marker id="bt-a" markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#c2410c" />
+      </marker>
+    </defs>
+    <line x1="10" y1="255" x2="370" y2="255" stroke="#cbd5e1" strokeWidth="1.5" />
+    {[0,1,2,3,4,5,6,7,8,9,10,11,12,13].map(i => (
+      <line key={i} x1={26+i*25} y1="255" x2={10+i*25} y2="269" stroke="#e2e8f0" strokeWidth="1.3" />
+    ))}
+    <polygon points="65,255 273,135 273,255" fill="#f2ecfb" stroke="none" />
+    <line x1="65" y1="255" x2="273" y2="135" stroke="#6d3a8e" strokeWidth="1.5" />
+    <line x1="273" y1="135" x2="273" y2="255" stroke="#94a3b8" strokeWidth="1.5" />
+    <path d="M 266,255 L 266,248 L 273,248" fill="none" stroke="#94a3b8" strokeWidth="1" />
+    <path d="M 100,255 A 35,35 0 0 0 95,238" fill="none" stroke="#f97316" strokeWidth="1.5" />
+    <SvgMi x={84} y={251} math={"\\alpha"} fill="#f97316" fontSize={13} />
+    <line x1="280" y1="137" x2="280" y2="252" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2" />
+    <SvgMi x={283} y={196} math="h" fill="#94a3b8" fontSize={11} />
+    <polygon points="148,179 186,157 198,178 160,200" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
+    <line x1="173" y1="179" x2="173" y2="297" stroke="#6d3a8e" strokeWidth="1.5" markerEnd="url(#bt-fg)" />
+    <SvgMi x={177} y={242} math="F_g" fill="#6d3a8e" fontSize={13} />
+    <line x1="173" y1="179" x2="121" y2="209" stroke="#f97316" strokeWidth="1.5" markerEnd="url(#bt-s)" />
+    <SvgMi x={98} y={202} math="S" fill="#f97316" fontSize={14} />
+    <line x1="173" y1="179" x2="225" y2="269" stroke="#3b82f6" strokeWidth="1.5" markerEnd="url(#bt-n)" />
+    <SvgMi x={226} y={221} math="N" fill="#3b82f6" fontSize={14} />
+    <line x1="173" y1="179" x2="121" y2="89" stroke="#16a34a" strokeWidth="1.5" markerEnd="url(#bt-r)" />
+    <SvgMi x={100} y={92} math="R" fill="#16a34a" fontSize={14} anchor="end" />
+    <line x1="121" y1="209" x2="173" y2="299" stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="5,3" />
+    <line x1="225" y1="269" x2="173" y2="299" stroke="#f97316" strokeWidth="1.2" strokeDasharray="5,3" />
+    {/* a: osobno, nad klockiem; kierunek jak S (w dół zbocza) */}
+    <line x1="222" y1="124" x2="171" y2="153" stroke="#c2410c" strokeWidth="2" markerEnd="url(#bt-a)" />
+    <SvgMi x={228} y={118} math="a" fill="#c2410c" fontSize={14} />
+    <path d="M 192,213 A 22,22 0 0 1 174,218" fill="none" stroke="#f97316" strokeWidth="1.5" />
+    <SvgMi x={176} y={211} math={"\\alpha"} fill="#f97316" fontSize={12} />
+  </svg>
+);
+
+// Rozdział 5 kinetyka: cztery warianty osi x wzdłuż zbocza (fiolet) + v_0 (niebieski) + a (brąz)
+// Geometry: zbocze jak DiagramBezTarciaRuch, środek klocka (173,179); jednostka „w górę zbocza” → (ux, uy)
+const KX_UX = 208 / 240;
+const KX_UY = -120 / 240;
+
+const DiagramKinetykaOsiX = ({ markerSuffix, v0PointsUp, xPositivePointsUp }) => (
+  <svg viewBox="0 0 380 330" className="w-full max-w-[340px] mx-auto block">
+    <defs>
+      <marker id={`kv-${markerSuffix}`} markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#2563eb" />
+      </marker>
+      <marker id={`ka-${markerSuffix}`} markerWidth="12" markerHeight="4" refX="11" refY="2" orient="auto">
+        <path d="M0,0 L0,4 L11,2 z" fill="#c2410c" />
+      </marker>
+      <marker id={`kxx-${markerSuffix}`} markerWidth="14" markerHeight="5" refX="12" refY="2.5" orient="auto">
+        <path d="M0,0.5 L0,4.5 L13,2.5 z" fill="#9333ea" />
+      </marker>
+    </defs>
+    <line x1="10" y1="255" x2="370" y2="255" stroke="#cbd5e1" strokeWidth="1.5" />
+    {[0,1,2,3,4,5,6,7,8,9,10,11,12,13].map(i => (
+      <line key={i} x1={26+i*25} y1="255" x2={10+i*25} y2="269" stroke="#e2e8f0" strokeWidth="1.3" />
+    ))}
+    <polygon points="65,255 273,135 273,255" fill="#f2ecfb" stroke="none" />
+    <line x1="65" y1="255" x2="273" y2="135" stroke="#6d3a8e" strokeWidth="1.5" />
+    <line x1="273" y1="135" x2="273" y2="255" stroke="#94a3b8" strokeWidth="1.5" />
+    <polygon points="148,179 186,157 198,178 160,200" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
+    {(() => {
+      const cx = 173;
+      const cy = 179;
+      const sx = xPositivePointsUp ? KX_UX : -KX_UX;
+      const sy = xPositivePointsUp ? KX_UY : -KX_UY;
+      const ox = 20 * (-KX_UY);
+      const oy = 20 * KX_UX;
+      const x1 = cx - 118 * sx + ox;
+      const y1 = cy - 118 * sy + oy;
+      const x2 = cx + 108 * sx + ox;
+      const y2 = cy - 108 * sy + oy;
+      const lx = x2 + 8 * (-KX_UY) + (xPositivePointsUp ? 2 : -6);
+      const ly = y2 + 8 * KX_UX + (xPositivePointsUp ? -14 : 6);
+      return (
+        <>
+          <line
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke="#9333ea"
+            strokeWidth="3.25"
+            strokeLinecap="round"
+            markerEnd={`url(#kxx-${markerSuffix})`}
+          />
+          <SvgMi x={lx} y={ly} math="x" fill="#9333ea" fontSize={15} />
+        </>
+      );
+    })()}
+    {(() => {
+      const cx = 173;
+      const cy = 179;
+      const vx = v0PointsUp ? KX_UX : -KX_UX;
+      const vy = v0PointsUp ? KX_UY : -KX_UY;
+      return (
+        <>
+          <line
+            x1={cx}
+            y1={cy}
+            x2={cx + 54 * vx}
+            y2={cy + 54 * vy}
+            stroke="#2563eb"
+            strokeWidth="2.25"
+            markerEnd={`url(#kv-${markerSuffix})`}
+          />
+          <SvgMi
+            x={cx + 58 * vx + (v0PointsUp ? 8 : -36)}
+            y={cy + 58 * vy + (v0PointsUp ? -8 : 10)}
+            math={"v_0"}
+            fill="#2563eb"
+            fontSize={13}
+          />
+        </>
+      );
+    })()}
+    <line x1="218" y1="122" x2="168" y2="151" stroke="#c2410c" strokeWidth="2.25" markerEnd={`url(#ka-${markerSuffix})`} />
+    <SvgMi x={182} y={114} math="a" fill="#c2410c" fontSize={14} />
   </svg>
 );
 
@@ -194,7 +331,7 @@ const DiagramRozkladFPozioma = () => (
     <line x1="273" y1="135" x2="273" y2="255" stroke="#94a3b8" strokeWidth="1.5" />
     <path d="M 266,255 L 266,248 L 273,248" fill="none" stroke="#94a3b8" strokeWidth="1" />
     <path d="M 100,255 A 35,35 0 0 0 95,238" fill="none" stroke="#f97316" strokeWidth="1.5" />
-    <SvgMi x={84} y={251} math="\alpha" fill="#f97316" fontSize={13} />
+    <SvgMi x={84} y={251} math={"\\alpha"} fill="#f97316" fontSize={13} />
     <polygon points="148,179 186,157 198,178 160,200" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
     {/* Pomocnicze: poziom (kierunek F), pion */}
     <line x1="108" y1="179" x2="298" y2="179" stroke="#d6d3d1" strokeWidth="1" strokeDasharray="4,3" />
@@ -203,10 +340,10 @@ const DiagramRozkladFPozioma = () => (
     <line x1="173" y1="179" x2="268" y2="125" stroke="#f97316" strokeWidth="1" strokeDasharray="5,4" opacity="0.45" />
     {/* α przy O: pion a kierunek F_⊥ (jak kąt nachylenia) */}
     <path d="M 240 180 A 31 31 0 0 0 244 195" fill="none" stroke="#f97316" strokeWidth="1.5" />
-    <SvgMi x={243} y={190} math="\alpha" fill="#f97316" fontSize={11} />
+    <SvgMi x={243} y={190} math={"\\alpha"} fill="#f97316" fontSize={11} />
     {/* α przy O: poziom vs F_∥ */}
     <path d="M 205 179 A 32 32 0 0 0 201 163" fill="none" stroke="#f97316" strokeWidth="1.5" />
-    <SvgMi x={190} y={176} math="\alpha" fill="#f97316" fontSize={11} />
+    <SvgMi x={190} y={176} math={"\\alpha"} fill="#f97316" fontSize={11} />
     {/* Zamknięcie równoległoboku składowych */}
     <line x1="248" y1="136" x2="273" y2="179" stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="5,3" opacity="0.85" />
     <line x1="198" y1="222" x2="273" y2="179" stroke="#f97316" strokeWidth="1.2" strokeDasharray="5,3" opacity="0.85" />
@@ -248,7 +385,7 @@ const DiagramReakcjaPodloza = () => (
     <line x1="204" y1="70" x2="204" y2="158" stroke="#94a3b8" strokeWidth="1.5" />
     <path d="M 197,158 L 197,151 L 204,151" fill="none" stroke="#94a3b8" strokeWidth="1" />
     <path d="M 85,158 A 35,35 0 0 0 80,141" fill="none" stroke="#f97316" strokeWidth="1.5" />
-    <SvgMi x={70} y={154} math="\alpha" fill="#f97316" fontSize={13} />
+    <SvgMi x={70} y={154} math={"\\alpha"} fill="#f97316" fontSize={13} />
     <polygon points="149,73 111,95 123,116 161,94" fill="white" stroke="#6d3a8e" strokeWidth="1.5" />
     {/* N: nacisk (składowa ciężaru), od środka w stronę powierzchni */}
     <line x1="136" y1="95" x2="158" y2="133" stroke="#3b82f6" strokeWidth="1.5" markerEnd="url(#rp-n)" />
@@ -256,9 +393,6 @@ const DiagramReakcjaPodloza = () => (
     {/* R: reakcja podłoża na klocek, przeciwnie do N */}
     <line x1="136" y1="95" x2="114" y2="57" stroke="#16a34a" strokeWidth="1.5" markerEnd="url(#rp-r)" />
     <SvgMi x={102} y={56} math="R" fill="#16a34a" fontSize={13} anchor="end" />
-    <text x="148" y="168" className="text-[9px] fill-stone-400" style={{ fontFamily: "system-ui, sans-serif" }}>
-      prostopadle do zbocza
-    </text>
   </svg>
 );
 
@@ -438,6 +572,107 @@ const exampleReakcjaDodatkowa = [
       </>
     ),
     formula: <Mb>{"R = 45\\ \\text{N}"}</Mb>,
+  },
+];
+
+const exampleBezTarciaPrzyspieszenie = [
+  {
+    label: "Zadanie",
+    content: (
+      <>
+        Klocek o masie <strong>m = 4 kg</strong> ślizga się po <strong>gładkiej</strong> równi (brak tarcia)
+        nachylonej pod kątem <strong>α = 30°</strong> do poziomu. Wyznacz przyspieszenie klocka oraz
+        składową nacisku <strong>N</strong> od ciężaru (jak w rozdziale o rozkładzie sił). Przyjmij{" "}
+        <strong>g = 10 m/s²</strong>.
+      </>
+    ),
+    hint: (
+      <>
+        Wzdłuż zbocza jedyna siła to <strong>S</strong>, bo <Mi>{"T = 0"}</Mi>. Z II zasady:{" "}
+        <Mi>{"m a = S"}</Mi>. Prostopadle: <Mi>{"R = N"}</Mi>.
+      </>
+    ),
+    formula: null,
+  },
+  {
+    label: "Równanie wzdłuż zbocza",
+    content: (
+      <>
+        Na gładkiej równi siła tarcia znika. Wypadkowa w kierunku równoległym do zbocza (w dół) ma
+        tylko składową ciężaru <strong>S</strong>:
+      </>
+    ),
+    formula: <Mb>{"m a = S = m g \\sin\\alpha"}</Mb>,
+    hint: "Zwrot „w dół\" zbocza musi się zgadzać ze zwrotem ruchu, jeśli klocek naprawdę ześlizguje się w dół.",
+  },
+  {
+    label: "Przyspieszenie",
+    content: (
+      <>
+        Dzielimy obie strony przez <Mi>{"m"}</Mi>. Przyspieszenie <strong>nie zależy od masy</strong>:
+      </>
+    ),
+    formula: <Mb>{"a = g \\sin\\alpha = 10 \\cdot \\sin 30^\\circ = 10 \\cdot 0{,}5 = 5\\ \\text{m}/\\text{s}^2"}</Mb>,
+  },
+  {
+    label: "Nacisk prostopadły N",
+    content: (
+      <>
+        W kierunku prostopadłym do zbocza przyspieszenie jest zerowe, więc jak w rozdziale o reakcji:{" "}
+        <Mi>{"N = m g \\cos\\alpha"}</Mi>. To ta sama wielkość co składowa nacisku z rozkładu ciężaru:
+      </>
+    ),
+    formula: (
+      <Mb>
+        {"N = 4 \\cdot 10 \\cdot \\cos 30^\\circ = 40 \\cdot \\frac{\\sqrt{3}}{2} = 20\\sqrt{3} \\approx 35\\ \\text{N}"}
+      </Mb>
+    ),
+  },
+];
+
+const exampleBezTarciaKinetyka = [
+  {
+    label: "Zadanie",
+    content: (
+      <>
+        Klocek na <strong>gładkiej</strong> równi <strong>α = 30°</strong>, <strong>g = 10 m/s²</strong>. W
+        chwili początkowej <strong>v_0 = 0</strong>. Odcinek po zboczu do „dołu" ma długość{" "}
+        <strong>L = 10 m</strong>. Jak długo trwa ześlizg i z jaką prędkością dociera na dół? Zacznij od{" "}
+        <Mi>{"a = g\\sin\\alpha"}</Mi>, potem użyj kinetyki z prędkością początkową.
+      </>
+    ),
+    hint: (
+      <>
+        Najpierw <Mi>{"a = g\\sin\\alpha"}</Mi>, potem{" "}
+        <Mi>{"L = v_0 t + \\tfrac{1}{2} a t^2"}</Mi> oraz <Mi>{"v = v_0 + a t"}</Mi>. Przy{" "}
+        <Mi>{"v_0 = 0"}</Mi> upraszcza się do <Mi>{"L = \\tfrac{1}{2} a t^2"}</Mi>.
+      </>
+    ),
+    formula: null,
+  },
+  {
+    label: "Przyspieszenie",
+    content: "Na gładkiej równi (bez tarcia), przy danym kącie:",
+    formula: <Mb>{"a = g \\sin 30^\\circ = 5\\ \\text{m}/\\text{s}^2"}</Mb>,
+  },
+  {
+    label: "Czas z drogi",
+    content: (
+      <>
+        Podstaw do{" "}
+        <Mi>{"L = v_0 t + \\tfrac{1}{2} a t^2"}</Mi> przy <Mi>{"v_0 = 0"}</Mi>:
+      </>
+    ),
+    formula: <Mb>{"10 = \\tfrac{1}{2} \\cdot 5 \\cdot t^2 \\quad \\implies \\quad t^2 = 4 \\quad \\implies \\quad t = 2\\ \\text{s}"}</Mb>,
+  },
+  {
+    label: "Prędkość na dole",
+    content: (
+      <>
+        Z <Mi>{"v = v_0 + a t"}</Mi> przy <Mi>{"v_0 = 0"}</Mi>:
+      </>
+    ),
+    formula: <Mb>{"v = 0 + 5 \\cdot 2 = 10\\ \\text{m}/\\text{s}"}</Mb>,
   },
 ];
 
@@ -892,12 +1127,203 @@ export default function RowniaPochylaPage() {
             {/* ── Rozdział 5: Bez tarcia ── */}
             <section>
               <SectionHead id="bez-tarcia" eyebrow="Rozdział 5" title="Równia bez tarcia" />
-              <p className="text-stone-600 text-base leading-relaxed mt-3">
-                Najprostszy przypadek: gładka (beztarciowa) powierzchnia. Jedyna siła wzdłuż zbocza
-                to spadek S = m·g·sinα. Z II zasady dynamiki Newtona wyznaczamy przyspieszenie
-                <Mi>{" a = g\\sin\\alpha"}</Mi>.
+              <p className="text-stone-600 text-base leading-relaxed mt-3 mb-4">
+                Rozważmy najprostszy przypadek: <strong>gładka równia</strong>, czyli bez siły tarcia,{" "}
+                <Mi>{"T = 0"}</Mi>. Składowe ciężaru <strong>S</strong> i <strong>N</strong> traktujemy
+                tak samo jak w rozdziale o rozkładzie sił, a siłę reakcji podłoża{" "}
+                <strong>R</strong> jak w rozdziale o reakcji. Na tej bazie rozwiązujemy typowe zadania:
+                przyspieszenie na zboczu, czas ześlizgu, prędkość w drodze po równi.
               </p>
-              <ComingSoon description="Ten rozdział jest w przygotowaniu. Omówimy: równanie Newtona, przyspieszenie, droga i czas ześlizgiwania, przykłady obliczeniowe." />
+
+              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 my-5">
+                <p className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-3">
+                  Siły i kierunek przyspieszenia
+                </p>
+                <div className="flex flex-col gap-6">
+                  <div className="w-full">
+                    <DiagramBezTarciaRuch />
+                  </div>
+                  <div className="w-full text-sm text-stone-600 leading-relaxed space-y-3">
+                    <p>
+                      Przy <Mi>{"T = 0"}</Mi> wypadkowa w kierunku <strong>wzdłuż zbocza</strong> to
+                      tylko <strong>S</strong>, więc przyspieszenie jest równoległe do <strong>S</strong>{" "}
+                      (w dół zbocza), a nie do <Mi>{"F_g"}</Mi>.
+                    </p>
+                    <p>
+                      Wektor <strong>a</strong> narysowano oddzielnie i zaznacza on kierunek przyspieszenia zgodny z <strong>S</strong>.
+                    </p>
+                    <p>
+                      <strong>Prostopadle do zbocza</strong>:{" "}
+                      <Mi>{"R = N "}</Mi>, czyli wartość reakcji równa jest naciskowi z
+                      rozkładu ciężaru (o ile nic nie dociska klocka dodatkową siłą).
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-stone-600 text-base leading-relaxed mb-4 space-y-3">
+                <p>
+                  II zasada dynamiki (<Mi>{"F_{w} = m a"}</Mi>) dla osi wzdłuż zbocza:
+                </p>
+                <Mb>{"F_{w} = S = m g \\sin\\alpha"}</Mb>
+                <Mb>{"m a = m g \\sin\\alpha \\quad \\implies \\quad a = g \\sin\\alpha"}</Mb>
+                <p>Dla osi prostopadłej siła wypadkowa to zero:</p>
+                <Mb>{"F_{w} = R - N = 0"}</Mb>
+              </div>
+
+              <RuleBox title="Przyspieszenie na gładkiej równi">
+                <div className="bg-white rounded-xl px-4 py-3 border border-[#d4b8f0] text-center">
+                  <Mb>{"a = g \\sin\\alpha"}</Mb>
+                  <p className="text-xs text-stone-500 mt-2">
+                    Przy braku tarcia dostajemy stałe przyspieszenie niezależne od masy <Mi>{"m"}</Mi>.
+                  </p>
+                </div>
+              </RuleBox>
+
+              <p className="text-stone-500 text-sm mt-4 mb-2">Przypadki graniczne:</p>
+              <div className="space-y-2 mb-5">
+                {[
+                  { a: "0^\\circ", res: "a = g \\sin 0^\\circ = 0", note: "poziom, brak składowej ciągnącej wzdłuż „zbocza\"" },
+                  { a: "90^\\circ", res: "a = g \\sin 90^\\circ = g", note: "jak swobodny spadek wzdłuż pionu" },
+                ].map(r => (
+                  <div key={r.a} className="bg-white border border-stone-200 rounded-xl px-4 py-3 shadow-sm text-sm flex flex-wrap gap-x-4 gap-y-1 items-center">
+                    <span className="font-semibold text-stone-700 min-w-[70px]"><Mi>{"\\alpha = " + r.a}</Mi></span>
+                    <span className="text-[#c2410c]"><Mi>{r.res}</Mi></span>
+                    <span className="text-stone-400 text-xs italic">{r.note}</span>
+                  </div>
+                ))}
+              </div>
+
+              <h3 className="font-display text-lg text-stone-800 mt-8 mb-3">Kinetyka ześlizgu</h3>
+              <p className="text-stone-600 text-base leading-relaxed mb-3">
+                Gdy znasz wartość przyspieszenia <Mi>{"a = g\\sin\\alpha"}</Mi> oraz
+                <strong> prędkość początkową</strong> <Mi>{"v_0"}</Mi> wzdłuż zbocza, z równań na ruch
+                jednostajnie <strong>przyspieszony lub opóźniony</strong> możesz obliczyć drogę i prędkość w czasie. Wszystkie zależności zawsze można
+                wyprowadzić z tych dwóch podstawowych wzorów.
+              </p>
+
+              <RuleBox title="Dwa wyjściowe wzory (oś wzdłuż zbocza)" color="purple">
+                <div className="space-y-3 mt-2 text-center text-sm">
+                  <div className="bg-white rounded-xl px-3 py-3 border border-stone-200">
+                    <Mb>{"v(t) = \\pm v_0 \\pm a t"}</Mb>
+                  </div>
+                  <div className="bg-white rounded-xl px-3 py-3 border border-stone-200">
+                    <Mb>{"s(t) = \\pm v_0 t \\pm \\tfrac{1}{2} a t^2"}</Mb>
+                  </div>
+                </div>
+                <div className="text-sm mt-4 text-stone-600 space-y-3">
+                  <p>
+                    <strong>Znak przy wyborze „+” lub „−":</strong> ustalasz na podstawie zwrotu osi wzdłuż zbocza, którą ustala się samemu. Rysunki poniżej ilustrują przykładowe przypadki wyboru znaków.
+                  </p>
+                </div>
+              </RuleBox>
+
+              <div className="grid sm:grid-cols-2 gap-6 my-6">
+                <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-3">
+                  <p className="text-xs text-stone-600 leading-relaxed text-center">
+                    Ciało porusza się w górę zbocza (<Mi>{"v_0"}</Mi> w górę zbocza, <Mi>{"a"}</Mi> w dół).
+                    Zwrot osi wzdłuż zbocza (oś <Mi>x</Mi>) wybieramy <strong>zgodnie z kierunkiem ruchu</strong>{" "}
+                    (z <Mi>{"v_0"}</Mi>).
+                  </p>
+                  <DiagramKinetykaOsiX markerSuffix="k1" v0PointsUp xPositivePointsUp />
+                  <div className="text-center space-y-2 pt-1">
+                    <Mb>{"v(t) = v_0 - a t"}</Mb>
+                    <Mb>{"s(t) = v_0 t - \\tfrac{1}{2} a t^2"}</Mb>
+                  </div>
+                </div>
+                <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-3">
+                  <p className="text-xs text-stone-600 leading-relaxed text-center">
+                    Ciało porusza się w dół zbocza (<Mi>{"v_0"}</Mi> i <Mi>{"a"}</Mi> w dół). Oś{" "}
+                    <Mi>x</Mi> wybieramy <strong>zgodnie z kierunkiem ruchu</strong> (z{" "}
+                    <Mi>{"v_0"}</Mi>).
+                  </p>
+                  <DiagramKinetykaOsiX markerSuffix="k2" v0PointsUp={false} xPositivePointsUp={false} />
+                  <div className="text-center space-y-2 pt-1">
+                    <Mb>{"v(t) = v_0 + a t"}</Mb>
+                    <Mb>{"s(t) = v_0 t + \\tfrac{1}{2} a t^2"}</Mb>
+                  </div>
+                </div>
+                <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-3">
+                  <p className="text-xs text-stone-600 leading-relaxed text-center">
+                    Ciało porusza się w górę zbocza (<Mi>{"v_0"}</Mi> w górę, <Mi>{"a"}</Mi> w dół). Oś{" "}
+                    <Mi>x</Mi> kierujemy <strong>zgodnie z kierunkiem</strong> <Mi>{"a"}</Mi> (w dół zbocza).
+                  </p>
+                  <DiagramKinetykaOsiX markerSuffix="k3" v0PointsUp xPositivePointsUp={false} />
+                  <div className="text-center space-y-2 pt-1">
+                    <Mb>{"v(t) = -v_0 + a t"}</Mb>
+                    <Mb>{"s(t) = -v_0 t + \\tfrac{1}{2} a t^2"}</Mb>
+                  </div>
+                </div>
+                <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-3">
+                  <p className="text-xs text-stone-600 leading-relaxed text-center">
+                    Ciało porusza się w dół zbocza (<Mi>{"v_0"}</Mi> i <Mi>{"a"}</Mi> w dół). Oś{" "}
+                    <Mi>x</Mi> jest <strong>przeciwna</strong> zarówno do <Mi>{"v_0"}</Mi>, jak i do{" "}
+                    <Mi>{"a"}</Mi> (w górę zbocza).
+                  </p>
+                  <DiagramKinetykaOsiX markerSuffix="k4" v0PointsUp={false} xPositivePointsUp />
+                  <div className="text-center space-y-2 pt-1">
+                    <Mb>{"v(t) = -v_0 - a t"}</Mb>
+                    <Mb>{"s(t) = -v_0 t - \\tfrac{1}{2} a t^2"}</Mb>
+                  </div>
+                </div>
+              </div>
+
+              <WorkedExample
+                title="Przykład: przyspieszenie na gładkiej równi"
+                steps={exampleBezTarciaPrzyspieszenie}
+              />
+              <WorkedExample
+                title="Przykład: czas ześlizgu i prędkość na dole"
+                steps={exampleBezTarciaKinetyka}
+              />
+
+              <h3 className="font-display text-lg text-stone-800 mt-8 mb-3">Szybkie ćwiczenia</h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <ExerciseCard
+                  number={1}
+                  question={
+                    <>
+                      Gładka równia, <Mi>{"g = 10\\ \\text{m}/\\text{s}^2"}</Mi>. Jaki jest moduł
+                      przyspieszenia dla <Mi>{"\\alpha = 53^\\circ"}</Mi>, jeśli{" "}
+                      <Mi>{"\\sin 53^\\circ = 0{,}8"}</Mi>?
+                    </>
+                  }
+                  answer={<Mi>{"a = g \\sin\\alpha = 8\\ \\text{m}/\\text{s}^2"}</Mi>}
+                />
+                <ExerciseCard
+                  number={2}
+                  question={
+                    <>
+                      Na tej samej gładkiej równi co w ćwiczeniu 1, <Mi>{"v_0 = 0"}</Mi>. Długość drogi po
+                      zboczu <Mi>{"s = 4\\ \\text{m}"}</Mi>. Oblicz czas <Mi>{"t"}</Mi> z{" "}
+                      <Mi>{"s = v_0 t + \\tfrac{1}{2} a t^2"}</Mi>.
+                    </>
+                  }
+                  answer={
+                    <>
+                      <Mi>{"a = 8\\ \\text{m}/\\text{s}^2"}</Mi>, więc{" "}
+                      <Mi>{"4 = \\tfrac{1}{2} \\cdot 8 \\cdot t^2"}</Mi>, stąd{" "}
+                      <Mi>{"t^2 = 1"}</Mi>, <Mi>{"t = 1\\ \\text{s}"}</Mi>.
+                    </>
+                  }
+                />
+                <ExerciseCard
+                  number={3}
+                  question={
+                    <>
+                      Dwa klocki o masach <Mi>{"m_1 = 2\\ \\text{kg}"}</Mi> i{" "}
+                      <Mi>{"m_2 = 5\\ \\text{kg}"}</Mi> puszczamy jeden po drugim na tej samej gładkiej
+                      równi pod tym samym kątem <Mi>{"\\alpha"}</Mi>. Porównaj ich przyspieszenia{" "}
+                      <Mi>{"a_1"}</Mi> i <Mi>{"a_2"}</Mi>.
+                    </>
+                  }
+                  answer={
+                    <>
+                      <Mi>{"a_1 = a_2 = g \\sin\\alpha"}</Mi>: na gładkiej równi przyspieszenie nie zależy od masy.
+                    </>
+                  }
+                />
+              </div>
             </section>
 
             {/* ── Rozdział 6: Tarcie ── */}
