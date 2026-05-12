@@ -1,6 +1,6 @@
 import { InlineMath, BlockMath } from "react-katex";
 import { FormulaBox } from "../matura/matematyka-rozszerzona/_components";
-import { LineDiagram, DiagramCwiartki } from "./diagrams";
+import { LineDiagram, DiagramCwiartki, PolygonDiagram } from "./diagrams";
 
 const Mi = ({ children }) => <InlineMath math={children} />;
 const Mb = ({ children }) => <BlockMath math={children} />;
@@ -1064,7 +1064,7 @@ export const maturaStyleTasks = [
       <div className="space-y-2 text-sm">
         <p>
           Nachylenie prostej przez <Mi>{"(x_1,y_1)"}</Mi> i <Mi>{"(x_2,y_2)"}</Mi> (gdy <Mi>{"x_1 \\neq x_2"}</Mi>):{" "}
-          <Mi>{"\\dfrac{y_2 - y_1}{x_2 - x_1}"}</Mi>. Pole wielokąta możesz policzyć wzorami na wektorze lub metodą „sznurową”.
+          <Mi>{"\\dfrac{y_2 - y_1}{x_2 - x_1}"}</Mi>. Do pola w b): najpierw narysuj czworokąt w układzie współrzędnych, zaznacz wierzchołki w kolejności <Mi>{"A,B,C,D"}</Mi> i połącz je odcinkami, wtedy od razu widać, jak policzyć pole (np. równoległobok albo trapez o podstawach na dwóch poziomych prostych).
         </p>
       </div>
     ),
@@ -1079,12 +1079,26 @@ export const maturaStyleTasks = [
         </p>
         <p className="font-semibold text-stone-800">b)</p>
         <p>
-          Metoda sznurowa dla <Mi>{"(-2,0)"}</Mi>, <Mi>{"(4,0)"}</Mi>, <Mi>{"(6,5)"}</Mi>, <Mi>{"(0,5)"}</Mi> i powrót do pierwszego punktu:
+          Rysunek czworokąta <Mi>{"ABCD"}</Mi> w kolejności z treści zadania (odcinki <Mi>{"AB"}</Mi>, <Mi>{"BC"}</Mi>, <Mi>{"CD"}</Mi>,{" "}
+          <Mi>{"DA"}</Mi>):
         </p>
-        <Mb>
-          {"P = \\dfrac{1}{2}\\left| (-2)\\cdot 0 + 4\\cdot 5 + 6\\cdot 5 + 0\\cdot 0 - \\bigl(0\\cdot 4 + 0\\cdot 6 + 5\\cdot 0 + 5\\cdot (-2)\\bigr) \\right|"}
-        </Mb>
-        <Mb>{" = \\dfrac{1}{2}\\left| 20 + 30 + 10 \\right| = \\dfrac{60}{2} = 30"}</Mb>
+        <PolygonDiagram
+          vertices={[
+            { x: -2, y: 0, label: "A", dx: -14, dy: 12, anchor: "end" },
+            { x: 4, y: 0, label: "B", dx: 6, dy: 12 },
+            { x: 6, y: 5, label: "C", dx: 6, dy: -4 },
+            { x: 0, y: 5, label: "D", dx: -18, dy: -4, anchor: "end" },
+          ]}
+          xRange={[-3, 7]}
+          yRange={[-0.5, 6]}
+        />
+        <p>
+          Z rysunku (i współrzędnych): odcinek <Mi>{"AB"}</Mi> leży na prostej <Mi>{"y = 0"}</Mi>, ma długość{" "}
+          <Mi>{"4 - (-2) = 6"}</Mi>. Prosta <Mi>{"CD"}</Mi> ma równanie <Mi>{"y = 5"}</Mi>, odcinek <Mi>{"CD"}</Mi> ma długość{" "}
+          <Mi>{"6 - 0 = 6"}</Mi>. Odległość między prostymi równoległymi <Mi>{"y = 0"}</Mi> i <Mi>{"y = 5"}</Mi> (wysokość figury między tymi podstawami) to{" "}
+          <Mi>{"5"}</Mi>. Mamy więc równoległobok o podstawie <Mi>{"6"}</Mi> i wysokości <Mi>{"5"}</Mi>:
+        </p>
+        <Mb>{"P = 6 \\cdot 5 = 30"}</Mb>
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
           <p className="font-semibold text-stone-800">
             Odpowiedź: a) <Mi>{"AB \\parallel CD"}</Mi>; b) <Mi>{"P = 30"}</Mi>.
@@ -1251,20 +1265,28 @@ export const maturaStyleTasks = [
     ),
     hint: (
       <p className="text-sm">
-        Prosta o miejscu zerowym <Mi>{"7"}</Mi> ma postać <Mi>{"y = a(x - 7)"}</Mi> przy pewnych <Mi>{"a \\neq 0"}</Mi>. Wyznacz{" "}
-        <Mi>{"a"}</Mi> z punktu <Mi>{"B"}</Mi>, potem podstaw <Mi>{"x = 1"}</Mi> oraz <Mi>{"x = 10"}</Mi>.
+        Miejsce zerowe równe <Mi>{"7"}</Mi> znaczy tyle, że dla <Mi>{"x = 7"}</Mi> wartość <Mi>{"y"}</Mi> na tej prostej jest{" "}
+        <Mi>{"0"}</Mi> (punkt <Mi>{"(7,\\, 0)"}</Mi> leży na prostej). Wykorzystaj to wraz z punktem <Mi>{"B"}</Mi>, a potem współliniowość{" "}
+        <Mi>{"A"}</Mi>, <Mi>{"B"}</Mi>, <Mi>{"C"}</Mi>.
       </p>
     ),
     solution: (
       <div className="space-y-3">
         <p>
-          Niech <Mi>{"y = a(x - 7)"}</Mi> będzie prostą przez <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>. Punkt <Mi>{"B(4,\\, -2)"}</Mi>:
+          Skoro prosta przez <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi> ma miejsce zerowe <Mi>{"7"}</Mi>, to dla <Mi>{"x = 7"}</Mi> jest <Mi>{"y = 0"}</Mi>, czyli prosta przechodzi przez <Mi>{"P = (7,\\, 0)"}</Mi>. Z treści znamy też <Mi>{"B = (4,\\, -2)"}</Mi>.
         </p>
-        <Mb>{"-2 = a(4 - 7) = -3a \\quad \\Rightarrow \\quad a = \\dfrac{2}{3}"}</Mb>
+        <p>Nachylenie prostej przez <Mi>{"P"}</Mi> i <Mi>{"B"}</Mi>:</p>
+        <Mb>{"a = \\dfrac{0 - (-2)}{7 - 4} = \\dfrac{2}{3}"}</Mb>
         <p>
-          Zatem <Mi>{"y = \\dfrac{2}{3}(x - 7)"}</Mi>.
+          Równanie prostej przez <Mi>{"B"}</Mi> o nachyleniu <Mi>{"a"}</Mi> (np. postać punktowa od <Mi>{"B"}</Mi>):{" "}
+          <Mi>{"y - (-2) = \\dfrac{2}{3}(x - 4)"}</Mi>, stąd{" "}
+          <Mi>{"y = \\dfrac{2}{3}x - \\dfrac{14}{3}"}</Mi>.
         </p>
-        <Mb>{"m = \\dfrac{2}{3}(1 - 7) = -4, \\qquad k = \\dfrac{2}{3}(10 - 7) = 2"}</Mb>
+        <p>
+          Punkty <Mi>{"A"}</Mi>, <Mi>{"B"}</Mi>, <Mi>{"C"}</Mi> leżą na tej samej prostej, więc podstawiamy <Mi>{"x = 1"}</Mi> oraz{" "}
+          <Mi>{"x = 10"}</Mi>:
+        </p>
+        <Mb>{"m = \\dfrac{2}{3} \\cdot 1 - \\dfrac{14}{3} = -4, \\qquad k = \\dfrac{2}{3} \\cdot 10 - \\dfrac{14}{3} = 2"}</Mb>
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
           <p className="font-semibold text-stone-800">
             Odpowiedź: <Mi>{"m = -4"}</Mi>, <Mi>{"k = 2"}</Mi>.

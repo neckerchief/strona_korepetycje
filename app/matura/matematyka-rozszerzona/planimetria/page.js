@@ -170,12 +170,17 @@ const tasks = [
         <Mb>{"726 = |AB|^2 + 361 + \\frac{76}{17}|AB|"}</Mb>
         <p>Mnożymy przez 17:</p>
         <Mb>{"17|AB|^2 + 76|AB| - 6205 = 0"}</Mb>
-        <p>DELTA <Mi>{"= 76^2 + 4 \\cdot 17 \\cdot 6205 = 5776 + 421940 = 427716 = 654^2"}</Mi></p>
+        <p>
+          <Mi>{"\\Delta = 76^2 + 4 \\cdot 17 \\cdot 6205 = 5776 + 421940 = 427716 = 654^2"}</Mi>
+        </p>
         <Mb>{"|AB| = \\frac{-76 + 654}{2\\cdot 17} = \\frac{578}{34} = 17"}</Mb>
 
         <p className="font-semibold text-stone-800">Krok 2. Korzystamy z własności czworokąta wpisanego w okrąg</p>
         <p>
-          Dla czworokąta cyklicznego kąty naprzeciwległe sumują się do <Mi>{"180°"}</Mi>:
+          Dla czworokąta cyklicznego kąty naprzeciwległe sumują się do <Mi>{"180°"}</Mi>, więc{" "}
+          <Mi>{"\\angle BCD = 180° - \\angle BAD"}</Mi>. Oznaczając{" "}
+          <Mi>{"\\alpha = \\angle BAD"}</Mi>, zachodzi{" "}
+          <Mi>{"\\cos(180° - \\alpha) = -\\cos\\alpha"}</Mi>.
         </p>
         <Mb>{"\\angle BAD + \\angle BCD = 180° \\quad\\Rightarrow\\quad \\cos(\\angle BCD) = -\\cos(\\angle BAD) = \\frac{2}{17}"}</Mb>
 
@@ -184,7 +189,9 @@ const tasks = [
         <Mb>{"726 = |BC|^2 + 289 - 2\\cdot|BC|\\cdot 17 \\cdot \\frac{2}{17}"}</Mb>
         <Mb>{"726 = |BC|^2 + 289 - 4|BC|"}</Mb>
         <Mb>{"|BC|^2 - 4|BC| - 437 = 0"}</Mb>
-        <p>DELTA <Mi>{"= 16 + 4 \\cdot 437 = 1764 = 42^2"}</Mi></p>
+        <p>
+          <Mi>{"\\Delta = 16 + 4 \\cdot 437 = 1764 = 42^2"}</Mi>
+        </p>
         <Mb>{"|BC| = \\frac{4 + 42}{2} = 23"}</Mb>
 
         <p className="font-semibold text-stone-800">Krok 4. Obliczamy obwód</p>

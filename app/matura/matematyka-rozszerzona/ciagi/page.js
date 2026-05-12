@@ -167,14 +167,20 @@ const tasks = [
           więc <Mi>{"a_2 = 160"}</Mi>.
         </p>
         <p>
-          Suma wyrazów parzystych to ciąg geometryczny z pierwszym wyrazem <Mi>{"a_1 q"}</Mi>
-          i ilorazem <Mi>{"q^2"}</Mi>:
+          Suma wyrazów parzystych to ciąg geometryczny z pierwszym wyrazem <Mi>{"a_1 q"}</Mi> i ilorazem{" "}
+          <Mi>{"q^2"}</Mi>.
+          Wartość z treści (<Mi>{"444{,}(4)"}</Mi>) zamieniasz np. tak: niech{" "}
+          <Mi>{"x = 0{,}(4)"}</Mi>, wtedy <Mi>{"1000 x = 444{,}(4)"}</Mi>, a jednocześnie{" "}
+          <Mi>{"444{,}(4) = 444 + x"}</Mi>, więc <Mi>{"1000 x = 444 + x"}</Mi>, stąd{" "}
+          <Mi>{"999 x = 444"}</Mi>, dalej{" "}
+          <Mi>{"444{,}(4) = 444 + x = \\dfrac{4000}{9}"}</Mi>.
         </p>
         <FormulaBox>
           <Mb>{"\\frac{a_1 q}{1-q^2} = \\frac{4000}{9}"}</Mb>
         </FormulaBox>
         <p>
-          Monotoniczność eliminuje jeden przypadek <Mi>{"q"}</Mi>.
+          Monotoniczny ciąg geometryczny nie może mieć ujemnego ilorazu, więc <Mi>{"q > 0"}</Mi>,
+          co później usprawni wybór znaku przy rozwiązaniu równania na <Mi>{"q"}</Mi>.
         </p>
       </div>
     ),
@@ -182,31 +188,45 @@ const tasks = [
     solution: (
       <div className="space-y-4">
         <p className="font-semibold text-stone-800">Krok 1. Wyznaczamy <Mi>{"a_1 q"}</Mi></p>
-        <Mb>{"\\sqrt{a_1 \\cdot a_3} = \\sqrt{a_1 \\cdot a_1 q^2} = a_1|q| = 160"}</Mb>
         <p>
-          Suma wyrazów parzystych: <Mi>{"\\frac{4000}{9}"}</Mi>{" "}
-          (<Mi>{"444{,}(4) = \\frac{4000}{9}"}</Mi>) jest dodatnia, więc <Mi>{"a_1 q > 0"}</Mi>,
-          zatem <Mi>{"a_2 = a_1 q = 160"}</Mi>.
+          Ciąg geometryczny nieskończony jest <strong>monotoniczny</strong>, więc nie zmienia znaku
+          na przemian, stąd <Mi>{"q > 0"}</Mi>.
+        </p>
+        <Mb>
+          {"\\sqrt{a_1 \\cdot a_3} = \\sqrt{a_1 \\cdot a_1 q^2} = \\sqrt{a_1^2 q^2} = |a_1| \\cdot q = 160"}
+        </Mb>
+        <p>
+          Suma dodatnia wyrazów parzystych jest szeregiem geometrycznym o pierwszym wyrazie{" "}
+          <Mi>{"a_2 = a_1 q"}</Mi> i dodatnim ilorazie <Mi>{"q^2"}</Mi>, więc jej pierwszy wyraz musi
+          być dodatni: <Mi>{"a_1 q > 0"}</Mi>.
+          Razem z <Mi>{"q > 0"}</Mi> daje to <Mi>{"a_1 > 0"}</Mi>, więc{" "}
+          <Mi>{"|a_1| \\cdot q = a_1 q = 160"}</Mi>.
         </p>
 
         <p className="font-semibold text-stone-800">Krok 2. Wyznaczamy iloraz <Mi>{"q"}</Mi></p>
+        <p>Zamiana ułamka okresowego <Mi>{"444{,}(4)"}</Mi> algorytmicznie:</p>
+        <Mb>
+          {"\\text{Niech } x = 0{,}(4). \\quad \\text{Wtedy}\\quad 1000 x = 444{,}(4)\\ \\text{i}\\quad 444{,}(4)=444+x"}
+        </Mb>
+        <Mb>{"\\Rightarrow \\quad 1000 x = 444 + x \\quad \\Rightarrow \\quad 999 x = 444"}</Mb>
+        <Mb>
+          {"\\Rightarrow \\quad x = \\dfrac{444}{999} = \\dfrac{4}{9} \\quad \\Rightarrow \\quad 444{,}(4)=444+x=\\dfrac{4000}{9}"}
+        </Mb>
         <p>Suma wyrazów parzystych (ciąg geometryczny z wyrazem pierwszym <Mi>{"a_1 q"}</Mi> i ilorazem <Mi>{"q^2"}</Mi>):</p>
         <FormulaBox>
           <Mb>{"\\frac{a_1 q}{1-q^2} = \\frac{4000}{9} \\quad\\Rightarrow\\quad \\frac{160}{1-q^2} = \\frac{4000}{9}"}</Mb>
         </FormulaBox>
-        <Mb>{"1-q^2 = \\frac{160 \\cdot 9}{4000} = \\frac{9}{25} \\quad\\Rightarrow\\quad q^2 = \\frac{16}{25} \\quad\\Rightarrow\\quad q = \\pm\\frac{4}{5}"}</Mb>
-
-        <p className="font-semibold text-stone-800">Krok 3. Monotoniczność</p>
+        <Mb>{"1-q^2 = \\frac{160 \\cdot 9}{4000} = \\frac{9}{25} \\quad\\Rightarrow\\quad q^2 = \\frac{16}{25}"}</Mb>
         <p>
-          Dla <Mi>{"q = -\\tfrac{4}{5}"}</Mi>: <Mi>{"a_1 = -200"}</Mi>,
-          ciąg zmienia znaki - nie jest monotoniczny. Odrzucamy.
-        </p>
-        <p>
-          Dla <Mi>{"q = \\tfrac{4}{5}"}</Mi>: <Mi>{"a_1 = 200"}</Mi>,
-          ciąg malejący. ✓
+          Z kroku 1 mamy już <Mi>{"q > 0"}</Mi>, więc{" "}
+          <Mi>{"q = \\dfrac{4}{5}"}</Mi>.
         </p>
 
-        <p className="font-semibold text-stone-800">Krok 4. Suma całkowita</p>
+        <p className="font-semibold text-stone-800">Krok 3. Monotoniczność i suma całkowita</p>
+        <p>
+          Dla <Mi>{"a_1 = \\dfrac{a_2}{q} = \\dfrac{160}{\\tfrac{4}{5}} = 200"}</Mi>,{" "}
+          <Mi>{"q \\in (0{,}\\, 1)"}</Mi>: ciąg malejący, zgodnie z treścią. ✓
+        </p>
         <FormulaBox>
           <Mb>{"S = \\frac{a_1}{1-q} = \\frac{200}{1-\\tfrac{4}{5}} = \\frac{200}{\\tfrac{1}{5}} = 1000"}</Mb>
         </FormulaBox>

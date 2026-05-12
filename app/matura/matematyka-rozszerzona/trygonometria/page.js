@@ -277,14 +277,13 @@ const tasks = [
           <Mb>{"\\frac{b}{\\sin(\\angle ACB)} = 2R \\quad\\Rightarrow\\quad b = 2R\\sin\\alpha"}</Mb>
         </FormulaBox>
         <p>
-          Następnie skorzystaj z wzoru na <Mi>{"\\sin 3\\alpha"}</Mi>:
+          Zapisz <Mi>{"\\sin(\\alpha + 2\\alpha) = \\dots"}</Mi> przy użyciu wzoru na sinus sumy oraz
+          wzorów na <Mi>{"\\sin 2\\alpha"}</Mi> i <Mi>{"\\cos 2\\alpha"}</Mi>; po wyłączeniu{" "}
+          <Mi>{"\\sin\\alpha"}</Mi> zamień <Mi>{"\\cos 2\\alpha"}</Mi> na{" "}
+          <Mi>{"2\\cos^2\\alpha-1"}</Mi>.
         </p>
-        <FormulaBox>
-          <Mb>{"\\sin 3\\alpha = 3\\sin\\alpha - 4\\sin^3\\alpha"}</Mb>
-        </FormulaBox>
         <p>
-          Wykaż, że <Mi>{"3\\sin\\alpha - \\sin 3\\alpha = 4\\sin^3\\alpha"}</Mi>, a
-          następnie uprość <Mi>{"R\\sqrt{\\dfrac{3\\sin\\alpha-\\sin 3\\alpha}{\\sin\\alpha}}"}</Mi>.
+          Pokaż, że wyrażenie pod pierwiastkiem uprości się do <Mi>{"4\\sin^2\\alpha"}</Mi>.
         </p>
       </div>
     ),
@@ -301,13 +300,52 @@ const tasks = [
         </FormulaBox>
 
         <p className="font-semibold text-stone-800">Krok 2. Upraszczamy wyrażenie pod pierwiastkiem</p>
-        <p>Korzystamy z wzoru:</p>
+        <p>
+          <Mi>{"\\sin 3\\alpha"}</Mi> rozwiniemy wzorami dostępnymi w tablicach: sinus sumy kątów i sinus
+          podwojonego kąta; potem w nawiasie zastąpimy <Mi>{"\\cos 2\\alpha"}</Mi>.
+        </p>
+        <Mb>{"\\sin 3\\alpha = \\sin(\\alpha + 2\\alpha)"}</Mb>
         <FormulaBox>
-          <Mb>{"\\sin 3\\alpha = 3\\sin\\alpha - 4\\sin^3\\alpha"}</Mb>
+          <Mb>
+            {"\\sin(\\alpha + \\beta) = \\sin\\alpha \\cos \\beta + \\cos\\alpha \\sin\\beta"}
+          </Mb>
         </FormulaBox>
-        <Mb>{"3\\sin\\alpha - \\sin 3\\alpha = 3\\sin\\alpha - (3\\sin\\alpha - 4\\sin^3\\alpha) = 4\\sin^3\\alpha"}</Mb>
-        <p>Zatem:</p>
-        <Mb>{"\\frac{3\\sin\\alpha - \\sin 3\\alpha}{\\sin\\alpha} = \\frac{4\\sin^3\\alpha}{\\sin\\alpha} = 4\\sin^2\\alpha"}</Mb>
+        <Mb>
+          {"\\sin 3\\alpha = \\sin \\alpha \\cos 2\\alpha + \\cos \\alpha \\sin 2\\alpha"}
+        </Mb>
+        <p>
+          Ponieważ <Mi>{"\\sin 2\\alpha = 2\\sin \\alpha \\cos \\alpha"}</Mi>:
+        </p>
+        <Mb>
+          {"= \\sin\\alpha \\cos 2\\alpha + 2 \\sin\\alpha \\cos^2\\alpha"}
+        </Mb>
+        <Mb>
+          {"= \\sin\\alpha\\bigl(\\cos 2\\alpha + 2\\cos^2\\alpha\\bigr)\\text{.}"}
+        </Mb>
+        <p>Wyliczamy wyrażenie <Mi>{"3\\sin\\alpha - \\sin 3\\alpha"}</Mi>:</p>
+        <Mb>
+          {"3\\sin\\alpha - \\sin 3\\alpha = \\sin\\alpha \\biggl[ 3-\\bigl(\\cos 2\\alpha + 2\\cos^2\\alpha\\bigr) \\biggr]"}
+        </Mb>
+        <p>
+          Rozpisując <Mi>{"\\cos 2\\alpha"}</Mi> w postaci przy <Mi>{"\\cos^2\\alpha"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\cos 2\\alpha = 2\\cos^2\\alpha - 1"}</Mb>
+        </FormulaBox>
+        <Mb>
+          {"\\quad \\Rightarrow \\quad \\cos 2\\alpha + 2\\cos^2\\alpha"}
+        </Mb>
+        <Mb>
+          {"= \\bigl(2\\cos^2\\alpha - 1\\bigr) + 2\\cos^2\\alpha = 4\\cos^2\\alpha - 1"}
+        </Mb>
+        <Mb>
+          {"\\quad \\Rightarrow \\quad 3\\sin\\alpha - \\sin 3\\alpha = \\sin\\alpha \\bigl[3-(4\\cos^2\\alpha-1)\\bigr]"}
+        </Mb>
+        <Mb>
+          {"= \\sin\\alpha(4-4\\cos^2\\alpha) = 4\\sin\\alpha\\sin^2\\alpha"}
+        </Mb>
+        <p>Przy kącie ostrym przy wierzchołku <Mi>{"C"}</Mi> jest <Mi>{"\\sin\\alpha > 0"}</Mi>, więc możemy skrócić przez <Mi>{"\\sin\\alpha"}</Mi>:</p>
+        <Mb>{"\\frac{3\\sin\\alpha - \\sin 3\\alpha}{\\sin\\alpha} = 4\\sin^2\\alpha"}</Mb>
 
         <p className="font-semibold text-stone-800">Krok 3. Finał dowodu</p>
         <Mb>{"R\\sqrt{\\frac{3\\sin\\alpha-\\sin 3\\alpha}{\\sin\\alpha}} = R\\sqrt{4\\sin^2\\alpha} = R \\cdot 2\\sin\\alpha = 2R\\sin\\alpha = b \\qquad \\blacksquare"}</Mb>

@@ -204,7 +204,7 @@ const tasks = [
         </p>
         <Mb>{"\\Delta = (4b)^2 - 4 \\cdot 3 \\cdot 6b^2 = 16b^2 - 72b^2 = -56b^2 \\leq 0"}</Mb>
         <p>
-          Dla <Mi>{"b \\neq 0"}</Mi>: DELTA <Mi>{"< 0"}</Mi> i współczynnik wiodący{" "}
+          Dla <Mi>{"b \\neq 0"}</Mi>: <Mi>{"\\Delta < 0"}</Mi> i współczynnik wiodący{" "}
           <Mi>{"3 > 0"}</Mi>, więc trójmian <Mi>{"> 0"}</Mi>.
         </p>
         <p>

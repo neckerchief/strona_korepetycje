@@ -184,8 +184,8 @@ const tasks = [
 
         <p className="font-semibold text-stone-800">Krok 2. Zdarzenie A∩B</p>
         <p>
-          Smaków "specjalnych": śmietankowy (S), truskawkowy (T), karmelowy (K),
-          pistacjowy (P) - łącznie 4. Smaków "zwykłych" (bez czekolady): waniliowy,
+          Smaki "specjalnych": śmietankowy (S), truskawkowy (T), karmelowy (K),
+          pistacjowy (P) - łącznie 4. Smaki "zwykłych" (bez czekolady): waniliowy,
           ciasteczkowy, miętowy - łącznie 3.
         </p>
         <p>

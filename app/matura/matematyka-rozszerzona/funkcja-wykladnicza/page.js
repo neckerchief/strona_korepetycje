@@ -62,12 +62,11 @@ const tasks = [
         <p className="font-semibold text-stone-800">Krok 1. Wyznaczamy <Mi>{"g^2"}</Mi></p>
         <Mb>{"g^2 = \\frac{K(4)}{K(2)} = \\frac{98\\,441}{50\\,225}"}</Mb>
         <p>
-          Obliczamy NWD(98441, 50225). Stosując algorytm Euklidesa:
-          98441 = 1·50225 + 48216; 50225 = 1·48216 + 2009; 48216 = 24·2009 + 0.
-          Zatem NWD = 2009.
+          Na kalkulatorze (albo skracając ułamek przez wspólny dzielnik) otrzymujemy{" "}
+          <Mi>{"g^2 = \\dfrac{49}{25}"}</Mi>, więc{" "}
+          <Mi>{"g = \\sqrt{\\dfrac{49}{25}} = \\dfrac{7}{5}"}</Mi>{" "}
+          (odrzucamy wartość ujemną pierwiastka, bo <Mi>{"g > 0"}</Mi>).
         </p>
-        <Mb>{"g^2 = \\frac{98441}{50225} = \\frac{49}{25} \\quad \\Rightarrow \\quad g = \\frac{7}{5}"}</Mb>
-        <p>(odrzucamy <Mi>{"g = -\\tfrac{7}{5}"}</Mi>, bo <Mi>{"g > 0"}</Mi>)</p>
 
         <p className="font-semibold text-stone-800">Krok 2. Wyznaczamy <Mi>{"W_0"}</Mi></p>
         <Mb>{"K(2) = W_0 \\cdot g^2 \\quad \\Rightarrow \\quad W_0 = \\frac{K(2)}{g^2} = \\frac{50\\,225}{\\tfrac{49}{25}} = 50\\,225 \\cdot \\frac{25}{49} = 1025 \\cdot 25 = 25\\,625"}</Mb>
@@ -77,8 +76,14 @@ const tasks = [
 
         <p className="font-semibold text-stone-800">Krok 3. Sprawdzamy, czy zbiórka osiągnie cel w 14 dniach</p>
         <Mb>{"K(14) = 25\\,625 \\cdot \\left(\\frac{7}{5}\\right)^{14}"}</Mb>
-        <p>Obliczamy przybliżoną wartość:</p>
-        <Mb>{"\\left(\\frac{7}{5}\\right)^2 = 1{,}96, \\quad \\left(\\frac{7}{5}\\right)^4 \\approx 3{,}84, \\quad \\left(\\frac{7}{5}\\right)^{14} = \\left[\\left(\\frac{7}{5}\\right)^2\\right]^7 \\approx 111{,}1"}</Mb>
+        <p>Wykorzystujemy to, że <Mi>{"14 = 2 \\cdot 7"}</Mi>, więc</p>
+        <Mb>
+          {
+            "\\left(\\frac{7}{5}\\right)^{14} = \\left[\\left(\\frac{7}{5}\\right)^2\\right]^7 = (1{,}96)^7"
+          }
+        </Mb>
+        <p>Przybliżenie na kalkulatorze:</p>
+        <Mb>{"(1{,}96)^7 \\approx 111{,}1"}</Mb>
         <Mb>{"K(14) \\approx 25\\,625 \\cdot 111{,}1 \\approx 2\\,847\\,000 > 2\\,500\\,000"}</Mb>
         <p>
           Tak, zbiórka uzbierała potrzebną kwotę w ciągu dwóch tygodni.
