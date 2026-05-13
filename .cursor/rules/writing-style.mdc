@@ -41,6 +41,12 @@ alwaysApply: false
   - ❌ `v<sub>x</sub>` in math context
 - Exception: SVG `<text>` elements may still use `<tspan dy="3" fontSize="0.8em">y</tspan>` since KaTeX cannot render inside SVG.
 
+## Dyskryminanta (trójmian kwadratowy, nierówności)
+- **Nigdy** nie pisz „DELTA”, „delta” ani „dyskryminant” słowem w środku zdania przy wzorze na deltę uczniowi.
+- **Zawsze** użyj symbolu w KaTeX: `<Mi>{"\\Delta = \\dots"}</Mi>` lub osobnej formuły z `\Delta`.
+  - ❌ `Na tym przedziale DELTA = ...`
+  - ✅ `Na tym przedziale <Mi>{"\\Delta = \\dots"}</Mi>`
+
 ## Polish Decimal Notation in KaTeX
 - Use `{,}` inside math mode to get a comma decimal separator without extra spacing:
   - ✅ `<Mi>{"0{,}5"}</Mi>` renders as 0,5
@@ -61,3 +67,40 @@ alwaysApply: false
 - **Odbiorca:** uczniowie liceum, w tym osoby **bez** wcześniejszej styczności z omawianymi zagadnieniami (materiał musi być zrozumiały także „od zera”).
 - **Cel:** prosty, konkretny język i **wystarczająco szczegółowe** wyjaśnienia (krok po kroku tam, gdzie to pomaga), **bez** lania wody i **bez** pomijania kroków rozumowania tylko dlatego, że wydają się „oczywiste” (dla kogoś uczącego się od zera zwykle **nie** są).
 - **Priorytet:** przejrzystość i wyłącznie treści, które **realnie uczą**, zamiast rozwodzić się we wstępach i dygresjach.
+
+## Zadania z matury: matematyka rozszerzona
+
+**Zakres:** `app/matura/matematyka-rozszerzona/page.js` oraz wszystkie podstrony z zadaniami w `app/matura/matematyka-rozszerzona/` (treści w `TaskCard`, `SubTask` i odpowiadające im bloki).
+
+### Rozwiązania: szczegóły i prostota
+
+- Pisz rozwiązania **naprawdę szczegółowo**, ale językiem **jak najprostszym**: jeden czysty tok rozumowania, bez skrótów myślowych „dla wtajemniczonych”.
+- **Nie pomijaj żadnego kroku** algebraicznego, logicznego ani uzasadnienia (w tym krótkiego „dlaczego wolno tak zrobić”, gdy nietypowe).
+- Jeśli istnieje **wskazówka** do zadania, rozwiązanie musi **odwołać się do niej w praktyce**: każdy pomysł ze wskazówki pojawia się w rozwiązaniu **w tej samej kolejności lub z jawnym powiązaniem** (np. „zgodnie ze wskazówką, najpierw … potem …”), tak żeby uczeń widział pełną drogę od podpowiedzi do wyniku.
+
+### Ton
+
+- Łącz **profesjonalizm** (poprawna terminologia, spójna struktura) z **życzliwym, spokojnym tonem** jak w dobrym podręczniku licealnym.
+- Możesz celować w styl **klasycznego podręcznika**, ale **bogatszego w detale**: ten sam poziom poprawności co w podręczniku, więcej kroków i wyjaśnień niuansów, żeby nic nie pozostawało domyślne.
+
+### Obliczenia pomocnicze („z boku”)
+
+- Gdy główne rozwiązanie korzysta z **długiej procedury** (np. **dzielenie wielomianów**, rozszerzanie i skracanie ułamków, rozpisywanie równania kwadratowego po wzorze, wielokrotne podstawienia), umieść **pełny rozpis krok po kroku** w **osobnej, widocznie szarej ramce**, żeby wyglądało to jak „ściąga z kartki z boku”, którą uczeń może sam prześledzić.
+- **Priorytet:** robić tak zawsze, gdy pominiecie rozpiski mogłoby sprawić, że uczeń nie wie, **skąd** wzięło się dalsze wyrażenie.
+- **Implementacja:** preferuj gotowy komponent `SideWork` z `app/matura/matematyka-rozszerzona/_components.js` (szare tło, obramowanie). Opcjonalnie ustaw tytuł, np. `title="Dzielenie wielomianów"` albo `title={null}` bez nagłówka.
+- **Układ obok głównego toku** na szerokich ekranach (na wąskich naturalnie jedna kolumna):
+
+```jsx
+import { SideWork } from "./_components"; // lub odpowiednia ścieżka
+
+<div className="flex flex-col lg:flex-row gap-4 items-start">
+  <div className="flex-1 min-w-0">
+    {/* główny ciąg rozumowania */}
+  </div>
+  <SideWork className="w-full lg:w-[min(100%,20rem)] shrink-0">
+    {/* kolejne kroki pomocnicze z <Mb> / <Mi> */}
+  </SideWork>
+</div>
+```
+
+- Jeśli `SideWork` nie jest importowany na danej stronie, możesz użyć **tego samego układu klas** na zwykłym `<aside>` (jak w definicji `SideWork`), żeby wizualnie było spójnie.

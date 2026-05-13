@@ -3,6 +3,8 @@ import { useState } from "react";
 import { InlineMath, BlockMath } from "react-katex";
 import { ChevronDown } from "lucide-react";
 
+const cn = (...classes) => classes.filter(Boolean).join(" ");
+
 export const Mi = ({ children }) => <InlineMath math={children} />;
 export const Mb = ({ children }) => <BlockMath math={children} />;
 
@@ -13,7 +15,22 @@ export const FormulaBox = ({ children }) => (
   </div>
 );
 
-const cn = (...classes) => classes.filter(Boolean).join(" ");
+// Szare „obliczenia z boku” (dzielenie wielomianów, rozszerzanie ułamków itd.)
+export const SideWork = ({ title = "Obliczenia pomocnicze", children, className }) => (
+  <aside
+    className={cn(
+      "rounded-lg border border-stone-200 bg-stone-100/90 px-4 py-3 text-sm text-stone-700 leading-relaxed",
+      className
+    )}
+  >
+    {title ? (
+      <p className="text-xs font-semibold uppercase tracking-wide text-stone-500 mb-2">
+        {title}
+      </p>
+    ) : null}
+    {children}
+  </aside>
+);
 
 // ─── Panel rozkładany ─────────────────────────────────────────
 
@@ -92,15 +109,16 @@ export const SubTask = ({ label, points, children, answer, hint, solution }) => 
 // Pola zadania:
 //   id, source, number, points
 //   instruction  – tekst nad wzorem (opcjonalny)
-//   mathBlock    – wzór w bloku (opcjonalny)
-//   noteItems    – [{ text }, { math }] pod wzorem (opcjonalne)
+//   mathBlock    – pierwszy wzór w bloku (opcjonalny)
+//   mathBlock2   – drugi blok po akapicie noteItems (opcjonalny)
+//   noteItems    – [{ text }, { math }] tekst opracowania pod wzorami (opcjonalny)
 //   answers      – ["A. ...", ...] dla zadań zamkniętych (opcjonalne)
 //   answer       – ReactNode: krótka odpowiedź (opcjonalny)
 //   hint         – ReactNode: wskazówka (opcjonalna)
 //   solution     – ReactNode: rozwiązanie krok po kroku (opcjonalne)
 
 export const TaskCard = ({
-  number, points, instruction, mathBlock, noteItems,
+  number, points, instruction, mathBlock, mathBlock2, noteItems,
   answers, answer, hint, solution, source,
 }) => {
   const [open, setOpen] = useState(null); // "answer" | "hint" | "solution" | null
@@ -136,6 +154,11 @@ export const TaskCard = ({
                 : <span key={i}>{item.text}</span>
             )}
           </p>
+        )}
+        {mathBlock2 && (
+          <div className="text-center my-4">
+            <Mb>{mathBlock2}</Mb>
+          </div>
         )}
         {answers && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">

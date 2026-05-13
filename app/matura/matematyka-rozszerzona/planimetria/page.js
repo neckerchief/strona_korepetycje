@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { TaskCard, SubTask, Mi, Mb, FormulaBox } from "../_components";
@@ -218,6 +219,18 @@ const Zad13 = () => (
         ramienia tego trapezu. Niech <Mi>{"b"}</Mi> oznacza długość dłuższej podstawy, przy
         czym <Mi>{"b > 4"}</Mi>.
       </p>
+      <figure className="my-6 flex flex-col items-center">
+        <Image
+          src="/matura/planimetria-smwp-zad13.png"
+          alt="Trapez równoramienny: górna podstawa 4, dolna podstawa b, ramię 10, środek C na prawym ramieniu oraz zacieniony prostokątny trójkąt oznaczony P"
+          width={1024}
+          height={555}
+          className="w-[40%] max-w-none h-auto mx-auto rounded-lg border border-[#c4a8e8] bg-white"
+        />
+        <figcaption className="mt-2 text-center text-xs text-stone-500 font-normal max-w-xl">
+          Rysunek do zadania (SMWP, październik&nbsp;2025)
+        </figcaption>
+      </figure>
     </div>
 
     <SubTask

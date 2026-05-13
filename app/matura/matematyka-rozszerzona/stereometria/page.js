@@ -322,44 +322,130 @@ export default function StereometriaPage() {
           hint={
             <div className="space-y-3">
               <p>
-                Niech bok podstawy to <Mi>{"a"}</Mi>, wysokość to <Mi>{"h"}</Mi>. Kąt
-                dwuścienny między sąsiednimi ścianami bocznymi (wzdłuż krawędzi bocznej np.{" "}
-                <Mi>{"SA"}</Mi>) wynosi <Mi>{"120°"}</Mi>. Wyznacz normalne do obu ścian i
-                oblicz cosinus kąta między nimi.
+                Kąt dwuścienny między ścianami <Mi>{"SAB"}</Mi> i <Mi>{"SAD"}</Mi> ma krawędź
+                wspólną <Mi>{"SA"}</Mi>. Narysuj w obu ścianach prostopadłe do <Mi>{"SA"}</Mi>{" "}
+                wychodzące z tego samego punktu <Mi>{"P"}</Mi> na <Mi>{"SA"}</Mi> (od
+                wierzchołków <Mi>{"B"}</Mi> i <Mi>{"D"}</Mi>): odcinki <Mi>{"PB"}</Mi> i{" "}
+                <Mi>{"PD"}</Mi>. Kąt <Mi>{"\\angle BPD"}</Mi> to kąt płaski tego kąta
+                dwuściennego, więc <Mi>{"120°"}</Mi>.
               </p>
               <p>
-                Wynik to relacja <Mi>{"h = \\frac{a}{2}"}</Mi>, z której oblicz wysokość
-                ściany bocznej (apotema) i pola.
+                W trójkącie <Mi>{"BPD"}</Mi> znasz <Mi>{"BD"}</Mi> (przekątna kwadratu) oraz
+                kąt przy <Mi>{"P"}</Mi>. Z symetrii ostrosłupa <Mi>{"PB = PD"}</Mi>. Oblicz{" "}
+                <Mi>{"PB"}</Mi>, potem z pola <Mi>{"\\triangle SAB"}</Mi> wyprowadź związek
+                między <Mi>{"h"}</Mi> a <Mi>{"a"}</Mi>.
               </p>
             </div>
           }
           solution={
             <div className="space-y-4">
-              <p className="font-semibold text-stone-800">Krok 1. Układ współrzędnych</p>
+              <p className="font-semibold text-stone-800">Rysunek pomocniczy</p>
+              <figure className="my-2 flex flex-col items-center">
+                <svg
+                  viewBox="0 0 280 200"
+                  className="w-full max-w-md h-auto text-[#52297a]"
+                  role="img"
+                  aria-label="Ostrosłup prawidłowy czworokątny: kąt płaski kąta dwuściennego przy krawędzi SA"
+                >
+                  <title>Ostrosłup: kąt dwuścienny przy SA</title>
+                  {/* podstawa (schemat) */}
+                  <path
+                    d="M 60 170 L 140 185 L 220 170 L 160 155 Z"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  {/* krawędzie boczne do S */}
+                  <line x1="60" y1="170" x2="140" y2="35" stroke="currentColor" strokeWidth="2" />
+                  <line x1="140" y1="185" x2="140" y2="35" stroke="currentColor" strokeWidth="2.5" />
+                  <line x1="220" y1="170" x2="140" y2="35" stroke="currentColor" strokeWidth="2" />
+                  <line x1="160" y1="155" x2="140" y2="35" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.45" />
+                  {/* S, A, B, D */}
+                  <circle cx="140" cy="35" r="4" fill="currentColor" />
+                  <circle cx="140" cy="185" r="3" fill="currentColor" />
+                  <circle cx="60" cy="170" r="3" fill="currentColor" />
+                  <circle cx="220" cy="170" r="3" fill="currentColor" />
+                  <text x="148" y="30" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" fill="currentColor">S</text>
+                  <text x="145" y="198" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" fill="currentColor">A</text>
+                  <text x="42" y="178" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" fill="currentColor">B</text>
+                  <text x="228" y="178" fontSize="14" fontFamily="Georgia, serif" fontStyle="italic" fill="currentColor">D</text>
+                  {/* punkt P na SA, PB i PD */}
+                  <circle cx="140" cy="118" r="3" fill="#8b5cf6" />
+                  <text x="148" y="122" fontSize="12" fontFamily="Georgia, serif" fontStyle="italic" fill="#6d3a8e">P</text>
+                  <line x1="60" y1="170" x2="140" y2="118" stroke="#8b5cf6" strokeWidth="2" />
+                  <line x1="220" y1="170" x2="140" y2="118" stroke="#8b5cf6" strokeWidth="2" />
+                </svg>
+                <figcaption className="text-xs text-stone-500 mt-2 text-center max-w-md">
+                  Odcinki <Mi>{"PB"}</Mi>, <Mi>{"PD"}</Mi>{" "} są 
+                  prostopadłe do <Mi>{"SA"}</Mi> w punkcie <Mi>{"P"}</Mi>, więc{" "}
+                  <Mi>{"\\angle BPD = 120°"}</Mi> jest kątem płaskim kąta dwuściennego.
+                </figcaption>
+              </figure>
+
+              <p className="font-semibold text-stone-800">Krok 1. Oznaczenia</p>
               <p>
-                Podstawa: kwadrat o boku <Mi>{"a"}</Mi>, środek w początku. Wierzchołki:{" "}
-                <Mi>{"A=(\\frac{a}{2},\\frac{a}{2},0)"}</Mi>,{" "}
-                <Mi>{"B=(-\\frac{a}{2},\\frac{a}{2},0)"}</Mi>,{" "}
-                <Mi>{"D=(\\frac{a}{2},-\\frac{a}{2},0)"}</Mi>, wierzchołek{" "}
-                <Mi>{"S=(0,0,h)"}</Mi>.
+                Niech bok podstawy ma długość <Mi>{"a"}</Mi>, a wysokość ostrosłupa (od{" "}
+                <Mi>{"S"}</Mi> do środka kwadratu) <Mi>{"h"}</Mi>. Przekątna kwadratu{" "}
+                <Mi>{"BD"}</Mi> ma długość <Mi>{"a\\sqrt{2}"}</Mi>.
               </p>
 
-              <p className="font-semibold text-stone-800">Krok 2. Normalne do ścian bocznych</p>
-              <p>Ściany <Mi>{"SAB"}</Mi> i <Mi>{"SAD"}</Mi> mają normalne (z iloczynu wektorowego):</p>
-              <Mb>{"\\vec{n}_1 = \\overrightarrow{SA}\\times\\overrightarrow{SB} = (0,\\,ah,\\,\\tfrac{a^2}{2})"}</Mb>
-              <Mb>{"\\vec{n}_2 = \\overrightarrow{SA}\\times\\overrightarrow{SD} = (-ah,\\,0,\\,-\\tfrac{a^2}{2})"}</Mb>
-              <Mb>{"\\cos 120° = \\frac{\\vec{n}_1\\cdot\\vec{n}_2}{|\\vec{n}_1||\\vec{n}_2|} = \\frac{-\\tfrac{a^4}{4}}{a^2(h^2+\\tfrac{a^2}{4})} = -\\frac{a^2/4}{h^2+a^2/4}"}</Mb>
+              <p className="font-semibold text-stone-800">
+                Krok 2. Kąt płaski kąta dwuściennego przy <Mi>{"SA"}</Mi>
+              </p>
+              <p>
+                Ściany <Mi>{"SAB"}</Mi> i <Mi>{"SAD"}</Mi> przecinają się wzdłuż <Mi>{"SA"}</Mi>.
+                Z symetrii ostrosłupa odległości punktów <Mi>{"B"}</Mi> i <Mi>{"D"}</Mi> od
+                prostej <Mi>{"SA"}</Mi> są równe, więc prostopadłe do <Mi>{"SA"}</Mi>{" "}
+                opuszczone z <Mi>{"B"}</Mi> i <Mi>{"D"}</Mi> spotykają się w jednym punkcie{" "}
+                <Mi>{"P"}</Mi> na <Mi>{"SA"}</Mi>. Kąt <Mi>{"\\angle BPD"}</Mi> jest kątem
+                płaskim kąta dwuściennego, z treści <Mi>{"120°"}</Mi>.
+              </p>
+              <p>
+                Trójkąt <Mi>{"BPD"}</Mi> jest równoramienny (<Mi>{"PB = PD"}</Mi>), przy
+                wierzchołku <Mi>{"P"}</Mi> kąt <Mi>{"120°"}</Mi>, przy podstawie{" "}
+                <Mi>{"BD = a\\sqrt{2}"}</Mi>. Z twierdzenia cosinusów:
+              </p>
+              <Mb>
+                {"(a\\sqrt{2})^2 = PB^2 + PD^2 - 2\\cdot PB\\cdot PD\\cos 120° = 2PB^2 + PB^2 = 3PB^2"}
+              </Mb>
+              <Mb>{"2a^2 = 3PB^2 \\quad \\Rightarrow \\quad PB^2 = \\frac{2a^2}{3}"}</Mb>
 
-              <p className="font-semibold text-stone-800">Krok 3. Wyznaczamy <Mi>{"h"}</Mi></p>
-              <Mb>{"-\\frac{1}{2} = -\\frac{a^2/4}{h^2+a^2/4} \\quad\\Rightarrow\\quad h^2+\\frac{a^2}{4} = \\frac{a^2}{2} \\quad\\Rightarrow\\quad h = \\frac{a}{2}"}</Mb>
+              <p className="font-semibold text-stone-800">Krok 3. Związek z wysokością <Mi>{"h"}</Mi></p>
+              <p>
+                Trójkąty <Mi>{"SOA"}</Mi> i <Mi>{"SOB"}</Mi> (środek podstawy{" "}
+                <Mi>{"O"}</Mi>) są prostokątne, <Mi>{"OA = OB"}</Mi> (połowa przekątnej kwadratu), więc
+              </p>
+              <Mb>{"OA^2 = \\frac{a^2}{2}, \\qquad SA^2 = h^2 + \\frac{a^2}{2}"}</Mb>
+              <p>
+                W prawidłowym ostrosłupie czworokątnym wszystkie krawędzie boczne mają tę samą
+                długość (symetria): <Mi>{"SA = SB = \\dots"}</Mi> Trójkąt <Mi>{"SAB"}</Mi> jest więc
+                równoramienny przy podstawie <Mi>{"AB"}</Mi>.
+              </p>
+              <p>
+                Pole <Mi>{"\\triangle SAB"}</Mi>: z jednej strony{" "}
+                <Mi>{"\\displaystyle \\frac{1}{2}\\cdot SA\\cdot PB"}</Mi> (wysokość{" "}
+                <Mi>{"PB"}</Mi> na bok <Mi>{"SA"}</Mi>), z drugiej{" "}
+                <Mi>{"\\displaystyle \\frac{1}{2}\\cdot a\\cdot m"}</Mi>, gdzie{" "}
+                <Mi>{"m"}</Mi> to apotema ściany bocznej (odległość <Mi>{"S"}</Mi> od środka
+                boku <Mi>{"AB"}</Mi>):
+              </p>
+              <Mb>{"m^2 = h^2 + \\left(\\frac{a}{2}\\right)^2"}</Mb>
+              <Mb>{"\\frac{1}{2}\\cdot SA\\cdot PB = \\frac{1}{2}\\cdot a\\cdot m \\quad \\Rightarrow \\quad m = \\frac{SA\\cdot PB}{a}"}</Mb>
+              <p>Podnosimy do kwadratu i podstawiamy <Mi>{"SA^2"}</Mi> oraz <Mi>{"PB^2"}</Mi>:</p>
+              <Mb>
+                {"m^2 = \\frac{SA^2\\cdot PB^2}{a^2} = \\frac{1}{a^2}\\left(h^2+\\frac{a^2}{2}\\right)\\cdot\\frac{2a^2}{3} = \\frac{2}{3}\\left(h^2+\\frac{a^2}{2}\\right)"}
+              </Mb>
+              <p>
+                Porównując z <Mi>{"m^2 = h^2 + \\dfrac{a^2}{4}"}</Mi>:
+              </p>
+              <Mb>{"h^2 + \\frac{a^2}{4} = \\frac{2h^2}{3} + \\frac{a^2}{3} \\quad \\Rightarrow \\quad \\frac{h^2}{3} = \\frac{a^2}{12} \\quad \\Rightarrow \\quad h = \\frac{a}{2}"}</Mb>
 
-              <p className="font-semibold text-stone-800">Krok 4. Pola</p>
-              <p>Apotema (wysokość ściany bocznej) = odległość od <Mi>{"S"}</Mi> do środka krawędzi podstawy:</p>
-              <Mb>{"l = \\sqrt{\\left(\\frac{a}{2}\\right)^2 + h^2} = \\sqrt{\\frac{a^2}{4}+\\frac{a^2}{4}} = \\frac{a}{\\sqrt{2}} = \\frac{a\\sqrt{2}}{2}"}</Mb>
-              <Mb>{"P_{\\text{boczna}} = 4 \\cdot \\frac{1}{2} \\cdot a \\cdot \\frac{a\\sqrt{2}}{2} = a^2\\sqrt{2}"}</Mb>
-              <Mb>{"P_{\\text{podstawa}} = a^2"}</Mb>
+              <p className="font-semibold text-stone-800">Krok 4. Pola i stosunek</p>
+              <p>Apotema (wysokość trójkąta bocznego przy podstawie <Mi>{"a"}</Mi>):</p>
+              <Mb>{"m = \\sqrt{h^2 + \\frac{a^2}{4}} = \\sqrt{\\frac{a^2}{4}+\\frac{a^2}{4}} = \\frac{a}{\\sqrt{2}} = \\frac{a\\sqrt{2}}{2}"}</Mb>
+              <Mb>{"P_{\\text{boczna}} = 4\\cdot\\frac{1}{2}\\cdot a\\cdot m = a^2\\sqrt{2}, \\qquad P_{\\text{podstawa}} = a^2"}</Mb>
               <FormulaBox>
-                <Mb>{"\\frac{P_{\\text{boczna}}}{P_{\\text{podstawa}}} = \\frac{a^2\\sqrt{2}}{a^2} = \\sqrt{2}"}</Mb>
+                <Mb>{"\\frac{P_{\\text{boczna}}}{P_{\\text{podstawa}}} = \\sqrt{2} \\qquad \\blacksquare"}</Mb>
               </FormulaBox>
             </div>
           }

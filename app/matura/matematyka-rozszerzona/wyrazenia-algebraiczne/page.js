@@ -256,7 +256,9 @@ const tasks = [
 
         <p className="font-semibold text-stone-800">Krok 3. Rozkład licznika</p>
         <Mb>{"-15x^2-7x+98 = -(15x^2+7x-98)"}</Mb>
-        <p>DELTA <Mi>{"= 49 + 4 \\cdot 15 \\cdot 98 = 49 + 5880 = 5929 = 77^2"}</Mi></p>
+        <p>
+          <Mi>{"\\Delta = 49 + 4 \\cdot 15 \\cdot 98 = 49 + 5880 = 5929 = 77^2"}</Mi>
+        </p>
         <Mb>{"x = \\frac{-7 \\pm 77}{30}: \\quad x_1 = \\frac{7}{3},\\quad x_2 = -\\frac{14}{5}"}</Mb>
         <Mb>{"15x^2+7x-98 = (3x-7)(5x+14)"}</Mb>
 

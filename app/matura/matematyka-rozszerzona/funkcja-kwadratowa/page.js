@@ -186,7 +186,17 @@ const tasks = [
     ),
     mathBlock: "f(x) = (2m+1)\\cdot x^2 - 6x + m - 3",
     noteItems: [
-      { text: "dla każdej liczby rzeczywistej " }, { math: "x" }, { text: ". Wyznacz wszystkie wartości parametru " }, { math: "m" }, { text: ", dla których funkcja " }, { math: "f" }, { text: " ma dokładnie dwa miejsca zerowe " }, { math: "x_1" }, { text: " oraz " }, { math: "x_2" }, { text: " przeciwnych znaków, które spełniają warunek " },
+      { text: "dla każdej liczby rzeczywistej " },
+      { math: "x" },
+      { text: ". Wyznacz wszystkie wartości parametru " },
+      { math: "m" },
+      { text: ", dla których funkcja " },
+      { math: "f" },
+      { text: " ma dokładnie dwa miejsca zerowe " },
+      { math: "x_1" },
+      { text: " oraz " },
+      { math: "x_2" },
+      { text: " przeciwnych znaków, które spełniają warunek. Zapisz obliczenia." },
     ],
     answers: null,
     mathBlock2: "x_1^3 + x_2^3 > (x_1 + x_2)^4",
@@ -216,11 +226,37 @@ const tasks = [
         <p>Potrzebujemy: <Mi>{"2m+1 \\neq 0"}</Mi> i <Mi>{"x_1 x_2 < 0"}</Mi>.</p>
         <p>Wzory Viète'a: <Mi>{"s = x_1+x_2 = \\frac{6}{2m+1}"}</Mi>, <Mi>{"p = x_1 x_2 = \\frac{m-3}{2m+1}"}</Mi></p>
         <Mb>{"p < 0 \\quad\\Leftrightarrow\\quad \\frac{m-3}{2m+1} < 0 \\quad\\Leftrightarrow\\quad m \\in \\left(-\\frac{1}{2},\\, 3\\right)"}</Mb>
-        <p>Na tym przedziale DELTA <Mi>{"= 36-4(2m+1)(m-3) = -8m^2+20m+48 > 0"}</Mi> ✓</p>
+        <p>
+          Na tym przedziale{" "}
+          <Mi>
+            {"\\Delta = 36-4(2m+1)(m-3) = -8m^2+20m+48 > 0"}
+          </Mi>{" "}
+          ✓ (dwa różne pierwiastki rzeczywiste).
+        </p>
 
         <p className="font-semibold text-stone-800">Krok 2. Nierówność <Mi>{"x_1^3+x_2^3 > (x_1+x_2)^4"}</Mi></p>
-        <Mb>{"x_1^3+x_2^3 = s^3-3ps"}</Mb>
-        <p>Nierówność: <Mi>{"s^3-3ps > s^4"}</Mi>. Ponieważ <Mi>{"s = \\frac{6}{2m+1} > 0"}</Mi>, dzielimy przez <Mi>{"s > 0"}</Mi>:</p>
+        <p>
+          Rozwijamy <Mi>{"(a+b)^3"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>
+            {
+              "\\begin{aligned} (x_1+x_2)^3 &= x_1^3 + 3x_1^2 x_2 + 3x_1 x_2^2 + x_2^3 \\\\ &= x_1^3 + x_2^3 + 3x_1 x_2 (x_1 + x_2) \\end{aligned}"
+            }
+          </Mb>
+        </FormulaBox>
+        <p>
+          Stąd{" "}
+          <Mi>{"x_1^3 + x_2^3 = (x_1+x_2)^3 - 3x_1 x_2 (x_1+x_2)"}</Mi>. Oznaczając jak w
+          poprzednim kroku <Mi>{"s = x_1+x_2"}</Mi> i <Mi>{"p = x_1 x_2"}</Mi>, otrzymujemy na
+          końcu zwartą postać:
+        </p>
+        <Mb>{"x_1^3+x_2^3 = s^3 - 3ps"}</Mb>
+        <p>
+          Nierówność z treści to <Mi>{"s^3-3ps > s^4"}</Mi>. Ponieważ dla{" "}
+          <Mi>{"m \\in \\left(-\\tfrac{1}{2},\\,3\\right)"}</Mi> jest{" "}
+          <Mi>{"s = \\dfrac{6}{2m+1} > 0"}</Mi>, dzielimy obie strony przez <Mi>{"s > 0"}</Mi>:
+        </p>
         <Mb>{"s^2(1-s) > 3p"}</Mb>
         <p>Podstawiamy i upraszczamy (mnożąc przez <Mi>{"(2m+1)^2 > 0"}</Mi>):</p>
         <Mb>{"12(2m-5) > (m-3)(2m+1)^2"}</Mb>
@@ -241,8 +277,16 @@ const tasks = [
               <th className="border border-[#d4b8f0] px-3 py-1">iloczyn</th>
             </tr></thead>
             <tbody>
-              <tr><td className="border border-[#d4b8f0] px-3 py-1"><Mi>{"(-\\tfrac{1}{2},\\,\\tfrac{3}{2})"}</Mi></td><td className="border border-[#d4b8f0] px-3 py-1 text-red-700">-</td><td className="border border-[#d4b8f0] px-3 py-1 text-green-700 font-bold">+ (niespeł.)</td></tr>
-              <tr className="bg-emerald-50"><td className="border border-[#d4b8f0] px-3 py-1"><Mi>{"(\\tfrac{3}{2},\\,3)"}</Mi></td><td className="border border-[#d4b8f0] px-3 py-1 text-green-700">+</td><td className="border border-[#d4b8f0] px-3 py-1 text-red-700 font-bold">- ✓</td></tr>
+              <tr>
+                <td className="border border-[#d4b8f0] px-3 py-1"><Mi>{"(-\\tfrac{1}{2},\\,\\tfrac{3}{2})"}</Mi></td>
+                <td className="border border-[#d4b8f0] px-3 py-1">-</td>
+                <td className="border border-[#d4b8f0] px-3 py-1"> + </td>
+              </tr>
+              <tr>
+                <td className="border border-[#d4b8f0] px-3 py-1"><Mi>{"(\\tfrac{3}{2},\\,3)"}</Mi></td>
+                <td className="border border-[#d4b8f0] px-3 py-1">+</td>
+                <td className="border border-[#d4b8f0] px-3 py-1">- ✓</td>
+              </tr>
             </tbody>
           </table>
         </div>

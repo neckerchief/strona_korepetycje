@@ -393,7 +393,7 @@ const tasks = [
     solution: (
       <div className="space-y-4">
         <p className="font-semibold text-stone-800">Krok 1. Upraszczamy obie strony</p>
-        <p>Prawa strona: <Mi>{"2\\sin\\frac{\\pi}{4} = \\sqrt{2}"}</Mi>, a</p>
+        <p>Prawa strona: <Mi>{"2\\sin\\frac{\\pi}{4} = \\sqrt{2}"}</Mi>:</p>
         <Mb>{"\\sqrt{2}(\\cos x - \\sin x) = 2\\left(\\cos\\frac{\\pi}{4}\\cos x - \\sin\\frac{\\pi}{4}\\sin x\\right) = 2\\cos\\left(x+\\frac{\\pi}{4}\\right)"}</Mb>
         <p>Lewa strona: <Mi>{"\\cos 4x = \\sin\\left(\\frac{\\pi}{2}-4x\\right)"}</Mi>, więc:</p>
         <FormulaBox>
