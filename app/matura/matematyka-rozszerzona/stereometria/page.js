@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeft, ChevronDown } from "lucide-react";
-import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
+import { TaskCard, Mi, Mb, FormulaBox, SideWork } from "../_components";
 
 // ─── Helpers ──────────────────────────────────────────────────
 
@@ -221,6 +221,8 @@ export default function StereometriaPage() {
             }
             solution={
               <div className="space-y-4">
+                <div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
+                  <div className="flex-1 min-w-0 space-y-4">
                 <p className="font-semibold text-stone-800">Krok 1. Obliczamy pochodną</p>
                 <p>
                   Korzystamy z reguły iloczynu:
@@ -229,13 +231,27 @@ export default function StereometriaPage() {
                   <Mb>{"\\bigl[f \\cdot g\\bigr]' = f'g + fg'"}</Mb>
                 </FormulaBox>
                 <p>
-                  Mamy <Mi>{"f = (d-12)^2"}</Mi>, <Mi>{"g = (6d-36)^{1/2}"}</Mi>.
+                  Mamy <Mi>{"f = (d-12)^2"}</Mi>, <Mi>{"g = (6d-36)^{1/2}"}</Mi>. Dostajemy:
                 </p>
-                <Mb>{"f' = 2(d-12), \\qquad g' = \\frac{6}{2\\sqrt{6d-36}} = \\frac{3}{\\sqrt{6d-36}}"}</Mb>
-                <Mb>{"V'(d) = 2(d-12)\\sqrt{6d-36} + (d-12)^2 \\cdot \\frac{3}{\\sqrt{6d-36}}"}</Mb>
-                <p>Wyłączamy wspólny czynnik:</p>
-                <Mb>{"V'(d) = \\frac{d-12}{\\sqrt{6d-36}} \\cdot \\bigl[2(6d-36) + 3(d-12)\\bigr]"}</Mb>
-                <Mb>{"= \\frac{d-12}{\\sqrt{6d-36}} \\cdot (15d - 108)"}</Mb>
+                <Mb>{"V'(d) = \\frac{d-12}{\\sqrt{6d-36}} \\cdot (15d - 108)"}</Mb>
+                  </div>
+                  <SideWork
+                    className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0"
+                    title={null}
+                  >
+                    <Mb>{"f' = 2(d-12), \\qquad g' = \\frac{6}{2\\sqrt{6d-36}} = \\frac{3}{\\sqrt{6d-36}}"}</Mb>
+                    <p className="mt-2">Iloczyn przed wyłączeniem:</p>
+                    <Mb>{"V'(d) = 2(d-12)\\sqrt{6d-36} + (d-12)^2 \\cdot \\frac{3}{\\sqrt{6d-36}}"}</Mb>
+                    <p className="mt-2">Wspólny mianownik <Mi>{"\\sqrt{6d-36}"}</Mi>:</p>
+                    <Mb>
+                      {"V'(d) = \\frac{2(d-12)(6d-36) + 3(d-12)^2}{\\sqrt{6d-36}}"}
+                    </Mb>
+                    <p className="mt-2">Wyłączamy <Mi>{"(d-12)"}</Mi> w liczniku:</p>
+                    <Mb>
+                      {"= \\frac{(d-12)\\bigl[2(6d-36) + 3(d-12)\\bigr]}{\\sqrt{6d-36}} = \\frac{(d-12)(15d-108)}{\\sqrt{6d-36}}"}
+                    </Mb>
+                  </SideWork>
+                </div>
 
                 <p className="font-semibold text-stone-800">Krok 2. Wyznaczamy miejsce zerowe</p>
                 <p>

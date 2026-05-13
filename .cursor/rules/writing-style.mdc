@@ -42,10 +42,13 @@ alwaysApply: false
 - Exception: SVG `<text>` elements may still use `<tspan dy="3" fontSize="0.8em">y</tspan>` since KaTeX cannot render inside SVG.
 
 ## Dyskryminanta (trójmian kwadratowy, nierówności)
-- **Nigdy** nie pisz „DELTA”, „delta” ani „dyskryminant” słowem w środku zdania przy wzorze na deltę uczniowi.
-- **Zawsze** użyj symbolu w KaTeX: `<Mi>{"\\Delta = \\dots"}</Mi>` lub osobnej formuły z `\Delta`.
-  - ❌ `Na tym przedziale DELTA = ...`
-  - ✅ `Na tym przedziale <Mi>{"\\Delta = \\dots"}</Mi>`
+- **Zwyczajowy język polski jest w porządku:** nagłówki kroków, polecenia we wskazówkach i krótkie komentarze mogą używać słowa „delta” w znaczeniu czynności (np. „Liczymy deltę”, „Oblicz deltę”, „sprawdź deltą drugi czynnik”).
+- **Tam, gdzie zapisujesz konkretny rachunek** (podstawione współczynniki lub liczby, łańcuch równości), **lewa strona musi być symbolem w KaTeX**, nie napisem „DELTA” / „delta” / „dyskryminant” w zwykłym tekście obok liczb.
+- **Zawsze** użyj `\Delta` w `<Mi>` / `<Mb>` dla samego wzoru z obliczeniem:
+  - ❌ `Na tym przedziale DELTA = 16 - 72 = -56`
+  - ❌ `delta = b^2 - 4ac = ...` (jako zwykły tekst strony, bez KaTeX)
+  - ✅ Nagłówek: „Krok 3. Liczymy deltę” oraz obok bloku: `<Mb>{"\\Delta = b^2 - 4ac = (-13)^2 - 4 \\cdot 6 \\cdot 6 = 25"}</Mb>`
+  - ✅ W jednym zdaniu: „Mamy <Mi>{"\\Delta < 0"}</Mi>, więc …” zamiast pisać „delta ujemna” oddzielnie od symbolu, jeśli chodzi o warunek na trójmian.
 
 ## Polish Decimal Notation in KaTeX
 - Use `{,}` inside math mode to get a comma decimal separator without extra spacing:
@@ -76,7 +79,7 @@ alwaysApply: false
 
 - Pisz rozwiązania **naprawdę szczegółowo**, ale językiem **jak najprostszym**: jeden czysty tok rozumowania, bez skrótów myślowych „dla wtajemniczonych”.
 - **Nie pomijaj żadnego kroku** algebraicznego, logicznego ani uzasadnienia (w tym krótkiego „dlaczego wolno tak zrobić”, gdy nietypowe).
-- Jeśli istnieje **wskazówka** do zadania, rozwiązanie musi **odwołać się do niej w praktyce**: każdy pomysł ze wskazówki pojawia się w rozwiązaniu **w tej samej kolejności lub z jawnym powiązaniem** (np. „zgodnie ze wskazówką, najpierw … potem …”), tak żeby uczeń widział pełną drogę od podpowiedzi do wyniku.
+- Jeśli istnieje **wskazówka** do zadania, rozwiązanie musi **odzwierciedlać ją w praktyce**: każdy pomysł ze wskazówki ma być **realnie przeprowadzony** w kolejnych krokach (ta sama kolejność lub naturalne dopięcie w toku rozumowania), tak żeby nic „nie wyskakiwało” znikąd i żeby uczeń mógł prześledzić drogę od podpowiedzi do wyniku — **bez** osobnych akapitów typu „zgodnie ze wskazówką”.
 
 ### Ton
 
@@ -87,17 +90,17 @@ alwaysApply: false
 
 - Gdy główne rozwiązanie korzysta z **długiej procedury** (np. **dzielenie wielomianów**, rozszerzanie i skracanie ułamków, rozpisywanie równania kwadratowego po wzorze, wielokrotne podstawienia), umieść **pełny rozpis krok po kroku** w **osobnej, widocznie szarej ramce**, żeby wyglądało to jak „ściąga z kartki z boku”, którą uczeń może sam prześledzić.
 - **Priorytet:** robić tak zawsze, gdy pominiecie rozpiski mogłoby sprawić, że uczeń nie wie, **skąd** wzięło się dalsze wyrażenie.
-- **Implementacja:** preferuj gotowy komponent `SideWork` z `app/matura/matematyka-rozszerzona/_components.js` (szare tło, obramowanie). Opcjonalnie ustaw tytuł, np. `title="Dzielenie wielomianów"` albo `title={null}` bez nagłówka.
-- **Układ obok głównego toku** na szerokich ekranach (na wąskich naturalnie jedna kolumna):
+- **Implementacja:** preferuj gotowy komponent `SideWork` z `app/matura/matematyka-rozszerzona/_components.js` (szare tło, obramowanie). Wewnątrz jest **poziome przewijanie** dla szerokiego KaTeX; kolumna ma **`min-w-0`**, żeby flex nie obcinał wzorów „na pół”. Opcjonalnie ustaw tytuł, np. `title="Dzielenie wielomianów"` albo `title={null}` bez nagłówka.
+- **Układ obok głównego toku:** tylko od **`xl`** (≈1280px), nie `lg`. Na `lg` wąska kolumna + długi ułamek w `SideWork` zwykle nie mieści się bez uciekania w poziomy scroll albo obcięcia; poniżej `xl` trzymaj **jedną kolumnę** (najpierw główny tok, potem ramka). Przy rzędzie obok daj ramce coś w stylu **`xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0`**: ogranicza szerokość względem viewportu, żeby zostawić miejsce głównemu tekstowi.
 
 ```jsx
 import { SideWork } from "./_components"; // lub odpowiednia ścieżka
 
-<div className="flex flex-col lg:flex-row gap-4 items-start">
-  <div className="flex-1 min-w-0">
+<div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
+  <div className="flex-1 min-w-0 space-y-4">
     {/* główny ciąg rozumowania */}
   </div>
-  <SideWork className="w-full lg:w-[min(100%,20rem)] shrink-0">
+  <SideWork className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0" title={null}>
     {/* kolejne kroki pomocnicze z <Mb> / <Mi> */}
   </SideWork>
 </div>

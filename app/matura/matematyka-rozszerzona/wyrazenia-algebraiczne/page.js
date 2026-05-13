@@ -181,8 +181,8 @@ const tasks = [
           <Mb>{"(a-2b)^2 = a^2 - 4ab + 4b^2"}</Mb>
         </FormulaBox>
         <p>
-          Pokaż, że różnica LHS - RHS jest zawsze dodatnia (wyróżnik trójmianu względem
-          jednej zmiennej jest ujemny).
+          Pokaż, że różnica lewej strony nierówności minus prawa strona jest zawsze dodatnia (wyróżnik
+          trójmianu względem jednej zmiennej jest ujemny).
         </p>
       </div>
     ),
@@ -193,7 +193,9 @@ const tasks = [
         <p>Z warunku <Mi>{"2b = a-c"}</Mi> mamy <Mi>{"c = a-2b"}</Mi>. Prawa strona:</p>
         <Mb>{"\\frac{1}{2}c^2 = \\frac{1}{2}(a-2b)^2 = \\frac{1}{2}(a^2-4ab+4b^2)"}</Mb>
 
-        <p className="font-semibold text-stone-800">Krok 2. Obliczamy różnicę LHS - RHS</p>
+        <p className="font-semibold text-stone-800">
+          Krok 2. Różnica lewej strony nierówności minus prawa strona
+        </p>
         <Mb>{"2a^2+5b^2 - \\frac{1}{2}(a^2-4ab+4b^2) = \\frac{3}{2}a^2 + 2ab + 3b^2"}</Mb>
         <p>Mnożymy przez 2 (nie zmienia znaku):</p>
         <Mb>{"3a^2 + 4ab + 6b^2"}</Mb>
@@ -204,8 +206,8 @@ const tasks = [
         </p>
         <Mb>{"\\Delta = (4b)^2 - 4 \\cdot 3 \\cdot 6b^2 = 16b^2 - 72b^2 = -56b^2 \\leq 0"}</Mb>
         <p>
-          Dla <Mi>{"b \\neq 0"}</Mi>: <Mi>{"\\Delta < 0"}</Mi> i współczynnik wiodący{" "}
-          <Mi>{"3 > 0"}</Mi>, więc trójmian <Mi>{"> 0"}</Mi>.
+          Dla <Mi>{"b \\neq 0"}</Mi> mamy <Mi>{"\\Delta < 0"}</Mi> i współczynnik wiodący{" "}
+          <Mi>{"3 > 0"}</Mi>, więc <Mi>{"3a^2 + 4ab + 6b^2 > 0"}</Mi> dla każdego <Mi>{"a"}</Mi>.
         </p>
         <p>
           Dla <Mi>{"b = 0"}</Mi>: z <Mi>{"a^2+b^2=1"}</Mi> mamy <Mi>{"a = \\pm 1 \\neq 0"}</Mi>,

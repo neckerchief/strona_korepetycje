@@ -16,10 +16,12 @@ export const FormulaBox = ({ children }) => (
 );
 
 // Szare „obliczenia z boku” (dzielenie wielomianów, rozszerzanie ułamków itd.)
+// Szerokie <Mb> zwykle nie zawijają się: wewnątrz jest overflow-x-auto. Przy układzie obok
+// (patrz writing-style) kolumna ma min-w-0, żeby flex nie obcinał treści bez paska przewijania.
 export const SideWork = ({ title = "Obliczenia pomocnicze", children, className }) => (
   <aside
     className={cn(
-      "rounded-lg border border-stone-200 bg-stone-100/90 px-4 py-3 text-sm text-stone-700 leading-relaxed",
+      "rounded-lg border border-stone-200 bg-stone-100/90 px-4 py-3 text-sm text-stone-700 leading-relaxed min-w-0 max-w-full self-stretch",
       className
     )}
   >
@@ -28,7 +30,9 @@ export const SideWork = ({ title = "Obliczenia pomocnicze", children, className 
         {title}
       </p>
     ) : null}
-    {children}
+    <div className="min-w-0 overflow-x-auto overflow-y-visible overscroll-x-contain">
+      {children}
+    </div>
   </aside>
 );
 

@@ -58,7 +58,6 @@ const tasks = [
 
     solution: (
       <div className="space-y-4">
-
         {/* ── Metoda 1: Bernoulli ── */}
         <p className="font-bold text-[#52297a] text-base">Metoda 1: schemat Bernoulliego</p>
 
@@ -93,7 +92,7 @@ const tasks = [
 
         {/* ── Metoda 2 ── */}
         <div className="mt-6 pt-6 border-t-2 border-[#d4bef5]" />
-        <p className="font-bold text-[#52297a] text-base">Metoda 2</p>
+        <p className="font-bold text-[#52297a] text-base">Metoda 2 (alternatywa)</p>
 
         <p className="font-semibold text-stone-800">Krok 1. Identyfikacja parametrów</p>
         <p>

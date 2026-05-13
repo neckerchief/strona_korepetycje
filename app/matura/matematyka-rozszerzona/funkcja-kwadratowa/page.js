@@ -24,6 +24,7 @@ const tasks = [
       { math: "x_1,\\ x_2" },
       { text: " spełniające warunek" },
     ],
+    mathBlock2: "x_1^3 + x_2^3 > 7\\cdot(x_1 + x_2)",
     answers: null,
 
     answer: (
@@ -59,12 +60,6 @@ const tasks = [
 
     solution: (
       <div className="space-y-4">
-
-        {/* ── Dodatkowy wzór (treść) ── */}
-        <div className="bg-white border border-[#c4a8e8] rounded-xl px-5 py-4 my-2 text-center">
-          <Mb>{"x_1^3 + x_2^3 > 7\\cdot(x_1 + x_2)"}</Mb>
-        </div>
-
         <p className="font-semibold text-stone-800">Krok 1. Wzory Viète'a</p>
         <p>
           Dla równania <Mi>{"x^2 - (2m+3)x + 4m+6 = 0"}</Mi>:
@@ -227,11 +222,9 @@ const tasks = [
         <p>Wzory Viète'a: <Mi>{"s = x_1+x_2 = \\frac{6}{2m+1}"}</Mi>, <Mi>{"p = x_1 x_2 = \\frac{m-3}{2m+1}"}</Mi></p>
         <Mb>{"p < 0 \\quad\\Leftrightarrow\\quad \\frac{m-3}{2m+1} < 0 \\quad\\Leftrightarrow\\quad m \\in \\left(-\\frac{1}{2},\\, 3\\right)"}</Mb>
         <p>
-          Na tym przedziale{" "}
-          <Mi>
-            {"\\Delta = 36-4(2m+1)(m-3) = -8m^2+20m+48 > 0"}
-          </Mi>{" "}
-          ✓ (dwa różne pierwiastki rzeczywiste).
+          Na tym przedziale mamy dwa różne pierwiastki rzeczywiste, bo{" "}
+          <Mb>{"\\Delta = 36-4(2m+1)(m-3) = -8m^2+20m+48 > 0"}</Mb>
+          (sprawdzenie: np. w środku przedziału <Mi>{"m = 0"}</Mi> daje <Mi>{"\\Delta = 48 > 0"}</Mi>).
         </p>
 
         <p className="font-semibold text-stone-800">Krok 2. Nierówność <Mi>{"x_1^3+x_2^3 > (x_1+x_2)^4"}</Mi></p>

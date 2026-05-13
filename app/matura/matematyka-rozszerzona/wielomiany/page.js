@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
+import { TaskCard, Mi, Mb, FormulaBox, SideWork } from "../_components";
 
 // ─── Zadania ──────────────────────────────────────────────────
 
@@ -118,12 +118,36 @@ const tasks = [
         <p>
           Dzielimy <Mi>{"W(x)"}</Mi> przez <Mi>{"(x+1)"}</Mi>:
         </p>
-        <Mb>{"W(x) = (x+1)(x^2 + x + 2)"}</Mb>
+
+        <div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
+          <div className="flex-1 min-w-0 space-y-3">
+            <Mb>{"W(x) = (x+1)(x^2 + x + 2)"}</Mb>
+          </div>
+          <SideWork
+            className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0"
+            title="Dzielenie wielomianów"
+          >
+            <Mb>
+              {[
+                "\\begin{aligned}",
+                "& \\underline{\\hspace{0.1em}x^2+x+2\\hspace{4.1em}} \\\\[0.25em]",
+                "& (x^3+2x^2+3x+2):(x+1) \\\\[0.45em]",
+                "& \\underline{-(x^3+x^2)\\hspace{2.8em}} \\\\[0.25em]",
+                "& \\hspace{1.5em}x^2+3x+2 \\\\[0.45em]",
+                "& \\hspace{1.5em}\\underline{-(x^2+x)\\hspace{1.25em}} \\\\[0.25em]",
+                "& \\hspace{3em}2x+2 \\\\[0.45em]",
+                "& \\hspace{3em}\\underline{-(2x+2)} \\\\[0.25em]",
+                "& \\hspace{4.5em}0",
+                "\\end{aligned}",
+              ].join("")}
+            </Mb>
+          </SideWork>
+        </div>
 
         <p className="font-semibold text-stone-800">Krok 5. Badamy trójmian <Mi>{"x^2 + x + 2"}</Mi></p>
         <Mb>{"\\Delta = 1^2 - 4 \\cdot 1 \\cdot 2 = 1 - 8 = -7 < 0"}</Mb>
         <p>
-          Delta ujemna, więc <Mi>{"x^2+x+2"}</Mi> nie ma pierwiastków rzeczywistych.
+          Mamy <Mi>{"\\Delta < 0"}</Mi>, więc <Mi>{"x^2+x+2"}</Mi> nie ma pierwiastków rzeczywistych.
         </p>
 
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">

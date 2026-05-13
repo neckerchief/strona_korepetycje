@@ -99,7 +99,6 @@ const tasks = [
 
     solution: (
       <div className="space-y-4">
-
         {/* ── Metoda 1 ── */}
         <p className="font-bold text-[#52297a] text-base">Metoda 1: wyznaczamy punkty M i N</p>
 
@@ -144,7 +143,7 @@ const tasks = [
 
         {/* ── Metoda 2 ── */}
         <div className="mt-6 pt-6 border-t-2 border-[#d4bef5]" />
-        <p className="font-bold text-[#52297a] text-base">Metoda 2: odległość od środka do cięciwy</p>
+        <p className="font-bold text-[#52297a] text-base">Metoda 2 (alternatywa): odległość od środka do cięciwy</p>
 
         <p className="font-semibold text-stone-800">Krok 1. Wyznaczamy prostą MN</p>
         <p>

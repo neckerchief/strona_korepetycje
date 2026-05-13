@@ -97,8 +97,14 @@ const tasks = [
           Dziedzina: <Mi>{"x \\in (0,1) \\cup (1, +\\infty)"}</Mi>
         </p>
         <ul className="list-disc list-inside space-y-1 ml-1">
-          <li><Mi>{"x = \\tfrac{1}{27} \\in (0,1)"}</Mi> — spełnione</li>
-          <li><Mi>{"x = 3 \\in (1, +\\infty)"}</Mi> — spełnione</li>
+          <li>
+            <Mi>{"x = \\tfrac{1}{27} \\in (0,1)"}</Mi>
+            : spełnione
+          </li>
+          <li>
+            <Mi>{"x = 3 \\in (1, +\\infty)"}</Mi>
+            : spełnione
+          </li>
         </ul>
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
           <p className="font-semibold text-stone-800">

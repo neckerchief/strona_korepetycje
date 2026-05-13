@@ -64,7 +64,9 @@ const tasks = [
 
     solution: (
       <div className="space-y-4">
-        <p className="font-semibold text-stone-800">Krok 1. Wyznaczamy a₃ i b₁</p>
+        <p className="font-semibold text-stone-800">
+          Krok 1. Wyznaczamy <Mi>{"a_3"}</Mi> i <Mi>{"b_1"}</Mi>
+        </p>
         <p>
           Ciąg <Mi>{"(a_3, 127, b_1)"}</Mi> jest arytmetyczny, więc środkowy wyraz to
           średnia skrajnych:
@@ -73,7 +75,7 @@ const tasks = [
           <Mb>{"2 \\cdot 127 = a_3 + b_1 \\quad \\Rightarrow \\quad a_3 + b_1 = 254"}</Mb>
         </FormulaBox>
         <p>
-          Z warunki <Mi>{"a_3 + 2 = b_1"}</Mi> podstawiamy <Mi>{"b_1 = a_3 + 2"}</Mi>:
+          Z warunku <Mi>{"a_3 + 2 = b_1"}</Mi> podstawiamy <Mi>{"b_1 = a_3 + 2"}</Mi>:
         </p>
         <Mb>{"a_3 + (a_3 + 2) = 254 \\quad \\Rightarrow \\quad 2a_3 = 252 \\quad \\Rightarrow \\quad a_3 = 126"}</Mb>
         <Mb>{"b_1 = 126 + 2 = 128"}</Mb>
