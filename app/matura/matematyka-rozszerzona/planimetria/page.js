@@ -6,11 +6,133 @@ import { TaskCard, SubTask, Mi, Mb, FormulaBox } from "../_components";
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_CKE_F2023 =
+  "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
+
 const tasks = [
+  {
+    id: "cke-2026-formula2023-maj-zad4-kwadrat",
+    source: SOURCE_CKE_F2023,
+    number: "1",
+    points: "0–3",
+    instruction: (
+      <div className="space-y-4">
+        <p>
+          Punkty <Mi>{"K"}</Mi> i <Mi>{"L"}</Mi> są środkami, odpowiednio, boków <Mi>{"AB"}</Mi> oraz{" "}
+          <Mi>{"BC"}</Mi> kwadratu <Mi>{"ABCD"}</Mi> o boku długości <Mi>{"a"}</Mi>. Punkt <Mi>{"M"}</Mi> jest
+          takim punktem na boku <Mi>{"BC"}</Mi>, że odcinki <Mi>{"DK"}</Mi> i <Mi>{"KM"}</Mi> są
+          prostopadłe.
+        </p>
+        <p>
+          Odcinek <Mi>{"AL"}</Mi> przecina odcinki <Mi>{"DK"}</Mi> oraz <Mi>{"DM"}</Mi> w punktach{" "}
+          <Mi>{"P"}</Mi> oraz <Mi>{"Q"}</Mi> (zobacz rysunek).
+        </p>
+        <figure className="flex flex-col items-center mx-auto w-[35%] max-w-full font-normal">
+          <Image
+            src="/matura/planimetria-cke-2026.png"
+            alt="Kwadrat ABCD: DK i KM są prostopadłe w punkcie K na środku AB; M na BC; AL przecina DK w P i DM w Q"
+            width={500}
+            height={300}
+            className="w-full h-auto rounded-lg border border-[#c4a8e8] bg-white"
+          />
+        </figure>
+        <p className="font-semibold">
+          Wykaż, że <Mi>{"|PQ|=\\dfrac{\\sqrt{5}}{5}a"}</Mi>.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Analizując kąty w odpowiednich trójkątach można wykazać, że{" "}
+          <Mi>{"\\triangle DAK \\sim \\triangle KBM \\sim \\triangle AKP"}</Mi> oraz obliczyć długość <Mi>{"|BM|"}</Mi>.
+        </p>
+        <p>
+          Dla przecięcia <Mi>{"P"}</Mi> poszukaj podobieństwa przy wspólnym wierzchołku <Mi>{"P"}</Mi>. Punkt{" "}
+          <Mi>{"Q"}</Mi>: przedłuż <Mi>{"DM"}</Mi> do przecięcia z prostą <Mi>{"AB"}</Mi>, znajdź stosunki przy{" "}
+          <Mi>{"M"}</Mi> przez podobieństwo prostokątnych trójkątów przy <Mi>{"B"}</Mi> i <Mi>{"C"}</Mi>, następnie{" "}
+          zastosuj twierdzenie Menelaosa do <Mi>{"\\triangle ABL"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p>
+          <span className="font-semibold text-stone-800">Plan.</span> Najpierw wyznaczamy położenie <Mi>{"M"}</Mi> na{" "}
+          <Mi>{"BC"}</Mi> z prostych <Mi>{"DK"}</Mi> i <Mi>{"KM"}</Mi>. Potem na odcinku <Mi>{"AL"}</Mi> liczymy ile
+          „długości <Mi>{"AL"}</Mi>” zajmują odcinki <Mi>{"AP"}</Mi> i <Mi>{"AQ"}</Mi>. Różnica da <Mi>{"|PQ|"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">
+          Krok 1. Podobieństwa trójkątów
+        </p>
+        <p>
+          Oznaczenia z treści: <Mi>{"K"}</Mi> i <Mi>{"L"}</Mi> to środki <Mi>{"AB"}</Mi> i <Mi>{"BC"}</Mi>, więc{" "}
+          <Mi>{"|AK|=|KB|=|BL|=\\frac{a}{2}"}</Mi> oraz <Mi>{"|DA|=|AB|=a"}</Mi>.
+        </p>
+        <p>
+          Trójkąty <Mi>{"\\triangle DAK"}</Mi> i <Mi>{"\\triangle KBM"}</Mi> mają kąty proste odpowiednio przy{" "}
+          <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>. Pokażemy, że mają też równe kąty ostre, więc są podobne.
+        </p>
+        <p>
+          Oznaczmy kąt <Mi>{"\\angle ADK = \\alpha"}</Mi>, skąd <Mi>{"\\angle AKD = 90° - \\alpha"}</Mi>. {" "}
+          Dodatkowo <Mi>{"\\angle AKD + \\angle BKM = 90°"}</Mi>. Zatem <Mi>{"\\angle BKM = \\alpha"}</Mi> oraz <Mi>{"\\angle KMB = 90° - \\alpha"}</Mi>. {" "}
+          Stosując takie same argumenty dla trójkątów <Mi>{"\\triangle AKP"}</Mi> i <Mi>{"\\triangle APD"}</Mi> otrzymujemy podobieństwo trójkątów:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\triangle DAK \\sim \\triangle KBM \\sim \\triangle AKP \\sim \\triangle APD"}</Mb>
+        </FormulaBox>
+        <p>Zatem kąty <Mi>{"\\angle APK = \\angle APD = 90°"}</Mi>.</p>
+        <p>
+          Z podobieństwa trójkątów mamy odpowiedające sobie boki: <Mi>{"|DA|"}</Mi> i <Mi>{"|KB|"}</Mi>, oraz <Mi>{"|AK|"}</Mi> i <Mi>{"|BM|"}</Mi>. Z proporcji:
+        </p>
+        <Mb>
+          {"\\frac{|DA|}{|KB|} = \\frac{|AK|}{|BM|} \\quad \\Rightarrow \\quad \\frac{a}{\\frac{a}{2}} = \\frac{\\frac{a}{2}}{|BM|} \\quad \\Rightarrow \\quad |BM| = \\frac{a}{4}"}
+        </Mb>
+        <Mb>
+          {"|ML| = |BL| - |BM| = \\frac{a}{2} - \\frac{a}{4} = \\frac{a}{4}, \\qquad |MC| = |BC| - |BM| = \\frac{3a}{4}"}
+        </Mb>
+        <p> 
+          Podobnie mamy dla <Mi>{"|DK|"}</Mi> i <Mi>{"|DA|"}</Mi>, oraz <Mi>{"|AK|"}</Mi> i <Mi>{"|AP|"}</Mi>:
+        </p>
+        <Mb>
+          {"|DK|^2 = a^2 +\\frac{a^2}{4} = \\frac{5a^2}{4} \\qquad \\Rightarrow \\qquad |DK| = \\frac{\\sqrt{5}}{2}a"}
+        </Mb>
+        <Mb>
+          {"\\frac{|DK|}{|DA|} = \\frac{|AK|}{|AP|} \\quad \\Rightarrow \\quad \\frac{\\frac{\\sqrt{5}}{2}a}{a} = \\frac{\\frac{a}{2}}{|AP|} \\quad \\Rightarrow \\quad |AP| = \\frac{\\sqrt{5}}{5}a"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">
+          Krok 2. Twierdzenie Pitagorasa i pozostałe boki
+        </p>
+        <p>Korzystając z twierdzenia Pitagorasa w odpowiednich trójkątach dostajemy długości pozostałych boków, które posłużą nam do obliczenia <Mi>{"|PQ|"}</Mi>.</p>
+        <Mb>
+          {"|AP|^2 + |DP|^2 = |DA|^2 \\qquad \\Rightarrow \\qquad |DP| = \\frac{2\\sqrt{5}}{5}a"}
+        </Mb>
+        <Mb>
+          {"|KB|^2 + |BM|^2 = |KM|^2 \\qquad \\Rightarrow \\qquad |KM| = \\frac{\\sqrt{5}}{4}a"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">
+          Krok 3. Obliczenie <Mi>{"|PQ|"}</Mi>
+        </p>
+        <p>Korzystając z podobieństwa trójkątów <Mi>{"\\triangle DKM"}</Mi> i <Mi>{"\\triangle DPQ"}</Mi> otrzymujemy:</p>
+        <Mb>
+          {"\\frac{|DK|}{|DP|} = \\frac{|KM|}{|PQ|} \\quad \\Rightarrow \\quad \\frac{\\frac{\\sqrt{5}}{2}a}{\\frac{2\\sqrt{5}}{5}a} = \\frac{\\frac{\\sqrt{5}}{4}a}{|PQ|} \\quad \\Rightarrow \\quad |PQ| = \\frac{\\sqrt{5}}{5}a  \\quad \\blacksquare"}
+        </Mb>
+      </div>
+    ),
+  },
   {
     id: "smwp-2026-styczen-zad5",
     source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
-    number: "1",
+    number: "2",
     points: "0–4",
     instruction: (
       <span>
@@ -122,11 +244,11 @@ const tasks = [
     ),
   },
 
-  // ── Zadanie 2 ─────────────────────────────────────────────
+  // ── Zadanie 3 ─────────────────────────────────────────────
   {
     id: "smwp-2025-pazdziernik-zad3",
     source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
-    number: "2",
+    number: "3",
     points: "0–3",
     instruction: (
       <span>
@@ -419,7 +541,10 @@ export default function PlanimetriaPage() {
             Planimetria
           </h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">
-            {tasks.length} {tasks.length === 1 ? "zadanie" : tasks.length < 5 ? "zadania" : "zadań"}
+            {tasks.length + 1}{" "}
+            {tasks.length + 1 === 1 ? "zadanie" : tasks.length + 1 < 5 ? "zadania" : "zadań"}
+            {" "}
+            (w tym jedno zadanie złożone z dwóch podpunktów)
           </p>
         </div>
 

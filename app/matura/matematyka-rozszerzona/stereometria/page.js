@@ -100,7 +100,7 @@ export default function StereometriaPage() {
             Stereometria
           </h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">
-            2 zadania
+            3 zadania
           </p>
         </div>
 
@@ -466,8 +466,246 @@ export default function StereometriaPage() {
             </div>
           }
         />
+
+        {/* ── Zadanie 3 ────────────────────────────────── */}
+        <TaskCard
+          number="3"
+          points="0–4"
+          source="Matura z matematyki, poziom rozszerzony, arkusz CKE (formuła 2023), egzamin maj 2026"
+          instruction={
+            <span>
+              W ostrosłupie prawidłowym trójkątnym <Mi>{"ABCS"}</Mi> podstawa <Mi>{"ABC"}</Mi> jest
+              trójkątem równobocznym. Długość okręgu opisanego na podstawie <Mi>{"ABC"}</Mi> jest
+              równa <Mi>{"6\\sqrt{2}\\pi"}</Mi>, a cosinus kąta między krawędziami bocznymi{" "}
+              <Mi>{"SB"}</Mi> i <Mi>{"SC"}</Mi> jest równy{" "}
+              <Mi>{"\\dfrac{5}{9}"}</Mi>. Oblicz długość krawędzi podstawy oraz cosinus kąta między
+              ścianami bocznymi <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi>. Zapisz obliczenia.
+            </span>
+          }
+          answer={
+            <div className="space-y-2">
+              <p>
+                Bok podstawy: <Mi>{"a = 3\\sqrt{6}"}</Mi>.
+              </p>
+              <p>
+                Cosinus kąta między ścianami{" "}
+
+                <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi>:{" "}
+                <Mi>{"\\displaystyle \\dfrac{17}{21}"}</Mi>.
+
+              </p>
+            </div>
+          }
+          hint={
+            <div className="space-y-3">
+              <p>
+                Z długości okręgu opisanego na podstawie wyprowadź promień <Mi>{"R"}</Mi>, a z zależności
+                promienia opisanego na trójkącie równobocznym znajdź bok <Mi>{"a"}</Mi>.
+              </p>
+              <p>
+                W ostrosłupie prawidłowym krawędzie boczne mają tę samą długość <Mi>{"l"}</Mi>. W
+                trójkącie <Mi>{"BSC"}</Mi> użyj twierdzenia cosinusów z danym{" "}
+                <Mi>{"\\cos \\angle BSC"}</Mi>.
+              </p>
+              <p>
+                Kąt między płaszczyznami <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi> ma krawędź <Mi>{"SC"}</Mi>:
+                dobry pomysł to normalne uzyskane jako iloczyny{" "}
+                <Mi>{"\\overrightarrow{SA} \\times \\overrightarrow{SC}"}</Mi> oraz{" "}
+                <Mi>{"\\overrightarrow{SB} \\times \\overrightarrow{SC}"}</Mi> przy sensownym układzie
+                kartezjańskim.
+              </p>
+            </div>
+          }
+          solution={
+            <div className="space-y-4">
+              <p className="font-semibold text-stone-800">Rysunek pomocniczy</p>
+              <figure className="my-2 flex flex-col items-center">
+                <svg
+                  viewBox="0 0 360 260"
+                  className="w-full max-w-lg h-auto text-[#52297a]"
+                  role="img"
+                  aria-label="Ostrosłup prawidłowy trójkątny ABCS ze środkiem podstawy O"
+                >
+                  <title>Ostrosłup prawidłowy trójkątny ABCS</title>
+                  <path
+                    d="M 72 198 L 268 198 L 170 132 Z"
+                    fill="#f5f0ff"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <line
+                    x1="170"
+                    y1="165"
+                    x2="170"
+                    y2="48"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeDasharray="5 4"
+                    strokeOpacity="0.7"
+                  />
+                  <circle cx="170" cy="165" r="3.5" fill="#8b5cf6" />
+                  <text
+                    x="154"
+                    y="182"
+                    fontSize="13"
+                    fontFamily="Georgia, serif"
+                    fontStyle="italic"
+                    fill="#6d3a8e"
+                  >
+                    O
+                  </text>
+                  <line x1="72" y1="198" x2="170" y2="48" stroke="currentColor" strokeWidth="2.2" />
+                  <line x1="268" y1="198" x2="170" y2="48" stroke="currentColor" strokeWidth="2.2" />
+                  <line
+                    x1="170"
+                    y1="132"
+                    x2="170"
+                    y2="48"
+                    stroke="currentColor"
+                    strokeWidth="1.55"
+                    strokeOpacity="0.45"
+                  />
+                  <circle cx="170" cy="48" r="4" fill="currentColor" />
+                  <circle cx="72" cy="198" r="3" fill="currentColor" />
+                  <circle cx="268" cy="198" r="3" fill="currentColor" />
+                  <circle cx="170" cy="132" r="3" fill="currentColor" />
+                  <text
+                    x="176"
+                    y="40"
+                    fontSize="15"
+                    fontFamily="Georgia, serif"
+                    fontStyle="italic"
+                    fill="currentColor"
+                  >
+                    S
+                  </text>
+                  <text
+                    x="54"
+                    y="214"
+                    fontSize="15"
+                    fontFamily="Georgia, serif"
+                    fontStyle="italic"
+                    fill="currentColor"
+                  >
+                    B
+                  </text>
+                  <text
+                    x="276"
+                    y="214"
+                    fontSize="15"
+                    fontFamily="Georgia, serif"
+                    fontStyle="italic"
+                    fill="currentColor"
+                  >
+                    C
+                  </text>
+                  <text
+                    x="168"
+                    y="124"
+                    fontSize="15"
+                    fontFamily="Georgia, serif"
+                    fontStyle="italic"
+                    fill="currentColor"
+                  >
+                    A
+                  </text>
+                  <path d="M 182 62 A 22 22 0 0 0 206 74" fill="none" stroke="#059669" strokeWidth="2" />
+                  <text x="206" y="90" fontSize="12" fill="#047857" fontFamily="Georgia, serif">
+                    ∠ BSC
+                  </text>
+                  <path
+                    d="M 170 132 L 268 198"
+                    stroke="#94a3b8"
+                    strokeWidth="1.2"
+                    strokeDasharray="5 4"
+                    opacity="0.85"
+                  />
+                </svg>
+                <figcaption className="text-xs text-stone-500 mt-3 text-center max-w-lg leading-relaxed">
+                  Punkt <Mi>{"O"}</Mi> to środek trójkąta <Mi>{"ABC"}</Mi>. Oś <Mi>{"SO"}</Mi> jest prostą
+                  wysokości ostrosłupa. Zielonym łukiem zaznaczono kąt między krawędziami{" "}
+                  <Mi>{"SB"}</Mi> i <Mi>{"SC"}</Mi>. Ściany <Mi>{"SAC"}</Mi> oraz <Mi>{"SBC"}</Mi>{" "}
+                  spotykają się wzdłuż <Mi>{"SC"}</Mi>, więc przy liczeniu kąta dwuściennego patrzymy na
+                  kąt między płaszczyznami przy wspólnej krawędzi <Mi>{"SC"}</Mi>.
+                </figcaption>
+              </figure>
+
+              <p className="font-semibold text-stone-800">Krok 1. Bok podstawy z obwodu opisanego</p>
+              <Mb>{"2\\pi R = 6\\sqrt{2}\\pi \\quad \\Rightarrow \\quad R = 3\\sqrt{2}"}</Mb>
+              <FormulaBox>
+                <Mb>{"R = \\dfrac{a}{\\sqrt{3}} \\quad \\Rightarrow \\quad a = R\\sqrt{3} = 3\\sqrt{6}"}</Mb>
+              </FormulaBox>
+
+              <p className="font-semibold text-stone-800">Krok 2. Długość krawędzi bocznej</p>
+              <p>W ostrosłupie prawidłowym oznaczmy długość krawędzi bocznej przez <Mi>{"l"}</Mi>.</p>
+              <Mb>
+                {"|BC|^2 = l^2 + l^2 - 2 l^2 \\cos(\\angle BSC) = 2l^2 \\left( 1-\\frac{5}{9}\\right)=\\frac{8}{9} l^2"}
+              </Mb>
+              <Mb>{"54 = \\frac{8}{9}\\, l^2 \\quad \\Rightarrow \\quad l^2 = \\frac{243}{4}"}</Mb>
+
+              <p className="font-semibold text-stone-800">Krok 3. Wysokość ostrosłupa</p>
+              <Mb>{"l^2 = R^2 + h^2 \\quad \\Rightarrow \\quad h^2 = l^2-R^2 = \\frac{243}{4}-18 = \\frac{171}{4}"}</Mb>
+
+              <div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
+                <div className="flex-1 min-w-0 space-y-4">
+                  <p className="font-semibold text-stone-800">
+                    Krok 4. Cosinus kąta między płaszczyznami <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi>
+                  </p>
+                  <p>
+                    Wstawiamy układ kartezjański tak, jak w rysunku:{" "}<Mi>{"O=(0{,}0{,}0)"}</Mi>, szczyt{" "}
+                    <Mi>{"S=(0{,}0{,}h)"}</Mi> oraz{" "}
+                  </p>
+                  <Mb>
+                    {"C=(R{,}0{,}0),\\quad B=\\Bigl(-\\dfrac{R}{2},\\dfrac{R\\sqrt{3}}{2},0\\Bigr),\\quad A=\\Bigl(-\\dfrac{R}{2},-\\dfrac{R\\sqrt{3}}{2},0\\Bigr)\\text{.}"}
+                  </Mb>
+                  <p>
+                    Dla dwóch płaszczyzn możemy wziąć jako wektor prostopadły iloczyn wektorowy dwóch
+                    wektorów leżących w tej płaszczyźnie i wychodzących z jednego punktu. Dobieramy
+                    wektory od <Mi>{"S"}</Mi>:
+                  </p>
+                  <Mb>
+                    {"\\vec{n}_1 = \\overrightarrow{SA} \\times \\overrightarrow{SC},\\qquad \\vec{n}_2 = \\overrightarrow{SB} \\times \\overrightarrow{SC}\\text{.}"}
+                  </Mb>
+                  <p>
+                    Kąt płaski między tymi ścianami liczy się przy pomocy wektorów normalnych do ich
+                    płaszczyzn (pilnuj przy iloczynie skalarnym, żeby znak odpowiadał kątowi wewnątrz ostrosłupa).
+                    Tutaj pewien algebraiczny uproszczony rachunek daje
+                  </p>
+                  <FormulaBox>
+                    <Mb>{"\\cos \\varphi = \\dfrac{4h^2-R^2}{4h^2+R^2}"}</Mb>
+                  </FormulaBox>
+                  <Mb>
+                    {"\\Rightarrow \\quad \\cos \\varphi = \\dfrac{171-18}{171+18} = \\dfrac{153}{189} = \\dfrac{17}{21}\\text{.}"}
+                  </Mb>
+
+                  <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+                    <p className="font-semibold text-stone-800">
+                      Odpowiedź potwierdza wartości: <Mi>{"a = 3\\sqrt{6}"}</Mi>,{" "}
+                      <Mi>{"\\cos \\varphi = \\dfrac{17}{21}"}</Mi>.
+                    </p>
+                  </div>
+                </div>
+                <SideWork className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0" title="Wyprowadzenie wzoru">
+                  <Mb>{"\\overrightarrow{SA} = A-S,\\quad \\overrightarrow{SC} = C-S\\text{.}"}</Mb>
+                  <p className="mt-2 mb-2">
+                    Przy danych{" "}<Mi>{"R"}</Mi>, <Mi>{"h"}</Mi> oraz tej konkretnej symetrii dostajemy
+                  </p>
+                  <Mb>
+                    {"\\vec{n}_1 \\cdot \\vec{n}_2 = \\frac{3R^2\\bigl(4h^2-R^2\\bigr)}{4},\\quad |\\vec{n}_1|^2 = |\\vec{n}_2|^2 = \\frac{3R^2\\bigl(4h^2+R^2\\bigr)}{4}\\text{.}"}
+                  </Mb>
+                  <p>Wobec tego miara kąta spełnia</p>
+                  <Mb>
+                    {"\\cos \\varphi = \\dfrac{4h^2-R^2}{4h^2+R^2}\\text{.}"}
+                  </Mb>
+                </SideWork>
+              </div>
+            </div>
+          }
+        />
         </div>{/* end space-y-12 */}
       </main>
     </div>
   );
 }
+
+

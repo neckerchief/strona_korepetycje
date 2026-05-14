@@ -49,11 +49,75 @@ const DiagramZnaki = () => (
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_CKE_F2023 =
+  "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
+
 const tasks = [
+  {
+    id: "cke-2026-formula2023-maj-zad3-nierownosc",
+    source: SOURCE_CKE_F2023,
+    number: "1",
+    points: "0–3",
+    instruction: (
+      <span>
+        Wykaż, że dla każdej dodatniej liczby rzeczywistej <Mi>{"x"}</Mi> i dla każdej dodatniej liczby
+        rzeczywistej <Mi>{"y"}</Mi> prawdziwa jest nierówność
+      </span>
+    ),
+    mathBlock: "\\frac{1}{x}+\\frac{1}{y} \\le \\frac{x}{y^2}+\\frac{y}{x^2}",
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Pomnóż obie strony przez <Mi>{"x^2y^2"}</Mi>: dla <Mi>{"x,y>0"}</Mi> ten czynnik jest dodatni,
+          więc znaki nierówności się nie zmieniają.
+        </p>
+        <p>
+          Po pomnożeniu przenieś wszystko na jedną stronę i spróbuj wygładzić zapis przez wyłączenie
+          wspólnego czynnika <Mi>{"(x-y)"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Założenia</p>
+        <p>
+          Niech <Mi>{"x>0"}</Mi> oraz <Mi>{"y>0"}</Mi>. Wtedy <Mi>{"(x+y)>0"}</Mi> oraz <Mi>{"x^2y^2>0"}</Mi>, więc mnożenie nierówności przez <Mi>{"x^2y^2"}</Mi> jej nie zmienia.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Mnożenie przez <Mi>{"x^2y^2"}</Mi></p>
+        <p>Mnożymy obie strony przez <Mi>{"x^2y^2"}</Mi>:</p>
+        <Mb>
+          {"x^2y^2\\left(\\frac{1}{x}+\\frac{1}{y}\\right) \\le x^2y^2\\left(\\frac{x}{y^2}+\\frac{y}{x^2}\\right)"}
+        </Mb>
+        <Mb>{"xy^2+x^2y \\le x^3+y^3"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Nierówność z zerem po prawej stronie</p>
+        <Mb>{"x^3+y^3-xy^2-x^2y \\ge 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Grupowanie i rozkład na czynniki</p>
+        <Mb>{"x^3-x^2y-xy^2+y^3 = x^2(x-y)-y^2(x-y) = (x^2-y^2)(x-y)"}</Mb>
+        <p>Stąd z tożsamości <Mi>{"a^2-b^2=(a-b)(a+b)"}</Mi> dostajemy</p>
+        <Mb>{"(x-y)(x+y)(x-y)=(x-y)^2(x+y)\\ge 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Końcówka dowodu</p>
+        <p>
+          Ponieważ <Mi>{"(x-y)^2\\ge 0"}</Mi> dla każdych rzeczywistych <Mi>{"x,y"}</Mi>, oraz{" "}
+          <Mi>{"x+y>0"}</Mi> z założeń <Mi>{"x,y>0"}</Mi>, mamy iloczyn liczby nieujemnej przez liczbę dodatnią, więc
+        </p>
+        <Mb>{"(x-y)^2(x+y)\\ge 0 \\quad \\blacksquare"}</Mb>
+      </div>
+    ),
+  },
+
   {
     id: "smwp-2026-styczen-zad6",
     source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
-    number: "1",
+    number: "2",
     points: "0–4",
     instruction: "Rozwiąż nierówność",
     mathBlock: "|x + 2| - |x - 3| < 6 + x",
@@ -153,11 +217,11 @@ const tasks = [
     ),
   },
 
-  // ── Zadanie 2 ─────────────────────────────────────────────
+  // ── Zadanie 3 ─────────────────────────────────────────────
   {
     id: "smwp-2025-pazdziernik-zad5",
     source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
-    number: "2",
+    number: "3",
     points: "0–3",
     instruction: (
       <span>
@@ -220,11 +284,11 @@ const tasks = [
     ),
   },
 
-  // ── Zadanie 3 ─────────────────────────────────────────────
+  // ── Zadanie 4 ─────────────────────────────────────────────
   {
     id: "smwp-2025-pazdziernik-zad11",
     source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
-    number: "3",
+    number: "4",
     points: "0–5",
     instruction: <span>Rozwiąż nierówność</span>,
     mathBlock: "\\frac{x+4}{x^2-9} - \\frac{x}{2x+6} \\geq \\frac{2x}{x-3} + 5",
@@ -292,6 +356,115 @@ const tasks = [
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
           <p className="font-semibold text-stone-800">
             Odpowiedź: <Mi>{"x \\in \\left(-3,\\,-\\tfrac{14}{5}\\right] \\cup \\left[\\tfrac{7}{3},\\,3\\right)"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // ── Zadanie 5 ─────────────────────────────────────────────
+  {
+    id: "cke-formula2023-maj-2026-przyklad-zad5-moduly",
+    source:
+      "Matura z matematyki, poziom rozszerzony, arkusz CKE (formuła 2023), egzamin maj 2026",
+    number: "5",
+    points: "0–4",
+    instruction: "Rozwiąż nierówność",
+    mathBlock: "|2x-6| - |x^2-9| < 0",
+    noteItems: [{ text: "Zapisz obliczenia." }],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"x \\in (-\\infty,\\,-5) \\cup (-1,\\,3) \\cup (3,\\,+\\infty)"}</Mi>, czyli inaczej{" "}
+        <Mi>{"(-\\infty,\\,-5) \\cup (-1,\\,+\\infty) \\setminus \\{3\\}"}</Mi>.
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Przenieś drugi moduł na prawą stronę:{" "}
+          <Mi>{"|2x-6| < |x^2-9|"}</Mi>. Zauważ, że{" "}
+          <Mi>{"|2x-6| = 2\\,|x-3|"}</Mi> oraz{" "}
+          <Mi>{"|x^2-9| = |(x-3)(x+3)| = |x-3|\\,|x+3|"}</Mi>.
+        </p>
+        <p>
+          Rozważ osobno <Mi>{"x = 3"}</Mi> (lepiej sprawdź od razu bez dzielenia) oraz przypadek{" "}
+          <Mi>{"x \\neq 3"}</Mi>, omijając przy tym zbędzne rozpatrywanie wielu przedziałów.
+        </p>
+        <p>
+          Drugi trop: można też tradycyjnie zerować wyrażenia pod modułami w{" "}
+          <Mi>{"x = \\pm 3"}</Mi> i rozwiązywać nierówność na przedziałach.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Metoda skrócona (przez wyciągnięcie wspólnego czynnika)</p>
+        <p>Nierówność jest równoważna</p>
+        <Mb>{"|2x-6| < |x^2-9| \\quad \\Longleftrightarrow \\quad |2(x-3)| < |(x-3)(x+3)|"}</Mb>
+        <Mb>{"2\\,|x-3| < |x-3|\\, |x+3|"}</Mb>
+        <p>
+          Podstawmy <Mi>{"x = 3"}</Mi>: lewa strona daje{" "}
+          <Mi>{"|0|"}</Mi>, prawa także <Mi>{"0"}</Mi>, więc{" "}
+          <Mi>{"0 < 0"}</Mi> jest fałszywe. Punkt <Mi>{"3"}</Mi>{" "}
+          <strong>nie należy</strong> do zbioru rozwiązań.
+        </p>
+        <p>
+          Niech teraz <Mi>{"x \\neq 3"}</Mi>. Wtedy{" "}
+          <Mi>{"|x-3| > 0"}</Mi>, więc możemy obie strony podzielić przez ten czynnik, nie zmieniając
+          znaku nierówności:
+        </p>
+        <Mb>{"2 < |x+3|"}</Mb>
+        <p>To znaczy, że odległość <Mi>{"x"}</Mi> od <Mi>{"-3"}</Mi> jest większa niż{" "}
+          <Mi>{"2"}</Mi>, czyli</p>
+        <Mb>{"x+3 > 2 \\quad \\text{lub} \\quad x+3 < -2"}</Mb>
+        <Mb>{"x > -1 \\quad \\text{lub} \\quad x < -5"}</Mb>
+        <p>Pamiętamy o wyłączeniu <Mi>{"x = 3"}</Mi> ze skrajnie prawego przedziału z pierwszego warunku.</p>
+        <FormulaBox>
+          <Mb>{"x \\in (-\\infty,\\,-5) \\cup (-1,\\,3) \\cup (3,\\,+\\infty) \\quad \\square"}</Mb>
+        </FormulaBox>
+
+        <div className="mt-8 pt-6 border-t border-[#d4bef5]" />
+        <p className="font-semibold text-stone-800">Metoda przedziałowa (upewnienie się drugą drogą)</p>
+        <p>Miejsca zerowe wyrażeń pod modułami:</p>
+        <Mb>{"2x - 6 = 0 \\Rightarrow x = 3, \\quad x^2 - 9 = 0 \\Rightarrow x \\in \\{-3,\\, 3\\}}"}</Mb>
+        <p>
+          Dzielimy prostą rzeczywistą na przedziały wg punktów <Mi>{"-3"}</Mi> oraz{" "}
+          <Mi>{"3"}</Mi> i w każdym zamykać moduły według definicji.
+        </p>
+        <p className="font-semibold text-stone-800">Przedział <Mi>{"x < -3"}</Mi></p>
+        <p>
+          W tym przedziale <Mi>{"x^2 > 9"}</Mi>, więc <Mi>{"x^2 - 9"}</Mi> jest dodatnie oraz{" "}
+          <Mi>{"2x - 6"}</Mi> jest ujemne. Stąd
+        </p>
+        <Mb>{"|2x-6| = -(2x-6) = 6-2x, \\quad |x^2-9| = x^2-9"}</Mb>
+        <Mb>{"6-2x - (x^2-9) < 0 \\quad \\Longleftrightarrow \\quad -x^2-2x+15 < 0"}</Mb>
+        <p>Mnożymy przez <Mi>{"-1"}</Mi> (zmiana znaku):</p>
+        <Mb>{"x^2+2x-15 > 0 \\quad \\Longleftrightarrow \\quad (x+5)(x-3) > 0"}</Mb>
+        <p>Na tym przedziale dostajemy <Mi>{"x < -5"}</Mi>.</p>
+
+        <p className="font-semibold text-stone-800">Przedział <Mi>{"-3 \\le x < 3"}</Mi></p>
+        <Mb>{"|2x-6| = 6-2x, \\quad |x^2-9| = 9-x^2"}</Mb>
+        <Mb>{"6-2x - (9-x^2) < 0 \\quad \\Longleftrightarrow \\quad x^2 - 2x - 3 < 0"}</Mb>
+        <Mb>{"(x-3)(x+1) < 0 \\quad \\Longleftrightarrow \\quad x \\in (-1,\\, 3)"}</Mb>
+        <p>Przekrój z aktualnym przedziałem: <Mi>{"(-1,\\, 3)"}</Mi>.</p>
+
+        <p className="font-semibold text-stone-800">Przedział <Mi>{"x > 3"}</Mi></p>
+        <Mb>{"|2x-6| = 2x-6, \\quad |x^2-9| = x^2-9"}</Mb>
+        <Mb>{"2x-6-(x^2-9) < 0 \\quad \\Longleftrightarrow \\quad -x^2+2x+3 < 0 \\quad \\Longleftrightarrow \\quad x^2-2x-3 > 0"}</Mb>
+        <Mb>{"(x-3)(x+1) > 0"}</Mb>
+        <p>Na <Mi>{"x>3"}</Mi> czynnik <Mi>{"(x-3)"}</Mi> jest dodatni, więc wystarczy{" "}
+          <Mi>{"x+1>0"}</Mi>, co jest automatycznie spełnione. Stąd cały przedział{" "}
+          <Mi>{"(3,\\,+\\infty)"}</Mi>.</p>
+
+        <p className="font-semibold text-stone-800">Suma</p>
+        <Mb>{"(-\\infty,\\,-5) \\cup (-1,\\,3) \\cup (3,\\,+\\infty)"}</Mb>
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"x \\in (-\\infty,\\,-5) \\cup (-1,\\,3) \\cup (3,\\,+\\infty)"}</Mi>
           </p>
         </div>
       </div>

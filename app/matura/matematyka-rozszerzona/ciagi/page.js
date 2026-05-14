@@ -235,6 +235,118 @@ const tasks = [
       </div>
     ),
   },
+
+  // ── Zadanie 3 ─────────────────────────────────────────────
+  {
+    id: "cke-formula2023-maj-2026-przyklad-zad6-ciagi",
+    source:
+      "Matura z matematyki, poziom rozszerzony, arkusz CKE (formuła 2023), egzamin maj 2026",
+    number: "3",
+    points: "0–4",
+    instruction: (
+      <span>
+        Dany jest skończony ciąg arytmetyczny <Mi>{"(a_n)"}</Mi>, którego liczba wyrazów jest
+        większa niż <Mi>{"6"}</Mi>. Pierwszy wyraz tego ciągu jest równy <Mi>{"1"}</Mi>, a ostatni
+        wyraz jest równy <Mi>{"(-2025)"}</Mi>. Wyrazy drugi, trzeci i szósty tego ciągu (w tej
+        kolejności) tworzą ciąg geometryczny.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: [{ text: "Oblicz sumę wszystkich wyrazów ciągu " }, { math: "(a_n)" }, { text: ". Zapisz obliczenia." }],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"S_n = -1\\,026\\,168"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Zapisz ogólny wyraz ciągu arytmetycznego:{" "}
+          <Mi>{"a_k = a_1 + (k-1)r"}</Mi>, przy{" "}
+          <Mi>{"a_1 = 1"}</Mi>.
+        </p>
+        <p>
+          Trzy kolejne wyrazy ciągu geometrycznego (w kolejności {" "}
+          <Mi>{"a_2,\\ a_3,\\ a_6"}</Mi>) muszą spełniać klasyczny warunek na środkowy wyraz:
+        </p>
+        <FormulaBox>
+          <Mb>{"a_3^2 = a_2 \\cdot a_6"}</Mb>
+        </FormulaBox>
+        <p>To da równanie kwadratowe na <Mi>{"r"}</Mi>; jedno z rozwiązań odpowiada ciągowi stałemu
+          i nie pozwala mieć ostatniego wyrazu równego <Mi>{"-2025"}</Mi>.</p>
+        <p>Gdy znajdziesz <Mi>{"r"}</Mi> oraz liczbę wyrazów {" "}<Mi>{"n"}</Mi>, użyj wzoru</p>
+        <FormulaBox>
+          <Mb>{"S_n = \\dfrac{a_1+a_n}{2}\\cdot n"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Ogólny wzór na wyraz ciągu arytmetycznego</p>
+        <p>
+          W ciągu arytmetycznym o różnicy <Mi>{"r"}</Mi> przy{" "}
+          <Mi>{"a_1 = 1"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"a_k = 1+(k-1)r \\qquad \\text{dla}\\ k \\in \\{1,\\,2,\\,3,\\ldots\\}\\text{.}"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 2. Warunek geometryczny</p>
+        <p>
+          Skoro <Mi>{"a_2,\\ a_3,\\ a_6"}</Mi>, w takiej kolejności, tworzą ciąg geometryczny,
+          środkowy wyraz jest geometryczną średnią skrajnych:
+        </p>
+        <Mb>{"a_3^2 = a_2 \\cdot a_6"}</Mb>
+        <p>Podstawiamy wartości z arytmetyki:</p>
+        <Mb>{"\\bigl(1+2r\\bigr)^2 = \\bigl(1+r\\bigr)\\bigl(1+5r\\bigr)"}</Mb>
+        <Mb>{"1+4r+4r^2 = 1+6r+5r^2"}</Mb>
+        <Mb>{"0 = r^2+2r = r(r+2) \\quad \\Rightarrow \\quad r = 0 \\quad \\text{lub}\\quad r = -2"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Rozstrzygnięcie między <Mi>{"r = 0"}</Mi> i{" "} <Mi>{"r = -2"}</Mi></p>
+        <p>
+          Dla <Mi>{"r = 0"}</Mi> mamy stały ciąg <Mi>{"a_n = 1"}</Mi>, więc ostatni wyraz nie może być{" "}
+          <Mi>{"-2025"}</Mi>. Odrzucamy.
+        </p>
+        <p>
+          Dla <Mi>{"r = -2"}</Mi>:
+        </p>
+        <Mb>{"a_k = 1 + (k-1)(-2) = 3-2k"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Liczba wyrazów</p>
+        <p>
+          Skoro ostatni wyraz (o numerze <Mi>{"n"}</Mi>) wynosi <Mi>{"-2025"}</Mi>,
+        </p>
+        <Mb>{"3-2n = -2025 \\quad \\Rightarrow \\quad 2n = 2028 \\quad \\Rightarrow \\quad n = 1014"}</Mb>
+        <p>
+          To spełnia założenie <Mi>{"n>6"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 5. Suma</p>
+        <FormulaBox>
+          <Mb>{"S_n = \\frac{a_1+a_n}{2}\\cdot n = \\frac{1+(-2025)}{2}\\cdot 1014 = -1012\\cdot 1014"}</Mb>
+        </FormulaBox>
+        <p>
+          Wygodniejsze mnożenie: <Mi>{"1012 = 1013-1"}</Mi>,{" "}
+          <Mi>{"1014 = 1013+1"}</Mi>, więc z tożsamości{" "}
+          <Mi>{"(u-1)(u+1) = u^2-1"}</Mi>:
+        </p>
+        <Mb>{"1012\\cdot 1014 = 1013^2-1"}</Mb>
+        <Mb>{"1013^2 = (1000+13)^2 = 1\\:000\\:000 + 2\\cdot 13\\cdot 1000 + 169 = 1\\:026\\:169"}</Mb>
+        <Mb>{"\\Rightarrow \\quad S_n = -(1\\:026\\:169 - 1) = -1\\:026\\:168 \\quad \\square"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź:{" "}
+            <Mi>{"S_{1014} = -1\\,026\\,168"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────

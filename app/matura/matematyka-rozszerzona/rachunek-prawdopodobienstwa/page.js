@@ -5,11 +5,115 @@ import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_CKE_F2023 =
+  "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
+
 const tasks = [
+  {
+    id: "cke-2026-formula2023-maj-zad2-prawdopodobienstwo",
+    source: SOURCE_CKE_F2023,
+    number: "1",
+    points: "0–3",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Ze zbioru ośmiu liczb <Mi>{"\\{1, 2, 3, 4, 5, 6, 7, 8\\}"}</Mi> losujemy bez zwracania osiem
+          razy po jednej liczbie. Wylosowane liczby ustawiamy w ciąg zgodnie z kolejnością losowania.
+        </p>
+        <p>
+          Oblicz prawdopodobieństwo zdarzenia <Mi>{"A"}</Mi> polegającego na tym, że wylosowane liczby
+          utworzą ciąg, w którym iloczyn każdych trzech kolejnych wyrazów będzie liczbą podzielną przez{" "}
+          <Mi>{"3"}</Mi>. Wynik podaj w postaci nieskracalnego ułamka zwykłego. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"\\dfrac{1}{28}"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          W zbiorze <Mi>{"\\{1,\\ldots,8\\}"}</Mi> tylko <Mi>{"3"}</Mi> i <Mi>{"6"}</Mi> są podzielne
+          przez <Mi>{"3"}</Mi>. Iloczyn trzech liczb jest podzielny przez <Mi>{"3"}</Mi> wtedy i tylko
+          wtedy, gdy przynajmniej jedna z nich dzieli się przez <Mi>{"3"}</Mi>.
+        </p>
+        <p>
+          Masz dokładnie dwie takie „specjalne” liczby w ciągu ośmiu wyrazów, a musisz pokryć sześć
+          okien postaci„ <Mi>{"(x_i,x_{i+1},x_{i+2})"}</Mi>”, <Mi>{"i=1,\\ldots,6"}</Mi>. Rozpisz krótko,
+          gdzie muszą stać te dwie wartości, żeby w każdym oknie znajdowała się przynajmniej jedna.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Przestrzeń zdarzeń elementarnych</p>
+        <p>
+          Losujemy bez zwracania wszystkie osiem liczb i zapisujemy je w kolejności. Każde takie ułożenie
+          jest permutacją zbioru ośmiu elementów i jest jednakowo prawdopodobne:
+        </p>
+        <FormulaBox>
+          <Mb>{"|\\Omega| = 8!"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 2. Co znaczy warunek dla podzielności przez 3?</p>
+        <p>
+          W zbiorze <Mi>{"\\{1,2,\\ldots,8\\}"}</Mi> tylko <Mi>{"3"}</Mi> i <Mi>{"6"}</Mi> mają czynnik
+          pierwszy <Mi>{"3"}</Mi>.
+        </p>
+        <p>
+          Produkt trzech dodatnich liczb całkowitych dzieli się przez <Mi>{"3"}</Mi> wtedy i tylko wtedy,
+          gdy przynajmniej jedna z trzech dzieli się przez <Mi>{"3"}</Mi>.
+          Zdarzenie <Mi>{"A"}</Mi>:
+        </p>
+        <Mb>
+          {"A = \\{\\text{taka permutacja, że dla każdego } i\\in\\{1,2,\\ldots,6\\}\\quad x_i\\cdot x_{i+1}\\cdot x_{i+2}\\equiv 0\\pmod{3}\\}"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Gdzie muszą stać liczby <Mi>{"3"}</Mi> i <Mi>{"6"}</Mi>?</p>
+        <p>
+          Jedyną dopuszczalną opcją, która spełnia warunki zadania można przedstawić w postaci wzorca:
+        </p>
+        <FormulaBox>
+          <Mb>{"T = 3\\text{ lub } 6, \\quad N = \\text{reszta liczb od 1 do 8 bez } T\\quad \\implies \\quad (N,N,T,N,N,T,N,N)"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 4. Liczba permutacji sprzyjających zdarzeniu</p>
+        <p>
+          Na pozycjach <Mi>{"3"}</Mi> oraz <Mi>{"6"}</Mi> ustawiamy wartości <Mi>{"3"}</Mi> i <Mi>{"6"}</Mi>: możemy je zamienić miejscami, czyli
+        </p>
+        <Mb>{"|\\{\\text{przypisanie dla }3\\text{ i }6\\}| = 2!"}</Mb>
+        <p>
+          Pozostałe sześć liczb ustawiamy dowolnie na pozycjach <Mi>{"1,2,4,5,7,8"}</Mi>, czyli
+        </p>
+        <Mb>{"|\\{\\text{ukończenie permutacji}\\}| = 6!"}</Mb>
+        <FormulaBox>
+          <Mb>{"|A|=2!\\cdot 6!=1440"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 5. Prawdopodobieństwo</p>
+        <Mb>{"P(A)=\\frac{|A|}{|\\Omega|}=\\frac{2\\cdot 6!}{8!}=\\frac{2}{8\\cdot 7}=\\frac{2}{56}=\\frac{1}{28}"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"\\dfrac{1}{28}"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "smwp-2026-styczen-zad3",
     source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
-    number: "1",
+    number: "2",
     points: "0–3",
     instruction: (
       <div className="space-y-3">
@@ -132,11 +236,11 @@ const tasks = [
     ),
   },
 
-  // ── Zadanie 2 ─────────────────────────────────────────────
+  // ── Zadanie 3 ─────────────────────────────────────────────
   {
     id: "smwp-2025-pazdziernik-zad4",
     source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
-    number: "2",
+    number: "3",
     points: "0–3",
     instruction: (
       <span>

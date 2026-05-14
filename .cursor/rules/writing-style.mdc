@@ -81,6 +81,12 @@ alwaysApply: false
 - **Nie pomijaj żadnego kroku** algebraicznego, logicznego ani uzasadnienia (w tym krótkiego „dlaczego wolno tak zrobić”, gdy nietypowe).
 - Jeśli istnieje **wskazówka** do zadania, rozwiązanie musi **odzwierciedlać ją w praktyce**: każdy pomysł ze wskazówki ma być **realnie przeprowadzony** w kolejnych krokach (ta sama kolejność lub naturalne dopięcie w toku rozumowania), tak żeby nic „nie wyskakiwało” znikąd i żeby uczeń mógł prześledzić drogę od podpowiedzi do wyniku — **bez** osobnych akapitów typu „zgodnie ze wskazówką”.
 
+### Zadania na dowód (`TaskCard`)
+
+- Gdy polecenie ma formę **„wykaż, że…”** (dowód; nie jest to zadanie z jedną „odpowiedzią” do ujawnienia osobno), ustaw w obiekcie zadania **`answer: null`**. Wtedy `TaskCard` **nie** renderuje przycisku **Odpowiedź**; zostają **Wskazówka** i **Rozwiązanie** (jeśli je dodajesz).
+- **Nie** dopisuj na końcu panelu rozwiązania osobnego bloku z nagłówkiem **„Odpowiedź:”** dla takich zadań: teza jest w treści zadania, a jej uzasadnienie kończy się w ostatnich krokach rozwiązania (np. symbol końca dowodu).
+- To samo dotyczy podpunktów w **`SubTask`**: przy poleceniu dowodowym pomiń `answer` lub ustaw **`answer: null`**, żeby nie pojawiał się przycisk **Odpowiedź**.
+
 ### Ton
 
 - Łącz **profesjonalizm** (poprawna terminologia, spójna struktura) z **życzliwym, spokojnym tonem** jak w dobrym podręczniku licealnym.
