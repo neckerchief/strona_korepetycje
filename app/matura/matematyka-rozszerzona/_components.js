@@ -1,12 +1,23 @@
 "use client";
-import { useState } from "react";
+import { Children, useState } from "react";
 import { InlineMath, BlockMath } from "react-katex";
 import { ChevronDown } from "lucide-react";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 
-export const Mi = ({ children }) => <InlineMath math={children} />;
-export const Mb = ({ children }) => <BlockMath math={children} />;
+// JSX whitespace/newlines next to `{...}` can yield multiple text children; KaTeX requires a string.
+function flattenMathChildren(children) {
+  return Children.toArray(children)
+    .map((node) => {
+      if (typeof node === "string" || typeof node === "number") return String(node);
+      return "";
+    })
+    .join("")
+    .trim();
+}
+
+export const Mi = ({ children }) => <InlineMath math={flattenMathChildren(children)} />;
+export const Mb = ({ children }) => <BlockMath math={flattenMathChildren(children)} />;
 
 // Ramka na wzór z tablic (fioletowa, jak w podręcznikach)
 export const FormulaBox = ({ children }) => (

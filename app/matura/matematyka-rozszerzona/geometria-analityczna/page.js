@@ -241,6 +241,131 @@ const tasks = [
       </div>
     ),
   },
+
+  {
+    id: "cke-2026-formula2023-maj-zad9-okrag",
+    source:
+      "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)",
+    number: "3",
+    points: "0–5",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          W kartezjańskim układzie współrzędnych <Mi>{"(x, y)"}</Mi> punkty{" "}
+          <Mi>{"A = (1, -1)"}</Mi> oraz <Mi>{"B = (4, 0)"}</Mi> są wierzchołkami trójkąta{" "}
+          <Mi>{"ABC"}</Mi>, w którym <Mi>{"|CA| = |CB|"}</Mi>. Jedno z ramion trójkąta{" "}
+          <Mi>{"ABC"}</Mi> jest zawarte w prostej o równaniu <Mi>{"x + 2y - 4 = 0"}</Mi>. Na
+          boku <Mi>{"AC"}</Mi> tego trójkąta wybrano punkt <Mi>{"M"}</Mi> taki, że stosunek
+          długości odcinków <Mi>{"|AM| : |MC| = 1 : 4"}</Mi>.
+        </p>
+        <p className="font-semibold">
+          Wyznacz równanie okręgu, którego środek leży w punkcie <Mi>{"M"}</Mi>, a który
+          przechodzi przez punkt <Mi>{"C"}</Mi>. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>
+          {
+            "\\left(x - \\dfrac{6}{5}\\right)^2 + \\left(y + \\dfrac{3}{5}\\right)^2 = \\dfrac{16}{5}"
+          }
+        </Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Sprawdź, czy <Mi>{"A"}</Mi> lub <Mi>{"B"}</Mi> leżą na prostej{" "}
+          <Mi>{"x + 2y - 4 = 0"}</Mi>. To wskaże, które ramię trójkąta leży na tej prostej.
+        </p>
+        <p>
+          Niech <Mi>{"C = (4 - 2y,\\, y)"}</Mi>. Z warunku <Mi>{"|CA| = |CB|"}</Mi> wyznacz{" "}
+          <Mi>{"y"}</Mi>, a potem <Mi>{"x"}</Mi>.
+        </p>
+        <p>
+          Punkt <Mi>{"M"}</Mi> dzieli odcinek <Mi>{"AC"}</Mi> w stosunku{" "}
+          <Mi>{"1 : 4"}</Mi> od <Mi>{"A"}</Mi>, więc{" "}
+          <Mi>{"\\overrightarrow{AM} = \\dfrac{1}{5}\\overrightarrow{AC}"}</Mi>.
+        </p>
+        <p>
+          Promień to <Mi>{"|MC|"}</Mi>. Równanie okręgu:{" "}
+          <Mi>{"(x - x_M)^2 + (y - y_M)^2 = r^2"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">
+          Krok 1. Które ramię leży na prostej <Mi>{"x + 2y - 4 = 0"}</Mi>?
+        </p>
+        <p>Podstawiamy współrzędne punktów:</p>
+        <Mb>{"1 + 2 \\cdot (-1) - 4 = -5 \\neq 0 \\qquad \\Rightarrow \\qquad A \\notin k"}</Mb>
+        <Mb>{"4 + 2 \\cdot 0 - 4 = 0 \\qquad \\Rightarrow \\qquad B \\in k"}</Mb>
+        <p>
+          Zatem na prostej leży bok <Mi>{"BC"}</Mi>. Wierzchołek <Mi>{"C"}</Mi> też leży na tej
+          prostej.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Współrzędne punktu <Mi>{"C"}</Mi></p>
+        <p>
+          Z równania prostej: <Mi>{"x = 4 - 2y"}</Mi>. Warunek <Mi>{"|CA| = |CB|"}</Mi> zapisujemy
+          przez kwadraty odległości:
+        </p>
+        <Mb>{"(3 - 2y)^2 + (y + 1)^2 = (-2y)^2 + y^2"}</Mb>
+        <Mb>{"9 - 12y + 4y^2 + y^2 + 2y + 1 = 4y^2 + y^2"}</Mb>
+        <Mb>{"5y^2 - 10y + 10 = 5y^2"}</Mb>
+        <Mb>{"-10y + 10 = 0 \\quad \\Rightarrow \\quad y = 1"}</Mb>
+        <Mb>{"x = 4 - 2 \\cdot 1 = 2 \\quad \\Rightarrow \\quad C = (2,\\, 1)"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Punkt <Mi>{"M"}</Mi> na boku <Mi>{"AC"}</Mi></p>
+        <p>
+          Stosunek <Mi>{"|AM| : |MC| = 1 : 4"}</Mi> oznacza, że{" "}
+          <Mi>{"\\overrightarrow{AM} = \\dfrac{1}{5}\\overrightarrow{AC}"}</Mi>:
+        </p>
+        <Mb>
+          {
+            "M = A + \\frac{1}{5}(C - A) = \\left(\\frac{6}{5},\\, -\\frac{3}{5}\\right)"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Promień i równanie okręgu</p>
+        <p>
+          Okrąg ma środek w <Mi>{"M"}</Mi> i przechodzi przez <Mi>{"C"}</Mi>, więc{" "}
+          <Mi>{"r^2 = |MC|^2"}</Mi>:
+        </p>
+        <Mb>
+          {
+            "|MC|^2 = \\left(\\frac{4}{5}\\right)^2 + \\left(\\frac{8}{5}\\right)^2 = \\frac{16}{5}"
+          }
+        </Mb>
+        <FormulaBox>
+          <Mb>
+            {
+              "\\left(x - \\frac{6}{5}\\right)^2 + \\left(y + \\frac{3}{5}\\right)^2 = \\frac{16}{5}"
+            }
+          </Mb>
+        </FormulaBox>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź:{" "}
+            <Mi>
+              {
+                "\\left(x - \\dfrac{6}{5}\\right)^2 + \\left(y + \\dfrac{3}{5}\\right)^2 = \\dfrac{16}{5}"
+              }
+            </Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────

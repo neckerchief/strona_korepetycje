@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { TaskCard, Mi, Mb, FormulaBox, SideWork } from "../_components";
+import { Zad12 } from "./Zad12";
 
 const tasks = [
   {
@@ -140,10 +141,14 @@ export default function ZadaniaOptymalizacyjnePage() {
         <div className="mb-14">
           <p className="text-sm font-semibold text-[#6d3a8e] uppercase tracking-widest mb-2">Dział 16</p>
           <h1 className="font-display text-4xl md:text-5xl text-stone-800 mb-4">Zadania optymalizacyjne</h1>
-          <p className="text-stone-500 text-lg max-w-xl leading-relaxed">{tasks.length} zadanie</p>
+          <p className="text-stone-500 text-lg max-w-xl leading-relaxed">{tasks.length + 1}{" "}
+            {tasks.length + 1 === 1 ? "zadanie" : tasks.length + 1 < 5 ? "zadania" : "zadań"}
+            {" "}
+            (w tym jedno zadanie złożone z dwóch podpunktów)</p>
         </div>
         <div className="space-y-12">
           {tasks.map((task) => <TaskCard key={task.id} {...task} />)}
+          <Zad12 />
 
           {/* Nota o kontekście zadania */}
           <div className="flex items-start gap-3 bg-[#f9f5ff] border border-[#d4b8f0] rounded-xl px-5 py-4 text-sm text-[#52297a]">

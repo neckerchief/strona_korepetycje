@@ -439,78 +439,65 @@ const tasks = [
     answer: (
       <div className="space-y-3">
         <p>
-          <Mi>
-            {"\\sin 2x = 0 \\quad \\vee \\quad \\sin 2x = \\dfrac{1}{2} \\quad \\vee \\quad \\sin 2x = -\\dfrac{1}{2}"}
-          </Mi>
-        </p>
-        <p>co odpowiada opisom</p>
-        <p>
-          <Mi>{"x = \\dfrac{k\\pi}{2}"}</Mi>, <Mi>{"k \\in \\mathbb{Z}"}</Mi>, oraz rozwiązaniom uzyskanym ze
-          standardowych równań <Mi>{"\\sin 2x = \\pm \\tfrac{1}{2}"}</Mi>.
+        <Mi>{"x = \\dfrac{k\\pi}{2}"}</Mi> lub{" "}
+            <Mi>{"x = \\dfrac{\\pi}{12} + \\dfrac{k\\pi}{2}"}</Mi> lub{" "}
+            <Mi>{"x = \\dfrac{5\\pi}{12} + \\dfrac{k\\pi}{2}\\quad"}</Mi> (<Mi>{"k \\in \\mathbb{Z}"}</Mi>).
         </p>
       </div>
     ),
 
     hint: (
       <div className="space-y-3">
-        <p>Zapisz <Mi>{"\\sin 6x"}</Mi> jako sinus potrójnego kąta przy argumencie <Mi>{"2x"}</Mi>:</p>
+        <p>Rozbij całe wyrażenie na trzy składniki <Mi>{"\\sin 6x - \\sin 2x - \\sin 2x"}</Mi> i użyj wzoru na różnicę sinusów dla <Mi>{"\\sin 6x - \\sin 2x"}</Mi>:</p>
         <FormulaBox>
-          <Mb>{"\\sin 6x = \\sin\\bigl(3\\cdot (2x)\\bigr)"}</Mb>
+          <Mb>{"\\sin\\alpha - \\sin\\beta = 2\\cos\\frac{\\alpha + \\beta}{2}\\sin\\frac{\\alpha -\\beta}{2}"}</Mb>
         </FormulaBox>
-        <p>Użyj w tablicowej postaci:</p>
-        <FormulaBox>
-          <Mb>{"\\sin 3 \\alpha = 3\\sin \\alpha - 4\\sin^3 \\alpha"}</Mb>
-        </FormulaBox>
-        <p>przyjmując <Mi>{"\\alpha = 2x"}</Mi>.</p>
-        <p>
-
-
-          Wyłączenie czynnika <Mi>{"\\sin 2x"}</Mi> zamienia równanie w iloczyn dwójsilników bez długich
-          tożsamości dodatkowych.
-        </p>
       </div>
     ),
 
     solution: (
       <div className="space-y-4">
-        <p className="font-semibold text-stone-800">Krok 1. Sinus podwójnego i potrójnego kąta</p>
+        <p className="font-semibold text-stone-800">Krok 1. Rozbicie na trzy składniki</p>
         <p>
-          Miara kąta <Mi>{"6x"}</Mi> wyraża się przez miarę <Mi>{"2x"}</Mi> wprost w zapisie{" "}
-          <Mi>{"6x = 3 \\cdot (2x)"}</Mi>.
+          Zapisujemy lewą stronę jako różnicę dwóch sinusów minus kolejny sinus{" "}
+          <Mi>{"2x"}</Mi>:
+        </p>
+        <Mb>{"\\sin 6x - 2\\sin 2x = \\sin 6x - \\sin 2x - \\sin 2x = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Wzór na różnicę sinusów</p>
+        <p>
+          Stosujemy go do wyrażenia <Mi>{"\\sin 6x - \\sin 2x"}</Mi>, przyjmując{" "}
+          <Mi>{"\\alpha = 6x"}</Mi> oraz <Mi>{"\\beta = 2x"}</Mi>:
         </p>
         <FormulaBox>
-          <Mb>{"\\sin 3 \\alpha = 3\\sin \\alpha - 4\\sin^3 \\alpha, \\quad \\alpha = 2x"}</Mb>
+          <Mb>{"\\sin\\alpha - \\sin\\beta = 2\\cos\\frac{\\alpha + \\beta}{2}\\sin\\frac{\\alpha - \\beta}{2}"}</Mb>
         </FormulaBox>
+        <Mb>{"\\sin 6x - \\sin 2x = 2\\cos\\frac{6x + 2x}{2}\\sin\\frac{6x - 2x}{2} = 2\\cos 4x \\cdot \\sin 2x"}</Mb>
 
-        <p className="font-semibold text-stone-800">Krok 2. Podstawienie do równania</p>
-        <Mb>{"\\sin 6x - 2\\sin 2x = \\bigl(3\\sin 2x - 4\\sin^3 2x\\bigr) - 2\\sin 2x = 0"}</Mb>
-        <Mb>{"\\sin 2x - 4\\sin^3 2x = 0"}</Mb>
-        <Mb>{"\\sin 2x \\cdot \\bigl(1 - 4\\sin^2 2x\\bigr) = 0"}</Mb>
+        <p className="font-semibold text-stone-800">Krok 3. Równanie z czynnikiem wspólnym</p>
+        <Mb>{"2\\cos 4x \\cdot \\sin 2x - \\sin 2x = 0"}</Mb>
+        <Mb>{"\\sin 2x \\cdot \\bigl(2\\cos 4x - 1\\bigr) = 0"}</Mb>
 
-        <p className="font-semibold text-stone-800">Krok 3. Pierwszy czynnik</p>
+        <p className="font-semibold text-stone-800">Krok 4. Pierwszy czynnik</p>
         <Mb>{"\\sin 2x = 0 \\quad \\Longleftrightarrow \\quad 2x = k\\pi \\quad (k \\in \\mathbb{Z}) \\quad \\Longleftrightarrow \\quad x = \\frac{k\\pi}{2}"}</Mb>
 
-        <p className="font-semibold text-stone-800">Krok 4. Drugi czynnik</p>
-        <Mb>{"1 - 4\\sin^2 2x = 0 \\quad \\Longleftrightarrow \\quad \\sin^2 2x = \\frac{1}{4} \\quad \\Longleftrightarrow \\quad \\sin 2x = \\frac{1}{2} \\quad \\text{lub} \\quad \\sin 2x = -\\frac{1}{2}"}</Mb>
-        <p>Dla <Mi>{"\\sin 2x = \\tfrac{1}{2}"}</Mi>:</p>
-        <Mb>{"2x = \\frac{\\pi}{6} + 2m\\pi \\quad \\text{lub} \\quad 2x = \\frac{5\\pi}{6} + 2m\\pi \\qquad (m \\in \\mathbb{Z})"}</Mb>
-        <Mb>{"x = \\frac{\\pi}{12} + m\\pi \\quad \\text{lub} \\quad x = \\frac{5\\pi}{12} + m\\pi"}</Mb>
-        <p>Dla <Mi>{"\\sin 2x = -\\tfrac{1}{2}"}</Mi>:</p>
-        <Mb>{"2x = \\frac{7\\pi}{6} + 2m\\pi \\quad \\text{lub} \\quad 2x = \\frac{11\\pi}{6} + 2m\\pi"}</Mb>
-        <Mb>{"x = \\frac{7\\pi}{12} + m\\pi \\quad \\text{lub} \\quad x = \\frac{11\\pi}{12} + m\\pi"}</Mb>
-
-        <p className="font-semibold text-stone-800">Krok 5. Jak to streścić w odpowiedzi</p>
+        <p className="font-semibold text-stone-800">Krok 5. Drugi czynnik</p>
+        <Mb>{"2\\cos 4x - 1 = 0 \\quad \\Longleftrightarrow \\quad \\cos 4x = \\frac{1}{2}"}</Mb>
         <p>
-          Zbiór rozwiązań to wszystkie <Mi>{"x"}</Mi>, dla których{" "}
-          <Mi>{"\\sin 2x \\in \\{0,\\ \\tfrac{1}{2},\\ -\\tfrac{1}{2}\\}"}</Mi>. To jest równoważne
-          powyższym rodzinom z parametrami całkowitymi.
+          Ponieważ <Mi>{"\\cos u = \\frac{1}{2}"}</Mi> wtedy i tylko wtedy, gdy{" "}
+          <Mi>{"u = \\frac{\\pi}{3} + 2m\\pi"}</Mi> lub{" "}
+          <Mi>{"u = \\frac{5\\pi}{3} + 2m\\pi"}</Mi> (<Mi>{"m \\in \\mathbb{Z}"}</Mi>), podstawiamy{" "}
+          <Mi>{"u = 4x"}</Mi>:
         </p>
+        <Mb>{"4x = \\frac{\\pi}{3} + 2m\\pi \\quad \\text{lub} \\quad 4x = \\frac{5\\pi}{3} + 2m\\pi"}</Mb>
+        <Mb>{"x = \\frac{\\pi}{12} + \\frac{m\\pi}{2} \\quad \\text{lub} \\quad x = \\frac{5\\pi}{12} + \\frac{m\\pi}{2}"}</Mb>
 
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
-          <p className="font-semibold text-stone-800">Odpowiedź (krótko):</p>
+          <p className="font-semibold text-stone-800">Odpowiedź:</p>
           <p className="mt-2">
-            <Mi>{"x = \\dfrac{k\\pi}{2}"}</Mi> (<Mi>{"k \\in \\mathbb{Z}"}</Mi>) lub rozwiązania równań{" "}
-            <Mi>{"\\sin 2x = \\pm \\tfrac{1}{2}"}</Mi> opisane explicite w kroku 4.
+            <Mi>{"x = \\dfrac{k\\pi}{2}"}</Mi> lub{" "}
+            <Mi>{"x = \\dfrac{\\pi}{12} + \\dfrac{k\\pi}{2}"}</Mi> lub{" "}
+            <Mi>{"x = \\dfrac{5\\pi}{12} + \\dfrac{k\\pi}{2}\\quad"}</Mi> (<Mi>{"k \\in \\mathbb{Z}"}</Mi>).
           </p>
         </div>
       </div>

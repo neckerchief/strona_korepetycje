@@ -292,6 +292,110 @@ const tasks = [
       </div>
     ),
   },
+
+  {
+    id: "cke-2026-formula2023-maj-zad10-kwadratowa",
+    source:
+      "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)",
+    number: "3",
+    points: "0–5",
+    instruction: (
+      <span>
+        Wyznacz wszystkie rzeczywiste wartości parametru <Mi>{"m"}</Mi>, gdzie{" "}
+        <Mi>{"m \\neq 0"}</Mi>, dla których funkcja kwadratowa <Mi>{"f"}</Mi> określona wzorem
+      </span>
+    ),
+    mathBlock: "f(x) = m^2 \\cdot x^2 - 2mx - m + 1",
+    noteItems: [
+      { text: "ma dwa różne miejsca zerowe " },
+      { math: "x_1" },
+      { text: " oraz " },
+      { math: "x_2" },
+      { text: " należące do przedziału " },
+      { math: "(-2, 2)" },
+      { text: ". Zapisz obliczenia." },
+    ],
+    answers: null,
+
+    answer: <p><Mi>{"m \\in (1,\\,+\\infty)"}</Mi></p>,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Dla <Mi>{"m \\neq 0"}</Mi> współczynnik przy <Mi>{"x^2"}</Mi> jest dodatni:{" "}
+          <Mi>{"a = m^2 > 0"}</Mi>, więc parabola „otwiera się” do góry.
+        </p>
+        <p>
+          Dwa różne miejsca zerowe: oblicz <Mi>{"\\Delta"}</Mi> i wymagaj{" "}
+          <Mi>{"\\Delta > 0"}</Mi>.
+        </p>
+        <p>
+          Gdy parabola jest dodatnio zorientowana, oba pierwiastki leżą w{" "}
+          <Mi>{"(-2, 2)"}</Mi>, jeśli:
+        </p>
+        <ul className="list-disc ml-6 space-y-1">
+          <li>
+            wierzchołek jest wewnątrz przedziału: <Mi>{"-2 < p < 2"}</Mi>, gdzie{" "}
+            <Mi>{"p = -\\dfrac{b}{2a}"}</Mi>,
+          </li>
+          <li>
+            <Mi>{"f(-2) > 0"}</Mi> oraz <Mi>{"f(2) > 0"}</Mi>.
+          </li>
+        </ul>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Współczynniki i warunek na dwa pierwiastki</p>
+        <p>
+          Funkcja ma postać <Mi>{"ax^2 + bx + c"}</Mi> z{" "}
+          <Mi>{"a = m^2"}</Mi>, <Mi>{"b = -2m"}</Mi>, <Mi>{"c = -m + 1"}</Mi>.
+          Dla <Mi>{"m \\neq 0"}</Mi> mamy <Mi>{"a > 0"}</Mi>.
+        </p>
+        <Mb>{"\\Delta = (-2m)^2 - 4 \\cdot m^2 \\cdot (-m + 1) = 4m^2 + 4m^3 - 4m^2 = 4m^3"}</Mb>
+        <p>
+          Dwa różne miejsca zerowe wymagają <Mi>{"\\Delta > 0"}</Mi>, czyli{" "}
+          <Mi>{"4m^3 > 0"}</Mi>, stąd <Mi>{"m > 0"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Współrzędna wierzchołka</p>
+        <Mb>{"p = -\\frac{b}{2a} = -\\frac{-2m}{2m^2} = \\frac{1}{m}"}</Mb>
+        <p>
+          Wierzchołek ma być w <Mi>{"(-2, 2)"}</Mi>. Dla <Mi>{"m > 0"}</Mi> warunek{" "}
+          <Mi>{"p > -2"}</Mi> jest zawsze spełniony. Z <Mi>{"p < 2"}</Mi> dostajemy{" "}
+          <Mi>{"\\dfrac{1}{m} < 2"}</Mi>, czyli <Mi>{"m > \\dfrac{1}{2}"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Wartości na końcach przedziału</p>
+        <Mb>{"f(-2) = m^2 \\cdot 4 + 4m - m + 1 = 4m^2 + 3m + 1"}</Mb>
+        <p>
+          Trójmian <Mi>{"4m^2 + 3m + 1"}</Mi> ma ujemną deltę, więc dla każdego{" "}
+          <Mi>{"m"}</Mi> jest dodatni. Warunek <Mi>{"f(-2) > 0"}</Mi> jest spełniony zawsze.
+        </p>
+        <Mb>{"f(2) = 4m^2 - 4m - m + 1 = 4m^2 - 5m + 1 = (4m - 1)(m - 1)"}</Mb>
+        <p>
+          Wymagamy <Mi>{"f(2) > 0"}</Mi>. Dla <Mi>{"m > 0"}</Mi> otrzymujemy{" "}
+          <Mi>{"m > 1"}</Mi> (bo pierwiastki to <Mi>{"\\dfrac{1}{4}"}</Mi> i <Mi>{"1"}</Mi>).
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Część wspólna warunków</p>
+        <p>Łączymy: <Mi>{"m \\neq 0"}</Mi>, <Mi>{"m > 0"}</Mi>, <Mi>{"m > \\dfrac{1}{2}"}</Mi>, <Mi>{"m > 1"}</Mi>.</p>
+        <Mb>{"m \\in (1,\\,+\\infty)"}</Mb>
+        <p className="text-stone-600 text-sm">
+          Sprawdzenie (np. <Mi>{"m = 2"}</Mi>): <Mi>{"f(x) = 4x^2 - 4x - 1"}</Mi>,{" "}
+          <Mi>{"\\Delta = 32 > 0"}</Mi>, pierwiastki <Mi>{"\\dfrac{1 \\pm \\sqrt{2}}{2}"}</Mi> leżą
+          w <Mi>{"(-2, 2)"}</Mi>.
+        </p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"m \\in (1,\\,+\\infty)"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 // ─── Strona ───────────────────────────────────────────────────

@@ -322,6 +322,110 @@ const tasks = [
       </div>
     ),
   },
+
+  {
+    id: "cke-2026-formula2023-maj-zad11-czworokat",
+    source: SOURCE_CKE_F2023,
+    number: "5",
+    points: "0–6",
+    instruction: (
+      <div className="space-y-4">
+        <p>
+          W czworokącie <Mi>{"ABCD"}</Mi> są dane: <Mi>{"|AB| = 9"}</Mi>, <Mi>{"|AD| = 10"}</Mi> oraz{" "}
+          <Mi>{"|\\angle BAD| = 60^\\circ"}</Mi>. W ten czworokąt wpisano okrąg oraz na tym
+          czworokącie opisano okrąg (zobacz rysunek).
+        </p>
+        <figure className="flex flex-col items-center mx-auto w-[40%] max-w-full font-normal">
+          <Image
+            src="/matura/planimetria_cke_2026_zad11.png"
+            alt="Czworokąt ABCD z wpisanym i opisanym okręgiem: |AB|=9, |AD|=10, kąt przy A równy 60°"
+            width={520}
+            height={400}
+            className="w-full h-auto rounded-lg border border-[#c4a8e8] bg-white"
+          />
+        </figure>
+        <p className="font-semibold">
+          Oblicz długości boków <Mi>{"BC"}</Mi> i <Mi>{"CD"}</Mi> oraz pole czworokąta{" "}
+          <Mi>{"ABCD"}</Mi>. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-1">
+        <p>
+          <Mi>{"|BC| = 5"}</Mi>, <Mi>{"|CD| = 6"}</Mi>, pole <Mi>{"30\\sqrt{3}"}</Mi>
+        </p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Czworokąt opisany na okrąg: kąty naprzemianległe sumują się do{" "}
+          <Mi>{"180^\\circ"}</Mi>. Przy <Mi>{"\\angle BAD = 60^\\circ"}</Mi> wyznacz{" "}
+          <Mi>{"\\angle BCD"}</Mi>.
+        </p>
+        <p>
+          Czworokąt z wpisanym okręgiem: twierdzenie Pitota{" "}
+          <Mi>{"|AB| + |CD| = |BC| + |AD|"}</Mi>.
+        </p>
+        <p>
+          Oblicz <Mi>{"BD"}</Mi> z <Mi>{"\\triangle ABD"}</Mi>, potem użyj twierdzenia cosinusów
+          w <Mi>{"\\triangle BCD"}</Mi> razem z Pitotem.
+        </p>
+        <p>
+          Pole to suma pól <Mi>{"\\triangle ABD"}</Mi> i <Mi>{"\\triangle BCD"}</Mi> ze wzorem{" "}
+          <Mi>{"\\dfrac{1}{2}ab\\sin\\gamma"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Własności czworokąta</p>
+        <p>
+          Czworokąt opisany na okrąg: <Mi>{"\\angle BCD = 180^\\circ - \\angle BAD = 120^\\circ"}</Mi>.
+        </p>
+        <p>
+          Pitot: <Mi>{"9 + |CD| = 10 + |BC|"}</Mi>, stąd <Mi>{"|CD| = |BC| + 1"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Przekątna <Mi>{"BD"}</Mi></p>
+        <FormulaBox>
+          <Mb>{"|BD|^2 = |AB|^2 + |AD|^2 - 2 \\cdot |AB| \\cdot |AD| \\cdot \\cos 60^\\circ"}</Mb>
+        </FormulaBox>
+        <Mb>{"|BD|^2 = 81 + 100 - 90 = 91"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Boki <Mi>{"BC"}</Mi> i <Mi>{"CD"}</Mi></p>
+        <Mb>
+          {
+            "91 = |BC|^2 + |CD|^2 + |BC||CD| \\quad \\text{(bo } \\cos 120^\\circ = -\\tfrac{1}{2}\\text{)}"
+          }
+        </Mb>
+        <p>Podstawiamy <Mi>{"|CD| = |BC| + 1"}</Mi>:</p>
+        <Mb>{"91 = 3|BC|^2 + 3|BC| + 1"}</Mb>
+        <Mb>{"|BC|^2 + |BC| - 30 = 0 \\quad \\Rightarrow \\quad |BC| = 5,\\quad |CD| = 6"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Pole</p>
+        <Mb>
+          {
+            "P = \\frac{1}{2} \\cdot 9 \\cdot 10 \\cdot \\sin 60^\\circ + \\frac{1}{2} \\cdot 5 \\cdot 6 \\cdot \\sin 120^\\circ = 30\\sqrt{3}"
+          }
+        </Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"|BC| = 5"}</Mi>, <Mi>{"|CD| = 6"}</Mi>,{" "}
+            <Mi>{"P_{ABCD} = 30\\sqrt{3}"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 // ─── Zadanie 3 (złożone: 13.1 + 13.2) ────────────────────────

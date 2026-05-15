@@ -491,7 +491,7 @@ export default function StereometriaPage() {
                 Cosinus kąta między ścianami{" "}
 
                 <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi>:{" "}
-                <Mi>{"\\displaystyle \\dfrac{17}{21}"}</Mi>.
+                <Mi>{"\\displaystyle \\dfrac{5}{14}"}</Mi>.
 
               </p>
             </div>
@@ -508,11 +508,14 @@ export default function StereometriaPage() {
                 <Mi>{"\\cos \\angle BSC"}</Mi>.
               </p>
               <p>
-                Kąt między płaszczyznami <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi> ma krawędź <Mi>{"SC"}</Mi>:
-                dobry pomysł to normalne uzyskane jako iloczyny{" "}
-                <Mi>{"\\overrightarrow{SA} \\times \\overrightarrow{SC}"}</Mi> oraz{" "}
-                <Mi>{"\\overrightarrow{SB} \\times \\overrightarrow{SC}"}</Mi> przy sensownym układzie
-                kartezjańskim.
+                Kąt między ścianami <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi> licz przy wspólnej krawędzi{" "}
+                <Mi>{"SC"}</Mi>: w każdej ścianie poprowadź wysokość z odpowiednio{" "}
+                <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi> na <Mi>{"SC"}</Mi>. Ze symetrii ostrosłupa względem
+                płaszczyzny <Mi>{"SOC"}</Mi> obie te wysokości spotykają <Mi>{"SC"}</Mi> w tym samym
+                punkcie <Mi>{"P"}</Mi>, więc kąt między odcinkami <Mi>{"PA"}</Mi> i <Mi>{"PB"}</Mi> jest
+                kątem płaskim szukanego kąta dwuściennego. Masz trójkąt <Mi>{"APB"}</Mi>, znajdź{" "}
+                <Mi>{"|PA|"}</Mi>, <Mi>{"|PB|"}</Mi>, <Mi>{"|AB|"}</Mi>, potem z twierdzenia cosinusów{" "}
+                <Mi>{"\\cos \\angle APB"}</Mi>.
               </p>
             </div>
           }
@@ -609,9 +612,9 @@ export default function StereometriaPage() {
                   >
                     A
                   </text>
-                  <path d="M 182 62 A 22 22 0 0 0 206 74" fill="none" stroke="#059669" strokeWidth="2" />
-                  <text x="206" y="90" fontSize="12" fill="#047857" fontFamily="Georgia, serif">
-                    ∠ BSC
+                  <path d="M 155 72 A 22 22 0 0 0 185 72" fill="none" stroke="#059669" strokeWidth="2" />
+                  <text x="148" y="90" fontSize="12" fill="#047857" fontFamily="Georgia, serif">
+                  ∠ BSC
                   </text>
                   <path
                     d="M 170 132 L 268 198"
@@ -630,14 +633,14 @@ export default function StereometriaPage() {
                 </figcaption>
               </figure>
 
-              <p className="font-semibold text-stone-800">Krok 1. Bok podstawy z obwodu opisanego</p>
+              <p className="font-semibold text-stone-800">Krok 1. Bok podstawy z obwodu okręgu opisanego</p>
               <Mb>{"2\\pi R = 6\\sqrt{2}\\pi \\quad \\Rightarrow \\quad R = 3\\sqrt{2}"}</Mb>
               <FormulaBox>
                 <Mb>{"R = \\dfrac{a}{\\sqrt{3}} \\quad \\Rightarrow \\quad a = R\\sqrt{3} = 3\\sqrt{6}"}</Mb>
               </FormulaBox>
 
               <p className="font-semibold text-stone-800">Krok 2. Długość krawędzi bocznej</p>
-              <p>W ostrosłupie prawidłowym oznaczmy długość krawędzi bocznej przez <Mi>{"l"}</Mi>.</p>
+              <p>W ostrosłupie prawidłowym oznaczmy długość krawędzi bocznej przez <Mi>{"l"}</Mi>. Twierdzenie cosinusów w trójkącie <Mi>{"BSC"}</Mi>:</p>
               <Mb>
                 {"|BC|^2 = l^2 + l^2 - 2 l^2 \\cos(\\angle BSC) = 2l^2 \\left( 1-\\frac{5}{9}\\right)=\\frac{8}{9} l^2"}
               </Mb>
@@ -646,58 +649,74 @@ export default function StereometriaPage() {
               <p className="font-semibold text-stone-800">Krok 3. Wysokość ostrosłupa</p>
               <Mb>{"l^2 = R^2 + h^2 \\quad \\Rightarrow \\quad h^2 = l^2-R^2 = \\frac{243}{4}-18 = \\frac{171}{4}"}</Mb>
 
-              <div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
-                <div className="flex-1 min-w-0 space-y-4">
-                  <p className="font-semibold text-stone-800">
-                    Krok 4. Cosinus kąta między płaszczyznami <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi>
-                  </p>
-                  <p>
-                    Wstawiamy układ kartezjański tak, jak w rysunku:{" "}<Mi>{"O=(0{,}0{,}0)"}</Mi>, szczyt{" "}
-                    <Mi>{"S=(0{,}0{,}h)"}</Mi> oraz{" "}
-                  </p>
-                  <Mb>
-                    {"C=(R{,}0{,}0),\\quad B=\\Bigl(-\\dfrac{R}{2},\\dfrac{R\\sqrt{3}}{2},0\\Bigr),\\quad A=\\Bigl(-\\dfrac{R}{2},-\\dfrac{R\\sqrt{3}}{2},0\\Bigr)\\text{.}"}
-                  </Mb>
-                  <p>
-                    Dla dwóch płaszczyzn możemy wziąć jako wektor prostopadły iloczyn wektorowy dwóch
-                    wektorów leżących w tej płaszczyźnie i wychodzących z jednego punktu. Dobieramy
-                    wektory od <Mi>{"S"}</Mi>:
-                  </p>
-                  <Mb>
-                    {"\\vec{n}_1 = \\overrightarrow{SA} \\times \\overrightarrow{SC},\\qquad \\vec{n}_2 = \\overrightarrow{SB} \\times \\overrightarrow{SC}\\text{.}"}
-                  </Mb>
-                  <p>
-                    Kąt płaski między tymi ścianami liczy się przy pomocy wektorów normalnych do ich
-                    płaszczyzn (pilnuj przy iloczynie skalarnym, żeby znak odpowiadał kątowi wewnątrz ostrosłupa).
-                    Tutaj pewien algebraiczny uproszczony rachunek daje
-                  </p>
-                  <FormulaBox>
-                    <Mb>{"\\cos \\varphi = \\dfrac{4h^2-R^2}{4h^2+R^2}"}</Mb>
-                  </FormulaBox>
-                  <Mb>
-                    {"\\Rightarrow \\quad \\cos \\varphi = \\dfrac{171-18}{171+18} = \\dfrac{153}{189} = \\dfrac{17}{21}\\text{.}"}
-                  </Mb>
+              <p className="font-semibold text-stone-800">
+                Krok 4. Kąt dwuścienny przy <Mi>{"SC"}</Mi>: wysokości w ścianach <Mi>{"SAC"}</Mi> i{" "}
+                <Mi>{"SBC"}</Mi>
+              </p>
+              <p>
+                Ściany <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi> przecinają się wzdłuż <Mi>{"SC"}</Mi>. W trójkącie{" "}
+                <Mi>{"SAC"}</Mi> opuszczamy z <Mi>{"A"}</Mi> wysokość na <Mi>{"SC"}</Mi> i oznaczamy jej spodek
+                przez <Mi>{"P"}</Mi>. Analogicznie w <Mi>{"\\triangle SBC"}</Mi> opuszczamy z{" "}
+                <Mi>{"B"}</Mi> wysokość na <Mi>{"SC"}</Mi>.
+              </p>
+              <p>
+                Płaszczyzna symetrii ostrosłupa zawierająca <Mi>{"S"}</Mi>, <Mi>{"C"}</Mi> oraz środek boku{" "}
+                <Mi>{"AB"}</Mi> przechodzi przez <Mi>{"O"}</Mi>, zamienia <Mi>{"A"}</Mi> z{" "}
+                <Mi>{"B"}</Mi> na siebie i zawiera prostą <Mi>{"SC"}</Mi>. Obrazem opuszczenia z{" "}
+                <Mi>{"A"}</Mi> jest opuszczenie z <Mi>{"B"}</Mi>, spodek na niezmienionej prostej{" "}
+                <Mi>{"SC"}</Mi> jest więc ten sam punkt <Mi>{"P"}</Mi>. Odcinki <Mi>{"PA"}</Mi> i{" "}
+                <Mi>{"PB"}</Mi> są więc oba prostopadłe do <Mi>{"SC"}</Mi> w punkcie <Mi>{"P"}</Mi>, a kąt{" "}
+                <Mi>{"\\angle APB"}</Mi> jest kątem płaskim kąta dwuściennego między ścianami{" "}
+                <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi>.
+              </p>
 
-                  <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
-                    <p className="font-semibold text-stone-800">
-                      Odpowiedź potwierdza wartości: <Mi>{"a = 3\\sqrt{6}"}</Mi>,{" "}
-                      <Mi>{"\\cos \\varphi = \\dfrac{17}{21}"}</Mi>.
-                    </p>
-                  </div>
-                </div>
-                <SideWork className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0" title="Wyprowadzenie wzoru">
-                  <Mb>{"\\overrightarrow{SA} = A-S,\\quad \\overrightarrow{SC} = C-S\\text{.}"}</Mb>
-                  <p className="mt-2 mb-2">
-                    Przy danych{" "}<Mi>{"R"}</Mi>, <Mi>{"h"}</Mi> oraz tej konkretnej symetrii dostajemy
-                  </p>
-                  <Mb>
-                    {"\\vec{n}_1 \\cdot \\vec{n}_2 = \\frac{3R^2\\bigl(4h^2-R^2\\bigr)}{4},\\quad |\\vec{n}_1|^2 = |\\vec{n}_2|^2 = \\frac{3R^2\\bigl(4h^2+R^2\\bigr)}{4}\\text{.}"}
-                  </Mb>
-                  <p>Wobec tego miara kąta spełnia</p>
-                  <Mb>
-                    {"\\cos \\varphi = \\dfrac{4h^2-R^2}{4h^2+R^2}\\text{.}"}
-                  </Mb>
-                </SideWork>
+              <p className="font-semibold text-stone-800">
+                Krok 5. Długości <Mi>{"PA"}</Mi> i <Mi>{"PB"}</Mi>
+              </p>
+              <p>
+                Trójkąty <Mi>{"SAC"}</Mi> i <Mi>{"SBC"}</Mi> mają odpowiednio równe trzy boki:{" "}
+                <Mi>{"SA = SB = l"}</Mi>, <Mi>{"SC"}</Mi> wspólny, <Mi>{"AC = BC = a"}</Mi>, więc są
+                przystające (kryterium <abbr title="trzy boki">SSS</abbr>). Odpowiednie kąty przy{" "}
+                <Mi>{"S"}</Mi> między ramionami <Mi>{"SA"}</Mi>, <Mi>{"SC"}</Mi> oraz <Mi>{"SB"}</Mi>,{" "}
+                <Mi>{"SC"}</Mi> są równe, czyli <Mi>{"\\angle ASC = \\angle BSC"}</Mi>. Z treści{" "}
+                <Mi>{"\\cos(\\angle BSC) = \\dfrac{5}{9}"}</Mi>, ten sam kosinus ma kąt{" "}
+                <Mi>{"\\angle ASC"}</Mi>.
+              </p>
+              <Mb>
+                {"\\sin(\\angle ASC) = \\sqrt{1-\\left(\\frac{5}{9}\\right)^2} = \\frac{\\sqrt{56}}{9} = \\frac{2\\sqrt{14}}{9}"}
+              </Mb>
+              <p>
+                Pole trójkąta <Mi>{"SAC"}</Mi> na dwa sposoby (podstawa <Mi>{"SC = l"}</Mi>, wysokość{" "}
+                <Mi>{"PA"}</Mi>, oraz dwa boki <Mi>{"l"}</Mi> i kąt między nimi):
+              </p>
+              <Mb>
+                {"\\frac{1}{2}\\,l\\cdot |PA| = \\frac{1}{2}\\,l^2 \\sin(\\angle ASC) \\quad \\Rightarrow \\quad |PA| = l\\sin(\\angle ASC)"}
+              </Mb>
+              <p>Z przystawania <Mi>{"\\triangle SAC \\cong \\triangle SBC"}</Mi> wynika <Mi>{"|PB| = |PA|"}</Mi>.</p>
+              <Mb>
+                {"|PA|^2 = l^2 \\cdot \\frac{56}{81} = \\frac{243}{4}\\cdot\\frac{56}{81} = 42 \\quad \\Rightarrow \\quad |PA| = |PB| = \\sqrt{42}"}
+              </Mb>
+
+              <p className="font-semibold text-stone-800">Krok 6. Twierdzenie cosinusów w <Mi>{"\\triangle APB"}</Mi></p>
+              <p>
+                Bok <Mi>{"AB = a = 3\\sqrt{6}"}</Mi>, więc <Mi>{"|AB|^2 = 54"}</Mi>. Dla kąta{" "}
+                <Mi>{"\\varphi = \\angle APB"}</Mi>:
+              </p>
+              <Mb>
+                {"|AB|^2 = |PA|^2 + |PB|^2 - 2|PA|\\cdot|PB|\\cos\\varphi"}
+              </Mb>
+              <Mb>
+                {"54 = 42 + 42 - 2\\cdot 42 \\cdot \\cos\\varphi \\quad \\Rightarrow \\quad 84\\cos\\varphi = 30"}
+              </Mb>
+              <FormulaBox>
+                <Mb>{"\\cos\\varphi = \\dfrac{30}{84} = \\dfrac{5}{14}"}</Mb>
+              </FormulaBox>
+
+              <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+                <p className="font-semibold text-stone-800">
+                  Odpowiedź: <Mi>{"a = 3\\sqrt{6}"}</Mi>,{" "}
+                  <Mi>{"\\displaystyle \\cos\\varphi = \\dfrac{5}{14}"}</Mi>.
+                </p>
               </div>
             </div>
           }

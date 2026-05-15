@@ -301,14 +301,14 @@ const tasks = [
           środkowy wyraz jest geometryczną średnią skrajnych:
         </p>
         <Mb>{"a_3^2 = a_2 \\cdot a_6"}</Mb>
-        <p>Podstawiamy wartości z arytmetyki:</p>
+        <p>Podstawiamy wartości z ciągu arytmetycznego:</p>
         <Mb>{"\\bigl(1+2r\\bigr)^2 = \\bigl(1+r\\bigr)\\bigl(1+5r\\bigr)"}</Mb>
         <Mb>{"1+4r+4r^2 = 1+6r+5r^2"}</Mb>
         <Mb>{"0 = r^2+2r = r(r+2) \\quad \\Rightarrow \\quad r = 0 \\quad \\text{lub}\\quad r = -2"}</Mb>
 
         <p className="font-semibold text-stone-800">Krok 3. Rozstrzygnięcie między <Mi>{"r = 0"}</Mi> i{" "} <Mi>{"r = -2"}</Mi></p>
         <p>
-          Dla <Mi>{"r = 0"}</Mi> mamy stały ciąg <Mi>{"a_n = 1"}</Mi>, więc ostatni wyraz nie może być{" "}
+          Dla <Mi>{"r = 0"}</Mi> mamy stały ciąg <Mi>{"a_n = 1"}</Mi>, więc ostatnim wyrazem nie może być{" "}
           <Mi>{"-2025"}</Mi>. Odrzucamy.
         </p>
         <p>
@@ -327,16 +327,8 @@ const tasks = [
 
         <p className="font-semibold text-stone-800">Krok 5. Suma</p>
         <FormulaBox>
-          <Mb>{"S_n = \\frac{a_1+a_n}{2}\\cdot n = \\frac{1+(-2025)}{2}\\cdot 1014 = -1012\\cdot 1014"}</Mb>
+          <Mb>{"S_n = \\frac{a_1+a_n}{2}\\cdot n = \\frac{1+(-2025)}{2}\\cdot 1014 = -1012\\cdot 1014 = -1\\,026\\,168"}</Mb>
         </FormulaBox>
-        <p>
-          Wygodniejsze mnożenie: <Mi>{"1012 = 1013-1"}</Mi>,{" "}
-          <Mi>{"1014 = 1013+1"}</Mi>, więc z tożsamości{" "}
-          <Mi>{"(u-1)(u+1) = u^2-1"}</Mi>:
-        </p>
-        <Mb>{"1012\\cdot 1014 = 1013^2-1"}</Mb>
-        <Mb>{"1013^2 = (1000+13)^2 = 1\\:000\\:000 + 2\\cdot 13\\cdot 1000 + 169 = 1\\:026\\:169"}</Mb>
-        <Mb>{"\\Rightarrow \\quad S_n = -(1\\:026\\:169 - 1) = -1\\:026\\:168 \\quad \\square"}</Mb>
 
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
           <p className="font-semibold text-stone-800">

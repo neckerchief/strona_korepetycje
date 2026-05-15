@@ -384,56 +384,19 @@ const tasks = [
     hint: (
       <div className="space-y-3">
         <p>
-          Przenieś drugi moduł na prawą stronę:{" "}
-          <Mi>{"|2x-6| < |x^2-9|"}</Mi>. Zauważ, że{" "}
-          <Mi>{"|2x-6| = 2\\,|x-3|"}</Mi> oraz{" "}
-          <Mi>{"|x^2-9| = |(x-3)(x+3)| = |x-3|\\,|x+3|"}</Mi>.
-        </p>
-        <p>
-          Rozważ osobno <Mi>{"x = 3"}</Mi> (lepiej sprawdź od razu bez dzielenia) oraz przypadek{" "}
-          <Mi>{"x \\neq 3"}</Mi>, omijając przy tym zbędzne rozpatrywanie wielu przedziałów.
-        </p>
-        <p>
-          Drugi trop: można też tradycyjnie zerować wyrażenia pod modułami w{" "}
-          <Mi>{"x = \\pm 3"}</Mi> i rozwiązywać nierówność na przedziałach.
+          Miejsca zerowe wyrażeń pod modułami to{" "}
+          <Mi>{"x = \\pm 3"}</Mi>. Rozwiąż nierówność na przedziałach podzielonych przez te miejsca zerowe.
         </p>
       </div>
     ),
 
     solution: (
       <div className="space-y-4">
-        <p className="font-semibold text-stone-800">Metoda skrócona (przez wyciągnięcie wspólnego czynnika)</p>
-        <p>Nierówność jest równoważna</p>
-        <Mb>{"|2x-6| < |x^2-9| \\quad \\Longleftrightarrow \\quad |2(x-3)| < |(x-3)(x+3)|"}</Mb>
-        <Mb>{"2\\,|x-3| < |x-3|\\, |x+3|"}</Mb>
-        <p>
-          Podstawmy <Mi>{"x = 3"}</Mi>: lewa strona daje{" "}
-          <Mi>{"|0|"}</Mi>, prawa także <Mi>{"0"}</Mi>, więc{" "}
-          <Mi>{"0 < 0"}</Mi> jest fałszywe. Punkt <Mi>{"3"}</Mi>{" "}
-          <strong>nie należy</strong> do zbioru rozwiązań.
-        </p>
-        <p>
-          Niech teraz <Mi>{"x \\neq 3"}</Mi>. Wtedy{" "}
-          <Mi>{"|x-3| > 0"}</Mi>, więc możemy obie strony podzielić przez ten czynnik, nie zmieniając
-          znaku nierówności:
-        </p>
-        <Mb>{"2 < |x+3|"}</Mb>
-        <p>To znaczy, że odległość <Mi>{"x"}</Mi> od <Mi>{"-3"}</Mi> jest większa niż{" "}
-          <Mi>{"2"}</Mi>, czyli</p>
-        <Mb>{"x+3 > 2 \\quad \\text{lub} \\quad x+3 < -2"}</Mb>
-        <Mb>{"x > -1 \\quad \\text{lub} \\quad x < -5"}</Mb>
-        <p>Pamiętamy o wyłączeniu <Mi>{"x = 3"}</Mi> ze skrajnie prawego przedziału z pierwszego warunku.</p>
-        <FormulaBox>
-          <Mb>{"x \\in (-\\infty,\\,-5) \\cup (-1,\\,3) \\cup (3,\\,+\\infty) \\quad \\square"}</Mb>
-        </FormulaBox>
-
-        <div className="mt-8 pt-6 border-t border-[#d4bef5]" />
-        <p className="font-semibold text-stone-800">Metoda przedziałowa (upewnienie się drugą drogą)</p>
-        <p>Miejsca zerowe wyrażeń pod modułami:</p>
-        <Mb>{"2x - 6 = 0 \\Rightarrow x = 3, \\quad x^2 - 9 = 0 \\Rightarrow x \\in \\{-3,\\, 3\\}}"}</Mb>
+        <p className="font-semibold text-stone-800">Metoda przedziałowa</p>
+        <p>Miejsca zerowe wyrażeń pod modułami to <Mi>{"x = \\pm 3"}</Mi>.</p>
         <p>
           Dzielimy prostą rzeczywistą na przedziały wg punktów <Mi>{"-3"}</Mi> oraz{" "}
-          <Mi>{"3"}</Mi> i w każdym zamykać moduły według definicji.
+          <Mi>{"3"}</Mi>.
         </p>
         <p className="font-semibold text-stone-800">Przedział <Mi>{"x < -3"}</Mi></p>
         <p>
@@ -452,13 +415,12 @@ const tasks = [
         <Mb>{"(x-3)(x+1) < 0 \\quad \\Longleftrightarrow \\quad x \\in (-1,\\, 3)"}</Mb>
         <p>Przekrój z aktualnym przedziałem: <Mi>{"(-1,\\, 3)"}</Mi>.</p>
 
-        <p className="font-semibold text-stone-800">Przedział <Mi>{"x > 3"}</Mi></p>
+        <p className="font-semibold text-stone-800">Przedział <Mi>{"x \\ge 3"}</Mi></p>
         <Mb>{"|2x-6| = 2x-6, \\quad |x^2-9| = x^2-9"}</Mb>
         <Mb>{"2x-6-(x^2-9) < 0 \\quad \\Longleftrightarrow \\quad -x^2+2x+3 < 0 \\quad \\Longleftrightarrow \\quad x^2-2x-3 > 0"}</Mb>
         <Mb>{"(x-3)(x+1) > 0"}</Mb>
-        <p>Na <Mi>{"x>3"}</Mi> czynnik <Mi>{"(x-3)"}</Mi> jest dodatni, więc wystarczy{" "}
-          <Mi>{"x+1>0"}</Mi>, co jest automatycznie spełnione. Stąd cały przedział{" "}
-          <Mi>{"(3,\\,+\\infty)"}</Mi>.</p>
+        <p>Dostajemy{" "}
+          <Mi>{"x \\in (3,\\,+\\infty)"}</Mi>.</p>
 
         <p className="font-semibold text-stone-800">Suma</p>
         <Mb>{"(-\\infty,\\,-5) \\cup (-1,\\,3) \\cup (3,\\,+\\infty)"}</Mb>
@@ -467,6 +429,30 @@ const tasks = [
             Odpowiedź: <Mi>{"x \\in (-\\infty,\\,-5) \\cup (-1,\\,3) \\cup (3,\\,+\\infty)"}</Mi>
           </p>
         </div>
+        <p className="font-semibold text-stone-800">Metoda skrócona (przez wyciągnięcie wspólnego czynnika)</p>
+        <p>Wyrażenia pod wartościami bezwzględnymi rozkładamy na czynniki:</p>
+        <Mb>{"|2x-6| < |x^2-9| \\quad \\Longleftrightarrow \\quad |2(x-3)| < |(x-3)(x+3)|"}</Mb>
+        <Mb>{"2\\,|x-3| < |x-3|\\, |x+3|"}</Mb>
+        <p>
+          Podstawmy <Mi>{"x = 3"}</Mi>: lewa strona daje{" "}
+          <Mi>{"|0|"}</Mi>, prawa także <Mi>{"0"}</Mi>, więc{" "}
+          <Mi>{"0 < 0"}</Mi> jest fałszywe. Punkt <Mi>{"3"}</Mi>{" "}
+          <strong>nie należy</strong> do zbioru rozwiązań.
+        </p>
+        <p>
+          Niech teraz <Mi>{"x \\neq 3"}</Mi>. Wtedy{" "}
+          <Mi>{"|x-3| > 0"}</Mi>, więc możemy obie strony podzielić przez ten czynnik, nie zmieniając
+          znaku nierówności:
+        </p>
+        <Mb>{"2 < |x+3|"}</Mb>
+        <p>To znaczy, że odległość <Mi>{"x"}</Mi> od <Mi>{"-3"}</Mi> jest większa niż{" "}
+          <Mi>{"2"}</Mi>, czyli:</p>
+        <Mb>{"x+3 > 2 \\quad \\text{lub} \\quad x+3 < -2"}</Mb>
+        <Mb>{"x > -1 \\quad \\text{lub} \\quad x < -5"}</Mb>
+        <p>Pamiętamy o wyłączeniu <Mi>{"x = 3"}</Mi> ze skrajnie prawego przedziału z pierwszego warunku.</p>
+        <FormulaBox>
+          <Mb>{"x \\in (-\\infty,\\,-5) \\cup (-1,\\,3) \\cup (3,\\,+\\infty) \\quad \\square"}</Mb>
+        </FormulaBox>
       </div>
     ),
   },
