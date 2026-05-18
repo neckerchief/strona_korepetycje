@@ -1,11 +1,163 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
+import { TaskCard, Mi, Mb, FormulaBox, SideWork } from "../_components";
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_CKE_CZERWIEC_2025_DOD =
+  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+
 const tasks = [
+  {
+    id: "cke-2025-czerwiec-dod-zad5-vieta",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "5",
+    points: "0–4",
+    instruction: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">
+          Wyznacz wszystkie wartości parametru <Mi>{"m"}</Mi>, dla których równanie
+        </p>
+        <div className="text-center">
+          <Mb>{"x^2 + 2mx + 2m - 1 = 0"}</Mb>
+        </div>
+        <p className="font-semibold text-stone-800">
+          ma dwa różne rozwiązania rzeczywiste <Mi>{"x_1,\\ x_2"}</Mi> spełniające warunek
+        </p>
+        <div className="text-center">
+          <Mb>{"m(x_1^2 + x_2^2) = 3m \\cdot x_1 \\cdot x_2 + 2"}</Mb>
+        </div>
+        <p className="font-semibold text-stone-800">Zapisz obliczenia.</p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    mathBlock2: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"m = 2"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Dwa różne pierwiastki rzeczywiste oznaczają <Mi>{"\\Delta > 0"}</Mi> dla trójmianu{" "}
+          <Mi>{"x^2 + 2mx + 2m - 1"}</Mi>.
+        </p>
+        <p>
+          Z wzorów Viète'a zapisz <Mi>{"x_1 + x_2"}</Mi> i <Mi>{"x_1 x_2"}</Mi> przez <Mi>{"m"}</Mi>, a sumę
+          kwadratów zamień na:
+        </p>
+        <FormulaBox>
+          <Mb>{"x_1^2 + x_2^2 = (x_1 + x_2)^2 - 2x_1 x_2"}</Mb>
+        </FormulaBox>
+        <p>
+          Podstaw do warunku z treści zadania, uprość i rozwiąż równanie na <Mi>{"m"}</Mi>. Na końcu weź tylko
+          te wartości, które spełniają oba warunki.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Warunek na dwa różne pierwiastki rzeczywiste</p>
+        <p>
+          Dla równania <Mi>{"x^2 + 2mx + 2m - 1 = 0"}</Mi> mamy <Mi>{"a = 1"}</Mi>, <Mi>{"b = 2m"}</Mi>,{" "}
+          <Mi>{"c = 2m - 1"}</Mi>. Dwa różne rozwiązania rzeczywiste wymagają dodatniej delty:
+        </p>
+        <Mb>{"\\Delta = b^2 - 4ac = (2m)^2 - 4(2m - 1) = 4m^2 - 8m + 4 = 4(m - 1)^2"}</Mb>
+        <Mb>{"\\Delta > 0 \\quad \\Leftrightarrow \\quad 4(m - 1)^2 > 0 \\quad \\Leftrightarrow \\quad m \\neq 1"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Wzory Viète'a</p>
+        <p>
+          Oznaczmy pierwiastki przez <Mi>{"x_1"}</Mi> i <Mi>{"x_2"}</Mi>. Dla trójmianu{" "}
+          <Mi>{"ax^2 + bx + c = 0"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"x_1 + x_2 = -\\frac{b}{a} = -2m, \\qquad x_1 x_2 = \\frac{c}{a} = 2m - 1"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 3. Suma kwadratów przez Viète'a</p>
+        <p>
+          W warunku występuje <Mi>{"x_1^2 + x_2^2"}</Mi>. Korzystamy z tożsamości:
+        </p>
+        <FormulaBox>
+          <Mb>{"x_1^2 + x_2^2 = (x_1 + x_2)^2 - 2x_1 x_2"}</Mb>
+        </FormulaBox>
+        <Mb>
+          {"x_1^2 + x_2^2 = (-2m)^2 - 2(2m - 1) = 4m^2 - 4m + 2"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Równanie na parametr <Mi>{"m"}</Mi></p>
+        <p>Warunek z treści zadania:</p>
+        <Mb>{"m(x_1^2 + x_2^2) = 3m \\cdot x_1 \\cdot x_2 + 2"}</Mb>
+        <p>Podstawiamy wyrażenia z kroku 3:</p>
+        <Mb>{"m(4m^2 - 4m + 2) = 3m(2m - 1) + 2"}</Mb>
+        <Mb>{"4m^3 - 4m^2 + 2m = 6m^2 - 3m + 2"}</Mb>
+        <Mb>{"4m^3 - 10m^2 + 5m - 2 = 0"}</Mb>
+        <p>
+          Szukamy pierwiastka całkowitego. Dla <Mi>{"m = 2"}</Mi> lewa strona równa się zero, więc{" "}
+          <Mi>{"m - 2"}</Mi> jest czynnikiem. Dzieląc wielomian otrzymujemy:
+        </p>
+
+        <div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
+          <div className="flex-1 min-w-0 space-y-3">
+            <Mb>{"4m^3 - 10m^2 + 5m - 2 = (m - 2)(4m^2 - 2m + 1)"}</Mb>
+          </div>
+          <SideWork
+            className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0"
+            title="Dzielenie wielomianów"
+          >
+            <Mb>
+              {[
+                "\\begin{aligned}",
+                "& \\underline{\\hspace{0.1em}4m^2-2m+1\\hspace{4.1em}} \\\\[0.25em]",
+                "& (4m^3-10m^2+5m-2):(m-2) \\\\[0.45em]",
+                "& \\underline{-(4m^3-8m^2)\\hspace{2.8em}} \\\\[0.25em]",
+                "& \\hspace{1.5em}-2m^2+5m-2 \\\\[0.45em]",
+                "& \\hspace{1.5em}\\underline{-(-2m^2+4m)\\hspace{1.25em}} \\\\[0.25em]",
+                "& \\hspace{3em}m-2 \\\\[0.45em]",
+                "& \\hspace{3em}\\underline{-(m-2)} \\\\[0.25em]",
+                "& \\hspace{4.5em}0",
+                "\\end{aligned}",
+              ].join("")}
+            </Mb>
+          </SideWork>
+        </div>
+
+        <p>
+          Trójmian <Mi>{"4m^2 - 2m + 1"}</Mi> ma deltę <Mi>{"\\Delta = (-2)^2 - 4 \\cdot 4 \\cdot 1 = -12 < 0"}</Mi>, więc
+          nie ma pierwiastków rzeczywistych. Stąd z warunku algebraicznego:
+        </p>
+        <Mb>{"m = 2"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Sprawdzenie warunku z kroku 1</p>
+        <p>
+          Dla <Mi>{"m = 2"}</Mi> mamy <Mi>{"m \\neq 1"}</Mi>, więc <Mi>{"\\Delta > 0"}</Mi> i równanie ma dwa
+          różne pierwiastki rzeczywiste.
+        </p>
+        <p>
+          Równanie przyjmuje postać <Mi>{"x^2 + 4x + 3 = 0"}</Mi>, czyli <Mi>{"(x+1)(x+3) = 0"}</Mi>, skąd{" "}
+          <Mi>{"x_1 = -1"}</Mi>, <Mi>{"x_2 = -3"}</Mi> (lub odwrotnie).
+        </p>
+        <Mb>
+          {"m(x_1^2 + x_2^2) = 2(1 + 9) = 20, \\qquad 3m \\cdot x_1 \\cdot x_2 + 2 = 3 \\cdot 2 \\cdot 3 + 2 = 20"}
+        </Mb>
+        <p>Warunek jest spełniony.</p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"m = 2"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "smwp-2026-styczen-zad9",
     source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",

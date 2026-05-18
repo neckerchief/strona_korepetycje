@@ -9,7 +9,263 @@ import { TaskCard, SubTask, Mi, Mb, FormulaBox } from "../_components";
 const SOURCE_CKE_F2023 =
   "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
 
+const SOURCE_CKE_CZERWIEC_2025_DOD =
+  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+
 const tasks = [
+  {
+    id: "cke-2025-czerwiec-dod-zad4-trapez",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "4",
+    points: "0–3",
+    instruction: (
+      <div className="space-y-4">
+        <p>
+          Dany jest prostokąt <Mi>{"ABCD"}</Mi>, w którym <Mi>{"|AB| = 2 \\cdot |AD|"}</Mi>. Na bokach{" "}
+          <Mi>{"AB"}</Mi>, <Mi>{"BC"}</Mi>, <Mi>{"CD"}</Mi> i <Mi>{"DA"}</Mi> tego prostokąta wybrano odpowiednio
+          punkty <Mi>{"K"}</Mi>, <Mi>{"L"}</Mi>, <Mi>{"M"}</Mi> i <Mi>{"N"}</Mi> (każdy z tych punktów leży na
+          dokładnie jednym boku prostokąta <Mi>{"ABCD"}</Mi>). Czworokąt <Mi>{"KLMN"}</Mi> jest trapezem
+          prostokątnym (zobacz rysunek), a wysokość <Mi>{"LM"}</Mi> tego trapezu jest równoległa do przekątnej{" "}
+          <Mi>{"BD"}</Mi> prostokąta.
+        </p>
+        <figure className="flex flex-col items-center mx-auto w-[40%] max-w-full font-normal">
+          <Image
+            src="/matura/planimetria_cke_czerwiec_4.png"
+            alt="Prostokąt ABCD z punktami K, L, M, N na bokach; czworokąt KLMN jest trapezem prostokątnym, LM równoległe do BD"
+            width={520}
+            height={380}
+            className="w-full h-auto rounded-lg border border-[#c4a8e8] bg-white"
+          />
+        </figure>
+        <p className="font-semibold">
+          Wykaż, że stosunek pola trójkąta <Mi>{"MDN"}</Mi> do pola trójkąta <Mi>{"KBL"}</Mi> jest równy{" "}
+          <Mi>{"16"}</Mi>.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Niech <Mi>{"|AD| = a"}</Mi>, więc <Mi>{"|AB| = |CD| = 2a"}</Mi> i <Mi>{"|BC| = a"}</Mi>. W trójkącie{" "}
+          <Mi>{"ABD"}</Mi> (z przekątnej prostokąta) oznacz kąt przy <Mi>{"D"}</Mi> jako <Mi>{"\\alpha"}</Mi>.
+        </p>
+        <p>
+          Z równoległości <Mi>{"LM \\parallel BD"}</Mi> i kątów prostych trapezu pokaż podobieństwa:{" "}
+          <Mi>{"\\triangle ABD \\sim \\triangle DMN \\sim \\triangle MCL \\sim \\triangle KBL"}</Mi>, ze
+          stosunkiem przyprostokątnych <Mi>{"2 : 1"}</Mi> (jak boki <Mi>{"AB"}</Mi> i <Mi>{"AD"}</Mi>).
+        </p>
+        <p>
+          Przyjmij <Mi>{"|DM| = x"}</Mi> i wyraź pozostałe odcinki przez <Mi>{"a"}</Mi> i <Mi>{"x"}</Mi>, potem
+          policz pola <Mi>{"\\triangle MDN"}</Mi> i <Mi>{"\\triangle KBL"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Oznaczenia i trójkąt z przekątnej</p>
+        <p>
+          Niech <Mi>{"|AD| = a"}</Mi>. Z warunku <Mi>{"|AB| = 2 \\cdot |AD|"}</Mi> mamy{" "}
+          <Mi>{"|AB| = |CD| = 2a"}</Mi> oraz <Mi>{"|BC| = a"}</Mi>.
+        </p>
+        <p>
+          Rozpatrzmy trójkąt prostokątny <Mi>{"ABD"}</Mi> (kąt prosty przy <Mi>{"A"}</Mi>). Oznaczmy
+        </p>
+        <Mb>{"\\alpha = \\angle ADB"}</Mb>
+        <p>
+          Wtedy <Mi>{"\\angle ABD = 90° - \\alpha"}</Mi> oraz, bo <Mi>{"|AB| = 2a"}</Mi> i <Mi>{"|AD| = a"}</Mi>:
+        </p>
+        <Mb>{"\\tg \\alpha = \\frac{|AB|}{|AD|} = 2"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Kąty w trójkącie <Mi>{"DMN"}</Mi></p>
+        <p>
+          Z rysunku trapezu prostokątnego <Mi>{"KLMN"}</Mi> wynika, że <Mi>{"\\angle NML = 90°"}</Mi> (wysokość{" "}
+          <Mi>{"LM"}</Mi> prostopadła do podstawy <Mi>{"NM"}</Mi>). Ponieważ <Mi>{"LM \\parallel BD"}</Mi>, odpowiednie
+          kąty przy prostych równoległych są równe, więc układ kątów w trójkącie <Mi>{"DMN"}</Mi> jest taki sam jak w
+          trójkącie <Mi>{"ABD"}</Mi> złożonym z przekątnej:
+        </p>
+        <Mb>{"\\angle DNM = \\alpha, \\qquad \\angle DMN = 90° - \\alpha"}</Mb>
+        <p>
+          (kąt prosty trapezu przy <Mi>{"M"}</Mi> odpowiada kątowi prostemu przy <Mi>{"A"}</Mi> w trójkącie{" "}
+          <Mi>{"ABD"}</Mi>).
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Podobieństwa trójkątów przy rogach</p>
+        <p>
+          Z równoległości <Mi>{"LM \\parallel BD"}</Mi> i powyższych kątów wynika, że trójkąty „wycięte” w rogach
+          prostokąta są podobne do <Mi>{"\\triangle ABD"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\triangle ABD \\sim \\triangle DMN \\sim \\triangle MCL \\sim \\triangle KBL"}</Mb>
+        </FormulaBox>
+        <p>
+          W każdym z nich stosunek dłuższej przyprostej do krótszej jest taki jak w prostokącie, czyli{" "}
+          <Mi>{"2 : 1"}</Mi> (odpowiednik stosunku <Mi>{"|AB| : |AD|"}</Mi>).
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Długości odcinków</p>
+        <p>
+          Punkt <Mi>{"M"}</Mi> leży na <Mi>{"CD"}</Mi>, punkt <Mi>{"N"}</Mi> na <Mi>{"DA"}</Mi>. Przyjmijmy
+        </p>
+        <Mb>{"|DM| = x, \\qquad |DN| = 2x"}</Mb>
+        <p>
+          (stosunek <Mi>{"2 : 1"}</Mi> jak przyprostokątnych w podobnym trójkącie <Mi>{"ABD"}</Mi>). Wtedy:
+        </p>
+        <Mb>{"|MC| = |CD| - |DM| = 2a - x"}</Mb>
+        <p>
+          Z podobieństwa <Mi>{"\\triangle MCL \\sim \\triangle ABD"}</Mi> przy wierzchołku <Mi>{"C"}</Mi> (krótsza
+          przyprostokątna to <Mi>{"|CL|"}</Mi>, dłuższa <Mi>{"|MC|"}</Mi>):
+        </p>
+        <Mb>{"|CL| = \\dfrac{|MC|}{2} = \\dfrac{2a - x}{2}"}</Mb>
+        <p>
+          Punkt <Mi>{"L"}</Mi> leży na <Mi>{"BC"}</Mi>, więc:
+        </p>
+        <Mb>{"|BL| = |BC| - |CL| = a - \\dfrac{2a - x}{2} = \\dfrac{x}{2}"}</Mb>
+        <p>
+          Z podobieństwa <Mi>{"\\triangle KBL \\sim \\triangle ABD"}</Mi> przy wierzchołku <Mi>{"B"}</Mi>:
+        </p>
+        <Mb>{"|KB| = \\dfrac{|BL|}{2} = \\dfrac{x}{4}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Pola trójkątów i stosunek</p>
+        <p>
+          Trójkąt <Mi>{"MDN"}</Mi> ma kąt prosty przy <Mi>{"D"}</Mi> (leży w rogu prostokąta), więc:
+        </p>
+        <Mb>{"P_{MDN} = \\dfrac{1}{2} \\cdot |DM| \\cdot |DN| = \\dfrac{1}{2} \\cdot x \\cdot 2x = x^2"}</Mb>
+        <p>
+          Trójkąt <Mi>{"KBL"}</Mi> ma kąt prosty przy <Mi>{"B"}</Mi>:
+        </p>
+        <Mb>{"P_{KBL} = \\dfrac{1}{2} \\cdot |KB| \\cdot |BL| = \\dfrac{1}{2} \\cdot \\dfrac{x}{4} \\cdot \\dfrac{x}{2} = \\dfrac{x^2}{16}"}</Mb>
+        <p>Stosunek pól:</p>
+        <Mb>
+          {"\\dfrac{P_{MDN}}{P_{KBL}} = \\dfrac{x^2}{\\dfrac{x^2}{16}} = 16 \\quad \\blacksquare"}
+        </Mb>
+      </div>
+    ),
+  },
+
+  {
+    id: "cke-2025-czerwiec-dod-zad7-czworokat-opisany",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "7",
+    points: "0–4",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Na czworokącie wypukłym <Mi>{"ABCD"}</Mi> o bokach długości: <Mi>{"|AB| = 3"}</Mi>,{" "}
+          <Mi>{"|BC| = 3"}</Mi>, <Mi>{"|CD| = 5"}</Mi> oraz <Mi>{"|DA| = 8"}</Mi>, opisano okrąg.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Oblicz promień tego okręgu. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"R = \\dfrac{7\\sqrt{3}}{3}"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Znasz wszystkie cztery boki. Narysuj jedną przekątną (np. <Mi>{"AC"}</Mi>) i rozłóż czworokąt na dwa
+          trójkąty.
+        </p>
+        <p>
+          Czworokąt wpisany w okrąg jest cykliczny: kąty naprzeciwległe sumują się do{" "}
+          <Mi>{"180°"}</Mi>, więc cosinusy tych kątów przeciwnych znaków (<Mi>{"\\cos(180° - \\alpha) = -\\cos(\\alpha)"}</Mi>). W obu trójkątach zapisz
+          twierdzenie cosinusów z tą samą przekątną i wyznacz cosinus jednego z kątów (oraz długość
+          przekątnej).
+        </p>
+        <FormulaBox>
+          <Mb>{"c^2 = a^2 + b^2 - 2ab\\cos\\gamma"}</Mb>
+        </FormulaBox>
+        <p>
+          Potem wybierz trójkąt złożony z dwóch boków i tej przekątnej (np.{" "}
+          <Mi>{"\\triangle ABC"}</Mi>) i skorzystaj z twierdzenia sinusów: wierzchołki tego trójkąta leżą na
+          tym samym okręgu co cały czworokąt, więc{" "}
+          <Mi>{"\\dfrac{a}{\\sin\\alpha} = 2R"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Przekątna i własność czworokąta cyklicznego</p>
+        <p>
+          Czworokąt <Mi>{"ABCD"}</Mi> jest wpisany w okrąg, więc jest cykliczny. Kąty naprzeciwległe sumują
+          się do <Mi>{"180°"}</Mi>:
+        </p>
+        <Mb>{"\\angle ABC + \\angle ADC = 180°"}</Mb>
+        <p>
+          Stąd <Mi>{"\\cos(\\angle ADC) = -\\cos(\\angle ABC)"}</Mi>. Oznaczmy przekątną{" "}
+          <Mi>{"f = |AC|"}</Mi> i <Mi>{"c = \\cos(\\angle ABC)"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Twierdzenie cosinusów w obu trójkątach</p>
+        <p>W trójkącie <Mi>{"ABC"}</Mi> (boki <Mi>{"3"}</Mi>, <Mi>{"3"}</Mi> i przekątna <Mi>{"f"}</Mi>):</p>
+        <FormulaBox>
+          <Mb>{"c^2 = a^2 + b^2 - 2ab\\cos\\gamma"}</Mb>
+        </FormulaBox>
+        <Mb>{"f^2 = 3^2 + 3^2 - 2 \\cdot 3 \\cdot 3 \\cdot c = 18 - 18c"}</Mb>
+        <p>W trójkącie <Mi>{"ADC"}</Mi> (boki <Mi>{"8"}</Mi>, <Mi>{"5"}</Mi> i ta sama przekątna <Mi>{"f"}</Mi>):</p>
+        <Mb>{"f^2 = 8^2 + 5^2 - 2 \\cdot 8 \\cdot 5 \\cdot \\cos(\\angle ADC) = 89 - 80\\cos(\\angle ADC)"}</Mb>
+        <p>
+          Podstawiamy <Mi>{"\\cos(\\angle ADC) = -c"}</Mi>:
+        </p>
+        <Mb>{"f^2 = 89 + 80c"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Długość przekątnej i cosinus kąta</p>
+        <p>Przyrównujemy oba wyrażenia na <Mi>{"f^2"}</Mi>:</p>
+        <Mb>{"18 - 18c = 89 + 80c \\quad \\Rightarrow \\quad 98c = -71 \\quad \\Rightarrow \\quad c = -\\dfrac{71}{98}"}</Mb>
+        <Mb>{"f^2 = 18 - 18 \\cdot \\left(-\\dfrac{71}{98}\\right) = 18 + \\dfrac{1278}{98} = \\dfrac{1521}{49} \\quad \\Rightarrow \\quad f = \\dfrac{39}{7}"}</Mb>
+        <p>
+          (bo <Mi>{"f > 0"}</Mi>).
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Twierdzenie sinusów i promień okręgu</p>
+        <p>
+          Trójkąt <Mi>{"ABC"}</Mi> ma wierzchołki na okręgu opisanym na <Mi>{"ABCD"}</Mi>, więc dla tego
+          trójkąta obowiązuje:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\dfrac{a}{\\sin\\alpha} = 2R"}</Mb>
+        </FormulaBox>
+        <p>
+          Bierzemy bok <Mi>{"f = |AC|"}</Mi> i kąt naprzeciwko niego, czyli <Mi>{"\\angle ABC"}</Mi>:
+        </p>
+        <Mb>{"2R = \\dfrac{f}{\\sin(\\angle ABC)}"}</Mb>
+        <p>
+          Mamy <Mi>{"\\cos(\\angle ABC) = -\\dfrac{71}{98}"}</Mi>. Korzystając z jedynki trygonometrycznej, obliczamy sinus kąta <Mi>{"\\angle ABC"}</Mi>:
+        </p>
+        <Mb>
+          {"\\sin^2(\\angle ABC) = 1 - \\cos^2(\\angle ABC) = 1 - \\dfrac{5041}{9604} = \\dfrac{4563}{9604}"}
+        </Mb>
+        <Mb>{"\\sin(\\angle ABC) = \\dfrac{\\sqrt{4563}}{98} = \\dfrac{39\\sqrt{3}}{98}"}</Mb>
+        <p>(kąt <Mi>{"\\angle ABC"}</Mi> jest rozwarty, więc sinus jest dodatni).</p>
+        <Mb>
+          {"2R = \\dfrac{\\dfrac{39}{7}}{\\dfrac{39\\sqrt{3}}{98}} = \\dfrac{39}{7} \\cdot \\dfrac{98}{39\\sqrt{3}} = \\dfrac{14}{\\sqrt{3}} = \\dfrac{14\\sqrt{3}}{3}"}
+        </Mb>
+        <Mb>{"R = \\dfrac{7\\sqrt{3}}{3}"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"R = \\dfrac{7\\sqrt{3}}{3}"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2026-formula2023-maj-zad4-kwadrat",
     source: SOURCE_CKE_F2023,

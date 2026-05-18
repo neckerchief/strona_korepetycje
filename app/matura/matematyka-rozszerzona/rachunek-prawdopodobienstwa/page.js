@@ -5,10 +5,131 @@ import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_CKE_CZERWIEC_2025_DOD =
+  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+
 const SOURCE_CKE_F2023 =
   "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
 
 const tasks = [
+  {
+    id: "cke-2025-czerwiec-dod-zad1-bernoulli",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "1",
+    points: "0–3",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Sklep AGD prowadzi sprzedaż wysyłkową pralek. Prawdopodobieństwo uszkodzenia podczas transportu
+          pralki wysłanej przez ten sklep do klienta jest równe <Mi>{"0{,}02"}</Mi>.
+        </p>
+        <p>
+          Oblicz prawdopodobieństwo zdarzenia <Mi>{"A"}</Mi> polegającego na tym, że spośród{" "}
+          <Mi>{"10"}</Mi> pralek wysłanych dziesięciu klientom przez ten sklep <strong>co najwyżej jedna</strong>{" "}
+          ulegnie uszkodzeniu podczas transportu. Wynik zapisz w postaci ułamka dziesiętnego w zaokrągleniu do
+          części tysięcznych. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"P(A) \\approx 0{,}984"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Każda pralka to niezależna próba z dwoma wynikami: uszkodzenie (prawdopodobieństwo{" "}
+          <Mi>{"p = 0{,}02"}</Mi>) lub brak uszkodzenia (<Mi>{"q = 1 - p = 0{,}98"}</Mi>). Masz{" "}
+          <Mi>{"n = 10"}</Mi> takich prób, więc to <strong>schemat Bernoulliego</strong>.
+        </p>
+        <p>
+          „Co najwyżej jedna” uszkodzona oznacza: albo <Mi>{"0"}</Mi>, albo dokładnie <Mi>{"1"}</Mi> uszkodzona
+          pralka:
+        </p>
+        <Mb>{"P(A) = P_{10}(0) + P_{10}(1)"}</Mb>
+        <p>Wzór na prawdopodobieństwo dokładnie <Mi>{"k"}</Mi> sukcesów w <Mi>{"n"}</Mi> próbach:</p>
+        <FormulaBox>
+          <Mb>{"P_n(k) = \\binom{n}{k} \\cdot p^k \\cdot q^{n-k}"}</Mb>
+        </FormulaBox>
+        <p>
+          Tu „sukces” to uszkodzenie w transporcie. Policz <Mi>{"P_{10}(0)"}</Mi> i <Mi>{"P_{10}(1)"}</Mi>, dodaj
+          wyniki i zaokrąglij do trzech miejsc po przecinku.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Rozpoznajemy schemat Bernoulliego</p>
+        <p>
+          Wysyłamy <Mi>{"n = 10"}</Mi> pralek. Dla każdej pralki transport jest osobną, niezależną próbą z dwoma
+          wynikami: uszkodzenie (prawdopodobieństwo <Mi>{"p = 0{,}02"}</Mi>) lub brak uszkodzenia (
+          <Mi>{"q = 1 - p = 0{,}98"}</Mi>). To jest schemat Bernoulliego.
+        </p>
+        <p>
+          Niech <Mi>{"X"}</Mi> oznacza liczbę uszkodzonych pralek spośród dziesięciu. Zdarzenie{" "}
+          <Mi>{"A"}</Mi> („co najwyżej jedna uszkodzona”) to:
+        </p>
+        <Mb>{"A = \\{X = 0\\} \\cup \\{X = 1\\}"}</Mb>
+        <p>
+          Zdarzenia <Mi>{"\\{X=0\\}"}</Mi> i <Mi>{"\\{X=1\\}"}</Mi> są rozłączne, więc:
+        </p>
+        <Mb>{"P(A) = P(X=0) + P(X=1) = P_{10}(0) + P_{10}(1)"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Schemat Bernoulliego</p>
+        <p>
+          Prawdopodobieństwo dokładnie <Mi>{"k"}</Mi> sukcesów (tu: uszkodzeń) w <Mi>{"n"}</Mi> próbach Bernoulliego:
+        </p>
+        <FormulaBox>
+          <Mb>{"P_n(k) = \\binom{n}{k} \\cdot p^k \\cdot q^{n-k}"}</Mb>
+        </FormulaBox>
+        <p>
+          Symbol <Mi>{"\\binom{n}{k}"}</Mi> to liczba sposobów wyboru <Mi>{"k"}</Mi> pralek spośród{" "}
+          <Mi>{"n"}</Mi>, które ulegną uszkodzeniu (pozostałe będą sprawne).
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Prawdopodobieństwo, że żadna pralka nie ulegnie uszkodzeniu</p>
+        <p>
+          Dla <Mi>{"k = 0"}</Mi> mamy <Mi>{"\\binom{10}{0} = 1"}</Mi> oraz <Mi>{"p^0 = 1"}</Mi>:
+        </p>
+        <Mb>
+          {"P_{10}(0) = \\binom{10}{0} \\cdot 0{,}02^0 \\cdot 0{,}98^{10} = 1 \\cdot 1 \\cdot 0{,}98^{10} = 0{,}98^{10}"}
+        </Mb>
+        <Mb>{"0{,}98^{10} \\approx 0{,}817073"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Prawdopodobieństwo, że dokładnie jedna pralka ulegnie uszkodzeniu</p>
+        <p>
+          Dla <Mi>{"k = 1"}</Mi> mamy <Mi>{"\\binom{10}{1} = 10"}</Mi> (wybieramy, która z dziesięciu pralek jest
+          uszkodzona):
+        </p>
+        <Mb>
+          {"P_{10}(1) = \\binom{10}{1} \\cdot 0{,}02^1 \\cdot 0{,}98^{9} = 10 \\cdot 0{,}02 \\cdot 0{,}98^{9}"}
+        </Mb>
+        <Mb>{"= 0{,}2 \\cdot 0{,}98^{9} \\approx 0{,}2 \\cdot 0{,}833748 \\approx 0{,}166750"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Sumujemy i zaokrąglamy</p>
+        <Mb>{"P(A) = P_{10}(0) + P_{10}(1) \\approx 0{,}817073 + 0{,}166750 = 0{,}983823"}</Mb>
+        <p>
+          Zadanie wymaga ułamka dziesiętnego zaokrąglonego do <strong>części tysięcznych</strong> (trzecia cyfra po
+          przecinku). Cyfra czwarta to <Mi>{"8 \\geq 5"}</Mi>, więc zaokrąglamy w górę:
+        </p>
+        <Mb>{"P(A) \\approx 0{,}984"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"P(A) \\approx 0{,}984"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2026-formula2023-maj-zad2-prawdopodobienstwo",
     source: SOURCE_CKE_F2023,

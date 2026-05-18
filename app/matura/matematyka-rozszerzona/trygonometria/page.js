@@ -5,7 +5,114 @@ import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_CKE_CZERWIEC_2025_DOD =
+  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+
 const tasks = [
+  {
+    id: "cke-2025-czerwiec-dod-zad6-rownanie-cos",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "6",
+    points: "0–4",
+    instruction: <span>Rozwiąż równanie</span>,
+    mathBlock: "\\cos 2x + 2\\cos^2 3x + \\cos 4x = 0",
+    noteItems: [
+      { text: "w przedziale " },
+      { math: "[0,\\,\\pi]" },
+      { text: ". Zapisz obliczenia." },
+    ],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>
+          {"x \\in \\left\\{\\dfrac{\\pi}{6},\\;\\dfrac{\\pi}{4},\\;\\dfrac{\\pi}{2},\\;\\dfrac{3\\pi}{4},\\;\\dfrac{5\\pi}{6}\\right\\}"}
+        </Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Dodaj do siebie <Mi>{"\\cos 2x"}</Mi> i <Mi>{"\\cos 4x"}</Mi> wzorem na sumę cosinusów:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\cos\\alpha + \\cos\\beta = 2\\cos\\frac{\\alpha+\\beta}{2}\\cos\\frac{\\alpha-\\beta}{2}"}</Mb>
+        </FormulaBox>
+        <p>
+          Wyłącz wspólny czynnik i zrób to samo jeszcze raz dla sumy cosinusów, która się pojawi w nawiasie.
+          Resztę rozwiążesz z równania iloczynowego <Mi>{"\\cdots = 0"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">
+          Krok 1. Łączymy <Mi>{"\\cos 2x"}</Mi> i <Mi>{"\\cos 4x"}</Mi>
+        </p>
+        <FormulaBox>
+          <Mb>{"\\cos\\alpha + \\cos\\beta = 2\\cos\\frac{\\alpha+\\beta}{2}\\cos\\frac{\\alpha-\\beta}{2}"}</Mb>
+        </FormulaBox>
+        <Mb>
+          {"\\cos 2x + \\cos 4x = 2\\cos\\frac{2x+4x}{2}\\cos\\frac{2x-4x}{2} = 2\\cos 3x \\cdot \\cos(-x) = 2\\cos 3x \\cos x"}
+        </Mb>
+        <p>Równanie przyjmuje postać:</p>
+        <Mb>{"2\\cos 3x \\cos x + 2\\cos^2 3x = 0"}</Mb>
+        <Mb>{"2\\cos 3x\\,(\\cos x + \\cos 3x) = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Drugie użycie wzoru na sumę cosinusów</p>
+        <p>
+          W nawiasie znowu mamy sumę cosinusów, więc:
+        </p>
+        <Mb>
+          {"\\cos x + \\cos 3x = 2\\cos\\frac{x+3x}{2}\\cos\\frac{x-3x}{2} = 2\\cos 2x \\cdot \\cos(-x) = 2\\cos 2x \\cos x"}
+        </Mb>
+        <p>Całe równanie:</p>
+        <Mb>{"2\\cos 3x \\cdot 2\\cos 2x \\cos x = 0"}</Mb>
+        <Mb>{"4\\cos x \\cos 2x \\cos 3x = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Rozwiązujemy równanie iloczynowe</p>
+        <p>
+          Iloczyn jest zerem, gdy któryś z czynników jest zerem.
+        </p>
+        <p className="font-medium text-stone-700">
+          <Mi>{"\\cos x = 0"}</Mi> → <Mi>{"x = \\dfrac{\\pi}{2} + k\\pi"}</Mi>. W <Mi>{"[0,\\pi]"}</Mi>:{" "}
+          <Mi>{"x = \\dfrac{\\pi}{2}"}</Mi>.
+        </p>
+        <p className="font-medium text-stone-700">
+          <Mi>{"\\cos 2x = 0"}</Mi> → <Mi>{"2x = \\dfrac{\\pi}{2} + k\\pi"}</Mi>, czyli{" "}
+          <Mi>{"x = \\dfrac{\\pi}{4} + \\dfrac{k\\pi}{2}"}</Mi>. W <Mi>{"[0,\\pi]"}</Mi>:{" "}
+          <Mi>{"x = \\dfrac{\\pi}{4}"}</Mi>, <Mi>{"x = \\dfrac{3\\pi}{4}"}</Mi>.
+        </p>
+        <p className="font-medium text-stone-700">
+          <Mi>{"\\cos 3x = 0"}</Mi> → <Mi>{"3x = \\dfrac{\\pi}{2} + k\\pi"}</Mi>, czyli{" "}
+          <Mi>{"x = \\dfrac{\\pi}{6} + \\dfrac{k\\pi}{3}"}</Mi>. W <Mi>{"[0,\\pi]"}</Mi>:{" "}
+          <Mi>{"x = \\dfrac{\\pi}{6}"}</Mi>, <Mi>{"x = \\dfrac{\\pi}{2}"}</Mi>, <Mi>{"x = \\dfrac{5\\pi}{6}"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Zbiór rozwiązań w przedziale</p>
+        <p>
+          Łączymy wszystkie wartości z <Mi>{"[0,\\pi]"}</Mi> (bez powtórzeń):
+        </p>
+        <FormulaBox>
+          <Mb>
+            {"x \\in \\left\\{\\dfrac{\\pi}{6},\\;\\dfrac{\\pi}{4},\\;\\dfrac{\\pi}{2},\\;\\dfrac{3\\pi}{4},\\;\\dfrac{5\\pi}{6}\\right\\}"}
+          </Mb>
+        </FormulaBox>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź:{" "}
+            <Mi>
+              {"x \\in \\left\\{\\dfrac{\\pi}{6},\\;\\dfrac{\\pi}{4},\\;\\dfrac{\\pi}{2},\\;\\dfrac{3\\pi}{4},\\;\\dfrac{5\\pi}{6}\\right\\}"}
+            </Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "smwp-2026-styczen-zad2",
     source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",

@@ -5,7 +5,246 @@ import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_CKE_CZERWIEC_2025_DOD =
+  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+
 const tasks = [
+  {
+    id: "cke-2025-czerwiec-dod-zad2-logarytmy-dowod",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "2",
+    points: "0–3",
+    instruction: (
+      <span>
+        Wykaż, że jeżeli <Mi>{"a = \\log_2 14"}</Mi> oraz <Mi>{"b = \\log_{\\sqrt{2}} 27"}</Mi>, to{" "}
+        <Mi>{"\\log_7 54 = \\dfrac{b + 2}{2a - 2}"}</Mi>.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Najpierw zapisz <Mi>{"b"}</Mi> jako logarytm o podstawie <Mi>{"2"}</Mi> wyłącznie wzorem na zamianę
+          podstawy. Potem uprość <strong>prawą</strong> stronę tezy{" "}
+          <Mi>{"\\dfrac{b + 2}{2a - 2}"}</Mi>.
+        </p>
+        <FormulaBox>
+          <p className="text-stone-500 text-xs mb-1">
+            jeżeli <Mi>{"a > 0,\\ a \\neq 1"}</Mi> oraz <Mi>{"c > 0"}</Mi>, to:
+          </p>
+          <Mb>{"\\log_b c = \\frac{\\log_a c}{\\log_a b}"}</Mb>
+        </FormulaBox>
+        <p>
+          W liczniku i mianowniku podstaw <Mi>{"a = \\log_2 14"}</Mi> oraz uproszczone <Mi>{"b"}</Mi>. Przydatne
+          fakty: <Mi>{"2 = \\log_2 4"}</Mi>, <Mi>{"1 = \\log_2 2"}</Mi>, a także suma i różnica logarytmów jako
+          iloczyn i iloraz argumentów. Gdy ułamek się uprości, rozpoznasz ten sam wzór zamiany podstawy co dla{" "}
+          <Mi>{"\\log_7 54"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">
+          Krok 1. Zamiana podstawy w <Mi>{"b"}</Mi>
+        </p>
+        <p>
+          Dla <Mi>{"b = \\log_{\\sqrt{2}} 27"}</Mi> przechodzimy na podstawę <Mi>{"2"}</Mi>:
+        </p>
+        <FormulaBox>
+          <p className="text-stone-500 text-xs mb-1">
+            jeżeli <Mi>{"a > 0,\\ a \\neq 1"}</Mi> oraz <Mi>{"c > 0"}</Mi>, to:
+          </p>
+          <Mb>{"\\log_b c = \\frac{\\log_a c}{\\log_a b}"}</Mb>
+        </FormulaBox>
+        <Mb>
+          {"b = \\log_{\\sqrt{2}} 27 = \\frac{\\log_2 27}{\\log_2 \\sqrt{2}} = \\frac{\\log_2 27}{\\log_2(2^{1/2})} = \\frac{\\log_2 27}{\\tfrac{1}{2}} = 2\\log_2 27"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Upraszczamy prawą stronę tezy</p>
+        <p>
+          Teza mówi, że <Mi>{"\\log_7 54 = \\dfrac{b + 2}{2a - 2}"}</Mi>. Zaczynamy od prawej strony i
+          podstawiamy <Mi>{"a = \\log_2 14"}</Mi> oraz <Mi>{"b = 2\\log_2 27"}</Mi> z kroku 1.
+        </p>
+        <p>
+          Przydatne równości (definicja logarytmu): <Mi>{"1 = \\log_2 2"}</Mi>.
+          Korzystamy też ze wzorów:
+        </p>
+        <Mb>{"\\log_a x + \\log_a y = \\log_a(xy), \\qquad \\log_a x - \\log_a y = \\log_a\\dfrac{x}{y}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Licznik <Mi>{"b + 2"}</Mi></p>
+        <Mb>{"b + 2 = 2\\log_2 27 + 2 = 2\\bigl(\\log_2 27 + 1\\bigr)"}</Mb>
+        <p>
+          W nawiasie zamieniamy <Mi>{"1"}</Mi> na <Mi>{"\\log_2 2"}</Mi> i stosujemy wzór na sumę logarytmów:
+        </p>
+        <Mb>
+          {"\\log_2 27  + \\log_2 2 = \\log_2(27 \\cdot 2) = \\log_2 54"}
+        </Mb>
+        <p>Stąd:</p>
+        <Mb>{"b + 2 = 2\\log_2 54"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Mianownik <Mi>{"2a - 2"}</Mi></p>
+        <Mb>{"2a - 2 = 2\\log_2 14 - 2 = 2\\bigl(\\log_2 14 - 1\\bigr)"}</Mb>
+        <p>
+          Liczbę <Mi>{"1"}</Mi> w ostatnim składniku zapisujemy jako <Mi>{"\\log_2 1"}</Mi>. Różnica logarytmów to logarytm ilorazu:</p>
+        <Mb>
+          {"a - 1 = \\log_2 14 - \\log_2 2= \\log_2\\dfrac{14}{2} = \\log_2 7"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Ułamek i zamiana podstawy</p>
+        <Mb>
+          {"\\dfrac{b + 2}{2a - 2} = \\dfrac{2\\log_2 54}{2\\log_2 7} = \\dfrac{\\log_2 54}{\\log_2 7}"}
+        </Mb>
+        <p>
+          To jest dokładnie wzór na zamianę podstawy z <Mi>{"2"}</Mi> na <Mi>{"7"}</Mi> (z tym samym
+          argumentem <Mi>{"54"}</Mi>):
+        </p>
+        <FormulaBox>
+          <Mb>{"\\log_7 54 = \\frac{\\log_2 54}{\\log_2 7}"}</Mb>
+        </FormulaBox>
+        <p>
+          Prawa strona tezy równa się więc lewej, czyli dla podanych <Mi>{"a"}</Mi> i <Mi>{"b"}</Mi> zachodzi
+          równość z treści zadania.
+        </p>
+        <Mb>{"\\log_7 54 = \\frac{b + 2}{2a - 2} \\quad \\blacksquare"}</Mb>
+      </div>
+    ),
+  },
+
+  {
+    id: "cke-2025-czerwiec-dod-zad3-iloczyn-cyfr",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "3",
+    points: "0–3",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Rozważamy wszystkie liczby naturalne sześciocyfrowe, w których zapisie dziesiętnym iloczyn cyfr jest
+          liczbą parzystą mniejszą od <Mi>{"5"}</Mi>.
+        </p>
+        <p>
+          Oblicz, ile jest wszystkich takich liczb sześciocyfrowych. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"368\\,586"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Iloczyn cyfr jest parzysty i mniejszy od <Mi>{"5"}</Mi>, więc może równać się tylko{" "}
+          <Mi>{"0"}</Mi>, <Mi>{"2"}</Mi> albo <Mi>{"4"}</Mi>. Rozpatrz te trzy przypadki osobno i na końcu
+          dodaj wyniki.
+        </p>
+        <p>
+          Dla iloczynu <Mi>{"0"}</Mi> wygodnie policzyć liczbę sześciocyfrowych <strong>bez</strong> zera w
+          zapisie (metoda dopełnienia): wszystkie sześciocyfrowe minus te, w których żadna cyfra nie jest
+          zerem.
+        </p>
+        <p>
+          Dla iloczynów <Mi>{"2"}</Mi> i <Mi>{"4"}</Mi> wypisz, jakie cyfry mogą wystąpić (tylko{" "}
+          <Mi>{"1"}</Mi>, <Mi>{"2"}</Mi>, ewentualnie <Mi>{"4"}</Mi>), a potem policz permutacje z powtórzeniami.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Jakie wartości może przyjąć iloczyn cyfr?</p>
+        <p>
+          Liczba sześciocyfrowa ma postać <Mi>{"d_1 d_2 d_3 d_4 d_5 d_6"}</Mi>, gdzie{" "}
+          <Mi>{"d_1 \\in \\{1,2,\\ldots,9\\}"}</Mi> (pierwsza cyfra nie może być zerem), a{" "}
+          <Mi>{"d_2,\\ldots,d_6 \\in \\{0,1,\\ldots,9\\}"}</Mi>.
+        </p>
+        <p>
+          Oznaczmy <Mi>{"P = d_1 \\cdot d_2 \\cdot d_3 \\cdot d_4 \\cdot d_5 \\cdot d_6"}</Mi>. Warunki zadania:
+          <Mi>{"P"}</Mi> jest parzyste oraz <Mi>{"P < 5"}</Mi>. Jedynymi parzystymi liczbami naturalnymi
+          mniejszymi od <Mi>{"5"}</Mi> są:
+        </p>
+        <Mb>{"P \\in \\{0,\\,2,\\,4\\}"}</Mb>
+        <p>
+          Policzymy osobno liczby sześciocyfrowe z iloczynem <Mi>{"0"}</Mi>, <Mi>{"2"}</Mi> i <Mi>{"4"}</Mi>, a
+          potem zsumujemy wyniki (te zbiory się nie nakładają).
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Iloczyn cyfr równy <Mi>{"0"}</Mi></p>
+        <p>
+          Iloczyn jest zerem wtedy i tylko wtedy, gdy <strong>przynajmniej jedna</strong> cyfra to{" "}
+          <Mi>{"0"}</Mi>. Pierwsza cyfra i tak nie jest zerem, więc zero musi wystąpić na jednej z pozycji{" "}
+          <Mi>{"d_2,\\ldots,d_6"}</Mi>.
+        </p>
+        <p>
+          Łatwiej policzyć to dopełnieniem. Wszystkich liczb sześciocyfrowych jest:
+        </p>
+        <Mb>{"9 \\cdot 10^5 = 900\\,000"}</Mb>
+        <p>
+          Liczby sześciocyfrowe <strong>bez</strong> zera w zapisie: każda z sześciu cyfr to{" "}
+          <Mi>{"1,2,\\ldots,9"}</Mi>:
+        </p>
+        <Mb>{"9^6 = 531\\,441"}</Mb>
+        <p>Stąd liczba sześciocyfrowych z iloczynem <Mi>{"0"}</Mi>:</p>
+        <Mb>{"N_0 = 900\\,000 - 531\\,441 = 368\\,559"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Iloczyn cyfr równy <Mi>{"2"}</Mi></p>
+        <p>
+          Żeby iloczyn sześciu cyfr z zbioru <Mi>{"\\{0,\\ldots,9\\}"}</Mi> wyniósł dokładnie <Mi>{"2"}</Mi>, nie
+          może być zera (bo wtedy iloczyn byłby <Mi>{"0"}</Mi>). Jedyny rozkład na czynniki pierwsze to jedna
+          cyfra <Mi>{"2"}</Mi> i pięć cyfr <Mi>{"1"}</Mi>.
+        </p>
+        <p>
+          Układamy sześć cyfr: <Mi>{"2,1,1,1,1,1"}</Mi>. Liczba różnych kolejności (permutacji z powtórzeniami):
+        </p>
+        <FormulaBox>
+          <Mb>{"\\frac{6!}{5!} = 6"}</Mb>
+        </FormulaBox>
+        <p>
+          W każdym takim ułożeniu pierwsza cyfra to <Mi>{"1"}</Mi> lub <Mi>{"2"}</Mi>, więc wszystkie{" "}
+          <Mi>{"6"}</Mi> liczb są sześciocyfrowe.
+        </p>
+        <Mb>{"N_2 = 6"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Iloczyn cyfr równy <Mi>{"4"}</Mi></p>
+        <p>
+          Znowu nie może być zera. Szukamy rozkładów iloczynu <Mi>{"4"}</Mi> na sześć cyfr z{" "}
+          <Mi>{"\\{1,\\ldots,9\\}"}</Mi>. Są dwa typy:
+        </p>
+        <p className="font-medium text-stone-700">Typ A: jedna cyfra <Mi>{"4"}</Mi> i pięć cyfr <Mi>{"1"}</Mi></p>
+        <Mb>{"\\frac{6!}{5!} = 6 \\quad \\text{(jak w kroku 3)}"}</Mb>
+        <p className="font-medium text-stone-700">Typ B: dwie cyfry <Mi>{"2"}</Mi> i cztery cyfry <Mi>{"1"}</Mi></p>
+        <p>
+          Wybieramy, na których dwóch z sześciu pozycjach stoją dwójki:
+        </p>
+        <Mb>{"\\frac{6!}{2!\\,4!} = \\binom{6}{2} = 15"}</Mb>
+        <p>
+          Znowu pierwsza cyfra jest zawsze <Mi>{"1"}</Mi> lub <Mi>{"2"}</Mi>, więc wszystkie te liczby są
+          poprawne sześciocyfrowe.
+        </p>
+        <Mb>{"N_4 = 6 + 15 = 21"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Suma</p>
+        <Mb>{"N = N_0 + N_2 + N_4 = 368\\,559 + 6 + 21 = 368\\,586"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: jest <Mi>{"368\\,586"}</Mi> takich liczb sześciocyfrowych.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "smwp-2026-styczen-zad1",
     source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
