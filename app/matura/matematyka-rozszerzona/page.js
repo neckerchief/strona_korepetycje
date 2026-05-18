@@ -17,12 +17,12 @@ const sections = [
   { num: "8",  title: "Funkcja wykładnicza",                                        href: "/matura/matematyka-rozszerzona/funkcja-wykladnicza", taskCount: 1 },
   { num: "9",  title: "Funkcja logarytmiczna",                                      href: null },
   { num: "10", title: "Trygonometria",                                              href: "/matura/matematyka-rozszerzona/trygonometria", taskCount: 6 },
-  { num: "11", title: "Ciągi",                                                      href: "/matura/matematyka-rozszerzona/ciagi", taskCount: 3 },
+  { num: "11", title: "Ciągi",                                                      href: "/matura/matematyka-rozszerzona/ciagi", taskCount: 4 },
   { num: "12", title: "Planimetria",                                                href: "/matura/matematyka-rozszerzona/planimetria", taskCount: 7 },
-  { num: "13", title: "Geometria analityczna",                                      href: "/matura/matematyka-rozszerzona/geometria-analityczna", taskCount: 3 },
+  { num: "13", title: "Geometria analityczna",                                      href: "/matura/matematyka-rozszerzona/geometria-analityczna", taskCount: 4 },
   { num: "14", title: "Stereometria",                                               href: "/matura/matematyka-rozszerzona/stereometria", taskCount: 3 },
-  { num: "15", title: "Elementy analizy matematycznej",                             href: "/matura/matematyka-rozszerzona/elementy-analizy", taskCount: 2 },
-  { num: "16", title: "Zadania optymalizacyjne",                                    href: "/matura/matematyka-rozszerzona/zadania-optymalizacyjne", taskCount: 2 },
+  { num: "15", title: "Elementy analizy matematycznej",                             href: "/matura/matematyka-rozszerzona/elementy-analizy", taskCount: 3 },
+  { num: "16", title: "Zadania optymalizacyjne",                                    href: "/matura/matematyka-rozszerzona/zadania-optymalizacyjne", taskCount: 3 },
   { num: "17", title: "Rachunek prawdopodobieństwa i statystyka",                   href: "/matura/matematyka-rozszerzona/rachunek-prawdopodobienstwa", taskCount: 4 },
 ];
 

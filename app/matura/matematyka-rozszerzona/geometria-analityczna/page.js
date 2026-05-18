@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
+import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
 // ─── Diagram do Metody 2 ──────────────────────────────────────
 // Schematyczny rysunek: okrąg O1, cięciwa MN, prostopadła O1H,
@@ -46,7 +46,146 @@ const DiagramMetoda2 = () => (
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_CKE_CZERWIEC_2025_DOD =
+  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+
 const tasks = [
+  {
+    id: "cke-2025-czerwiec-dod-zad11-okrag-rownoleglobok",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "11",
+    points: "0–6",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          W kartezjańskim układzie współrzędnych <Mi>{"(x, y)"}</Mi> dany jest równoległobok{" "}
+          <Mi>{"ABCD"}</Mi> o wierzchołkach <Mi>{"A = (-8, -1)"}</Mi> i <Mi>{"D = (-13, 9)"}</Mi> oraz
+          środku symetrii <Mi>{"M = \\left(-\\dfrac{9}{2}, 1\\right)"}</Mi>.
+        </p>
+        <p>
+          Okrąg <Mi>{"\\mathcal{O}"}</Mi> przechodzi przez początek tego układu i jest styczny do
+          prostych zawierających boki <Mi>{"AB"}</Mi> i <Mi>{"BC"}</Mi> tego równoległoboku. Druga
+          współrzędna środka okręgu <Mi>{"\\mathcal{O}"}</Mi> jest liczbą ujemną.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Wyznacz równanie okręgu <Mi>{"\\mathcal{O}"}</Mi>. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"(x + 1)^2 + (y + 2)^2 = 5"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Punkt <Mi>{"M"}</Mi> jest środkiem przekątnych, więc jest także środkiem odcinków{" "}
+          <Mi>{"AC"}</Mi> i <Mi>{"BD"}</Mi>. Z tego wyznacz współrzędne <Mi>{"B"}</Mi> i{" "}
+          <Mi>{"C"}</Mi>, a potem równania prostych <Mi>{"AB"}</Mi> i <Mi>{"BC"}</Mi>.
+        </p>
+        <p>Równanie okręgu:</p>
+        <FormulaBox>
+          <Mb>{"(x - a)^2 + (y - b)^2 = r^2"}</Mb>
+        </FormulaBox>
+        <p>
+          Przechodzenie przez środek układu daje <Mi>{"a^2 + b^2 = r^2"}</Mi>. Styczność do prostych: odległość od punktu <Mi>{"(a, b)"}</Mi> do każdej z
+          prostych musi być równa <Mi>{"r"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"d = \\dfrac{|Ax + By + C|}{\\sqrt{A^2 + B^2}}"}</Mb>
+        </FormulaBox>
+        <p>
+          Ułóż dwa równania ze styczności (do <Mi>{"AB"}</Mi> i do <Mi>{"BC"}</Mi>) oraz wykorzystaj{" "}
+          <Mi>{"a^2 + b^2 = r^2"}</Mi>. Na końcu wybierz rozwiązanie z <Mi>{"b < 0"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Współrzędne <Mi>{"B"}</Mi> i <Mi>{"C"}</Mi></p>
+        <p>
+          <Mi>{"M"}</Mi> jest środkiem <Mi>{"AC"}</Mi>:
+        </p>
+        <Mb>
+          {
+            "\\frac{-8 + x_C}{2} = -\\frac{9}{2},\\quad \\frac{-1 + y_C}{2} = 1 \\quad \\Rightarrow \\quad C = (-1, 3)"
+          }
+        </Mb>
+        <p>
+          <Mi>{"M"}</Mi> jest środkiem <Mi>{"BD"}</Mi>:
+        </p>
+        <Mb>
+          {
+            "\\frac{x_B - 13}{2} = -\\frac{9}{2},\\quad \\frac{y_B + 9}{2} = 1 \\quad \\Rightarrow \\quad B = (4, -7)"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Równania prostych <Mi>{"AB"}</Mi> i <Mi>{"BC"}</Mi></p>
+        <p>
+          Prosta <Mi>{"AB"}</Mi> przez <Mi>{"A = (-8, -1)"}</Mi> i <Mi>{"B = (4, -7)"}</Mi>:
+        </p>
+        <Mb>{"x + 2y + 10 = 0"}</Mb>
+        <p>
+          Prosta <Mi>{"BC"}</Mi> przez <Mi>{"B = (4, -7)"}</Mi> i <Mi>{"C = (-1, 3)"}</Mi>:
+        </p>
+        <Mb>{"2x + y - 1 = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Układ na <Mi>{"a"}</Mi>, <Mi>{"b"}</Mi>, <Mi>{"r"}</Mi></p>
+        <p>
+          Niech środek okręgu to <Mi>{"(a, b)"}</Mi>. Okrąg przechodzi przez <Mi>{"(0, 0)"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"a^2 + b^2 = r^2 \\quad \\text{(I)}"}</Mb>
+        </FormulaBox>
+        <p>
+          Odległość od <Mi>{"(a, b)"}</Mi> do prostej <Mi>{"x + 2y + 10 = 0"}</Mi> musi być równa{" "}
+          <Mi>{"r"}</Mi>:
+        </p>
+        <Mb>{"\\dfrac{|a + 2b + 10|}{\\sqrt{5}} = r \\quad \\text{(II)}"}</Mb>
+        <p>
+          Odległość do prostej <Mi>{"2x + y - 1 = 0"}</Mi>:
+        </p>
+        <Mb>{"\\dfrac{|2a + b - 1|}{\\sqrt{5}} = r \\quad \\text{(III)}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Uproszczenie</p>
+        <p>
+          Z (II) i (III) wynika <Mi>{"|a + 2b + 10| = |2a + b - 1|"}</Mi>. Zauważ, że dla środka
+          leżącego w kącie między prostymi <Mi>{"AB"}</Mi> i <Mi>{"BC"}</Mi> (przy wierzchołku{" "}
+          <Mi>{"B"}</Mi>) wyrażenia mają przeciwne znaki, więc:
+        </p>
+        <Mb>{"a + 2b + 10 = -(2a + b - 1) \\quad \\Rightarrow \\quad a + b = -3"}</Mb>
+        <p>
+          Stąd <Mi>{"a = -3 - b"}</Mi>. Podstawiamy do (I) oraz do (II) (po podniesieniu do kwadratu
+          obu stron <Mi>{"|a + 2b + 10| = r\\sqrt{5}"}</Mi>):
+        </p>
+        <Mb>{"(b + 7)^2 = 5\\bigl(2b^2 + 6b + 9\\bigr)"}</Mb>
+        <Mb>{"9b^2 + 16b - 4 = 0 \\quad \\Rightarrow \\quad b = -2 \\quad \\text{lub} \\quad b = \\dfrac{2}{9}"}</Mb>
+        <p>
+          Z warunku <Mi>{"b < 0"}</Mi> bierzemy <Mi>{"b = -2"}</Mi>, więc <Mi>{"a = -1"}</Mi> i{" "}
+          <Mi>{"r^2 = 5"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 5. Równanie okręgu</p>
+        <FormulaBox>
+          <Mb>{"(x + 1)^2 + (y + 2)^2 = 5"}</Mb>
+        </FormulaBox>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"(x + 1)^2 + (y + 2)^2 = 5"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "smwp-2026-styczen-zad4",
     source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
@@ -400,8 +539,8 @@ export default function GeometriaAnalitycznaPage() {
         </div>
 
         <div className="space-y-12">
-          {tasks.map((task) => (
-            <TaskCard key={task.id} {...task} />
+          {sortTasksBySourceDate(tasks).map((task, index) => (
+            <TaskCard key={task.id} {...task} number={getDisplayNumber(index)} />
           ))}
         </div>
       </main>

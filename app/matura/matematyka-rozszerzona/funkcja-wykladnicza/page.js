@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
+import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
 const SOURCE = "Matura próbna SMWP, październik 2025, poziom rozszerzony";
 
@@ -112,7 +112,9 @@ export default function FunkcjaWykladniczaPage() {
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">{tasks.length} zadanie</p>
         </div>
         <div className="space-y-12">
-          {tasks.map((task) => <TaskCard key={task.id} {...task} />)}
+          {sortTasksBySourceDate(tasks).map((task, index) => (
+            <TaskCard key={task.id} {...task} number={getDisplayNumber(index)} />
+          ))}
         </div>
       </main>
     </div>

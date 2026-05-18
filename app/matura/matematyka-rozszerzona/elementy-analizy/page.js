@@ -1,13 +1,127 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
+import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
 const SOURCE_CKE_F2023 =
   "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
+const SOURCE_CKE_CZERWIEC_2025_DOD =
+  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
 const SOURCE_SMWP = "Matura próbna SMWP, październik 2025, poziom rozszerzony";
 
 const tasks = [
+  {
+    id: "cke-2025-czerwiec-dod-zad8-styczna-wielomian",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "8",
+    points: "0–4",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Wielomian <Mi>{"f"}</Mi> zmiennej rzeczywistej <Mi>{"x"}</Mi> jest określony wzorem{" "}
+          <Mi>{"f(x) = x^3 + ax^2 + bx + c"}</Mi>, gdzie <Mi>{"a, b, c \\in \\mathbb{R}"}</Mi>. Liczba{" "}
+          <Mi>{"(-2)"}</Mi> jest miejscem zerowym tego wielomianu. W kartezjańskim układzie współrzędnych{" "}
+          <Mi>{"(x, y)"}</Mi> styczna do wykresu wielomianu <Mi>{"f"}</Mi> w punkcie <Mi>{"A"}</Mi> o pierwszej
+          współrzędnej równej <Mi>{"(-2)"}</Mi> przecina ten wykres w punkcie <Mi>{"P = (1, 9)"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Wyznacz wzór wielomianu <Mi>{"f"}</Mi>. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"f(x) = x^3 + 3x^2 + 3x + 2"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Skoro <Mi>{"(-2)"}</Mi> jest miejscem zerowym, to <Mi>{"f(-2) = 0"}</Mi>, więc punkt styczności to{" "}
+          <Mi>{"A = (-2, 0)"}</Mi>.
+        </p>
+        <p>Wzór na styczną w punkcie <Mi>{"(x_0, f(x_0))"}</Mi>:</p>
+        <FormulaBox>
+          <Mb>{"y = a(x - x_0) + f(x_0), \\qquad a = f'(x_0)"}</Mb>
+        </FormulaBox>
+        <p>
+          Dla <Mi>{"x_0 = -2"}</Mi> i <Mi>{"f(x_0) = 0"}</Mi> styczna ma postać{" "}
+          <Mi>{"y = f'(-2)(x + 2)"}</Mi>. Podstaw punkt <Mi>{"P = (1, 9)"}</Mi>: dostaniesz jedno równanie na{" "}
+          <Mi>{"a, b, c"}</Mi>. Do trzech niewiadomych potrzebujesz jeszcze <Mi>{"f(-2) = 0"}</Mi> oraz warunku, że{" "}
+          <Mi>{"P"}</Mi> leży na wykresie, czyli <Mi>{"f(1) = 9"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Warunki z treści zadania</p>
+        <p>
+          <Mi>{"f(x) = x^3 + ax^2 + bx + c"}</Mi>, więc <Mi>{"f'(x) = 3x^2 + 2ax + b"}</Mi>.
+        </p>
+        <p>
+          Liczba <Mi>{"(-2)"}</Mi> jest miejscem zerowym, więc punkt <Mi>{"A"}</Mi> ma współrzędne{" "}
+          <Mi>{"(-2, 0)"}</Mi>:
+        </p>
+        <Mb>{"f(-2) = 0"}</Mb>
+        <p>
+          Styczna w punkcie <Mi>{"A"}</Mi> przechodzi przez <Mi>{"P = (1, 9)"}</Mi>, a ponieważ styczna przecina
+          wykres w <Mi>{"P"}</Mi>, punkt <Mi>{"P"}</Mi> leży też na wykresie <Mi>{"f"}</Mi>:
+        </p>
+        <Mb>{"f(1) = 9"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Równanie ze stycznej</p>
+        <p>Wzór na styczną w punkcie <Mi>{"(x_0, f(x_0))"}</Mi>:</p>
+        <FormulaBox>
+          <Mb>{"y = f'(x_0)(x - x_0) + f(x_0)"}</Mb>
+        </FormulaBox>
+        <p>
+          Dla <Mi>{"x_0 = -2"}</Mi> i <Mi>{"f(-2) = 0"}</Mi>:
+        </p>
+        <Mb>{"y = f'(-2)(x + 2)"}</Mb>
+        <p>
+          Punkt <Mi>{"P = (1, 9)"}</Mi> leży na stycznej, więc:
+        </p>
+        <Mb>{"9 = f'(-2)(1 + 2) = 3 \\cdot f'(-2) \\quad \\Rightarrow \\quad f'(-2) = 3"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Układ równań na <Mi>{"a, b, c"}</Mi></p>
+        <p>Z warunku <Mi>{"f(-2) = 0"}</Mi>:</p>
+        <Mb>{"(-2)^3 + a(-2)^2 + b(-2) + c = 0 \\quad \\Rightarrow \\quad -8 + 4a - 2b + c = 0"}</Mb>
+        <Mb>{"4a - 2b + c = 8 \\quad \\text{(I)}"}</Mb>
+        <p>Z warunku <Mi>{"f'(-2) = 3"}</Mi>:</p>
+        <Mb>{"3(-2)^2 + 2a(-2) + b = 3 \\quad \\Rightarrow \\quad 12 - 4a + b = 3"}</Mb>
+        <Mb>{"b = 4a - 9 \\quad \\text{(II)}"}</Mb>
+        <p>Z warunku <Mi>{"f(1) = 9"}</Mi>:</p>
+        <Mb>{"1 + a + b + c = 9 \\quad \\Rightarrow \\quad a + b + c = 8 \\quad \\text{(III)}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Rozwiązanie układu</p>
+        <p>Podstawiamy (II) do (I) i (III):</p>
+        <Mb>{"c = 8 - 4a + 2(4a - 9) = 4a - 10"}</Mb>
+        <Mb>{"a + (4a - 9) + (4a - 10) = 8 \\quad \\Rightarrow \\quad 9a = 27 \\quad \\Rightarrow \\quad a = 3"}</Mb>
+        <Mb>{"b = 4 \\cdot 3 - 9 = 3, \\qquad c = 4 \\cdot 3 - 10 = 2"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Sprawdzenie</p>
+        <Mb>{"f(x) = x^3 + 3x^2 + 3x + 2"}</Mb>
+        <Mb>{"f(-2) = -8 + 12 - 6 + 2 = 0, \\qquad f(1) = 1 + 3 + 3 + 2 = 9"}</Mb>
+        <Mb>{"f'(x) = 3x^2 + 6x + 3, \\qquad f'(-2) = 12 - 12 + 3 = 3"}</Mb>
+        <p>
+          Styczna: <Mi>{"y = 3(x + 2)"}</Mi>, dla <Mi>{"x = 1"}</Mi> daje <Mi>{"y = 9"}</Mi>.
+        </p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"f(x) = x^3 + 3x^2 + 3x + 2"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2026-formula2023-maj-zad1-analiza",
     source: SOURCE_CKE_F2023,
@@ -160,7 +274,9 @@ export default function ElementyAnalizyPage() {
           </p>
         </div>
         <div className="space-y-12">
-          {tasks.map((task) => <TaskCard key={task.id} {...task} />)}
+          {sortTasksBySourceDate(tasks).map((task, index) => (
+            <TaskCard key={task.id} {...task} number={getDisplayNumber(index)} />
+          ))}
         </div>
       </main>
     </div>

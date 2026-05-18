@@ -1,5 +1,6 @@
 "use client";
 import { Children, useState } from "react";
+export { sortTasksBySourceDate, getDisplayNumber, getSourceSortKey } from "./_taskUtils";
 import { InlineMath, BlockMath } from "react-katex";
 import { ChevronDown } from "lucide-react";
 

@@ -1,11 +1,119 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
+import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_CKE_CZERWIEC_2025_DOD =
+  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+
 const tasks = [
+  {
+    id: "cke-2025-czerwiec-dod-zad9-ciagi-aryt-geom",
+    source: SOURCE_CKE_CZERWIEC_2025_DOD,
+    number: "9",
+    points: "0–5",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Ciąg <Mi>{"(a_n)"}</Mi>, określony dla każdej liczby naturalnej <Mi>{"n \\geq 1"}</Mi>, jest arytmetyczny
+          i rosnący. W tym ciągu <Mi>{"a_6 = 15"}</Mi> oraz <Mi>{"a_{15} = a_3 \\cdot (a_8 - 6)"}</Mi>.
+        </p>
+        <p>
+          Ciąg <Mi>{"(b_n)"}</Mi>, określony dla każdej liczby naturalnej <Mi>{"n \\geq 1"}</Mi>, jest geometryczny
+          i <Mi>{"b_1 = a_{11}"}</Mi> oraz <Mi>{"b_2 = a_6"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Oblicz sumę wszystkich wyrazów ciągu <Mi>{"(b_n)"}</Mi>. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"S = 64"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Dla ciągu arytmetycznego zapisz wyrazy przez <Mi>{"a_1"}</Mi> i różnicę <Mi>{"r"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"a_n = a_1 + (n-1)r"}</Mb>
+        </FormulaBox>
+        <p>
+          Podstaw <Mi>{"a_3"}</Mi>, <Mi>{"a_8"}</Mi> i <Mi>{"a_{15}"}</Mi> do warunku{" "}
+          <Mi>{"a_{15} = a_3 \\cdot (a_8 - 6)"}</Mi> oraz <Mi>{"a_6 = 15"}</Mi>. Otrzymasz równanie na{" "}
+          <Mi>{"r"}</Mi> — wybierz rozwiązanie dodatnie, bo ciąg jest rosnący.
+        </p>
+        <p>
+          Dla ciągu geometrycznego <Mi>{"(b_n)"}</Mi> oblicz <Mi>{"q = \\dfrac{b_2}{b_1}"}</Mi>, a sumę wszystkich
+          wyrazów (szereg geometryczny) policz ze wzoru:
+        </p>
+        <FormulaBox>
+          <Mb>{"S = \\dfrac{b_1}{1-q}"}</Mb>
+        </FormulaBox>
+        <p>
+          (Warunek zbieżności: <Mi>{"|q| < 1"}</Mi>.)
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Równanie na <Mi>{"r"}</Mi> w ciągu <Mi>{"(a_n)"}</Mi></p>
+        <p>
+          Ciąg <Mi>{"(a_n)"}</Mi> jest arytmetyczny, więc <Mi>{"a_n = a_1 + (n-1)r"}</Mi>. Z <Mi>{"a_6 = 15"}</Mi>:
+        </p>
+        <Mb>{"a_6 = a_1 + 5r = 15"}</Mb>
+        <p>Wyrazy potrzebne w warunku:</p>
+        <Mb>{"a_3 = a_1 + 2r, \\qquad a_8 = a_1 + 7r, \\qquad a_{15} = a_1 + 14r"}</Mb>
+        <p>Podstawiamy <Mi>{"a_{15} = a_3 \\cdot (a_8 - 6)"}</Mi>:</p>
+        <Mb>{"a_1 + 14r = (a_1 + 2r)(a_1 + 7r - 6)"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Wykorzystanie <Mi>{"a_6 = 15"}</Mi></p>
+        <p>
+          Wyrażamy wyrazy przez <Mi>{"a_6"}</Mi> i <Mi>{"r"}</Mi>:{" "}
+          <Mi>{"a_n = a_6 + (n-6)r"}</Mi>.
+        </p>
+        <Mb>{"a_3 = 15 - 3r, \\qquad a_8 = 15 + 2r, \\qquad a_{15} = 15 + 9r"}</Mb>
+        <Mb>{"15 + 9r = (15 - 3r)(9 + 2r)"}</Mb>
+        <Mb>{"15 + 9r = 135 + 30r - 27r - 6r^2"}</Mb>
+        <Mb>{"6r^2 - 6r - 120 = 0 \\quad \\Rightarrow \\quad r^2 - r - 20 = 0"}</Mb>
+        <Mb>{"(r - 5)(r + 4) = 0 \\quad \\Rightarrow \\quad r = 5 \\quad \\text{lub} \\quad r = -4"}</Mb>
+        <p>
+          Ciąg jest rosnący, więc <Mi>{"r > 0"}</Mi>, stąd <Mi>{"r = 5"}</Mi>.
+        </p>
+        <Mb>{"a_1 = a_6 - 5r = 15 - 25 = -10"}</Mb>
+        <Mb>{"a_{11} = a_1 + 10r = -10 + 50 = 40"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Ciąg <Mi>{"(b_n)"}</Mi> i iloraz</p>
+        <Mb>{"b_1 = a_{11} = 40, \\qquad b_2 = a_6 = 15"}</Mb>
+        <Mb>{"q = \\dfrac{b_2}{b_1} = \\dfrac{15}{40} = \\dfrac{3}{8}"}</Mb>
+        <p>
+          Mamy <Mi>{"|q| = \\dfrac{3}{8} < 1"}</Mi>, więc szereg geometryczny jest zbieżny.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Suma wszystkich wyrazów</p>
+        <FormulaBox>
+          <Mb>{"S = \\dfrac{b_1}{1-q} = \\dfrac{40}{1 - \\dfrac{3}{8}} = \\dfrac{40}{\\dfrac{5}{8}} = 64"}</Mb>
+        </FormulaBox>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"S = 64"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "smwp-2026-styczen-zad10",
     source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
@@ -374,8 +482,8 @@ export default function CiagiPage() {
         </div>
 
         <div className="space-y-12">
-          {tasks.map((task) => (
-            <TaskCard key={task.id} {...task} />
+          {sortTasksBySourceDate(tasks).map((task, index) => (
+            <TaskCard key={task.id} {...task} number={getDisplayNumber(index)} />
           ))}
         </div>
       </main>

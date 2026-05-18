@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { TaskCard, Mi, Mb, FormulaBox } from "../_components";
+import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
 // ─── Diagram: tabliczka znaków ────────────────────────────────
 
@@ -490,8 +490,8 @@ export default function WyrazeniaAlgebraicznePage() {
         </div>
 
         <div className="space-y-12">
-          {tasks.map((task) => (
-            <TaskCard key={task.id} {...task} />
+          {sortTasksBySourceDate(tasks).map((task, index) => (
+            <TaskCard key={task.id} {...task} number={getDisplayNumber(index)} />
           ))}
         </div>
       </main>

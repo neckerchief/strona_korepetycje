@@ -5,10 +5,12 @@ import { SubTask, Mi, Mb, FormulaBox, SideWork } from "../_components";
 const SOURCE_CKE_F2023 =
   "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
 
-export const Zad12 = () => (
+export const Zad12 = ({ number = "1", points = "0–7" }) => (
   <div className="border border-[#c4a8e8] rounded-xl overflow-hidden">
     <div className="bg-[#d4bef5] px-5 py-2.5">
-      <span className="font-bold text-[#2d1458] text-sm">Zadanie 12.</span>
+      <span className="font-bold text-[#2d1458] text-sm">
+        Zadanie {number}. ({points})
+      </span>
     </div>
     <div className="bg-white px-5 py-5 text-base font-semibold text-stone-800 leading-relaxed space-y-3">
       <p>
@@ -30,7 +32,7 @@ export const Zad12 = () => (
     </div>
 
     <SubTask
-      label="12.1"
+      label={`${number}.1`}
       points="0–3"
       hint={
         <div className="space-y-3">
@@ -87,7 +89,7 @@ export const Zad12 = () => (
     </SubTask>
 
     <SubTask
-      label="12.2"
+      label={`${number}.2`}
       points="0–4"
       answer={
         <p>
