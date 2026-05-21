@@ -52,7 +52,101 @@ const DiagramZnaki = () => (
 const SOURCE_CKE_F2023 =
   "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
 
+const SOURCE_CKE_MAJ_2025 =
+  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+
 const tasks = [
+  {
+    id: "cke-2025-maj-zad2-nierownosc-szescian",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "2",
+    points: "0–3",
+    instruction: (
+      <span>
+        Wykaż, że dla każdej dodatniej liczby rzeczywistej <Mi>{"a"}</Mi> i dla każdej dodatniej liczby
+        rzeczywistej <Mi>{"b"}</Mi> takich, że <Mi>{"b \\neq \\dfrac{1}{2}a"}</Mi>, prawdziwa jest
+        nierówność
+      </span>
+    ),
+    mathBlock: "(a + 2b)^3 > 8a^2b + 16ab^2",
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Rozwiń sześcian <Mi>{"(a + 2b)^3"}</Mi> wzorem skróconego mnożenia na trzecią potęgę sumy.
+        </p>
+        <FormulaBox>
+          <Mb>{"(a + 2b)^3 = a^3 + 3a^2(2b) + 3a(2b)^2 + (2b)^3"}</Mb>
+        </FormulaBox>
+        <p>
+          Przenieś wyrażenie z prawej strony nierówności na lewą i uprość różnicę. Spróbuj wyłączyć
+          wspólny czynnik <Mi>{"(a - 2b)"}</Mi> (to ten sam warunek co <Mi>{"b \\neq \\dfrac{1}{2}a"}</Mi>).
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Założenia</p>
+        <p>
+          Niech <Mi>{"a > 0"}</Mi> oraz <Mi>{"b > 0"}</Mi>. Z warunku <Mi>{"b \\neq \\dfrac{1}{2}a"}</Mi>{" "}
+          wynika <Mi>{"a - 2b \\neq 0"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Rozwinięcie sześcianu</p>
+        <p>Korzystamy ze wzoru na trzecią potęgę sumy:</p>
+        <Mb>{"(a + 2b)^3 = a^3 + 3a^2(2b) + 3a(2b)^2 + (2b)^3"}</Mb>
+        <Mb>{"= a^3 + 6a^2b + 12ab^2 + 8b^3"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Przenosimy wszystko na lewą stronę</p>
+        <p>
+          Dowód sprowadza się do pokazania, że różnica lewej strony nierówności minus prawa strona jest
+          dodatnia:
+        </p>
+        <Mb>
+          {
+            "(a + 2b)^3 - 8a^2b - 16ab^2 = a^3 + 6a^2b + 12ab^2 + 8b^3 - 8a^2b - 16ab^2"
+          }
+        </Mb>
+        <Mb>{"= a^3 - 2a^2b - 4ab^2 + 8b^3"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Grupowanie i rozkład na czynniki</p>
+        <p>Wyłączamy wspólny czynnik <Mi>{"(a - 2b)"}</Mi>:</p>
+        <Mb>
+          {
+            "a^3 - 2a^2b - 4ab^2 + 8b^3 = a^2(a - 2b) - 4b^2(a - 2b) = (a - 2b)(a^2 - 4b^2)"
+          }
+        </Mb>
+        <p>Z tożsamości <Mi>{"a^2 - b^2 = (a-b)(a+b)"}</Mi>:</p>
+        <Mb>
+          {
+            "(a - 2b)(a^2 - 4b^2) = (a - 2b)(a - 2b)(a + 2b) = (a - 2b)^2(a + 2b)"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Znak iloczynu</p>
+        <p>
+          Ponieważ <Mi>{"a > 0"}</Mi> i <Mi>{"b > 0"}</Mi>, mamy <Mi>{"a + 2b > 0"}</Mi>.
+          Ponadto <Mi>{"(a - 2b)^2 \\geq 0"}</Mi> dla każdych liczb rzeczywistych, a z warunku{" "}
+          <Mi>{"b \\neq \\dfrac{1}{2}a"}</Mi> wynika <Mi>{"a - 2b \\neq 0"}</Mi>, więc{" "}
+          <Mi>{"(a - 2b)^2 > 0"}</Mi>.
+        </p>
+        <Mb>{"(a - 2b)^2(a + 2b) > 0"}</Mb>
+        <p>
+          Zatem <Mi>{"(a + 2b)^3 - 8a^2b - 16ab^2 > 0"}</Mi>, czyli{" "}
+          <Mi>{"(a + 2b)^3 > 8a^2b + 16ab^2"}</Mi> dla każdych dodatnich <Mi>{"a,\\ b"}</Mi> spełniających{" "}
+          <Mi>{"b \\neq \\dfrac{1}{2}a"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>{"\\blacksquare"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2026-formula2023-maj-zad3-nierownosc",
     source: SOURCE_CKE_F2023,

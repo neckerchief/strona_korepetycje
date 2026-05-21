@@ -12,7 +12,142 @@ const SOURCE_CKE_F2023 =
 const SOURCE_CKE_CZERWIEC_2025_DOD =
   "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
 
+const SOURCE_CKE_MAJ_2025 =
+  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+
 const tasks = [
+  {
+    id: "cke-2025-maj-zad3-trojkat-rownoboczny",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "3",
+    points: "0–3",
+    instruction: (
+      <span>
+        W trójkącie równobocznym <Mi>{"ABC"}</Mi> punkt <Mi>{"D"}</Mi> leży na boku <Mi>{"BC"}</Mi>. Stosunek
+        pola trójkąta <Mi>{"ABD"}</Mi> do pola trójkąta <Mi>{"ADC"}</Mi> jest równy{" "}
+        <Mi>{"\\dfrac{\\sqrt{3}-1}{2}"}</Mi>. Oblicz miarę kąta <Mi>{"DAC"}</Mi>. Zapisz obliczenia.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"\\angle DAC = 45^\\circ"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Oznacz <Mi>{"\\alpha = \\angle DAC"}</Mi>. W trójkącie równobocznym{" "}
+          <Mi>{"\\angle BAC = 60^\\circ"}</Mi>, więc <Mi>{"\\angle DAB = 60^\\circ - \\alpha"}</Mi>.
+        </p>
+        <p>
+          Zapisz pola obu trójkątów wzorem na pole z dwoma bokami i kątem między nimi (wspólny bok to{" "}
+          <Mi>{"AD"}</Mi>, a drugie boki wychodzą z wierzchołka <Mi>{"A"}</Mi>):
+        </p>
+        <FormulaBox>
+          <Mb>
+            {
+              "P_{ABD} = \\frac{1}{2} \\cdot |AB| \\cdot |AD| \\cdot \\sin(\\angle DAB), \\qquad P_{ADC} = \\frac{1}{2} \\cdot |AC| \\cdot |AD| \\cdot \\sin(\\angle DAC)"
+            }
+          </Mb>
+        </FormulaBox>
+        <p>
+          W trójkącie równobocznym <Mi>{"|AB| = |AC|"}</Mi>, więc po podzieleniu pól wiele czynników się
+          skróci. Następnie zastosuj wzór na sinus różnicy kątów do{" "}
+          <Mi>{"\\sin(60^\\circ - \\alpha)"}</Mi> i rozwiąż równanie na <Mi>{"\\alpha"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Oznaczenia i kąty przy wierzchołku <Mi>{"A"}</Mi></p>
+        <p>
+          Niech <Mi>{"\\alpha = \\angle DAC"}</Mi>. Trójkąt <Mi>{"ABC"}</Mi> jest równoboczny, więc{" "}
+          <Mi>{"\\angle BAC = 60^\\circ"}</Mi> oraz <Mi>{"|AB| = |AC|"}</Mi>. Punkt <Mi>{"D"}</Mi> leży na{" "}
+          <Mi>{"BC"}</Mi>, więc promienie <Mi>{"AB"}</Mi> i <Mi>{"AC"}</Mi> są wspólne dla obu mniejszych
+          trójkątów, a kąty przy <Mi>{"A"}</Mi> dzielą kąt <Mi>{"60^\\circ"}</Mi>:
+        </p>
+        <Mb>{"\\angle DAB = 60^\\circ - \\alpha"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Pola trójkątów</p>
+        <p>
+          W obu trójkątach wspólny jest bok <Mi>{"AD"}</Mi>, a drugie boki wychodzą z wierzchołka{" "}
+          <Mi>{"A"}</Mi>. Korzystamy ze wzoru na pole:
+        </p>
+        <Mb>
+          {
+            "P_{ABD} = \\frac{1}{2} \\cdot |AB| \\cdot |AD| \\cdot \\sin(\\angle DAB) = \\frac{1}{2} \\cdot |AB| \\cdot |AD| \\cdot \\sin(60^\\circ - \\alpha)"
+          }
+        </Mb>
+        <Mb>
+          {
+            "P_{ADC} = \\frac{1}{2} \\cdot |AC| \\cdot |AD| \\cdot \\sin(\\angle DAC) = \\frac{1}{2} \\cdot |AC| \\cdot |AD| \\cdot \\sin \\alpha"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Stosunek pól</p>
+        <p>Z treści zadania:</p>
+        <Mb>
+          {
+            "\\frac{P_{ABD}}{P_{ADC}} = \\frac{\\sqrt{3}-1}{2}"
+          }
+        </Mb>
+        <p>
+          Ponieważ <Mi>{"|AB| = |AC|"}</Mi>, czynniki <Mi>{"\\dfrac{1}{2}"}</Mi>, <Mi>{"|AB|/|AC|"}</Mi> oraz{" "}
+          <Mi>{"|AD|"}</Mi> skracają się:
+        </p>
+        <Mb>
+          {
+            "\\frac{\\sin(60^\\circ - \\alpha)}{\\sin \\alpha} = \\frac{\\sqrt{3}-1}{2}"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Wzór na sinus różnicy kątów</p>
+        <p>
+          Korzystamy ze wzoru <Mi>{"\\sin(x - y) = \\sin x \\cos y - \\cos x \\sin y"}</Mi> oraz wartości{" "}
+          <Mi>{"\\sin 60^\\circ = \\dfrac{\\sqrt{3}}{2}"}</Mi>, <Mi>{"\\cos 60^\\circ = \\dfrac{1}{2}"}</Mi>:
+        </p>
+        <Mb>
+          {
+            "\\sin(60^\\circ - \\alpha) = \\sin 60^\\circ \\cos \\alpha - \\cos 60^\\circ \\sin \\alpha = \\frac{\\sqrt{3}}{2}\\cos \\alpha - \\frac{1}{2}\\sin \\alpha"
+          }
+        </Mb>
+        <p>Podstawiamy do równania ze stosunkiem pól i dzielimy obie strony przez <Mi>{"\\sin \\alpha"}</Mi> (kąt <Mi>{"\\alpha"}</Mi> jest ostry, więc <Mi>{"\\sin \\alpha > 0"}</Mi>):</p>
+        <Mb>
+          {
+            "\\frac{\\sqrt{3}}{2}\\cdot\\frac{\\cos \\alpha}{\\sin \\alpha} - \\frac{1}{2} = \\frac{\\sqrt{3}-1}{2}"
+          }
+        </Mb>
+        <Mb>
+          {
+            "\\frac{\\sqrt{3}}{2}\\operatorname{ctg} \\alpha = \\frac{\\sqrt{3}-1}{2} + \\frac{1}{2} = \\frac{\\sqrt{3}}{2}"
+          }
+        </Mb>
+        <Mb>{"\\operatorname{ctg} \\alpha = 1 \\quad \\Rightarrow \\quad \\alpha = 45^\\circ"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Sprawdzenie (opcjonalnie)</p>
+        <p>
+          Dla <Mi>{"\\alpha = 45^\\circ"}</Mi> mamy <Mi>{"60^\\circ - \\alpha = 15^\\circ"}</Mi>. Z tożsamości na{" "}
+          <Mi>{"\\sin 15^\\circ"}</Mi>:
+        </p>
+        <Mb>
+          {
+            "\\frac{\\sin 15^\\circ}{\\sin 45^\\circ} = \\frac{\\sin(45^\\circ - 30^\\circ)}{\\sin 45^\\circ} = \\frac{\\sqrt{3}-1}{2}"
+          }
+        </Mb>
+        <p>
+          Zgodnie z warunkiem zadania. Ponieważ <Mi>{"0^\\circ < \\alpha < 60^\\circ"}</Mi>, jedynym rozwiązaniem
+          jest <Mi>{"\\angle DAC = 45^\\circ"}</Mi>.
+        </p>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-czerwiec-dod-zad4-trapez",
     source: SOURCE_CKE_CZERWIEC_2025_DOD,

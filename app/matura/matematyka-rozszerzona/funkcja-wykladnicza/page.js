@@ -3,12 +3,120 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
-const SOURCE = "Matura próbna SMWP, październik 2025, poziom rozszerzony";
+const SOURCE_SMWP_2025_PAZDZIERNIK = "Matura próbna SMWP, październik 2025, poziom rozszerzony";
+
+const SOURCE_CKE_MAJ_2025 =
+  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
 
 const tasks = [
   {
+    id: "cke-2025-maj-zad1-bakterie",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "1",
+    points: "0–2",
+    instruction: (
+      <span>
+        W warunkach laboratoryjnych obserwowano dynamikę wzrostu liczebności populacji pewnego
+        gatunku bakterii. Liczebność <Mi>{"N"}</Mi> populacji bakterii zmienia się w czasie zgodnie
+        z zależnością wykładniczą
+      </span>
+    ),
+    mathBlock: "N(t) = N_0 \\cdot k^{\\,t},\\quad t \\geq 0",
+    noteItems: [
+      { text: "gdzie " },
+      { math: "N_0" },
+      { text: " – liczebność populacji w chwili " },
+      { math: "t = 0" },
+      { text: " rozpoczęcia obserwacji, " },
+      { math: "k" },
+      { text: " – stała dodatnia, charakterystyczna dla danego gatunku bakterii i dla warunków przeprowadzenia obserwacji, " },
+      { math: "t" },
+      { text: " – czas wyrażony w godzinach, liczony od chwili " },
+      { math: "t = 0" },
+      { text: " rozpoczęcia obserwacji. W chwili rozpoczęcia obserwacji liczebność populacji była równa " },
+      { math: "10\\,000" },
+      { text: ", a po dwóch godzinach była równa " },
+      { math: "15\\,625" },
+      { text: ". Oblicz, o ile procent wzrastała liczebność populacji tej bakterii w ciągu każdej godziny. Zapisz obliczenia." },
+    ],
+    answers: null,
+
+    answer: (
+      <p>
+        Liczebność populacji wzrastała o <Mi>{"25\\%"}</Mi> w ciągu każdej godziny.
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Z treści zadania mamy <Mi>{"N(0) = 10\\,000"}</Mi> oraz <Mi>{"N(2) = 15\\,625"}</Mi>.
+          Podstawiając te wartości do wzoru <Mi>{"N(t) = N_0 \\cdot k^t"}</Mi>, możemy wyznaczyć stałą{" "}
+          <Mi>{"k"}</Mi>.
+        </p>
+        <p>
+          Aby policzyć procentowy wzrost populacji w ciągu jednej godziny, należy obliczyć:
+        </p>
+        <FormulaBox>
+          <Mb>
+            {
+              "\\frac{N(t+1)- N(t)}{N(t)} \\cdot 100\\% = \\left(\\frac{N(t+1)}{N(t)} - 1 \\right) \\cdot 100\\% = (k - 1) \\cdot 100\\%"
+            }
+          </Mb>
+        </FormulaBox>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Wyznaczamy <Mi>{"N_0"}</Mi> i <Mi>{"k"}</Mi></p>
+        <p>
+          W chwili rozpoczęcia obserwacji <Mi>{"t = 0"}</Mi>, więc z wzoru otrzymujemy{" "}
+          <Mi>{"N(0) = N_0"}</Mi>. Z treści zadania:
+        </p>
+        <Mb>{"N_0 = N(0) = 10\\,000"}</Mb>
+        <p>
+          Po dwóch godzinach <Mi>{"t = 2"}</Mi>, więc <Mi>{"N(2) = N_0 \\cdot k^2"}</Mi>. Podstawiamy
+         liczby:
+        </p>
+        <Mb>{"15\\,625 = 10\\,000 \\cdot k^2"}</Mb>
+        <Mb>{"k^2 = \\frac{15\\,625}{10\\,000} = \\frac{125^2}{100^2} = \\left(\\frac{5}{4}\\right)^2"}</Mb>
+        <p>
+          Stała <Mi>{"k"}</Mi> jest dodatnia, więc bierzemy dodatni pierwiastek:
+        </p>
+        <Mb>{"k = \\frac{5}{4} = 1{,}25"}</Mb>
+
+        <p className="font-semibold text-stone-800">
+          Krok 2. Procentowy wzrost populacji w ciągu jednej godziny
+        </p>
+        <p>
+          Porównujemy liczebność w dwóch kolejnych godzinach (różnica czasu wynosi{" "}
+          <Mi>{"1"}</Mi>):
+        </p>
+        <Mb>
+          {
+            "\\frac{N(t+1)}{N(t)} = \\frac{N_0 \\cdot k^{t+1}}{N_0 \\cdot k^t} = k"
+          }
+        </Mb>
+        <p>
+          Pytanie brzmi: <em>o ile procent wzrastała</em> populacja w ciągu godziny, czyli o ile
+          procent większa jest liczebność po godzinie względem poprzedniej chwili:
+        </p>
+        <Mb>
+          {
+            "\\left(\\frac{N(t+1)}{N(t)} - 1\\right) \\cdot 100\\% = (k - 1) \\cdot 100\\%"
+          }
+        </Mb>
+        <Mb>{"(k - 1) \\cdot 100\\% = \\left(\\frac{5}{4} - 1\\right) \\cdot 100\\% = \\frac{1}{4} \\cdot 100\\% = 25\\%"}</Mb>
+        <p>
+          Liczebność populacji wzrastała o <Mi>{"25\\%"}</Mi> w ciągu każdej godziny.
+        </p>
+      </div>
+    ),
+  },
+  {
     id: "smwp-2025-pazdziernik-zad1",
-    source: SOURCE,
+    source: SOURCE_SMWP_2025_PAZDZIERNIK,
     number: "1",
     points: "0–2",
     instruction: (
@@ -109,7 +217,9 @@ export default function FunkcjaWykladniczaPage() {
         <div className="mb-14">
           <p className="text-sm font-semibold text-[#6d3a8e] uppercase tracking-widest mb-2">Dział 8</p>
           <h1 className="font-display text-4xl md:text-5xl text-stone-800 mb-4">Funkcja wykładnicza</h1>
-          <p className="text-stone-500 text-lg max-w-xl leading-relaxed">{tasks.length} zadanie</p>
+          <p className="text-stone-500 text-lg max-w-xl leading-relaxed">
+            {tasks.length} {tasks.length === 1 ? "zadanie" : tasks.length < 5 ? "zadania" : "zadań"}
+          </p>
         </div>
         <div className="space-y-12">
           {sortTasksBySourceDate(tasks).map((task, index) => (
