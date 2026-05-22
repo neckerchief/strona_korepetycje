@@ -149,6 +149,98 @@ const tasks = [
   },
 
   {
+    id: "cke-2025-maj-zad7-trapez-srodki-ramion",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "7",
+    points: "0–4",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          W trapezie <Mi>{"ABCD"}</Mi> o podstawach <Mi>{"AB"}</Mi> i <Mi>{"CD"}</Mi> punkt <Mi>{"E"}</Mi> jest
+          środkiem ramienia <Mi>{"AD"}</Mi>, a punkt <Mi>{"F"}</Mi> jest środkiem ramienia <Mi>{"BC"}</Mi>{" "}
+          trapezu. Stosunek pola trapezu <Mi>{"EFCD"}</Mi> do pola trapezu <Mi>{"ABFE"}</Mi> jest równy{" "}
+          <Mi>{"\\dfrac{1}{2}"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Wykaż, że <Mi>{"\\dfrac{|CD|}{|AB|} = \\dfrac{1}{5}"}</Mi>.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Oznacz długości podstaw: <Mi>{"|AB| = a"}</Mi>, <Mi>{"|CD| = b"}</Mi>. Z twierdzenia na odcinek łączący
+          środki ramion trapezu:
+        </p>
+        <FormulaBox>
+          <Mb>{"|EF| = \\dfrac{a + b}{2}"}</Mb>
+        </FormulaBox>
+        <p>
+          (średnia arytmetyczna długości obu podstaw). Ponieważ <Mi>{"E"}</Mi> i <Mi>{"F"}</Mi> są środkami ramion,
+          odcinek <Mi>{"EF"}</Mi> dzieli trapez na dwa mniejsze trapezy o <strong>tej samej wysokości</strong>{" "}
+          (każdy ma połowę wysokości całego trapezu <Mi>{"ABCD"}</Mi>).
+        </p>
+        <p>
+          Zapisz pola <Mi>{"EFCD"}</Mi> i <Mi>{"ABFE"}</Mi> wzorem na pole trapezu, podstaw stosunek{" "}
+          <Mi>{"\\dfrac{1}{2}"}</Mi> i rozwiąż równanie na <Mi>{"\\dfrac{b}{a}"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>{"P = \\dfrac{(c + d) \\cdot h}{2}"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Oznaczenia i odcinek środkowy</p>
+        <p>
+          Niech <Mi>{"|AB| = a"}</Mi> oraz <Mi>{"|CD| = b"}</Mi> (podstawy trapezu <Mi>{"ABCD"}</Mi>). Punkty{" "}
+          <Mi>{"E"}</Mi> i <Mi>{"F"}</Mi> są środkami ramion <Mi>{"AD"}</Mi> i <Mi>{"BC"}</Mi>, więc odcinek{" "}
+          <Mi>{"EF"}</Mi> łączy środki ramion. Z twierdzenia na ten odcinek:
+        </p>
+        <FormulaBox>
+          <Mb>{"|EF| = \\dfrac{|AB| + |CD|}{2} = \\dfrac{a + b}{2}"}</Mb>
+        </FormulaBox>
+        <p>
+          Odcinek <Mi>{"EF"}</Mi> jest równoległy do podstaw i dzieli trapez na dwa trapezy: dolny{" "}
+          <Mi>{"ABFE"}</Mi> (podstawy <Mi>{"AB"}</Mi> i <Mi>{"EF"}</Mi>) oraz górny <Mi>{"EFCD"}</Mi> (podstawy{" "}
+          <Mi>{"EF"}</Mi> i <Mi>{"CD"}</Mi>).
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Wspólna wysokość obu trapezów</p>
+        <p>
+          Ponieważ <Mi>{"E"}</Mi> i <Mi>{"F"}</Mi> leżą w połowie wysokości ramion, odległość od podstawy{" "}
+          <Mi>{"AB"}</Mi> do <Mi>{"EF"}</Mi> jest taka sama jak od <Mi>{"EF"}</Mi> do <Mi>{"CD"}</Mi>. Oznaczmy
+          tę wspólną wysokość obu mniejszych trapezów przez <Mi>{"h"}</Mi> (to połowa wysokości trapezu{" "}
+          <Mi>{"ABCD"}</Mi>).
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Pola trapezów</p>
+        <p>Korzystamy ze wzoru na pole trapezu <Mi>{"P = \\dfrac{(\\text{suma podstaw}) \\cdot h}{2}"}</Mi>:</p>
+        <Mb>
+          {"P_{EFCD} = \\dfrac{|EF| + |CD|}{2} \\cdot h = \\dfrac{\\dfrac{a+b}{2} + b}{2} \\cdot h = \\dfrac{a + 3b}{4} \\cdot h"}
+        </Mb>
+        <Mb>
+          {"P_{ABFE} = \\dfrac{|AB| + |EF|}{2} \\cdot h = \\dfrac{a + \\dfrac{a+b}{2}}{2} \\cdot h = \\dfrac{3a + b}{4} \\cdot h"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Warunek na stosunek pól</p>
+        <p>Z treści zadania <Mi>{"\\dfrac{P_{EFCD}}{P_{ABFE}} = \\dfrac{1}{2}"}</Mi>. Ponieważ oba trapezy mają tę
+          samą wysokość <Mi>{"h > 0"}</Mi>, czynnik <Mi>{"h"}</Mi> się skraca:</p>
+        <Mb>{"\\dfrac{a + 3b}{3a + b} = \\dfrac{1}{2}"}</Mb>
+        <Mb>{"2(a + 3b) = 3a + b"}</Mb>
+        <Mb>{"2a + 6b = 3a + b \\quad \\Longrightarrow \\quad 5b = a"}</Mb>
+        <Mb>{"\\dfrac{b}{a} = \\dfrac{1}{5} \\quad \\Longrightarrow \\quad \\dfrac{|CD|}{|AB|} = \\dfrac{1}{5} \\quad \\blacksquare"}</Mb>
+      </div>
+    ),
+  },
+
+  {
     id: "cke-2025-czerwiec-dod-zad4-trapez",
     source: SOURCE_CKE_CZERWIEC_2025_DOD,
     number: "4",

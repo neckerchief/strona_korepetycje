@@ -49,7 +49,134 @@ const DiagramMetoda2 = () => (
 const SOURCE_CKE_CZERWIEC_2025_DOD =
   "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
 
+const SOURCE_CKE_MAJ_2025 =
+  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+
 const tasks = [
+  {
+    id: "cke-2025-maj-zad8-okregi-przeciecie",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "8",
+    points: "0–5",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          W kartezjańskim układzie współrzędnych <Mi>{"(x, y)"}</Mi> dane są okręgi <Mi>{"\\mathcal{O}_1"}</Mi> i{" "}
+          <Mi>{"\\mathcal{O}_2"}</Mi> o równaniach:
+        </p>
+        <Mb>{"\\mathcal{O}_1:\\ (x - 1)^2 + (y + 3)^2 = 5"}</Mb>
+        <Mb>{"\\mathcal{O}_2:\\ (x - 2)^2 + (y - 4)^2 = 45"}</Mb>
+        <p>
+          Okręgi te przecinają się w punktach <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>. Pierwsza współrzędna punktu{" "}
+          <Mi>{"A"}</Mi> jest dodatnia. Punkt <Mi>{"M"}</Mi> spełnia warunek{" "}
+          <Mi>{"\\vec{AM} = -2 \\cdot \\vec{BM}"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Oblicz współrzędne punktów <Mi>{"A"}</Mi>, <Mi>{"B"}</Mi> oraz <Mi>{"M"}</Mi>. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-2">
+        <p>
+          <Mi>{"A = \\left(\\dfrac{16}{5},\\,-\\dfrac{13}{5}\\right)"}</Mi>,{" "}
+          <Mi>{"B = (-1,\\,-2)"}</Mi>
+        </p>
+        <p>
+          <Mi>{"M = \\left(\\dfrac{2}{5},\\,-\\dfrac{11}{5}\\right)"}</Mi>
+        </p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          <strong>Punkty przecięcia:</strong> odejmij równanie <Mi>{"\\mathcal{O}_1"}</Mi> od równania{" "}
+          <Mi>{"\\mathcal{O}_2"}</Mi>. Po rozwinięciu kwadratów człony z <Mi>{"x^2"}</Mi> i <Mi>{"y^2"}</Mi>{" "}
+          znikną i dostaniesz równanie liniowe (prosta <Mi>{"AB"}</Mi>).
+        </p>
+        <p>
+          Wyznacz z niego <Mi>{"x"}</Mi> przez <Mi>{"y"}</Mi> (albo odwrotnie) i podstaw do <strong>jednego</strong> z
+          pełnych równań okręgu. Powstanie równanie kwadratowe z <strong>dwoma</strong> rozwiązaniami: to właśnie
+          punkty <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>. Wybierz ten, u którego <Mi>{"x > 0"}</Mi>, jako <Mi>{"A"}</Mi>.
+        </p>
+        <p>
+          <strong>Punkt <Mi>{"M"}</Mi>:</strong> zapisz warunek wektorowy na współrzędne, np.{" "}
+          <Mi>{"\\vec{AM} = -2\\vec{BM}"}</Mi> daje dwa równania liniowe na <Mi>{"x_M"}</Mi> i <Mi>{"y_M"}</Mi>.
+          Możesz też przekształcić do postaci <Mi>{"3\\vec{OM} = \\vec{OA} + 2\\vec{OB}"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Odejmujemy równania okręgów</p>
+        <p>
+          Odejmujemy lewą i prawą stronę równania <Mi>{"\\mathcal{O}_1"}</Mi> od <Mi>{"\\mathcal{O}_2"}</Mi>:
+        </p>
+        <Mb>
+          {"(x-2)^2 - (x-1)^2 + (y-4)^2 - (y+3)^2 = 45 - 5"}
+        </Mb>
+        <p>Rozwijamy kwadraty (składniki <Mi>{"x^2"}</Mi> i <Mi>{"y^2"}</Mi> się skracają):</p>
+        <Mb>{"(x^2 - 4x + 4) - (x^2 - 2x + 1) + (y^2 - 8y + 16) - (y^2 + 6y + 9) = 40"}</Mb>
+        <Mb>{"-2x + 3 - 14y + 7 = 40 \\quad \\Longrightarrow \\quad 2x + 14y = -30"}</Mb>
+        <Mb>{"x + 7y = -15 \\quad \\Longrightarrow \\quad x = -15 - 7y"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Podstawienie do równania <Mi>{"\\mathcal{O}_1"}</Mi></p>
+        <Mb>{"(-15 - 7y - 1)^2 + (y + 3)^2 = 5"}</Mb>
+        <Mb>{"(-16 - 7y)^2 + (y + 3)^2 = 5"}</Mb>
+        <Mb>{"256 + 224y + 49y^2 + y^2 + 6y + 9 = 5"}</Mb>
+        <Mb>{"50y^2 + 230y + 260 = 0 \\quad \\Longrightarrow \\quad 5y^2 + 23y + 26 = 0"}</Mb>
+        <Mb>{"\\Delta = 23^2 - 4 \\cdot 5 \\cdot 26 = 529 - 520 = 9 = 3^2"}</Mb>
+        <Mb>{"y = \\dfrac{-23 \\pm 3}{10} \\quad \\Longrightarrow \\quad y = -2 \\quad \\text{lub} \\quad y = -\\dfrac{13}{5}"}</Mb>
+        <p>Odpowiadające wartości <Mi>{"x"}</Mi>:</p>
+        <Mb>{"y = -2 \\Rightarrow x = -1, \\qquad y = -\\dfrac{13}{5} \\Rightarrow x = -15 + \\dfrac{91}{5} = \\dfrac{16}{5}"}</Mb>
+        <p>
+          Pierwsza współrzędna <Mi>{"A"}</Mi> jest dodatnia, więc:
+        </p>
+        <FormulaBox>
+          <Mb>{"A = \\left(\\dfrac{16}{5},\\,-\\dfrac{13}{5}\\right), \\qquad B = (-1,\\,-2)"}</Mb>
+        </FormulaBox>
+        <p className="text-stone-600 text-sm">
+          Sprawdzenie w <Mi>{"\\mathcal{O}_2"}</Mi>: dla <Mi>{"A"}</Mi> mamy{" "}
+          <Mi>{"\\left(\\dfrac{6}{5}\\right)^2 + \\left(-\\dfrac{33}{5}\\right)^2 = \\dfrac{36 + 1089}{25} = 45"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Współrzędne punktu <Mi>{"M"}</Mi></p>
+        <p>
+          Warunek <Mi>{"\\vec{AM} = -2\\vec{BM}"}</Mi> oznacza:
+        </p>
+        <Mb>{"(x_M - x_A,\\, y_M - y_A) = -2(x_M - x_B,\\, y_M - y_B)"}</Mb>
+        <p>Rozpisujemy na współrzędne i przenosimy niewiadome na lewą stronę:</p>
+        <Mb>{"x_M - x_A = -2x_M + 2x_B \\quad \\Longrightarrow \\quad 3x_M = x_A + 2x_B"}</Mb>
+        <Mb>{"y_M - y_A = -2y_M + 2y_B \\quad \\Longrightarrow \\quad 3y_M = y_A + 2y_B"}</Mb>
+        <p>Zatem:</p>
+        <Mb>
+          {"x_M = \\dfrac{x_A + 2x_B}{3} = \\dfrac{\\dfrac{16}{5} + 2 \\cdot (-1)}{3} = \\dfrac{\\dfrac{16}{5} - 2}{3} = \\dfrac{\\dfrac{6}{5}}{3} = \\dfrac{2}{5}"}
+        </Mb>
+        <Mb>
+          {"y_M = \\dfrac{y_A + 2y_B}{3} = \\dfrac{-\\dfrac{13}{5} + 2 \\cdot (-2)}{3} = \\dfrac{-\\dfrac{13}{5} - 4}{3} = \\dfrac{-\\dfrac{33}{5}}{3} = -\\dfrac{11}{5}"}
+        </Mb>
+        <FormulaBox>
+          <Mb>{"M = \\left(\\dfrac{2}{5},\\,-\\dfrac{11}{5}\\right)"}</Mb>
+        </FormulaBox>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">Odpowiedź:</p>
+          <p className="mt-2">
+            <Mi>{"A = \\left(\\dfrac{16}{5},\\,-\\dfrac{13}{5}\\right)"}</Mi>,{" "}
+            <Mi>{"B = (-1,\\,-2)"}</Mi>,{" "}
+            <Mi>{"M = \\left(\\dfrac{2}{5},\\,-\\dfrac{11}{5}\\right)"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-czerwiec-dod-zad11-okrag-rownoleglobok",
     source: SOURCE_CKE_CZERWIEC_2025_DOD,

@@ -8,6 +8,9 @@ import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} f
 const SOURCE_CKE_CZERWIEC_2025_DOD =
   "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
 
+const SOURCE_CKE_MAJ_2025 =
+  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+
 const tasks = [
   {
     id: "cke-2025-czerwiec-dod-zad9-ciagi-aryt-geom",
@@ -108,6 +111,140 @@ const tasks = [
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
           <p className="font-semibold text-stone-800">
             Odpowiedź: <Mi>{"S = 64"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "cke-2025-maj-zad6-ciag-geom-zbiezny",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "6",
+    points: "0–4",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Ciąg <Mi>{"(a_n)"}</Mi>, określony dla każdej liczby naturalnej <Mi>{"n \\geq 1"}</Mi>, jest geometryczny
+          i zbieżny. W tym ciągu <Mi>{"a_1 + a_3 = 20"}</Mi> oraz <Mi>{"a_1^2 + a_3^2 = 328"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Oblicz sumę wszystkich wyrazów tego ciągu. Rozważ wszystkie przypadki. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-2">
+        <p>
+          Dla <Mi>{"q = \\dfrac{1}{3}"}</Mi>: <Mi>{"S = 27"}</Mi>
+        </p>
+        <p>
+          Dla <Mi>{"q = -\\dfrac{1}{3}"}</Mi>: <Mi>{"S = \\dfrac{27}{2}"}</Mi>
+        </p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          W ciągu geometrycznym <Mi>{"a_3 = a_1 \\cdot q^2"}</Mi>. Podstaw to do obu warunków i wyznacz{" "}
+          <Mi>{"a_1"}</Mi> oraz <Mi>{"q^2"}</Mi>.
+        </p>
+        <p>
+          Możesz też traktować <Mi>{"a_1"}</Mi> i <Mi>{"a_3"}</Mi> jak dwie niewiadome: z{" "}
+          <Mi>{"a_1 + a_3 = 20"}</Mi> oraz <Mi>{"a_1^2 + a_3^2 = 328"}</Mi> policz iloczyn{" "}
+          <Mi>{"a_1 \\cdot a_3"}</Mi>.
+        </p>
+        <p>
+          Ciąg jest zbieżny, więc szereg geometryczny ma sens tylko gdy <Mi>{"|q| < 1"}</Mi>. Suma:
+        </p>
+        <FormulaBox>
+          <Mb>{"S = \\dfrac{a_1}{1 - q}"}</Mb>
+        </FormulaBox>
+        <p>
+          Dla każdego dopuszczalnego ilorazu <Mi>{"q"}</Mi> policz <Mi>{"S"}</Mi> osobno (znak{" "}
+          <Mi>{"q"}</Mi> może być dodatni lub ujemny).
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Wyrazy przez <Mi>{"a_1"}</Mi> i <Mi>{"q"}</Mi></p>
+        <p>
+          Ciąg <Mi>{"(a_n)"}</Mi> jest geometryczny, więc <Mi>{"a_n = a_1 \\cdot q^{n-1}"}</Mi>. W szczególności:
+        </p>
+        <Mb>{"a_3 = a_1 \\cdot q^2"}</Mb>
+        <p>Warunki z treści zadania:</p>
+        <Mb>{"a_1 + a_3 = 20 \\quad \\Longrightarrow \\quad a_1(1 + q^2) = 20"}</Mb>
+        <Mb>{"a_1^2 + a_3^2 = 328 \\quad \\Longrightarrow \\quad a_1^2(1 + q^4) = 328"}</Mb>
+
+        <p className="font-semibold text-stone-800">
+          Krok 2. Wyznaczenie <Mi>{"a_1"}</Mi> i <Mi>{"a_3"}</Mi> (metoda na sumę i iloczyn)
+        </p>
+        <p>
+          Korzystamy ze wzoru skróconego mnożenia <Mi>{"(a_1 + a_3)^2 = a_1^2 + 2a_1 a_3 + a_3^2"}</Mi>:
+        </p>
+        <Mb>{"20^2 = 328 + 2a_1 a_3 \\quad \\Longrightarrow \\quad 400 = 328 + 2a_1 a_3"}</Mb>
+        <Mb>{"a_1 \\cdot a_3 = 36"}</Mb>
+        <p>
+          Podstawiamy <Mi>{"a_1 = 20-a_3"}</Mi> do równania na <Mi>{"a_1 \\cdot a_3 = 36"}</Mi> i otrzymujemy równanie kwadratowe {" "}
+          <Mi>{"a_3^2 - 20a_3 + 36 = 0"}</Mi>:
+        </p>
+        <Mb>{"\\Delta = 20^2 - 4 \\cdot 36 = 400 - 144 = 256 = 16^2"}</Mb>
+        <Mb>{"a_3 = \\dfrac{20 \\pm 16}{2} \\quad \\Longrightarrow \\quad a_3 = 18 \\quad \\text{lub} \\quad a_3 = 2"}</Mb>
+        <p>Możliwe pary:</p>
+        <Mb>{"(a_1,\\, a_3) = (18,\\, 2) \\quad \\text{lub} \\quad (a_1,\\, a_3) = (2,\\, 18)"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Które pary dają ciąg zbieżny?</p>
+        <p>
+          Z <Mi>{"a_3 = a_1 q^2"}</Mi> wynika <Mi>{"q^2 = \\dfrac{a_3}{a_1}"}</Mi> (przy <Mi>{"a_1 \\neq 0"}</Mi>).
+        </p>
+        <p>
+          <strong>Przypadek A:</strong> <Mi>{"a_1 = 18"}</Mi>, <Mi>{"a_3 = 2"}</Mi>
+        </p>
+        <Mb>{"q^2 = \\dfrac{2}{18} = \\dfrac{1}{9} \\quad \\Longrightarrow \\quad q = \\dfrac{1}{3} \\quad \\text{lub} \\quad q = -\\dfrac{1}{3}"}</Mb>
+        <p>
+          Mamy <Mi>{"|q| = \\dfrac{1}{3} < 1"}</Mi>, więc szereg jest zbieżny. To dopuszczalne rozwiązanie.
+        </p>
+        <p>
+          <strong>Przypadek B:</strong> <Mi>{"a_1 = 2"}</Mi>, <Mi>{"a_3 = 18"}</Mi>
+        </p>
+        <Mb>{"q^2 = \\dfrac{18}{2} = 9 \\quad \\Longrightarrow \\quad q = 3 \\quad \\text{lub} \\quad q = -3"}</Mb>
+        <p>
+          Wtedy <Mi>{"|q| = 3 \\geq 1"}</Mi>, więc ciąg <strong>nie jest zbieżny</strong>. Ten przypadek odrzucamy.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Suma wszystkich wyrazów dla każdego ilorazu</p>
+        <p>
+          Dla ciągu geometrycznego zbieżnego suma nieskończonego szeregu wynosi:
+        </p>
+        <FormulaBox>
+          <Mb>{"S = \\dfrac{a_1}{1 - q}"}</Mb>
+        </FormulaBox>
+        <p>
+          Zostaje <Mi>{"a_1 = 18"}</Mi> oraz dwa możliwe znaki ilorazu.
+        </p>
+        <p>
+          <strong>Gdy</strong> <Mi>{"q = \\dfrac{1}{3}"}</Mi>:
+        </p>
+        <Mb>{"S = \\dfrac{18}{1 - \\dfrac{1}{3}} = \\dfrac{18}{\\dfrac{2}{3}} = 27"}</Mb>
+        <p>
+          <strong>Gdy</strong> <Mi>{"q = -\\dfrac{1}{3}"}</Mi>:
+        </p>
+        <Mb>{"S = \\dfrac{18}{1 - \\left(-\\dfrac{1}{3}\\right)} = \\dfrac{18}{\\dfrac{4}{3}} = \\dfrac{27}{2}"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">Odpowiedź (wszystkie przypadki zbieżne):</p>
+          <p className="mt-2">
+            dla <Mi>{"q = \\dfrac{1}{3}"}</Mi>: <Mi>{"S = 27"}</Mi>;
+          </p>
+          <p>
+            dla <Mi>{"q = -\\dfrac{1}{3}"}</Mi>: <Mi>{"S = \\dfrac{27}{2}"}</Mi>.
           </p>
         </div>
       </div>

@@ -47,6 +47,32 @@ const DiagramZnaki = () => (
   </svg>
 );
 
+// Tabliczka znaków dla |x−2| i |x+3| (punkty krytyczne: −3, 2)
+const DiagramZnakiMaj2025Zad5 = () => (
+  <svg viewBox="0 0 400 100" className="w-full max-w-md mx-auto my-5 block">
+    <line x1="85" y1="10" x2="385" y2="10" stroke="#e2e8f0" strokeWidth="1" />
+    <line x1="85" y1="40" x2="385" y2="40" stroke="#e2e8f0" strokeWidth="1" />
+    <line x1="85" y1="70" x2="385" y2="70" stroke="#e2e8f0" strokeWidth="1" />
+    <line x1="155" y1="10" x2="155" y2="82" stroke="#c4a8e8" strokeWidth="1.5" />
+    <line x1="265" y1="10" x2="265" y2="82" stroke="#c4a8e8" strokeWidth="1.5" />
+    <text x="80" y="31" fontSize="12" textAnchor="end" fill="#444" fontStyle="italic">x − 2</text>
+    <text x="80" y="61" fontSize="12" textAnchor="end" fill="#444" fontStyle="italic">x + 3</text>
+    <text x="120" y="33" fontSize="18" textAnchor="middle" fill="#991b1b" fontWeight="bold">−</text>
+    <text x="120" y="63" fontSize="18" textAnchor="middle" fill="#991b1b" fontWeight="bold">−</text>
+    <text x="210" y="33" fontSize="18" textAnchor="middle" fill="#991b1b" fontWeight="bold">−</text>
+    <text x="210" y="63" fontSize="18" textAnchor="middle" fill="#166534" fontWeight="bold">+</text>
+    <text x="325" y="33" fontSize="18" textAnchor="middle" fill="#166534" fontWeight="bold">+</text>
+    <text x="325" y="63" fontSize="18" textAnchor="middle" fill="#166534" fontWeight="bold">+</text>
+    <line x1="88" y1="82" x2="372" y2="82" stroke="#374151" strokeWidth="2" />
+    <polygon points="372,77 384,82 372,87" fill="#374151" />
+    <text x="388" y="86" fontSize="13" fill="#374151" fontStyle="italic">x</text>
+    <line x1="155" y1="77" x2="155" y2="87" stroke="#374151" strokeWidth="2" />
+    <line x1="265" y1="77" x2="265" y2="87" stroke="#374151" strokeWidth="2" />
+    <text x="155" y="98" fontSize="12" textAnchor="middle" fill="#374151">−3</text>
+    <text x="265" y="98" fontSize="12" textAnchor="middle" fill="#374151">2</text>
+  </svg>
+);
+
 // ─── Zadania ──────────────────────────────────────────────────
 
 const SOURCE_CKE_F2023 =
@@ -143,6 +169,117 @@ const tasks = [
         <FormulaBox>
           <Mb>{"\\blacksquare"}</Mb>
         </FormulaBox>
+      </div>
+    ),
+  },
+
+  {
+    id: "cke-2025-maj-zad5-moduly",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "5",
+    points: "0–4",
+    instruction: "Rozwiąż nierówność",
+    mathBlock: "|x - 2| - 2 \\cdot |x + 3| < -2",
+    noteItems: [{ text: "Zapisz obliczenia." }],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"x \\in (-\\infty,\\,-10) \\cup \\left(-\\dfrac{2}{3},\\,+\\infty\\right)"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>Skorzystaj z definicji wartości bezwzględnej:</p>
+        <FormulaBox>
+          <Mb>{"\\left|w\\right| = \\begin{cases} w & \\text{jeżeli } w \\geq 0 \\\\ -w & \\text{jeżeli } w < 0 \\end{cases}"}</Mb>
+        </FormulaBox>
+        <p>
+          Miejsca zerowe wyrażeń pod modułami: <Mi>{"x - 2 = 0"}</Mi> daje <Mi>{"x = 2"}</Mi>, a{" "}
+          <Mi>{"x + 3 = 0"}</Mi> daje <Mi>{"x = -3"}</Mi>. Podziel oś na trzy przedziały i rozwiązuj
+          nierówność w każdym z nich, a na końcu zsumuj rozwiązania z poszczególnych przypadków.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Punkty krytyczne</p>
+        <p>
+          Wyrażenia <Mi>{"x - 2"}</Mi> i <Mi>{"x + 3"}</Mi> zmieniają znak odpowiednio w punktach{" "}
+          <Mi>{"x = 2"}</Mi> oraz <Mi>{"x = -3"}</Mi>. Rozpatrujemy trzy przypadki.
+        </p>
+        <DiagramZnakiMaj2025Zad5 />
+
+        <p className="font-semibold text-stone-800">
+          Przypadek 1: <Mi>{"x < -3"}</Mi>
+        </p>
+        <p>
+          W tym przedziale <Mi>{"x - 2 < 0"}</Mi> oraz <Mi>{"x + 3 < 0"}</Mi>, więc:
+        </p>
+        <Mb>{"|x - 2| = -(x - 2) = 2 - x, \\quad |x + 3| = -(x + 3) = -x - 3"}</Mb>
+        <p>Podstawiamy do nierówności:</p>
+        <Mb>{"(2 - x) - 2(-x - 3) < -2"}</Mb>
+        <Mb>{"2 - x + 2x + 6 < -2"}</Mb>
+        <Mb>{"x + 8 < -2 \\quad\\Rightarrow\\quad x < -10"}</Mb>
+        <p>
+          Część wspólna z warunkiem <Mi>{"x < -3"}</Mi>:{" "}
+          <Mi>{"x \\in (-\\infty,\\,-10)"}</Mi>
+        </p>
+
+        <p className="font-semibold text-stone-800">
+          Przypadek 2: <Mi>{"-3 \\leq x < 2"}</Mi>
+        </p>
+        <p>
+          W tym przedziale <Mi>{"x - 2 < 0"}</Mi>, ale <Mi>{"x + 3 \\geq 0"}</Mi>, więc:
+        </p>
+        <Mb>{"|x - 2| = 2 - x, \\quad |x + 3| = x + 3"}</Mb>
+        <p>Podstawiamy:</p>
+        <Mb>{"(2 - x) - 2(x + 3) < -2"}</Mb>
+        <Mb>{"2 - x - 2x - 6 < -2"}</Mb>
+        <Mb>{"-3x - 4 < -2 \\quad\\Rightarrow\\quad -3x < 2 \\quad\\Rightarrow\\quad x > -\\dfrac{2}{3}"}</Mb>
+        <p>
+          Część wspólna z <Mi>{"-3 \\leq x < 2"}</Mi>:{" "}
+          <Mi>{"x \\in \\left(-\\dfrac{2}{3},\\, 2\\right)"}</Mi>
+        </p>
+
+        <p className="font-semibold text-stone-800">
+          Przypadek 3: <Mi>{"x \\geq 2"}</Mi>
+        </p>
+        <p>
+          W tym przedziale oba wyrażenia pod modułem są nieujemne:
+        </p>
+        <Mb>{"|x - 2| = x - 2, \\quad |x + 3| = x + 3"}</Mb>
+        <p>Podstawiamy:</p>
+        <Mb>{"(x - 2) - 2(x + 3) < -2"}</Mb>
+        <Mb>{"x - 2 - 2x - 6 < -2"}</Mb>
+        <Mb>{"-x - 8 < -2 \\quad\\Rightarrow\\quad -x < 6 \\quad\\Rightarrow\\quad x > -6"}</Mb>
+        <p>
+          Część wspólna z <Mi>{"x \\geq 2"}</Mi>: <Mi>{"x \\in [2,\\,+\\infty)"}</Mi>
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Suma rozwiązań</p>
+        <Mb>
+          {"(-\\infty,\\,-10) \\cup \\left(-\\dfrac{2}{3},\\, 2\\right) \\cup [2,\\,+\\infty) = (-\\infty,\\,-10) \\cup \\left(-\\dfrac{2}{3},\\,+\\infty\\right)"}
+        </Mb>
+        <p>
+          Przedziały <Mi>{"\\left(-\\dfrac{2}{3},\\, 2\\right)"}</Mi> i <Mi>{"[2,\\,+\\infty)"}</Mi> łączą się w{" "}
+          <Mi>{"\\left(-\\dfrac{2}{3},\\,+\\infty\\right)"}</Mi>, bo granica <Mi>{"x = 2"}</Mi> należy do obu (w
+          przypadku 3 mamy <Mi>{"x \\geq 2"}</Mi>).
+        </p>
+        <p className="text-stone-600 text-sm">
+          Sprawdzenie brzegów: dla <Mi>{"x = -10"}</Mi> oraz <Mi>{"x = -\\dfrac{2}{3}"}</Mi> lewa strona nierówności
+          równa się dokładnie <Mi>{"-2"}</Mi>, więc te punkty nie wchodzą do rozwiązania (nierówność jest
+          „ostra”).
+        </p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź:{" "}
+            <Mi>{"x \\in (-\\infty,\\,-10) \\cup \\left(-\\dfrac{2}{3},\\,+\\infty\\right)"}</Mi>
+          </p>
+        </div>
       </div>
     ),
   },

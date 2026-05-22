@@ -8,7 +8,156 @@ import {TaskCard, Mi, Mb, FormulaBox, SideWork, sortTasksBySourceDate, getDispla
 const SOURCE_CKE_CZERWIEC_2025_DOD =
   "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
 
+const SOURCE_CKE_MAJ_2025 =
+  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+
 const tasks = [
+  {
+    id: "cke-2025-maj-zad11-parametr-vieta",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "11",
+    points: "0–6",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Funkcja <Mi>{"f"}</Mi> jest określona wzorem{" "}
+          <Mi>{"f(x) = (2 - m)x^2 - 2(2m + 1)x + m + 8"}</Mi> dla każdej liczby rzeczywistej <Mi>{"x"}</Mi>,
+          gdzie <Mi>{"m"}</Mi> jest liczbą rzeczywistą różną od <Mi>{"2"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Wyznacz wszystkie wartości parametru <Mi>{"m"}</Mi>, dla których funkcja <Mi>{"f"}</Mi> ma dokładnie
+          dwa miejsca zerowe <Mi>{"x_1"}</Mi> oraz <Mi>{"x_2"}</Mi> tego samego znaku, które spełniają warunek{" "}
+          <Mi>{"(x_1 - x_2)^2 \\le 180"}</Mi>. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    mathBlock2: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"m \\in (-8,\\,-3)"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Oznacz współczynniki trójmianu: <Mi>{"a = 2 - m"}</Mi>, <Mi>{"b = -2(2m + 1)"}</Mi>,{" "}
+          <Mi>{"c = m + 8"}</Mi>. Dokładnie dwa miejsca zerowe to <Mi>{"\\Delta > 0"}</Mi>.
+        </p>
+        <p>
+          Ten sam znak pierwiastków (Viète): <Mi>{"x_1 \\cdot x_2 = \\dfrac{c}{a} > 0"}</Mi>.
+        </p>
+        <p>
+          Warunek na odległość pierwiastków zapisz przez sumę i iloczyn:
+        </p>
+        <FormulaBox>
+          <Mb>{"(x_1 - x_2)^2 = (x_1 + x_2)^2 - 4x_1 x_2"}</Mb>
+        </FormulaBox>
+        <p>
+          Podstaw <Mi>{"x_1 + x_2 = -\\dfrac{b}{a}"}</Mi> i <Mi>{"x_1 x_2 = \\dfrac{c}{a}"}</Mi>, a potem
+          porównaj z <Mi>{"180"}</Mi>. Na końcu weź przecięcie wszystkich warunków na <Mi>{"m"}</Mi> (pamiętaj, że{" "}
+          <Mi>{"m \\neq 2"}</Mi>).
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Współczynniki i dokładnie dwa miejsca zerowe</p>
+        <p>
+          Funkcja <Mi>{"f"}</Mi> jest kwadratowa, bo <Mi>{"m \\neq 2"}</Mi>, więc <Mi>{"a = 2 - m \\neq 0"}</Mi>.
+          Mamy:
+        </p>
+        <Mb>{"a = 2 - m, \\qquad b = -2(2m + 1) = -4m - 2, \\qquad c = m + 8"}</Mb>
+        <p>
+          Dokładnie dwa miejsca zerowe oznaczają dwa różne pierwiastki rzeczywiste, czyli dodatnią deltę:
+        </p>
+        <Mb>{"\\Delta = b^2 - 4ac"}</Mb>
+        <Mb>
+          {"\\Delta = (-4m - 2)^2 - 4(2 - m)(m + 8) = 16m^2 + 16m + 4 + 4m^2 + 24m - 64 = 20m^2 + 40m - 60"}
+        </Mb>
+        <Mb>{"\\Delta = 20(m^2 + 2m - 3) = 20(m + 3)(m - 1)"}</Mb>
+        <Mb>{"\\Delta > 0 \\quad \\Leftrightarrow \\quad (m + 3)(m - 1) > 0 \\quad \\Leftrightarrow \\quad m < -3 \\quad \\text{lub} \\quad m > 1"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Ten sam znak miejsc zerowych</p>
+        <p>Z wzorów Viète'a iloczyn pierwiastków:</p>
+        <Mb>{"x_1 \\cdot x_2 = \\dfrac{c}{a} = \\dfrac{m + 8}{2 - m}"}</Mb>
+        <p>
+          Warunek <Mi>{"x_1 \\cdot x_2 > 0"}</Mi> (ściśle dodatni, bo pierwiastki tego samego znaku i różne, więc
+          żaden nie jest zerem):
+        </p>
+        <Mb>{"\\dfrac{m + 8}{2 - m} > 0"}</Mb>
+        <p>
+          Znak ilorazu: miejsca zerowe licznika i mianownika to <Mi>{"m = -8"}</Mi> oraz <Mi>{"m = 2"}</Mi> (ten
+          drugi odrzucamy z treści zadania). Na osi:
+        </p>
+        <Mb>{"-8 < m < 2"}</Mb>
+        <p>
+          Przecięcie z warunkiem <Mi>{"\\Delta > 0"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"(-8,\\,-3) \\cup (1,\\,2)"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 3. Warunek <Mi>{"(x_1 - x_2)^2 \\le 180"}</Mi></p>
+        <p>
+          Korzystamy z tożsamości (jak we wskazówce):
+        </p>
+        <Mb>
+          {"(x_1 - x_2)^2 = (x_1 + x_2)^2 - 4x_1 x_2 = \\left(-\\dfrac{b}{a}\\right)^2 - 4 \\cdot \\dfrac{c}{a} = \\dfrac{b^2 - 4ac}{a^2} = \\dfrac{\\Delta}{a^2}"}
+        </Mb>
+        <p>
+          Warunek przyjmuje postać:
+        </p>
+        <Mb>{"\\dfrac{\\Delta}{a^2} = \\dfrac{20(m + 3)(m - 1)}{(2 - m)^2} \\le 180"}</Mb>
+        <Mb>{"\\dfrac{(m + 3)(m - 1)}{(2 - m)^2} \\le 9"}</Mb>
+        <p>
+          Na zbiorach z kroku 2 mamy <Mi>{"(m + 3)(m - 1) > 0"}</Mi> oraz <Mi>{"a = 2 - m > 0"}</Mi>, więc można
+          pomnożyć obie strony przez dodatni mianownik <Mi>{"(2 - m)^2"}</Mi>:
+        </p>
+        <Mb>{"(m + 3)(m - 1) \\le 9(2 - m)^2"}</Mb>
+        <Mb>{"m^2 + 2m - 3 \\le 36 - 36m + 9m^2"}</Mb>
+        <Mb>{"8m^2 - 38m + 39 \\ge 0"}</Mb>
+        <p>Liczymy deltę trójmianu kwadratowego:</p>
+        <Mb>{"\\Delta_t = (-38)^2 - 4 \\cdot 8 \\cdot 39 = 1444 - 1248 = 196 = 14^2"}</Mb>
+        <Mb>{"m = \\dfrac{38 \\pm 14}{16} \\quad \\Longrightarrow \\quad m = \\dfrac{3}{2} \\quad \\text{lub} \\quad m = \\dfrac{13}{4}"}</Mb>
+        <p>
+          Trójmian <Mi>{"8m^2 - 38m + 39"}</Mi> ma współczynnik przy <Mi>{"m^2"}</Mi> dodatni, więc jest nieujemny
+          poza pierwiastkami:
+        </p>
+        <Mb>{"m \\le \\dfrac{3}{2} \\quad \\text{lub} \\quad m \\ge \\dfrac{13}{4}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Przecięcie wszystkich warunków</p>
+        <p>
+          Na przedziale <Mi>{"(-8,\\,-3)"}</Mi> warunek <Mi>{"m \\le \\dfrac{3}{2}"}</Mi> jest spełniony zawsze, więc
+          zostaje cały przedział:
+        </p>
+        <Mb>{"m \\in (-8,\\,-3)"}</Mb>
+        <p>
+          Na przedziale <Mi>{"(1,\\,2)"}</Mi> potrzebujemy dodatkowo <Mi>{"m \\ge \\dfrac{13}{4}"}</Mi>, ale{" "}
+          <Mi>{"\\dfrac{13}{4} > 2"}</Mi>, więc tu nie ma żadnego rozwiązania.
+        </p>
+        <p>
+          Sprawdzamy granice (otwarte z powodu <Mi>{"\\Delta > 0"}</Mi> i <Mi>{"x_1 x_2 > 0"}</Mi>): dla{" "}
+          <Mi>{"m = -8"}</Mi> iloczyn pierwiastków jest zerem, dla <Mi>{"m = -3"}</Mi> delta jest zerem.
+        </p>
+        <FormulaBox>
+          <Mb>{"m \\in (-8,\\,-3)"}</Mb>
+        </FormulaBox>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"m \\in (-8,\\,-3)"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-czerwiec-dod-zad5-vieta",
     source: SOURCE_CKE_CZERWIEC_2025_DOD,

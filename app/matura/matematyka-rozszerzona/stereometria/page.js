@@ -29,11 +29,132 @@ export default function StereometriaPage() {
             Stereometria
           </h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">
-            3 zadania
+            4 zadania
           </p>
         </div>
 
         <div className="space-y-12">
+
+        {/* ── Zadanie 4 (CKE maj 2025, zad. 10) ─────────── */}
+        <TaskCard
+          number="4"
+          points="0–5"
+          source="Matura z matematyki, poziom rozszerzony, CKE, maj 2025"
+          instruction={
+            <div className="space-y-3">
+              <p>
+                Dany jest ostrosłup <Mi>{"ABCDS"}</Mi> o podstawie <Mi>{"ABCD"}</Mi> będącej kwadratem. Bok boczny{" "}
+                <Mi>{"SA"}</Mi> jest wysokością tego ostrosłupa. Długość krawędzi podstawy tego ostrosłupa jest
+                równa <Mi>{"3\\sqrt{34}"}</Mi>. Kąt <Mi>{"\\beta"}</Mi> jest kątem między ścianami bocznymi{" "}
+                <Mi>{"CDS"}</Mi> i <Mi>{"BCS"}</Mi>, a <Mi>{"\\cos\\beta = -\\dfrac{9}{25}"}</Mi>.
+              </p>
+              <p className="font-semibold text-stone-800">
+                Oblicz pole powierzchni bocznej tego ostrosłupa. Zapisz obliczenia.
+              </p>
+            </div>
+          }
+          answer={<p><Mi>{"P_b = 918"}</Mi></p>}
+          hint={
+            <div className="space-y-3">
+              <p>
+                Na krawędzi <Mi>{"CS"}</Mi> wybierz punkt <Mi>{"F"}</Mi> taki, że w każdej ścianie bocznej ze
+                wspólną krawędzią <Mi>{"CS"}</Mi> odcinek z wierzchołka podstawy do <Mi>{"F"}</Mi> jest
+                prostopadły do <Mi>{"CS"}</Mi> (np. <Mi>{"\\angle BFC = 90^\\circ"}</Mi> w ścianie{" "}
+                <Mi>{"BCS"}</Mi>). Wtedy <Mi>{"\\beta = \\angle BFD"}</Mi> i możesz użyć twierdzenia cosinusów w
+                równoramiennym trójkącie <Mi>{"BFD"}</Mi> z przekątną podstawy <Mi>{"BD"}</Mi>.
+              </p>
+              <p>
+                Z Pitagorasa w trójkącie <Mi>{"BFC"}</Mi> (prosty przy <Mi>{"F"}</Mi>) wyznacz <Mi>{"|CF|"}</Mi>.
+                Potem w trójkącie <Mi>{"BFS"}</Mi> (też prosty przy <Mi>{"F"}</Mi>):{" "}
+                <Mi>{"|BS|^2 = |BF|^2 + |SF|^2"}</Mi>, a <Mi>{"|CS| = |CF| + |SF|"}</Mi>. Połącz to z{" "}
+                <Mi>{"|BS|^2 = |AB|^2 + |SA|^2"}</Mi> i <Mi>{"|CS|^2 = 2|AB|^2 + |SA|^2"}</Mi> (wysokość{" "}
+                <Mi>{"SA"}</Mi> prostopadła do podstawy).
+              </p>
+              <p>
+                Pole boczne: dwa trójkąty przy <Mi>{"A"}</Mi> mają pola <Mi>{"\\dfrac{1}{2}|SA|\\cdot|AB|"}</Mi>, a
+                ściany <Mi>{"BCS"}</Mi> i <Mi>{"CDS"}</Mi>: <Mi>{"\\dfrac{1}{2}|CS|\\cdot|BF|"}</Mi>.
+              </p>
+            </div>
+          }
+          solution={
+            <div className="space-y-4">
+              <p className="font-semibold text-stone-800">Krok 1. Punkt <Mi>{"F"}</Mi> i kąt między ścianami</p>
+              <p>
+                Niech <Mi>{"a = |AB| = 3\\sqrt{34}"}</Mi>. Na krawędzi <Mi>{"CS"}</Mi> oznaczmy punkt <Mi>{"F"}</Mi>{" "}
+                taki, że w ścianie <Mi>{"BCS"}</Mi> mamy <Mi>{"BF \\perp CS"}</Mi> (czyli <Mi>{"\\angle BFC = 90^\\circ"}</Mi>),
+                a w ścianie <Mi>{"DCS"}</Mi> analogicznie <Mi>{"DF \\perp CS"}</Mi>. Z twierdzenia o trzech
+                prostopadłych (bo <Mi>{"SA"}</Mi> jest wysokością, więc <Mi>{"SA \\perp"}</Mi> płaszczyźnie podstawy):
+                takie prostopadłości w ścianach bocznych są możliwe, a kąt między ścianami <Mi>{"BCS"}</Mi> i{" "}
+                <Mi>{"CDS"}</Mi> ma miarę <Mi>{"\\angle BFD = \\beta"}</Mi>.
+              </p>
+              <p>
+                Przekątna kwadratu: <Mi>{"|BD| = a\\sqrt{2} = 3\\sqrt{68}"}</Mi>. Trójkąt <Mi>{"BFD"}</Mi> jest
+                równoramiennym (<Mi>{"BF = DF"}</Mi>). Z twierdzenia cosinusów przy wierzchołku <Mi>{"F"}</Mi>:
+              </p>
+              <Mb>
+                {"|BD|^2 = 2|BF|^2 - 2|BF|^2\\cos\\beta = 2|BF|^2\\left(1 + \\dfrac{9}{25}\\right) = \\dfrac{68}{25}|BF|^2"}
+              </Mb>
+              <Mb>{"|BD|^2 = 9 \\cdot 68 = 612 \\quad \\Longrightarrow \\quad |BF|^2 = 225, \\quad |BF| = 15"}</Mb>
+
+              <p className="font-semibold text-stone-800">Krok 2. Odcinek <Mi>{"CF"}</Mi> i dalsza część krawędzi <Mi>{"CS"}</Mi></p>
+              <p>
+                W prostokątnym trójkącie <Mi>{"BFC"}</Mi> (kąt prosty przy <Mi>{"F"}</Mi>):
+              </p>
+              <Mb>{"|BC|^2 = |BF|^2 + |CF|^2 \\quad \\Longrightarrow \\quad |CF|^2 = 9 \\cdot 34 - 225 = 81, \\quad |CF| = 9"}</Mb>
+              <p>
+                Punkt <Mi>{"F"}</Mi> leży między <Mi>{"C"}</Mi> a <Mi>{"S"}</Mi> na krawędzi <Mi>{"CS"}</Mi>, więc{" "}
+                <Mi>{"|CS| = |CF| + |SF|"}</Mi>. W prostokątnym trójkącie <Mi>{"BFS"}</Mi> (kąt prosty przy{" "}
+                <Mi>{"F"}</Mi>, bo <Mi>{"BF \\perp CS"}</Mi>):
+              </p>
+              <Mb>{"|BS|^2 = |BF|^2 + |SF|^2 = 225 + |SF|^2"}</Mb>
+              <p>
+                Wysokość <Mi>{"SA"}</Mi> jest prostopadła do podstawy, więc <Mi>{"SA \\perp AB"}</Mi> i trójkąt{" "}
+                <Mi>{"SAB"}</Mi> jest prostokątny przy <Mi>{"A"}</Mi>:
+              </p>
+              <Mb>{"|BS|^2 = |SA|^2 + a^2"}</Mb>
+              <p>
+                Dla <Mi>{"C"}</Mi> w kwadracie: <Mi>{"|CS|^2 = |SC|^2 = 2a^2 + |SA|^2"}</Mi> (z twierdzenia
+                Pitagorasa w przestrzeni, bo <Mi>{"SA \\perp"}</Mi> podstawę i <Mi>{"AC"}</Mi> to przekątna kwadratu
+                o boku <Mi>{"a"}</Mi> w płaszczyźnie podstawy).
+              </p>
+              <p>
+                Podstawiamy <Mi>{"|BS|^2 = 225 + |SF|^2"}</Mi> oraz <Mi>{"|CS| = 9 + |SF|"}</Mi>:
+              </p>
+              <Mb>{"2a^2 + |SA|^2 = (9 + |SF|)^2, \\qquad a^2 + |SA|^2 = 225 + |SF|^2"}</Mb>
+              <p>Odejmujemy równania stronami:</p>
+              <Mb>{"a^2 = (9 + |SF|)^2 - |SF|^2 - 225 = 81 + 18|SF| - 225 = 18|SF| - 144"}</Mb>
+              <Mb>{"306 = 18|SF| - 144 \\quad \\Longrightarrow \\quad |SF| = 25, \\quad |CS| = 34"}</Mb>
+              <Mb>{"|SA|^2 = 225 + 625 - 306 = 544 \\quad \\Longrightarrow \\quad |SA| = 4\\sqrt{34}"}</Mb>
+              <p className="text-stone-600 text-sm">
+                Sprawdzenie: <Mi>{"|CS|^2 = 2 \\cdot 306 + 544 = 1156 = 34^2"}</Mi>.
+              </p>
+
+              <p className="font-semibold text-stone-800">Krok 3. Pole powierzchni bocznej</p>
+              <p>
+                Ostrosłup ma cztery ściany boczne. Przy wierzchołku <Mi>{"A"}</Mi> (wysokość z <Mi>{"S"}</Mi>):
+              </p>
+              <Mb>
+                {"P_{SAB} = P_{SAD} = \\dfrac{1}{2} \\cdot |SA| \\cdot a = \\dfrac{1}{2} \\cdot 4\\sqrt{34} \\cdot 3\\sqrt{34} = 204"}
+              </Mb>
+              <p>
+                Ściany <Mi>{"BCS"}</Mi> i <Mi>{"CDS"}</Mi>: w każdej trójkąt ma podstawę <Mi>{"CS"}</Mi> i wysokość{" "}
+                <Mi>{"BF"}</Mi> lub <Mi>{"DF"}</Mi> (prostopadłą do <Mi>{"CS"}</Mi>):
+              </p>
+              <Mb>
+                {"P_{BCS} = P_{CDS} = \\dfrac{1}{2} \\cdot |CS| \\cdot |BF| = \\dfrac{1}{2} \\cdot 34 \\cdot 15 = 255"}
+              </Mb>
+              <FormulaBox>
+                <Mb>{"P_b = 2 \\cdot 204 + 2 \\cdot 255 = 408 + 510 = 918"}</Mb>
+              </FormulaBox>
+
+              <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+                <p className="font-semibold text-stone-800">
+                  Odpowiedź: <Mi>{"P_b = 918"}</Mi>
+                </p>
+              </div>
+            </div>
+          }
+        />
 
         {/* ── Zadanie 1 (CKE maj 2026) ─────────────────── */}
         <TaskCard
@@ -436,7 +557,6 @@ export default function StereometriaPage() {
           }
         />
 
-        {/* ── 
         {/* ── Zadanie 3 (CKE czerwiec 2025, zad. 10) ─────── */}
         <TaskCard
           number="3"

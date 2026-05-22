@@ -8,7 +8,124 @@ import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} f
 const SOURCE_CKE_CZERWIEC_2025_DOD =
   "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
 
+const SOURCE_CKE_MAJ_2025 =
+  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+
 const tasks = [
+  {
+    id: "cke-2025-maj-zad9-rownanie-tryg",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "9",
+    points: "0–5",
+    instruction: <span>Rozwiąż równanie</span>,
+    mathBlock: "3\\cos^2 x + \\sqrt{3}\\sin(2x) - 3\\sin^2 x = 0",
+    noteItems: [
+      { text: "w przedziale " },
+      { math: "[-\\pi,\\,\\pi]" },
+      { text: ". Zapisz obliczenia." },
+    ],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>
+          {"x \\in \\left\\{-\\dfrac{2\\pi}{3},\\,-\\dfrac{\\pi}{6},\\,\\dfrac{\\pi}{3},\\,\\dfrac{5\\pi}{6}\\right\\}"}
+        </Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Zauważ, że <Mi>{"3\\cos^2 x - 3\\sin^2 x = 3(\\cos^2 x - \\sin^2 x) = 3\\cos(2x)"}</Mi>. Równanie
+          sprowadza się do postaci z argumentem podwojonym:
+        </p>
+        <Mb>{"3\\cos(2x) + \\sqrt{3}\\sin(2x) = 0"}</Mb>
+        <p>
+          Podziel obie strony przez <Mi>{"2\\sqrt{3}"}</Mi> (liczba dodatnia, więc równoważność zachodzi) i
+          porównaj z wzorem na cosinus sumy kątów:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\cos(\\alpha - \\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta"}</Mb>
+        </FormulaBox>
+        <p>
+          Powinieneś otrzymać równanie typu <Mi>{"\\cos\\left(2x - \\dfrac{\\pi}{6}\\right) = 0"}</Mi>, a potem
+          rozwiąż je w zadanym przedziale.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-bold text-[#52297a] text-base">Metoda 1: cosinus argumentu podwojonego</p>
+
+        <p className="font-semibold text-stone-800">Krok 1. Wzór na cosinus podwójny</p>
+        <p>
+          Korzystamy ze wzoru <Mi>{"\\cos(2x) = \\cos^2 x - \\sin^2 x"}</Mi>:
+        </p>
+        <Mb>{"3\\cos^2 x + \\sqrt{3}\\sin(2x) - 3\\sin^2 x = 3(\\cos^2 x - \\sin^2 x) + \\sqrt{3}\\sin(2x)"}</Mb>
+        <Mb>{"= 3\\cos(2x) + \\sqrt{3}\\sin(2x) = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Dzielenie przez <Mi>{"2\\sqrt{3}"}</Mi></p>
+        <p>
+          Dzielimy obie strony przez <Mi>{"2\\sqrt{3} > 0"}</Mi> (nie zmienia znaku równania):
+        </p>
+        <Mb>
+          {"\\dfrac{3}{2\\sqrt{3}}\\cos(2x) + \\dfrac{\\sqrt{3}}{2\\sqrt{3}}\\sin(2x) = \\dfrac{\\sqrt{3}}{2}\\cos(2x) + \\dfrac{1}{2}\\sin(2x) = 0"}
+        </Mb>
+        <p>
+          Liczby <Mi>{"\\dfrac{\\sqrt{3}}{2}"}</Mi> i <Mi>{"\\dfrac{1}{2}"}</Mi> to wartości cosinusa i sinusa kąta{" "}
+          <Mi>{"\\dfrac{\\pi}{6}"}</Mi>:
+        </p>
+        <Mb>
+          {"\\cos\\dfrac{\\pi}{6}\\cdot\\cos(2x) + \\sin\\dfrac{\\pi}{6}\\cdot\\sin(2x) = \\cos\\left(2x - \\dfrac{\\pi}{6}\\right) = 0"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Rozwiązanie równania</p>
+        <Mb>{"2x - \\dfrac{\\pi}{6} = \\dfrac{\\pi}{2} + k\\pi, \\quad k \\in \\mathbb{Z}"}</Mb>
+        <Mb>{"2x = \\dfrac{2\\pi}{3} + k\\pi \\quad \\Longrightarrow \\quad x = \\dfrac{\\pi}{3} + \\dfrac{k\\pi}{2}"}</Mb>
+        <p>W przedziale <Mi>{"[-\\pi,\\,\\pi]"}</Mi>:</p>
+        <Mb>
+          {"k = -2 \\Rightarrow x = -\\dfrac{2\\pi}{3},\\quad k = -1 \\Rightarrow x = -\\dfrac{\\pi}{6},\\quad k = 0 \\Rightarrow x = \\dfrac{\\pi}{3},\\quad k = 1 \\Rightarrow x = \\dfrac{5\\pi}{6}"}
+        </Mb>
+
+        <div className="mt-6 pt-6 border-t-2 border-[#d4bef5]" />
+        <p className="font-bold text-[#52297a] text-base">Metoda 2: tangens argumentu podwojonego</p>
+
+        <p className="font-semibold text-stone-800">Krok 1. Ten sam początek</p>
+        <Mb>{"3\\cos(2x) + \\sqrt{3}\\sin(2x) = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Tangens</p>
+        <p>
+          Przenosimy wyraz z cosinusem na prawą stronę. Gdy <Mi>{"\\cos(2x) \\neq 0"}</Mi>, dzielimy przez{" "}
+          <Mi>{"\\cos(2x)"}</Mi>:
+        </p>
+        <Mb>{"\\sqrt{3}\\sin(2x) = -3\\cos(2x) \\quad \\Longrightarrow \\quad \\tg(2x) = -\\sqrt{3}"}</Mb>
+        <p>
+          (Gdy <Mi>{"\\cos(2x) = 0"}</Mi>, lewa strona pierwotnego równania daje{" "}
+          <Mi>{"\\sqrt{3}\\sin(2x) = \\pm\\sqrt{3} \\neq 0"}</Mi>, więc nie ma dodatkowych rozwiązań spoza
+          tego przypadku.)
+        </p>
+        <Mb>{"2x = -\\dfrac{\\pi}{3} + k\\pi \\quad \\Longrightarrow \\quad x = -\\dfrac{\\pi}{6} + \\dfrac{k\\pi}{2}"}</Mb>
+        <p>To ten sam ciąg rozwiązań co w metodzie 1. W <Mi>{"[-\\pi,\\,\\pi]"}</Mi>:</p>
+        <FormulaBox>
+          <Mb>
+            {"x \\in \\left\\{-\\dfrac{2\\pi}{3},\\,-\\dfrac{\\pi}{6},\\,\\dfrac{\\pi}{3},\\,\\dfrac{5\\pi}{6}\\right\\}"}
+          </Mb>
+        </FormulaBox>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź:{" "}
+            <Mi>
+              {"x \\in \\left\\{-\\dfrac{2\\pi}{3},\\,-\\dfrac{\\pi}{6},\\,\\dfrac{\\pi}{3},\\,\\dfrac{5\\pi}{6}\\right\\}"}
+            </Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-czerwiec-dod-zad6-rownanie-cos",
     source: SOURCE_CKE_CZERWIEC_2025_DOD,

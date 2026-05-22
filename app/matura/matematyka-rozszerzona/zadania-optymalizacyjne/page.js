@@ -4,9 +4,16 @@ import { ArrowLeft } from "lucide-react";
 import { getSourceSortKey, getDisplayNumber } from "../_components";
 import { Zad12 } from "./Zad12";
 import { Zad12Czerwiec2025Dod } from "./Zad12Czerwiec2025Dod";
+import { Zad12Maj2025 } from "./Zad12Maj2025";
 import { Zad1Smwp2026 } from "./Zad1Smwp2026";
 
 const COMPOUND_TASKS = [
+  {
+    id: "cke-maj-2025-stozek",
+    source: "Matura z matematyki, poziom rozszerzony, CKE, maj 2025",
+    points: "0–6",
+    Component: Zad12Maj2025,
+  },
   {
     id: "cke-maj-2026-kwietnik",
     source:

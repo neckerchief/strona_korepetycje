@@ -8,10 +8,138 @@ import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} f
 const SOURCE_CKE_CZERWIEC_2025_DOD =
   "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
 
+const SOURCE_CKE_MAJ_2025 =
+  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+
 const SOURCE_CKE_F2023 =
   "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
 
 const tasks = [
+  {
+    id: "cke-2025-maj-zad4-kostka-warunkowe",
+    source: SOURCE_CKE_MAJ_2025,
+    number: "4",
+    points: "0–3",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Doświadczenie losowe polega na czterokrotnym rzucie symetryczną sześcienną kostką do gry, która na
+          każdej ściance ma inną liczbę oczek – od jednego oczka do sześciu oczek.
+        </p>
+        <p className="font-semibold">
+          Oblicz prawdopodobieństwo zdarzenia polegającego na tym, że otrzymamy co najmniej jeden raz sześć
+          oczek, pod warunkiem że otrzymamy dokładnie dwa razy pięć oczek. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"\\dfrac{9}{25}"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          To jest <strong>prawdopodobieństwo warunkowe</strong>. Oznacz: <Mi>{"A"}</Mi> = „co najmniej jedna
+          szóstka”, <Mi>{"B"}</Mi> = „dokładnie dwie piątki”. Szukasz <Mi>{"P(A|B)"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>{"P(A|B) = \\frac{|A \\cap B|}{|B|}"}</Mb>
+        </FormulaBox>
+        <p>
+          Każdy ciąg czterech wyników rzutu jest jednakowo prawdopodobny (kostka symetryczna). Policz najpierw,
+          ile jest ciągów spełniających <Mi>{"B"}</Mi>, a potem ile z nich spełnia też <Mi>{"A"}</Mi>.
+        </p>
+        <p>
+          Przy dokładnie dwóch piątkach: wybierz 2 pozycje na piątki (<Mi>{"\\binom{4}{2}"}</Mi>). Na pozostałych
+          dwóch nie może być piątki (5 możliwości na każdą). Dla <Mi>{"A"}</Mi> na tych dwóch pozycjach musi
+          wypaść przynajmniej jedna szóstka.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Przestrzeń zdarzeń elementarnych</p>
+        <p>
+          Rzucamy kostką <Mi>{"4"}</Mi> razy. Każdy wynik to jedno z <Mi>{"6"}</Mi> oczek, więc każdy ciąg
+          czterech wyników (np. <Mi>{"(3,5,1,6)"}</Mi>) jest jednym zdarzeniem elementarnym. Kostka jest
+          symetryczna, więc wszystkie <Mi>{"6^4 = 1296"}</Mi> ciągów są jednakowo prawdopodobne.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Zdarzenia A i B</p>
+        <p>
+          <Mi>{"B"}</Mi>: dokładnie dwa razy wypada pięć oczek.
+        </p>
+        <p>
+          <Mi>{"A"}</Mi>: co najmniej jeden raz wypada sześć oczek.
+        </p>
+        <p>
+          Szukamy prawdopodobieństwa <Mi>{"A"}</Mi> <strong>pod warunkiem</strong> <Mi>{"B"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"P(A|B) = \\frac{P(A \\cap B)}{P(B)} = \\frac{|A \\cap B|}{|B|}"}</Mb>
+        </FormulaBox>
+        <p>
+          W liczniku i mianowniku liczymy <strong>liczbę ciągów</strong> (zdarzeń elementarnych), bo każdy ciąg
+          ma to samo prawdopodobieństwo <Mi>{"\\left(\\frac{1}{6}\\right)^4"}</Mi>, więc skraca się w ułamku.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Ile ciągów spełnia warunek B?</p>
+        <p>
+          Musimy mieć dokładnie <Mi>{"2"}</Mi> piątki. Wybieramy, na których <Mi>{"2"}</Mi> z <Mi>{"4"}</Mi>{" "}
+          rzutów wypadnie piątka:
+        </p>
+        <Mb>{"\\binom{4}{2} = 6"}</Mb>
+        <p>
+          Na pozostałych <Mi>{"2"}</Mi> rzutach <strong>nie może</strong> być piątki (inaczej byłoby więcej niż
+          dwie piątki). Na każdym z tych rzutów może wypaść: <Mi>{"1, 2, 3, 4"}</Mi> lub <Mi>{"6"}</Mi>, czyli{" "}
+          <Mi>{"5"}</Mi> możliwości:
+        </p>
+        <Mb>{"5 \\cdot 5 = 25"}</Mb>
+        <FormulaBox>
+          <Mb>{"|B| = \\binom{4}{2} \\cdot 5^2 = 6 \\cdot 25 = 150"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 4. Ile ciągów spełnia A ∩ B?</p>
+        <p>
+          Nadal dokładnie <Mi>{"2"}</Mi> piątki (<Mi>{"\\binom{4}{2} = 6"}</Mi> sposobów na ich pozycje). Na
+          dwóch pozostałych rzutach musi być <strong>co najmniej jedna szóstka</strong> i nadal nie może być
+          piątki.
+        </p>
+        <p>
+          <strong>Metoda dopełnienia</strong> (wygodna, gdy „co najmniej jeden”): policz wszystkie ciągi z{" "}
+          <Mi>{"B"}</Mi>, a potem odejmij te, w których <strong>nie ma</strong> szóstki.
+        </p>
+        <p>
+          Ciągi z <Mi>{"B"}</Mi> bez szóstki: na dwóch wolnych pozycjach tylko <Mi>{"1, 2, 3, 4"}</Mi> (4
+          możliwości na rzut):
+        </p>
+        <Mb>{"\\binom{4}{2} \\cdot 4^2 = 6 \\cdot 16 = 96"}</Mb>
+        <p>
+          Zatem ciągów z <Mi>{"B"}</Mi>, w których jest co najmniej jedna szóstka:
+        </p>
+        <FormulaBox>
+          <Mb>{"|A \\cap B| = 150 - 96 = 54"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 5. Prawdopodobieństwo warunkowe</p>
+        <Mb>{"P(A|B) = \\frac{|A \\cap B|}{|B|} = \\frac{54}{150} = \\frac{9}{25}"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"\\dfrac{9}{25}"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-czerwiec-dod-zad1-bernoulli",
     source: SOURCE_CKE_CZERWIEC_2025_DOD,
