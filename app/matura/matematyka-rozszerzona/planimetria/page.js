@@ -14,6 +14,8 @@ const SOURCE_CKE_CZERWIEC_2025_DOD =
 
 const SOURCE_CKE_MAJ_2025 =
   "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+const SOURCE_PROBNA_PL_MARZEC_2025 =
+  "Matura próbna, Politechnika Łódzka, marzec 2025";
 
 const tasks = [
   {
@@ -904,6 +906,139 @@ const tasks = [
           <p className="font-semibold text-stone-800">
             Odpowiedź: <Mi>{"|BC| = 5"}</Mi>, <Mi>{"|CD| = 6"}</Mi>,{" "}
             <Mi>{"P_{ABCD} = 30\\sqrt{3}"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // ── Matura próbna PŁ marzec 2025 ──────────────────────────
+  {
+    id: "probna-pl-2025-marzec-zad6-trojkaty-podobne",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "6",
+    points: "0–4",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Przez punkt wewnętrzny <Mi>{"P"}</Mi> trójkąta <Mi>{"ABC"}</Mi> poprowadzono proste równoległe
+          do wszystkich boków. Wycięły one trzy trójkąty o polach odpowiednio: <Mi>{"1"}</Mi>,{" "}
+          <Mi>{"4"}</Mi> i <Mi>{"9"}</Mi>. Oblicz pole trójkąta <Mi>{"ABC"}</Mi>.
+        </p>
+
+        {/* Schemat */}
+        <div className="flex justify-center my-2">
+          <svg viewBox="0 0 340 280" className="w-full max-w-sm" aria-label="Trójkąt ABC z punktem P i trzema małymi trójkątami wychodzącymi z P">
+            {/* Duży trójkąt ABC */}
+            <polygon points="170,20 30,260 310,260" fill="none" stroke="#6d3a8e" strokeWidth="2" />
+
+            {/* Proste przez P równoległe do boków (przerywane) */}
+            <line x1="100" y1="140" x2="240" y2="140" stroke="#c4a8e8" strokeWidth="1.2" strokeDasharray="5,3" />
+            <line x1="147" y1="60" x2="263" y2="260" stroke="#c4a8e8" strokeWidth="1.2" strokeDasharray="5,3" />
+            <line x1="217" y1="100" x2="123" y2="260" stroke="#c4a8e8" strokeWidth="1.2" strokeDasharray="5,3" />
+
+            {/* Trójkąt 1: na boku AB, pole = 4 */}
+            <polygon points="147,60 100,140 193,140" fill="#fef3c7" fillOpacity="0.7" stroke="#92400e" strokeWidth="1.5" />
+            {/* Trójkąt 2: na boku BC, pole = 9 */}
+            <polygon points="123,260 263,260 193,140" fill="#dcfce7" fillOpacity="0.7" stroke="#166534" strokeWidth="1.5" />
+            {/* Trójkąt 3: na boku CA, pole = 1 */}
+            <polygon points="240,140 217,100 193,140" fill="#f2ecfb" fillOpacity="0.7" stroke="#52297a" strokeWidth="1.5" />
+
+            {/* Punkt P */}
+            <circle cx="193" cy="140" r="3.5" fill="#6d3a8e" />
+            <text x="189" y="130" fontSize="13" fontWeight="700" fill="#6d3a8e">P</text>
+
+            {/* Etykiety wierzchołków */}
+            <text x="163" y="14" fontSize="14" fontWeight="700" fill="#2d1458">A</text>
+            <text x="12" y="274" fontSize="14" fontWeight="700" fill="#2d1458">B</text>
+            <text x="314" y="274" fontSize="14" fontWeight="700" fill="#2d1458">C</text>
+
+            {/* Pola małych trójkątów */}
+            <text x="147" y="118" fontSize="13" fontWeight="600" fill="#92400e" textAnchor="middle">4</text>
+            <text x="193" y="228" fontSize="13" fontWeight="600" fill="#166534" textAnchor="middle">9</text>
+            <text x="216" y="128" fontSize="11" fontWeight="600" fill="#52297a" textAnchor="middle">1</text>
+          </svg>
+        </div>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"P_{ABC} = 36"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Trzy proste przez <Mi>{"P"}</Mi> wycinają trzy trójkąty, z których każdy ma wierzchołek
+          w <Mi>{"P"}</Mi> i podstawę na innym boku <Mi>{"ABC"}</Mi>. Boki każdego z tych trójkątów
+          są równoległe do boków <Mi>{"ABC"}</Mi>, więc mają te same kąty, a zatem każdy z nich
+          jest <strong>podobny</strong> do <Mi>{"ABC"}</Mi>.
+        </p>
+        <p>
+          Każdy mały trójkąt ma jeden bok na boku <Mi>{"ABC"}</Mi>. Te trzy boki dzielą bok
+          dużego trójkąta na trzy części, więc ich współczynniki podobieństwa sumują się do{" "}
+          <Mi>{"1"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Trzy trójkąty wychodzące z <Mi>{"P"}</Mi></p>
+        <p>
+          Trzy proste przez <Mi>{"P"}</Mi> (równoległe kolejno do <Mi>{"BC"}</Mi>, <Mi>{"CA"}</Mi>{" "}
+          i <Mi>{"AB"}</Mi>) przecinają boki trójkąta <Mi>{"ABC"}</Mi> w sześciu punktach. Powstają
+          trzy trójkąty, z których każdy ma jeden wierzchołek w <Mi>{"P"}</Mi>, a przeciwległy bok
+          (podstawę) na jednym z boków <Mi>{"ABC"}</Mi>. Przy wierzchołkach <Mi>{"A"}</Mi>,{" "}
+          <Mi>{"B"}</Mi>, <Mi>{"C"}</Mi> powstają równoległoboki.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Podobieństwo do <Mi>{"ABC"}</Mi></p>
+        <p>
+          Weźmy np. trójkąt z podstawą na <Mi>{"BC"}</Mi>. Jego dwa boki wychodzące z{" "}
+          <Mi>{"P"}</Mi> leżą na prostych równoległych do <Mi>{"CA"}</Mi> i <Mi>{"AB"}</Mi>,
+          a podstawa leży na <Mi>{"BC"}</Mi>. Wszystkie trzy boki są więc równoległe do
+          odpowiednich boków <Mi>{"ABC"}</Mi>, co oznacza, że kąty są takie same. Ten trójkąt
+          jest zatem <strong>podobny</strong> do <Mi>{"ABC"}</Mi>. Analogicznie dwa pozostałe.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Współczynniki podobieństwa sumują się do <Mi>{"1"}</Mi></p>
+        <p>
+          Oznaczmy współczynniki podobieństwa trzech małych trójkątów jako{" "}
+          <Mi>{"k_1, k_2, k_3"}</Mi>. Każdy mały trójkąt ma swoją podstawę na innym boku{" "}
+          <Mi>{"ABC"}</Mi>. Rozważmy bok <Mi>{"BC"}</Mi>: proste równoległe do <Mi>{"AB"}</Mi>{" "}
+          i <Mi>{"CA"}</Mi> przecinają go w dwóch punktach, dzieląc go na trzy odcinki.
+        </p>
+        <p>
+          Z podobieństwa każdy z tych odcinków odpowiada podstawie jednego z małych trójkątów
+          (oryginałowi lub „przesuniętemu" równolegle na <Mi>{"BC"}</Mi>). Ich długości
+          to <Mi>{"k_1 \\cdot |BC|"}</Mi>, <Mi>{"k_2 \\cdot |BC|"}</Mi>,{" "}
+          <Mi>{"k_3 \\cdot |BC|"}</Mi>, a razem składają się na cały bok:
+        </p>
+        <FormulaBox>
+          <Mb>{"k_1 + k_2 + k_3 = 1"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 4. Obliczamy pole</p>
+        <p>
+          Oznaczmy pole <Mi>{"ABC"}</Mi> jako <Mi>{"S"}</Mi>. Stosunek pól trójkątów podobnych
+          to kwadrat stosunku podobieństwa:
+        </p>
+        <Mb>{"k_1^2 \\cdot S = 1, \\qquad k_2^2 \\cdot S = 4, \\qquad k_3^2 \\cdot S = 9"}</Mb>
+        <p>Stąd:</p>
+        <Mb>{"k_1 = \\frac{1}{\\sqrt{S}}, \\qquad k_2 = \\frac{2}{\\sqrt{S}}, \\qquad k_3 = \\frac{3}{\\sqrt{S}}"}</Mb>
+        <p>Podstawiamy do warunku z kroku 3:</p>
+        <Mb>{"\\frac{1}{\\sqrt{S}} + \\frac{2}{\\sqrt{S}} + \\frac{3}{\\sqrt{S}} = 1"}</Mb>
+        <Mb>{"\\frac{6}{\\sqrt{S}} = 1 \\qquad \\Longrightarrow \\qquad \\sqrt{S} = 6 \\qquad \\Longrightarrow \\qquad S = 36"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: pole trójkąta <Mi>{"ABC"}</Mi> wynosi <Mi>{"36"}</Mi>.
           </p>
         </div>
       </div>

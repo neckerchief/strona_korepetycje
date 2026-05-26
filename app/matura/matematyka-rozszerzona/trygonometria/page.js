@@ -10,6 +10,8 @@ const SOURCE_CKE_CZERWIEC_2025_DOD =
 
 const SOURCE_CKE_MAJ_2025 =
   "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+const SOURCE_PROBNA_PL_MARZEC_2025 =
+  "Matura próbna, Politechnika Łódzka, marzec 2025";
 
 const tasks = [
   {
@@ -722,6 +724,142 @@ const tasks = [
             <Mi>{"x = \\dfrac{k\\pi}{2}"}</Mi> lub{" "}
             <Mi>{"x = \\dfrac{\\pi}{12} + \\dfrac{k\\pi}{2}"}</Mi> lub{" "}
             <Mi>{"x = \\dfrac{5\\pi}{12} + \\dfrac{k\\pi}{2}\\quad"}</Mi> (<Mi>{"k \\in \\mathbb{Z}"}</Mi>).
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // ── Matura próbna PŁ marzec 2025 ──────────────────────────
+  {
+    id: "probna-pl-2025-marzec-zad9-rownanie-tryg",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "9",
+    points: null,
+    instruction: (
+      <div className="space-y-3">
+        <p>Rozwiąż równanie</p>
+        <Mb>{"\\sin 3x + \\cos 2x = 1 + 2\\sin x \\cos 2x"}</Mb>
+        <p>a) Ile jest rozwiązań tego równania należących do przedziału <Mi>{"(0, \\pi)"}</Mi>?</p>
+        <p>
+          b) Podaj sumę rozwiązań tego równania należących do przedziału{" "}
+          <Mi>{"[-2\\pi,\\, 2\\pi]"}</Mi>. (Przyjmij <Mi>{"3"}</Mi> jako przybliżoną wartość{" "}
+          <Mi>{"\\pi"}</Mi>.)
+        </p>
+        <p>
+          c) Podaj najmniejsze dodatnie rozwiązanie tego równania.
+          (Przyjmij <Mi>{"3"}</Mi> jako przybliżoną wartość <Mi>{"\\pi"}</Mi>.)
+        </p>
+        <p>
+          d) Ile rozwiązań wymiernych ma to równanie? (W przypadku gdy jest nieskończenie wiele
+          takich rozwiązań, w odpowiedzi wpisz <Mi>{"8"}</Mi>.)
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-1">
+        <p>a) <Mi>{"2"}</Mi></p>
+        <p>b) <Mi>{"-2\\pi \\approx -6"}</Mi></p>
+        <p>c) <Mi>{"\\dfrac{\\pi}{6} \\approx 0{,}5"}</Mi></p>
+        <p>d) <Mi>{"1"}</Mi></p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>Przenieś wszystko na jedną stronę i pogrupuj:</p>
+        <Mb>{"(\\sin 3x - 2\\sin x \\cos 2x) + (\\cos 2x - 1) = 0"}</Mb>
+        <p>
+          Pierwszą grupę uprość, rozwijając <Mi>{"\\sin 3x = \\sin(x + 2x)"}</Mi> i redukując.
+          Drugą zamień wzorem <Mi>{"\\cos 2x - 1 = -2\\sin^2 x"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Przenosimy i grupujemy</p>
+        <Mb>{"\\sin 3x - 2\\sin x\\cos 2x + \\cos 2x - 1 = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">
+          Krok 2. Upraszczamy <Mi>{"\\sin 3x - 2\\sin x \\cos 2x"}</Mi>
+        </p>
+        <p>Korzystamy ze wzoru na sinus sumy:</p>
+        <Mb>{"\\sin 3x = \\sin(x + 2x) = \\sin x \\cos 2x + \\cos x \\sin 2x"}</Mb>
+        <p>Podstawiamy:</p>
+        <Mb>
+          {"\\sin x\\cos 2x + \\cos x\\sin 2x - 2\\sin x\\cos 2x = \\cos x\\sin 2x - \\sin x\\cos 2x"}
+        </Mb>
+        <p>
+          Rozpoznajemy wzór na sinus różnicy{" "}
+          <Mi>{"\\sin(A - B) = \\sin A\\cos B - \\cos A\\sin B"}</Mi>:
+        </p>
+        <Mb>
+          {"\\cos x\\sin 2x - \\sin x\\cos 2x = \\sin(2x - x) = \\sin x"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">
+          Krok 3. Upraszczamy <Mi>{"\\cos 2x - 1"}</Mi>
+        </p>
+        <FormulaBox>
+          <Mb>{"\\cos 2x - 1 = -2\\sin^2 x"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 4. Równanie po uproszczeniu</p>
+        <Mb>{"\\sin x - 2\\sin^2 x = 0"}</Mb>
+        <Mb>{"\\sin x\\,(1 - 2\\sin x) = 0"}</Mb>
+        <p>Dwa przypadki:</p>
+        <Mb>{"\\sin x = 0 \\qquad \\text{lub} \\qquad \\sin x = \\tfrac{1}{2}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Rozwiązania ogólne</p>
+        <Mb>{"\\sin x = 0 \\quad \\Longrightarrow \\quad x = n\\pi, \\quad n \\in \\mathbb{Z}"}</Mb>
+        <Mb>
+          {"\\sin x = \\tfrac{1}{2} \\quad \\Longrightarrow \\quad x = \\tfrac{\\pi}{6} + 2n\\pi \\quad \\text{lub} \\quad x = \\tfrac{5\\pi}{6} + 2n\\pi, \\quad n \\in \\mathbb{Z}"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 6. Odpowiedzi na podpunkty</p>
+
+        <p><strong>a)</strong> Przedział <Mi>{"(0, \\pi)"}</Mi> (otwarty):</p>
+        <ul className="list-disc list-inside space-y-1 ml-1">
+          <li><Mi>{"\\sin x = 0"}</Mi>: <Mi>{"x = 0"}</Mi> i <Mi>{"x = \\pi"}</Mi> nie należą do przedziału otwartego.</li>
+          <li><Mi>{"\\sin x = \\tfrac{1}{2}"}</Mi>: <Mi>{"x = \\tfrac{\\pi}{6} \\in (0, \\pi)"}</Mi> ✓ oraz <Mi>{"x = \\tfrac{5\\pi}{6} \\in (0, \\pi)"}</Mi> ✓</li>
+        </ul>
+        <Mb>{"\\text{Odpowiedź: } 2"}</Mb>
+
+        <p><strong>b)</strong> Przedział <Mi>{"[-2\\pi,\\, 2\\pi]"}</Mi>:</p>
+        <p><Mi>{"\\sin x = 0"}</Mi>: <Mi>{"x \\in \\{-2\\pi,\\, -\\pi,\\, 0,\\, \\pi,\\, 2\\pi\\}"}</Mi> — suma <Mi>{"= 0"}</Mi>.</p>
+        <p>
+          <Mi>{"\\sin x = \\tfrac{1}{2}"}</Mi>:{" "}
+          <Mi>{"x \\in \\bigl\\{\\tfrac{\\pi}{6},\\; \\tfrac{5\\pi}{6},\\; -\\tfrac{7\\pi}{6},\\; -\\tfrac{11\\pi}{6}\\bigr\\}"}</Mi>
+        </p>
+        <Mb>
+          {"\\tfrac{\\pi}{6} + \\tfrac{5\\pi}{6} - \\tfrac{7\\pi}{6} - \\tfrac{11\\pi}{6} = \\frac{1 + 5 - 7 - 11}{6}\\,\\pi = \\frac{-12}{6}\\,\\pi = -2\\pi"}
+        </Mb>
+        <Mb>{"\\text{Suma: } 0 + (-2\\pi) = -2\\pi \\approx -6"}</Mb>
+
+        <p><strong>c)</strong> Najmniejsze dodatnie rozwiązanie:</p>
+        <p>
+          Dodatnie rozwiązania to: <Mi>{"\\tfrac{\\pi}{6},\\; \\tfrac{5\\pi}{6},\\; \\pi,\\; 2\\pi,\\; \\ldots"}</Mi>{" "}
+          Najmniejsze: <Mi>{"\\dfrac{\\pi}{6} \\approx 0{,}5"}</Mi>.
+        </p>
+
+        <p><strong>d)</strong> Rozwiązania wymierne:</p>
+        <p>
+          Z <Mi>{"\\sin x = 0"}</Mi> mamy <Mi>{"x = n\\pi"}</Mi>. Liczba <Mi>{"n\\pi"}</Mi> jest
+          wymierna tylko dla <Mi>{"n = 0"}</Mi> (bo <Mi>{"\\pi"}</Mi> jest niewymierne).
+          Rozwiązania z <Mi>{"\\sin x = \\tfrac{1}{2}"}</Mi> to wielokrotności <Mi>{"\\pi"}</Mi>,
+          więc też niewymierne.
+        </p>
+        <Mb>{"\\text{Jedyne rozwiązanie wymierne: } x = 0 \\quad \\Longrightarrow \\quad 1"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"2"}</Mi>, b) <Mi>{"-2\\pi \\approx -6"}</Mi>,
+            c) <Mi>{"\\dfrac{\\pi}{6} \\approx 0{,}5"}</Mi>, d) <Mi>{"1"}</Mi>
           </p>
         </div>
       </div>

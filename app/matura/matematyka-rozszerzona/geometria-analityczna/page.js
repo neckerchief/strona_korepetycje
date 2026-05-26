@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} from "../_components";
+import {TaskCard, Mi, Mb, FormulaBox, SideWork, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
 // ─── Diagram do Metody 2 ──────────────────────────────────────
 // Schematyczny rysunek: okrąg O1, cięciwa MN, prostopadła O1H,
@@ -51,6 +51,9 @@ const SOURCE_CKE_CZERWIEC_2025_DOD =
 
 const SOURCE_CKE_MAJ_2025 =
   "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+
+const SOURCE_PROBNA_PL_MARZEC_2025 =
+  "Matura próbna, Politechnika Łódzka, marzec 2025";
 
 const tasks = [
   {
@@ -629,6 +632,140 @@ const tasks = [
             </Mi>
           </p>
         </div>
+      </div>
+    ),
+  },
+
+  // ── Próbna PŁ marzec 2025 – ortocentrum i okrąg opisany ─────
+  {
+    id: "probna-pl-2025-marzec-trojkat-ortocentrum-okrag",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "11",
+    points: "0–5",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          W trójkącie <Mi>{"ABC"}</Mi> dane są wierzchołki <Mi>{"A = (-1, 1)"}</Mi>,{" "}
+          <Mi>{"B = (5, 7)"}</Mi> oraz punkt <Mi>{"P = (3, 3)"}</Mi> przecięcia się wysokości tego
+          trójkąta. Znajdź współrzędne wierzchołka <Mi>{"C"}</Mi>. Znajdź równanie okręgu opisanego
+          na tym trójkącie.
+        </p>
+        <div className="text-sm text-stone-600 space-y-1">
+          <p>a) Podaj pierwszą współrzędną punktu <Mi>{"C"}</Mi></p>
+          <p>b) Podaj drugą współrzędną punktu <Mi>{"C"}</Mi></p>
+          <p>c) Podaj pierwszą współrzędną środka okręgu</p>
+          <p>d) Podaj drugą współrzędną środka okręgu</p>
+          <p>e) Podaj kwadrat długości promienia okręgu</p>
+        </div>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-1 text-sm">
+        <p>a) <Mi>{"11"}</Mi></p>
+        <p>b) <Mi>{"-5"}</Mi></p>
+        <p>c) <Mi>{"6"}</Mi></p>
+        <p>d) <Mi>{"0"}</Mi></p>
+        <p>e) <Mi>{"50"}</Mi></p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Punkt <Mi>{"P"}</Mi> jest ortocentrum, więc wysokości z <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi> przechodzą
+          przez <Mi>{"P"}</Mi>. Nachylenie prostej <Mi>{"AP"}</Mi> jest prostopadłe do boku{" "}
+          <Mi>{"BC"}</Mi>, a nachylenie <Mi>{"BP"}</Mi> – prostopadłe do <Mi>{"AC"}</Mi>.
+        </p>
+        <p>
+          Zapisz równania prostych <Mi>{"BC"}</Mi> i <Mi>{"AC"}</Mi> i znajdź ich punkt przecięcia –
+          to wierzchołek <Mi>{"C"}</Mi>.
+        </p>
+        <p>
+          Środek okręgu opisanego jest równoodległy od wszystkich trzech wierzchołków. Przyrównaj
+          kwadraty odległości: <Mi>{"SA^2 = SB^2"}</Mi> i <Mi>{"SA^2 = SC^2"}</Mi>, by otrzymać
+          układ dwóch równań liniowych.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Nachylenia wysokości</p>
+        <p>
+          Nachylenie prostej <Mi>{"AP"}</Mi>:
+        </p>
+        <Mb>{"a_{AP} = \\frac{3 - 1}{3 - (-1)} = \\frac{2}{4} = \\frac{1}{2}"}</Mb>
+        <p>
+          Wysokość z <Mi>{"A"}</Mi> jest prostopadła do <Mi>{"BC"}</Mi>, więc:
+        </p>
+        <Mb>{"a_{BC} = -\\frac{1}{a_{AP}} = -2"}</Mb>
+        <p>
+          Nachylenie prostej <Mi>{"BP"}</Mi>:
+        </p>
+        <Mb>{"a_{BP} = \\frac{3 - 7}{3 - 5} = \\frac{-4}{-2} = 2"}</Mb>
+        <p>
+          Wysokość z <Mi>{"B"}</Mi> jest prostopadła do <Mi>{"AC"}</Mi>, więc:
+        </p>
+        <Mb>{"a_{AC} = -\\frac{1}{a_{BP}} = -\\frac{1}{2}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Równania prostych BC i AC</p>
+        <p>
+          Prosta <Mi>{"BC"}</Mi> przechodzi przez <Mi>{"B(5, 7)"}</Mi> z nachyleniem <Mi>{"-2"}</Mi>:
+        </p>
+        <Mb>{"y - 7 = -2(x - 5) \\quad\\Longrightarrow\\quad y = -2x + 17"}</Mb>
+        <p>
+          Prosta <Mi>{"AC"}</Mi> przechodzi przez <Mi>{"A(-1, 1)"}</Mi> z nachyleniem <Mi>{"-\\tfrac{1}{2}"}</Mi>:
+        </p>
+        <Mb>{"y - 1 = -\\tfrac{1}{2}(x + 1) \\quad\\Longrightarrow\\quad y = -\\tfrac{1}{2}x + \\tfrac{1}{2}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Współrzędne punktu C</p>
+        <p>
+          Przyrównujemy:
+        </p>
+        <Mb>{"-2x + 17 = -\\tfrac{1}{2}x + \\tfrac{1}{2}"}</Mb>
+        <Mb>{"-\\tfrac{3}{2}x = -\\tfrac{33}{2} \\quad\\Longrightarrow\\quad x = 11"}</Mb>
+        <Mb>{"y = -2 \\cdot 11 + 17 = -5"}</Mb>
+        <FormulaBox>
+          <Mb>{"C = (11,\\, -5)"}</Mb>
+        </FormulaBox>
+
+        <SideWork title="Sprawdzenie: czy wysokość z C przechodzi przez P?">
+          <p>
+            Nachylenie <Mi>{"AB"}</Mi>: <Mi>{"a_{AB} = \\frac{7 - 1}{5 - (-1)} = 1"}</Mi>, więc
+            wysokość z <Mi>{"C"}</Mi> ma nachylenie <Mi>{"-1"}</Mi>.
+          </p>
+          <p>
+            Prosta przez <Mi>{"C(11, -5)"}</Mi>: <Mi>{"y = -x + 6"}</Mi>. Dla{" "}
+            <Mi>{"x = 3"}</Mi>: <Mi>{"y = 3"}</Mi> ✓
+          </p>
+        </SideWork>
+
+        <p className="font-semibold text-stone-800">Krok 4. Środek okręgu opisanego</p>
+        <p>
+          Niech <Mi>{"S = (p, q)"}</Mi>. Środek jest równoodległy od wierzchołków: <Mi>{"SA^2 = SB^2"}</Mi>.
+        </p>
+        <Mb>{"(p + 1)^2 + (q - 1)^2 = (p - 5)^2 + (q - 7)^2"}</Mb>
+        <p>Po rozwinięciu i uproszczeniu:</p>
+        <Mb>{"12p + 12q = 72 \\quad\\Longrightarrow\\quad p + q = 6 \\quad (I)"}</Mb>
+
+        <p>Warunek <Mi>{"SA^2 = SC^2"}</Mi>:</p>
+        <Mb>{"(p + 1)^2 + (q - 1)^2 = (p - 11)^2 + (q + 5)^2"}</Mb>
+        <p>Po rozwinięciu i uproszczeniu:</p>
+        <Mb>{"24p - 12q = 144 \\quad\\Longrightarrow\\quad 2p - q = 12 \\quad (II)"}</Mb>
+
+        <p>Z (I) i (II):</p>
+        <Mb>{"p + q = 6,\\quad 2p - q = 12 \\quad\\Longrightarrow\\quad 3p = 18 \\quad\\Longrightarrow\\quad p = 6,\\; q = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Promień okręgu</p>
+        <Mb>{"r^2 = SA^2 = (6 + 1)^2 + (0 - 1)^2 = 49 + 1 = 50"}</Mb>
+
+        <FormulaBox>
+          <Mb>{"(x - 6)^2 + y^2 = 50"}</Mb>
+        </FormulaBox>
       </div>
     ),
   },

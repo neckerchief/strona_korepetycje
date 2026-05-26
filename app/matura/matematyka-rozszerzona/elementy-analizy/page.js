@@ -1,13 +1,15 @@
 "use client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} from "../_components";
+import {TaskCard, Mi, Mb, FormulaBox, SideWork, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
 const SOURCE_CKE_F2023 =
   "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
 const SOURCE_CKE_CZERWIEC_2025_DOD =
   "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
 const SOURCE_SMWP = "Matura próbna SMWP, październik 2025, poziom rozszerzony";
+const SOURCE_PROBNA_PL_MARZEC_2025 =
+  "Matura próbna, Politechnika Łódzka, marzec 2025";
 
 const tasks = [
   {
@@ -248,6 +250,351 @@ const tasks = [
 
         <p className="font-semibold text-stone-800">Krok 3. Wyznaczamy granicę</p>
         <Mb>{"\\lim_{x \\to 3^-} \\frac{\\sqrt{2x^2-x}}{3-x} = \\frac{\\sqrt{15}}{0^+} = +\\infty"}</Mb>
+      </div>
+    ),
+  },
+
+  // ── Matura próbna PŁ marzec 2025 ──────────────────────────
+  {
+    id: "probna-pl-2025-marzec-minimum-x3y3",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "",
+    points: null,
+    instruction: (
+      <span>
+        Wyznacz liczby <Mi>{"x"}</Mi>, <Mi>{"y"}</Mi> jeżeli wiadomo, że{" "}
+        <Mi>{"x + y = 100"}</Mi> oraz że <Mi>{"x^3 + y^3"}</Mi> osiąga wartość najmniejszą.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"x = 50"}</Mi>, <Mi>{"y = 50"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>Skorzystaj ze wzoru skróconego mnożenia:</p>
+        <FormulaBox>
+          <Mb>{"x^3 + y^3 = (x+y)(x^2 - xy + y^2)"}</Mb>
+        </FormulaBox>
+        <p>
+          Podstaw <Mi>{"x + y = 100"}</Mi>, a potem wyraź <Mi>{"y = 100 - x"}</Mi>, żeby
+          otrzymać funkcję jednej zmiennej. Znajdź jej minimum za pomocą pochodnej.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Stosujemy wzór skróconego mnożenia</p>
+        <FormulaBox>
+          <Mb>{"x^3 + y^3 = (x + y)(x^2 - xy + y^2)"}</Mb>
+        </FormulaBox>
+        <p>
+          Ponieważ <Mi>{"x + y = 100"}</Mi>, otrzymujemy:
+        </p>
+        <Mb>{"x^3 + y^3 = 100(x^2 - xy + y^2)"}</Mb>
+
+        <p className="font-semibold text-stone-800">
+          Krok 2. Podstawiamy <Mi>{"y = 100 - x"}</Mi>
+        </p>
+        <p>
+          Wyrażenie w nawiasie:
+        </p>
+        <Mb>
+          {"x^2 - xy + y^2 = x^2 - x(100 - x) + (100 - x)^2"}
+        </Mb>
+        <Mb>
+          {"= x^2 - 100x + x^2 + 10\\,000 - 200x + x^2"}
+        </Mb>
+        <Mb>
+          {"= 3x^2 - 300x + 10\\,000"}
+        </Mb>
+        <p>Definiujemy funkcję jednej zmiennej:</p>
+        <Mb>{"f(x) = 100(3x^2 - 300x + 10\\,000)"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Pochodna i miejsce zerowe</p>
+        <Mb>{"f'(x) = 100(6x - 300) = 600(x - 50)"}</Mb>
+        <Mb>{"f'(x) = 0 \\quad \\Longrightarrow \\quad x = 50"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Sprawdzamy, że to minimum</p>
+        <p>Druga pochodna:</p>
+        <Mb>{"f''(x) = 600 > 0"}</Mb>
+        <p>
+          Ponieważ <Mi>{"f''(x) > 0"}</Mi> dla każdego <Mi>{"x"}</Mi>, funkcja{" "}
+          <Mi>{"f"}</Mi> jest wypukła (parabola skierowana ramionami do góry), więc{" "}
+          <Mi>{"x = 50"}</Mi> to punkt <strong>minimum globalnego</strong>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 5. Wyznaczamy <Mi>{"y"}</Mi></p>
+        <Mb>{"y = 100 - x = 100 - 50 = 50"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"x = 50"}</Mi>, <Mi>{"y = 50"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // ── Próbna PŁ marzec 2025 – brak ekstremum parametr m ────────
+  {
+    id: "probna-pl-2025-marzec-brak-ekstremum-parametr",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "12",
+    points: "0–6",
+    instruction: (
+      <div className="space-y-3">
+        <p>Dana jest funkcja</p>
+        <Mb>
+          {"f(x) = \\frac{m-2}{5}\\,x^5 - \\frac{2(m+3)}{3}\\,x^3 + (m+1)\\,x"}
+        </Mb>
+        <p>
+          Wyznacz te wartości parametru <Mi>{"m"}</Mi>, dla których funkcja <Mi>{"f(x)"}</Mi> nie
+          posiada ekstremum.
+        </p>
+        <div className="text-sm text-stone-600 space-y-1">
+          <p>a) Podaj największą całkowitą wartość parametru spełniającego warunki zadania</p>
+          <p>b) Podaj najmniejszą całkowitą wartość parametru nie spełniającego warunków zadania</p>
+          <p>c) Podaj sumę liczb z poprzednich odpowiedzi</p>
+          <p>d) Podaj iloczyn liczb z pierwszych dwóch odpowiedzi</p>
+          <p>e) Podaj sumę wartości bezwzględnych z pierwszych dwóch odpowiedzi</p>
+          <p>f) Podaj wartość bezwzględną sumy liczb z dwóch pierwszych odpowiedzi</p>
+        </div>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-1 text-sm">
+        <p>a) <Mi>{"-1"}</Mi></p>
+        <p>b) <Mi>{"0"}</Mi></p>
+        <p>c) <Mi>{"-1"}</Mi></p>
+        <p>d) <Mi>{"0"}</Mi></p>
+        <p>e) <Mi>{"1"}</Mi></p>
+        <p>f) <Mi>{"1"}</Mi></p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Brak ekstremum oznacza, że <Mi>{"f'(x)"}</Mi> nie zmienia znaku. Oblicz pochodną i
+          podstaw <Mi>{"t = x^2"}</Mi>, by otrzymać funkcję kwadratową <Mi>{"g(t)"}</Mi>.
+        </p>
+        <p>
+          Oblicz wyróżnik <Mi>{"\\Delta"}</Mi>. Jeśli <Mi>{"\\Delta < 0"}</Mi> – brak miejsc
+          zerowych, znak pochodnej wyznacza współczynnik <Mi>{"(m - 2)"}</Mi>. Jeśli{" "}
+          <Mi>{"\\Delta \\geq 0"}</Mi> – oba miejsca zerowe muszą być niedodatnie: sprawdź
+          warunek na <Mi>{"p"}</Mi> wierzchołka i na <Mi>{"g(0)"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Pochodna i podstawienie</p>
+        <Mb>
+          {"f'(x) = (m-2)\\,x^4 - 2(m+3)\\,x^2 + (m+1)"}
+        </Mb>
+        <p>
+          Podstawiamy <Mi>{"t = x^2 \\geq 0"}</Mi>:
+        </p>
+        <Mb>{"g(t) = (m-2)\\,t^2 - 2(m+3)\\,t + (m+1)"}</Mb>
+        <p>
+          Funkcja <Mi>{"f"}</Mi> nie ma ekstremum, gdy <Mi>{"f'(x)"}</Mi> nie zmienia znaku, czyli
+          gdy <Mi>{"g(t)"}</Mi> nie ma <strong>dodatnich</strong> miejsc zerowych (bo <Mi>{"t = x^2 \\geq 0"}</Mi>).
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Wyróżnik</p>
+        <Mb>{"\\Delta = 4(m+3)^2 - 4(m-2)(m+1) = 4(7m + 11)"}</Mb>
+
+        <p className="font-semibold text-stone-800">
+          Przypadek 1: <Mi>{"\\Delta < 0"}</Mi>, czyli <Mi>{"m < -\\tfrac{11}{7}"}</Mi>
+        </p>
+        <p>
+          Brak miejsc zerowych – pochodna jest cały czas dodatnia lub ujemna. Znak <Mi>{"g(t)"}</Mi> wyznacza
+          współczynnik wiodący <Mi>{"(m - 2)"}</Mi>. Ponieważ <Mi>{"m < -\\tfrac{11}{7} < 2"}</Mi>, mamy{" "}
+          <Mi>{"m - 2 < 0"}</Mi>, więc <Mi>{"g(t) < 0"}</Mi> dla każdego <Mi>{"t"}</Mi>.
+          Funkcja <Mi>{"f"}</Mi> jest ściśle malejąca – brak ekstremum. ✓
+        </p>
+
+        <p className="font-semibold text-stone-800">
+          Przypadek 2: <Mi>{"\\Delta \\geq 0"}</Mi>, czyli <Mi>{"m \\geq -\\tfrac{11}{7}"}</Mi>
+        </p>
+        <p>
+          Miejsca zerowe <Mi>{"g"}</Mi> istnieją, ale oba muszą być niedodatnie, żeby{" "}
+          <Mi>{"f'"}</Mi> nie zmieniała znaku na <Mi>{"[0, +\\infty)"}</Mi>. Warunki:
+        </p>
+        <p>
+          <strong>a)</strong> Współrzędna <Mi>{"p"}</Mi> wierzchołka paraboli musi być ujemna:
+        </p>
+        <Mb>{"p = \\frac{m + 3}{m - 2} < 0"}</Mb>
+        <p>
+          <strong>b)</strong> Wartość w punkcie <Mi>{"t = 0"}</Mi> musi mieć ten sam znak
+          co „zewnętrze" paraboli:
+        </p>
+        <ul className="list-disc list-inside text-sm space-y-1">
+          <li>
+            jeśli <Mi>{"m - 2 > 0"}</Mi> (parabola w górę): <Mi>{"g(0) \\geq 0"}</Mi>
+          </li>
+          <li>
+            jeśli <Mi>{"m - 2 < 0"}</Mi> (parabola w dół): <Mi>{"g(0) \\leq 0"}</Mi>
+          </li>
+        </ul>
+
+        <p className="font-semibold text-stone-800">
+          Podprzypadek <Mi>{"m > 2"}</Mi>
+        </p>
+        <p>
+          Wtedy <Mi>{"p = \\frac{m+3}{m-2} > 0"}</Mi> (oba: licznik i mianownik dodatnie),
+          więc warunek <Mi>{"p < 0"}</Mi> nie jest spełniony. Brak rozwiązań.
+        </p>
+
+        <p className="font-semibold text-stone-800">
+          Podprzypadek <Mi>{"m < 2"}</Mi> (i <Mi>{"m \\geq -\\tfrac{11}{7}"}</Mi>)
+        </p>
+        <p>
+          Parabola otwiera się w dół (<Mi>{"m - 2 < 0"}</Mi>). Sprawdzamy warunki:
+        </p>
+        <Mb>
+          {"p = \\frac{m + 3}{m - 2}:\\quad m + 3 > 0\\ (\\text{bo } m \\geq -\\tfrac{11}{7} > -3),\\; m - 2 < 0 \\quad\\Longrightarrow\\quad p < 0\\ ✓"}
+        </Mb>
+        <Mb>
+          {"g(0) = m + 1 \\leq 0 \\quad\\Longleftrightarrow\\quad m \\leq -1"}
+        </Mb>
+        <p>
+          Zakres: <Mi>{"-\\tfrac{11}{7} \\leq m \\leq -1"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Wniosek</p>
+        <p>Łączymy oba przypadki:</p>
+        <Mb>
+          {"m < -\\tfrac{11}{7} \\;\\cup\\; -\\tfrac{11}{7} \\leq m \\leq -1 \\;=\\; m \\leq -1"}
+        </Mb>
+        <FormulaBox>
+          <p>
+            Funkcja <Mi>{"f"}</Mi> nie ma ekstremum dla{" "}
+            <Mi>{"m \\in (-\\infty,\\, -1]"}</Mi>.
+          </p>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 4. Odpowiedzi na podpunkty</p>
+        <p>a) Największa całkowita wartość spełniająca: <Mi>{"m = -1"}</Mi></p>
+        <p>b) Najmniejsza całkowita wartość niespełniająca: <Mi>{"m = 0"}</Mi></p>
+        <p>c) Suma: <Mi>{"-1 + 0 = -1"}</Mi></p>
+        <p>d) Iloczyn: <Mi>{"(-1) \\cdot 0 = 0"}</Mi></p>
+        <p>e) Suma wartości bezwzględnych: <Mi>{"|-1| + |0| = 1"}</Mi></p>
+        <p>f) Wartość bezwzględna sumy: <Mi>{"|-1 + 0| = 1"}</Mi></p>
+      </div>
+    ),
+  },
+
+  // ── Próbna PŁ marzec 2025 – prostopadłościan, V_max ─────────
+  {
+    id: "probna-pl-2025-marzec-prostopadloscian-vmax",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "13",
+    points: "0–4",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Suma długości trzech krawędzi prostopadłościanu wychodzących z jednego wierzchołka jest
+          równa <Mi>{"8"}</Mi>. Długość jednej z tych krawędzi jest trzy razy mniejsza od drugiej.
+          Wyznacz długości krawędzi prostopadłościanu o największej objętości.
+        </p>
+        <div className="text-sm text-stone-600 space-y-1">
+          <p>
+            Podaj w kolejności rosnącej długości krawędzi prostopadłościanu o największej
+            objętości (tam gdzie nie występuje liczba całkowita, wynik podaj w postaci
+            licznik/mianownik nieskracalnego ułamka)
+          </p>
+          <p>Podaj objętość tego prostopadłościanu (wynik podaj w postaci licznik/mianownik)</p>
+          <p>
+            Ile jest prostopadłościanów o krawędziach o długości całkowitej spełniających
+            warunki: <em>Suma długości trzech krawędzi prostopadłościanu wychodzących z jednego
+            wierzchołka jest równa 8. Długość jednej z tych krawędzi jest trzy razy mniejsza
+            od drugiej</em>
+          </p>
+        </div>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-1 text-sm">
+        <p>Krawędzie: <Mi>{"\\tfrac{4}{3},\\; \\tfrac{8}{3},\\; 4"}</Mi></p>
+        <p>Objętość: <Mi>{"\\tfrac{128}{9}"}</Mi></p>
+        <p>Prostopadłościanów o krawędziach całkowitych: <Mi>{"1"}</Mi></p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Oznacz krawędzie <Mi>{"a, b, c"}</Mi> tak, że <Mi>{"a = \\tfrac{b}{3}"}</Mi>. Z warunku
+          sumy wyraź <Mi>{"c"}</Mi> przez <Mi>{"b"}</Mi> i zapisz objętość jako funkcję jednej zmiennej.
+        </p>
+        <p>
+          Oblicz pochodną i przyrównaj do zera. Dla krawędzi całkowitych sprawdź, ile jest
+          rozwiązań w liczbach naturalnych.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Parametryzacja</p>
+        <p>
+          Niech <Mi>{"a = \\tfrac{b}{3}"}</Mi>. Z warunku <Mi>{"a + b + c = 8"}</Mi>:
+        </p>
+        <Mb>{"\\frac{b}{3} + b + c = 8 \\quad\\Longrightarrow\\quad c = 8 - \\frac{4b}{3}"}</Mb>
+        <p>
+          Warunek dodatniości krawędzi: <Mi>{"b > 0"}</Mi> i <Mi>{"c > 0 \\Rightarrow b < 6"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Objętość jako funkcja <Mi>{"b"}</Mi></p>
+        <Mb>
+          {"V(b) = \\frac{b}{3} \\cdot b \\cdot \\left(8 - \\frac{4b}{3}\\right) = \\frac{8b^2}{3} - \\frac{4b^3}{9}"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Pochodna</p>
+        <Mb>{"V'(b) = \\frac{16b}{3} - \\frac{12b^2}{9} = \\frac{16b}{3} - \\frac{4b^2}{3} = \\frac{4b}{3}(4 - b)"}</Mb>
+        <Mb>{"V'(b) = 0 \\quad\\Longrightarrow\\quad b = 0 \\;\\text{(odpada)}\\quad\\text{lub}\\quad b = 4"}</Mb>
+        <p>
+          Dla <Mi>{"b \\in (0, 4)"}</Mi> mamy <Mi>{"V' > 0"}</Mi>, a dla{" "}
+          <Mi>{"b \\in (4, 6)"}</Mi> mamy <Mi>{"V' < 0"}</Mi>, więc <Mi>{"b = 4"}</Mi> daje maksimum.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Krawędzie i objętość</p>
+        <Mb>{"b = 4,\\quad a = \\frac{4}{3},\\quad c = 8 - \\frac{16}{3} = \\frac{8}{3}"}</Mb>
+        <FormulaBox>
+          <p>
+            Krawędzie rosnąco: <Mi>{"\\tfrac{4}{3},\\; \\tfrac{8}{3},\\; 4"}</Mi>.
+            Objętość: <Mi>{"V = \\tfrac{4}{3} \\cdot 4 \\cdot \\tfrac{8}{3} = \\tfrac{128}{9}"}</Mi>.
+          </p>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 5. Krawędzie całkowite</p>
+        <p>
+          Przy <Mi>{"a = \\tfrac{b}{3}"}</Mi>: <Mi>{"b = 3a"}</Mi>, <Mi>{"c = 8 - 4a"}</Mi>.
+          Dla <Mi>{"a, b, c \\in \\mathbb{N}"}</Mi>: <Mi>{"a \\geq 1"}</Mi> i{" "}
+          <Mi>{"c = 8 - 4a \\geq 1"}</Mi>, czyli <Mi>{"a \\leq \\tfrac{7}{4}"}</Mi>.
+          Jedyne rozwiązanie: <Mi>{"a = 1,\\; b = 3,\\; c = 4"}</Mi>.
+        </p>
+        <FormulaBox>
+          <p>Jest <Mi>{"1"}</Mi> taki prostopadłościan.</p>
+        </FormulaBox>
       </div>
     ),
   },

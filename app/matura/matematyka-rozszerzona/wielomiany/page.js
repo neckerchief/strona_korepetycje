@@ -5,6 +5,9 @@ import {TaskCard, Mi, Mb, FormulaBox, SideWork, sortTasksBySourceDate, getDispla
 
 // ─── Zadania ──────────────────────────────────────────────────
 
+const SOURCE_PROBNA_PL_MARZEC_2025 =
+  "Matura próbna, Politechnika Łódzka, marzec 2025";
+
 const tasks = [
   {
     id: "smwp-2026-styczen-zad8",
@@ -154,6 +157,215 @@ const tasks = [
           <p className="font-semibold text-stone-800">
             Odpowiedź: <Mi>{"W(x) = x^3 + 2x^2 + 3x + 2"}</Mi>. Jedyny pierwiastek rzeczywisty:{" "}
             <Mi>{"x = -1"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // ── Matura próbna PŁ marzec 2025 ──────────────────────────
+  {
+    id: "probna-pl-2025-marzec-zad4-reszta-wielomian",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "4",
+    points: null,
+    instruction: (
+      <span>
+        Reszta z dzielenia wielomianu <Mi>{"W(x) = x^{2025} - 2x^{2024} + 2x^{2023} - 1"}</Mi> przez{" "}
+        <Mi>{"x^3 - x"}</Mi> jest postaci <Mi>{"Ax^2 + Bx + C"}</Mi>.
+      </span>
+    ),
+    mathBlock: null,
+    noteItems: [{ text: "Oblicz współczynniki " }, { math: "A" }, { text: ", " }, { math: "B" }, { text: ", " }, { math: "C" }, { text: "." }],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"A = -2"}</Mi>, <Mi>{"B = 3"}</Mi>, <Mi>{"C = -1"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>Rozłóż dzielnik na czynniki:</p>
+        <Mb>{"x^3 - x = x(x - 1)(x + 1)"}</Mb>
+        <p>
+          Skoro <Mi>{"W(x) = Q(x) \\cdot (x^3 - x) + Ax^2 + Bx + C"}</Mi>, to dla każdego
+          pierwiastka dzielnika reszta musi dawać tę samą wartość co <Mi>{"W(x)"}</Mi>.
+          Podstaw <Mi>{"x = 0"}</Mi>, <Mi>{"x = 1"}</Mi> i <Mi>{"x = -1"}</Mi>, żeby
+          dostać układ trzech równań na <Mi>{"A"}</Mi>, <Mi>{"B"}</Mi>, <Mi>{"C"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Rozkład dzielnika</p>
+        <Mb>{"x^3 - x = x(x-1)(x+1)"}</Mb>
+        <p>
+          Dzielnik ma trzy pierwiastki: <Mi>{"x = 0"}</Mi>, <Mi>{"x = 1"}</Mi>, <Mi>{"x = -1"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Kluczowa obserwacja</p>
+        <p>
+          Z algorytmu dzielenia wielomianów wiemy, że:
+        </p>
+        <Mb>{"W(x) = Q(x) \\cdot (x^3 - x) + Ax^2 + Bx + C"}</Mb>
+        <p>
+          Dla każdego pierwiastka dzielnika iloczyn <Mi>{"Q(x) \\cdot (x^3 - x)"}</Mi> zeruje się,
+          więc <Mi>{"W(x) = Ax^2 + Bx + C"}</Mi>. Podstawiamy kolejno <Mi>{"x = 0"}</Mi>,{" "}
+          <Mi>{"x = 1"}</Mi> i <Mi>{"x = -1"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Trzy równania</p>
+
+        <p><strong>Dla <Mi>{"x = 0"}</Mi>:</strong></p>
+        <Mb>{"W(0) = 0 - 0 + 0 - 1 = -1"}</Mb>
+        <Mb>{"C = -1 \\quad \\text{(I)}"}</Mb>
+
+        <p><strong>Dla <Mi>{"x = 1"}</Mi>:</strong></p>
+        <Mb>{"W(1) = 1 - 2 + 2 - 1 = 0"}</Mb>
+        <Mb>{"A + B + C = 0 \\quad \\text{(II)}"}</Mb>
+
+        <p><strong>Dla <Mi>{"x = -1"}</Mi>:</strong></p>
+        <Mb>
+          {"W(-1) = (-1)^{2025} - 2 \\cdot (-1)^{2024} + 2 \\cdot (-1)^{2023} - 1"}
+        </Mb>
+        <p>
+          Wykładnik <Mi>{"2025"}</Mi> jest nieparzysty, więc <Mi>{"(-1)^{2025} = -1"}</Mi>.
+          Wykładniki <Mi>{"2024"}</Mi> i <Mi>{"2023"}</Mi> są odpowiednio parzysty i nieparzysty:
+        </p>
+        <Mb>{"W(-1) = -1 - 2 \\cdot 1 + 2 \\cdot (-1) - 1 = -1 - 2 - 2 - 1 = -6"}</Mb>
+        <Mb>{"A - B + C = -6 \\quad \\text{(III)}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Rozwiązujemy układ</p>
+        <p>Z (I): <Mi>{"C = -1"}</Mi>. Podstawiamy do (II) i (III):</p>
+        <Mb>{"A + B = 1 \\quad \\text{(II')}"}</Mb>
+        <Mb>{"A - B = -5 \\quad \\text{(III')}"}</Mb>
+        <p>Dodajemy stronami:</p>
+        <Mb>{"2A = -4 \\quad \\Rightarrow \\quad A = -2"}</Mb>
+        <p>Odejmujemy (III') od (II'):</p>
+        <Mb>{"2B = 6 \\quad \\Rightarrow \\quad B = 3"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"A = -2"}</Mi>, <Mi>{"B = 3"}</Mi>, <Mi>{"C = -1"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "probna-pl-2025-marzec-zad5-dwumian-newtona",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "5",
+    points: "0–2",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Rozwiąż równanie
+        </p>
+        <Mb>{"\\binom{n}{3} - \\binom{n}{2} = 14"}</Mb>
+        <p>
+          gdzie <Mi>{"n \\in \\mathbb{N}"}</Mi>, <Mi>{"n \\geq 3"}</Mi>.
+        </p>
+        <p>a) Ile to równanie ma rozwiązań?</p>
+        <p>b) Podaj wartość największej liczby naturalnej spełniającej to równanie.</p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-1">
+        <p>a) Równanie ma <Mi>{"1"}</Mi> rozwiązanie.</p>
+        <p>b) <Mi>{"n = 7"}</Mi></p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>Rozpisz symbole Newtona:</p>
+        <FormulaBox>
+          <Mb>{"\\binom{n}{3} = \\frac{n(n-1)(n-2)}{6}, \\qquad \\binom{n}{2} = \\frac{n(n-1)}{2}"}</Mb>
+        </FormulaBox>
+        <p>
+          Po podstawieniu i pomnożeniu obu stron przez <Mi>{"6"}</Mi> wyciągnij wspólny
+          czynnik <Mi>{"n(n-1)"}</Mi>. Otrzymasz równanie postaci{" "}
+          <Mi>{"n(n-1)(\\ldots) = \\ldots"}</Mi>, które po rozwinięciu daje wielomian trzeciego
+          stopnia. Szukaj jego pierwiastków całkowitych wśród dzielników wyrazu wolnego.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Rozpisujemy symbole Newtona</p>
+        <FormulaBox>
+          <Mb>{"\\binom{n}{3} = \\frac{n(n-1)(n-2)}{6}, \\qquad \\binom{n}{2} = \\frac{n(n-1)}{2}"}</Mb>
+        </FormulaBox>
+        <p>Równanie przyjmuje postać:</p>
+        <Mb>{"\\frac{n(n-1)(n-2)}{6} - \\frac{n(n-1)}{2} = 14"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Mnożymy przez <Mi>{"6"}</Mi> i upraszczamy</p>
+        <Mb>{"n(n-1)(n-2) - 3n(n-1) = 84"}</Mb>
+        <p>Wyciągamy wspólny czynnik <Mi>{"n(n-1)"}</Mi>:</p>
+        <Mb>{"n(n-1)\\bigl[(n-2) - 3\\bigr] = 84"}</Mb>
+        <Mb>{"n(n-1)(n-5) = 84"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Rozwiązujemy równanie wielomianowe</p>
+        <p>Po rozwinięciu:</p>
+        <Mb>{"n^3 - 6n^2 + 5n - 84 = 0"}</Mb>
+        <p>
+          Szukamy pierwiastków całkowitych wśród dzielników wyrazu wolnego{" "}
+          <Mi>{"84"}</Mi>. Sprawdzamy <Mi>{"n = 7"}</Mi>:
+        </p>
+        <Mb>{"7^3 - 6 \\cdot 7^2 + 5 \\cdot 7 - 84 = 343 - 294 + 35 - 84 = 0 \\quad \\checkmark"}</Mb>
+        <p>
+          Dzielimy wielomian przez <Mi>{"(n - 7)"}</Mi>:
+        </p>
+
+        <div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
+          <div className="flex-1 min-w-0 space-y-3">
+            <Mb>{"n^3 - 6n^2 + 5n - 84 = (n - 7)(n^2 + n + 12)"}</Mb>
+          </div>
+          <SideWork
+            className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0"
+            title="Dzielenie wielomianów"
+          >
+            <Mb>
+              {[
+                "\\begin{aligned}",
+                "& \\underline{\\hspace{0.1em}n^2+n+12\\hspace{5.3em}} \\\\[0.25em]",
+                "& (n^3-6n^2+5n-84):(n-7) \\\\[0.45em]",
+                "& \\underline{-(n^3-7n^2)\\hspace{3.5em}} \\\\[0.25em]",
+                "& \\hspace{1.5em}n^2+5n-84 \\\\[0.45em]",
+                "& \\hspace{1.5em}\\underline{-(n^2-7n)\\hspace{1.5em}} \\\\[0.25em]",
+                "& \\hspace{3em}12n-84 \\\\[0.45em]",
+                "& \\hspace{3em}\\underline{-(12n-84)} \\\\[0.25em]",
+                "& \\hspace{5.5em}0",
+                "\\end{aligned}",
+              ].join("")}
+            </Mb>
+          </SideWork>
+        </div>
+
+        <p className="font-semibold text-stone-800">Krok 4. Badamy trójmian <Mi>{"n^2 + n + 12"}</Mi></p>
+        <Mb>{"\\Delta = 1^2 - 4 \\cdot 1 \\cdot 12 = 1 - 48 = -47 < 0"}</Mb>
+        <p>
+          Mamy <Mi>{"\\Delta < 0"}</Mi>, więc trójmian <Mi>{"n^2 + n + 12"}</Mi> nie ma
+          pierwiastków rzeczywistych. Jedynym rozwiązaniem jest <Mi>{"n = 7"}</Mi>, które
+          spełnia warunek <Mi>{"n \\geq 3"}</Mi>.
+        </p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            a) Równanie ma <Mi>{"1"}</Mi> rozwiązanie.
+          </p>
+          <p className="font-semibold text-stone-800 mt-1">
+            b) Największa (i jedyna) liczba naturalna: <Mi>{"n = 7"}</Mi>.
           </p>
         </div>
       </div>

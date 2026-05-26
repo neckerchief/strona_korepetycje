@@ -13,6 +13,7 @@ export function getSourceSortKey(source = "") {
   if (s.includes("maj")) month = 5;
   else if (s.includes("czerwiec")) month = 6;
   else if (s.includes("styczeń") || s.includes("styczen")) month = 1;
+  else if (s.includes("marzec")) month = 3;
   else if (s.includes("październik") || s.includes("pazdziernik")) month = 10;
   else if (s.includes("lipiec")) month = 7;
   else if (s.includes("sierpień") || s.includes("sierpien")) month = 8;

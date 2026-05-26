@@ -10,6 +10,8 @@ const SOURCE_CKE_CZERWIEC_2025_DOD =
 
 const SOURCE_CKE_MAJ_2025 =
   "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+const SOURCE_PROBNA_PL_MARZEC_2025 =
+  "Matura próbna, Politechnika Łódzka, marzec 2025";
 
 const tasks = [
   {
@@ -692,6 +694,108 @@ const tasks = [
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
           <p className="font-semibold text-stone-800">
             Odpowiedź: <Mi>{"m \\in (1,\\,+\\infty)"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // ── Matura próbna PŁ marzec 2025 ──────────────────────────
+  {
+    id: "probna-pl-2025-marzec-zad8-vieta-bc-pierwiastki",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "8",
+    points: null,
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Weź pod uwagę równanie kwadratowe <Mi>{"x^2 + bx + c = 0"}</Mi>. Wyznacz takie wartości{" "}
+          <Mi>{"b"}</Mi>, <Mi>{"c"}</Mi>, aby <Mi>{"b"}</Mi>, <Mi>{"c"}</Mi> były
+          pierwiastkami tego równania.
+        </p>
+        <p>a) Ile jest par <Mi>{"(b, c)"}</Mi> spełniających warunek zadania?</p>
+        <p>b) Oblicz sumę wszystkich wartości parametru <Mi>{"b"}</Mi> spełniającego warunki zadania.</p>
+        <p>c) Oblicz sumę wszystkich wartości parametru <Mi>{"c"}</Mi> spełniającego warunki zadania.</p>
+        <p>
+          d) Oblicz sumę wartości bezwzględnych wszystkich wartości parametrów <Mi>{"b"}</Mi>,{" "}
+          <Mi>{"c"}</Mi> spełniających warunki zadania.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-1">
+        <p>a) <Mi>{"2"}</Mi></p>
+        <p>b) <Mi>{"1"}</Mi></p>
+        <p>c) <Mi>{"-2"}</Mi></p>
+        <p>d) <Mi>{"3"}</Mi></p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Skoro <Mi>{"b"}</Mi> i <Mi>{"c"}</Mi> są pierwiastkami równania{" "}
+          <Mi>{"x^2 + bx + c = 0"}</Mi>, to z wzorów Viète'a:
+        </p>
+        <FormulaBox>
+          <Mb>{"b + c = -b \\qquad \\text{oraz} \\qquad b \\cdot c = c"}</Mb>
+        </FormulaBox>
+        <p>
+          Drugie równanie rozbij na dwa przypadki: <Mi>{"c = 0"}</Mi> lub <Mi>{"b = 1"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Wzory Viète'a</p>
+        <p>
+          Jeśli <Mi>{"b"}</Mi> i <Mi>{"c"}</Mi> są pierwiastkami równania{" "}
+          <Mi>{"x^2 + bx + c = 0"}</Mi>, to suma i iloczyn pierwiastków dają:
+        </p>
+        <FormulaBox>
+          <Mb>{"b + c = -b \\quad \\text{(I)} \\qquad \\text{oraz} \\qquad b \\cdot c = c \\quad \\text{(II)}"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 2. Rozwiązanie równania (II)</p>
+        <p>Przenosimy na jedną stronę:</p>
+        <Mb>{"bc - c = 0 \\quad \\Longrightarrow \\quad c(b - 1) = 0"}</Mb>
+        <p>Stąd dwa przypadki: <Mi>{"c = 0"}</Mi> lub <Mi>{"b = 1"}</Mi>.</p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Przypadek <Mi>{"c = 0"}</Mi></p>
+        <p>Z równania (I):</p>
+        <Mb>{"b + 0 = -b \\quad \\Longrightarrow \\quad 2b = 0 \\quad \\Longrightarrow \\quad b = 0"}</Mb>
+        <p>
+          Sprawdzenie: równanie <Mi>{"x^2 = 0"}</Mi> ma pierwiastek podwójny <Mi>{"x = 0"}</Mi>.
+          Oba parametry <Mi>{"b = 0"}</Mi> i <Mi>{"c = 0"}</Mi> są równe temu pierwiastkowi. ✓
+        </p>
+        <p>Para: <Mi>{"(b, c) = (0, 0)"}</Mi>.</p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Przypadek <Mi>{"b = 1"}</Mi></p>
+        <p>Z równania (I):</p>
+        <Mb>{"1 + c = -1 \\quad \\Longrightarrow \\quad c = -2"}</Mb>
+        <p>
+          Sprawdzenie: równanie <Mi>{"x^2 + x - 2 = 0"}</Mi>, czyli{" "}
+          <Mi>{"(x + 2)(x - 1) = 0"}</Mi>, ma pierwiastki <Mi>{"x = 1"}</Mi> i{" "}
+          <Mi>{"x = -2"}</Mi>. Parametry <Mi>{"b = 1"}</Mi> i <Mi>{"c = -2"}</Mi> to
+          dokładnie te pierwiastki. ✓
+        </p>
+        <p>Para: <Mi>{"(b, c) = (1, -2)"}</Mi>.</p>
+
+        <p className="font-semibold text-stone-800">Krok 5. Odpowiedzi na podpunkty</p>
+        <p>Mamy dwie pary: <Mi>{"(0, 0)"}</Mi> i <Mi>{"(1, -2)"}</Mi>.</p>
+        <Mb>{"\\text{a)}\\ 2 \\quad \\text{pary}"}</Mb>
+        <Mb>{"\\text{b)}\\ 0 + 1 = 1"}</Mb>
+        <Mb>{"\\text{c)}\\ 0 + (-2) = -2"}</Mb>
+        <Mb>{"\\text{d)}\\ |0| + |0| + |1| + |{-2}| = 3"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"2"}</Mi>, b) <Mi>{"1"}</Mi>, c) <Mi>{"-2"}</Mi>, d) <Mi>{"3"}</Mi>
           </p>
         </div>
       </div>

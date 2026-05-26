@@ -10,6 +10,8 @@ const SOURCE_CKE_CZERWIEC_2025_DOD =
 
 const SOURCE_CKE_MAJ_2025 =
   "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+const SOURCE_PROBNA_PL_MARZEC_2025 =
+  "Matura próbna, Politechnika Łódzka, marzec 2025";
 
 const tasks = [
   {
@@ -579,6 +581,264 @@ const tasks = [
           <p className="font-semibold text-stone-800">
             Odpowiedź:{" "}
             <Mi>{"S_{1014} = -1\\,026\\,168"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // ── Matura próbna PŁ marzec 2025 ──────────────────────────
+  {
+    id: "probna-pl-2025-marzec-zad2-granica-ciagu",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "2",
+    points: null,
+    instruction: "Oblicz",
+    mathBlock:
+      "\\lim_{n \\to \\infty} \\frac{1}{n}\\left[\\left(1+\\frac{1}{n}\\right) + \\left(1+\\frac{2}{n}\\right) + \\left(1+\\frac{3}{n}\\right) + \\ldots + \\left(1+\\frac{n-1}{n}\\right)\\right]",
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"\\dfrac{3}{2}"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Zauważ, że wyrażenia w nawiasie kwadratowym tworzą ciąg arytmetyczny
+          o pierwszym wyrazie <Mi>{"a_1 = 1 + \\dfrac{1}{n}"}</Mi> i różnicy{" "}
+          <Mi>{"r = \\dfrac{1}{n}"}</Mi>. Policz, ile jest wyrazów i zastosuj wzór:
+        </p>
+        <FormulaBox>
+          <Mb>{"S_m = \\frac{a_1 + a_m}{2} \\cdot m"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Ciąg arytmetyczny w nawiasie</p>
+        <p>
+          Wyrażenia w nawiasie kwadratowym to:
+        </p>
+        <Mb>
+          {"\\left(1+\\frac{1}{n}\\right),\\quad \\left(1+\\frac{2}{n}\\right),\\quad \\left(1+\\frac{3}{n}\\right),\\quad \\ldots,\\quad \\left(1+\\frac{n-1}{n}\\right)"}
+        </Mb>
+        <p>
+          Tworzą one ciąg arytmetyczny o:
+        </p>
+        <ul className="list-disc list-inside space-y-1 ml-1">
+          <li>pierwszym wyrazie <Mi>{"a_1 = 1 + \\dfrac{1}{n}"}</Mi>,</li>
+          <li>różnicy <Mi>{"r = \\dfrac{1}{n}"}</Mi>,</li>
+          <li>ostatnim wyrazie <Mi>{"a_{n-1} = 1 + \\dfrac{n-1}{n}"}</Mi>,</li>
+          <li>liczbie wyrazów <Mi>{"m = n - 1"}</Mi>.</li>
+        </ul>
+
+        <p className="font-semibold text-stone-800">Krok 2. Suma ciągu arytmetycznego</p>
+        <p>Korzystamy ze wzoru:</p>
+        <FormulaBox>
+          <Mb>{"S = \\frac{a_1 + a_m}{2} \\cdot m"}</Mb>
+        </FormulaBox>
+        <Mb>
+          {"S = \\frac{\\left(1 + \\dfrac{1}{n}\\right) + \\left(1 + \\dfrac{n-1}{n}\\right)}{2} \\cdot (n-1) = \\frac{2 + \\dfrac{1}{n} + \\dfrac{n-1}{n}}{2} \\cdot (n-1)"}
+        </Mb>
+        <p>
+          W liczniku upraszczamy ułamki:
+        </p>
+        <Mb>
+          {"\\frac{1}{n} + \\frac{n-1}{n} = \\frac{n}{n} = 1"}
+        </Mb>
+        <p>Stąd:</p>
+        <Mb>
+          {"S = \\frac{2 + 1}{2} \\cdot (n-1) = \\frac{3}{2}(n-1)"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Mnożymy przez <Mi>{"\\dfrac{1}{n}"}</Mi> i liczymy granicę</p>
+        <Mb>
+          {"\\frac{1}{n} \\cdot \\frac{3(n-1)}{2} = \\frac{3}{2} \\cdot \\frac{n-1}{n} = \\frac{3}{2} \\cdot \\left(1 - \\frac{1}{n}\\right)"}
+        </Mb>
+        <p>
+          Gdy <Mi>{"n \\to \\infty"}</Mi>, wyrażenie <Mi>{"\\dfrac{1}{n} \\to 0"}</Mi>, więc:
+        </p>
+        <Mb>
+          {"\\lim_{n \\to \\infty} \\frac{3}{2} \\cdot \\left(1 - \\frac{1}{n}\\right) = \\frac{3}{2} \\cdot 1 = \\frac{3}{2}"}
+        </Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"\\dfrac{3}{2}"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // ── Matura próbna PŁ marzec 2025 ──────────────────────────
+  {
+    id: "probna-pl-2025-marzec-zad10-ciag-geom-aryt",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "10",
+    points: "0–2",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Trójka liczb całkowitych tworzy ciąg geometryczny o ilorazie całkowitym. Gdy najmniejszą
+          z nich zwiększymy o <Mi>{"9"}</Mi>, to w tej samej kolejności powstanie ciąg arytmetyczny.
+          Znajdź te liczby.
+        </p>
+        <p>a) Ile jest takich ciągów geometrycznych?</p>
+        <p>b) Ile spośród tych ciągów geometrycznych jest rosnących?</p>
+        <p>c) Ile spośród tych ciągów jest malejących?</p>
+        <p>d) Ile spośród tych ciągów jest naprzemiennych?</p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-1">
+        <p>a) <Mi>{"4"}</Mi></p>
+        <p>b) <Mi>{"0"}</Mi></p>
+        <p>c) <Mi>{"2"}</Mi></p>
+        <p>d) <Mi>{"2"}</Mi></p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Oznacz ciąg geometryczny jako <Mi>{"a,\\ aq,\\ aq^2"}</Mi> i rozpatrz osobno, który
+          wyraz jest najmniejszy (zależy od znaków <Mi>{"a"}</Mi> i <Mi>{"q"}</Mi>). Warunek
+          arytmetyczności po zwiększeniu najmniejszego wyrazu o <Mi>{"9"}</Mi> daje równanie
+          postaci:
+        </p>
+        <FormulaBox>
+          <Mb>{"a(q-1)^2 = \\pm k"}</Mb>
+        </FormulaBox>
+        <p>
+          gdzie <Mi>{"(q-1)^2"}</Mi> musi być dzielnikiem pewnej stałej. Sprawdź, dla których
+          całkowitych <Mi>{"q"}</Mi> dostaniesz całkowite <Mi>{"a"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Oznaczenia i warunek arytmetyczności</p>
+        <p>
+          Ciąg geometryczny: <Mi>{"a,\\ aq,\\ aq^2"}</Mi>, gdzie <Mi>{"a, q \\in \\mathbb{Z}"}</Mi>,{" "}
+          <Mi>{"q \\neq 0"}</Mi>, <Mi>{"q \\neq 1"}</Mi>
+          {" "}(bo przy <Mi>{"q = 1"}</Mi> ciąg jest stały i dodanie <Mi>{"9"}</Mi> nie da ciągu arytmetycznego).
+        </p>
+        <p>
+          Zwiększamy <strong>najmniejszy</strong> wyraz o <Mi>{"9"}</Mi>. Który wyraz jest
+          najmniejszy, zależy od znaków <Mi>{"a"}</Mi> i <Mi>{"q"}</Mi>. Rozpatrujemy dwa
+          przypadki: najmniejszy jest wyraz środkowy albo ostatni.
+        </p>
+
+        <p className="font-semibold text-stone-800">
+          Krok 2. Przypadek A: najmniejszy jest <Mi>{"aq^2"}</Mi> (ostatni wyraz)
+        </p>
+        <p>
+          Po zwiększeniu ciąg <Mi>{"a,\\ aq,\\ aq^2 + 9"}</Mi> jest arytmetyczny, więc:
+        </p>
+        <Mb>{"2aq = a + aq^2 + 9"}</Mb>
+        <Mb>{"a(2q - 1 - q^2) = 9 \\quad \\Longrightarrow \\quad -a(q-1)^2 = 9"}</Mb>
+        <FormulaBox>
+          <Mb>{"a(q-1)^2 = -9"}</Mb>
+        </FormulaBox>
+        <p>
+          Potrzebujemy <Mi>{"a < 0"}</Mi> (bo <Mi>{"(q-1)^2 > 0"}</Mi>), a <Mi>{"(q-1)^2"}</Mi>{" "}
+          musi być dzielnikiem <Mi>{"9"}</Mi> będącym kwadratem: <Mi>{"1"}</Mi> lub <Mi>{"9"}</Mi>.
+        </p>
+        <p><strong><Mi>{"(q-1)^2 = 1"}</Mi>:</strong> <Mi>{"q = 2"}</Mi> (bo <Mi>{"q = 0"}</Mi> daje
+          zdegenerowany ciąg), <Mi>{"a = -9"}</Mi>.</p>
+        <Mb>{"(-9,\\ -18,\\ -36) \\quad \\text{najmniejszy: } -36 \\checkmark"}</Mb>
+        <p>Sprawdzenie: <Mi>{"(-9,\\ -18,\\ -27)"}</Mi> — różnica <Mi>{"-9"}</Mi>. ✓</p>
+
+        <p><strong><Mi>{"(q-1)^2 = 9"}</Mi>:</strong> <Mi>{"q = 4"}</Mi> lub <Mi>{"q = -2"}</Mi>, <Mi>{"a = -1"}</Mi>.</p>
+        <Mb>{"q = 4: \\quad (-1,\\ -4,\\ -16) \\quad \\text{najmniejszy: } -16 \\checkmark"}</Mb>
+        <p>Sprawdzenie: <Mi>{"(-1,\\ -4,\\ -7)"}</Mi> — różnica <Mi>{"-3"}</Mi>. ✓</p>
+        <Mb>{"q = -2: \\quad (-1,\\ 2,\\ -4) \\quad \\text{najmniejszy: } -4 \\checkmark"}</Mb>
+        <p>Sprawdzenie: <Mi>{"(-1,\\ 2,\\ 5)"}</Mi> — różnica <Mi>{"3"}</Mi>. ✓</p>
+
+        <p className="font-semibold text-stone-800">
+          Krok 3. Przypadek B: najmniejszy jest <Mi>{"aq"}</Mi> (środkowy wyraz)
+        </p>
+        <p>
+          To zdarza się, gdy <Mi>{"q < 0"}</Mi> i <Mi>{"a > 0"}</Mi> (wtedy środkowy wyraz
+          jest ujemny, a skrajne dodatnie). Po zwiększeniu: <Mi>{"a,\\ aq + 9,\\ aq^2"}</Mi>{" "}
+          jest arytmetyczny:
+        </p>
+        <Mb>{"2(aq + 9) = a + aq^2 \\quad \\Longrightarrow \\quad a(q-1)^2 = 18"}</Mb>
+        <p>
+          Teraz <Mi>{"a > 0"}</Mi>, a <Mi>{"(q-1)^2"}</Mi> musi być kwadratowym dzielnikiem{" "}
+          <Mi>{"18"}</Mi>: to <Mi>{"1"}</Mi> lub <Mi>{"9"}</Mi>.
+        </p>
+        <p>
+          <strong><Mi>{"(q-1)^2 = 1"}</Mi>:</strong>{" "}
+          <Mi>{"q = 2"}</Mi>, <Mi>{"a = 18"}</Mi> → <Mi>{"(18,\\ 36,\\ 72)"}</Mi>.
+          Środkowy wyraz <Mi>{"36"}</Mi> nie jest najmniejszy. ✗
+        </p>
+        <p>
+          <strong><Mi>{"(q-1)^2 = 9"}</Mi>:</strong>{" "}
+          <Mi>{"q = -2"}</Mi>, <Mi>{"a = 2"}</Mi> → <Mi>{"(2,\\ -4,\\ 8)"}</Mi>.
+          Środkowy <Mi>{"-4"}</Mi> jest najmniejszy. ✓
+        </p>
+        <p>Sprawdzenie: <Mi>{"(2,\\ 5,\\ 8)"}</Mi> — różnica <Mi>{"3"}</Mi>. ✓</p>
+
+        <p className="font-semibold text-stone-800">Krok 4. Zestawienie i odpowiedzi</p>
+        <div className="overflow-x-auto">
+          <table className="text-sm border-collapse w-full">
+            <thead>
+              <tr className="border-b border-stone-300">
+                <th className="text-left py-1.5 pr-3">Ciąg</th>
+                <th className="text-left py-1.5 pr-3"><Mi>{"q"}</Mi></th>
+                <th className="text-center py-1.5 pr-3">Rosnący?</th>
+                <th className="text-center py-1.5 pr-3">Malejący?</th>
+                <th className="text-center py-1.5">Naprzemienny?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-stone-200">
+                <td className="py-1.5 pr-3"><Mi>{"(2,\\ -4,\\ 8)"}</Mi></td>
+                <td className="py-1.5 pr-3"><Mi>{"-2"}</Mi></td>
+                <td className="text-center py-1.5 pr-3">nie</td>
+                <td className="text-center py-1.5 pr-3">nie</td>
+                <td className="text-center py-1.5">tak</td>
+              </tr>
+              <tr className="border-b border-stone-200">
+                <td className="py-1.5 pr-3"><Mi>{"(-1,\\ 2,\\ -4)"}</Mi></td>
+                <td className="py-1.5 pr-3"><Mi>{"-2"}</Mi></td>
+                <td className="text-center py-1.5 pr-3">nie</td>
+                <td className="text-center py-1.5 pr-3">nie</td>
+                <td className="text-center py-1.5">tak</td>
+              </tr>
+              <tr className="border-b border-stone-200">
+                <td className="py-1.5 pr-3"><Mi>{"(-9,\\ -18,\\ -36)"}</Mi></td>
+                <td className="py-1.5 pr-3"><Mi>{"2"}</Mi></td>
+                <td className="text-center py-1.5 pr-3">nie</td>
+                <td className="text-center py-1.5">tak</td>
+                <td className="text-center py-1.5">nie</td>
+              </tr>
+              <tr>
+                <td className="py-1.5 pr-3"><Mi>{"(-1,\\ -4,\\ -16)"}</Mi></td>
+                <td className="py-1.5 pr-3"><Mi>{"4"}</Mi></td>
+                <td className="text-center py-1.5 pr-3">nie</td>
+                <td className="text-center py-1.5">tak</td>
+                <td className="text-center py-1.5">nie</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"4"}</Mi>, b) <Mi>{"0"}</Mi>, c) <Mi>{"2"}</Mi>, d) <Mi>{"2"}</Mi>
           </p>
         </div>
       </div>

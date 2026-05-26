@@ -7,8 +7,84 @@ import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} f
 
 const SOURCE_CKE_CZERWIEC_2025_DOD =
   "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+const SOURCE_PROBNA_PL_MARZEC_2025 =
+  "Matura próbna, Politechnika Łódzka, marzec 2025";
 
 const tasks = [
+  {
+    id: "probna-pl-2025-marzec-zad1-logarytmy",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "1",
+    points: null,
+    instruction: "Oblicz",
+    mathBlock: "\\log_2 9 \\cdot \\log_7 \\tfrac{1}{25} \\cdot \\log_3 16 \\cdot \\log_5 49",
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"-32"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Zamień argumenty na potęgi, żeby wyciągnąć wykładniki przed logarytmy.
+          Potem skorzystaj z własności:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\log_a b \\cdot \\log_b a = 1"}</Mb>
+        </FormulaBox>
+        <p>
+          Pogrupuj czynniki w pary, w których podstawa jednego logarytmu jest argumentem drugiego.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Zapisujemy argumenty jako potęgi</p>
+        <p>Korzystamy ze wzoru:</p>
+        <FormulaBox>
+          <Mb>{"\\log_a b^n = n \\cdot \\log_a b"}</Mb>
+        </FormulaBox>
+        <Mb>{"\\log_2 9 = \\log_2 3^2 = 2\\log_2 3"}</Mb>
+        <Mb>{"\\log_7 \\tfrac{1}{25} = \\log_7 5^{-2} = -2\\log_7 5"}</Mb>
+        <Mb>{"\\log_3 16 = \\log_3 2^4 = 4\\log_3 2"}</Mb>
+        <Mb>{"\\log_5 49 = \\log_5 7^2 = 2\\log_5 7"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Mnożymy współczynniki liczbowe</p>
+        <p>Iloczyn przyjmuje postać:</p>
+        <Mb>
+          {"2 \\cdot (-2) \\cdot 4 \\cdot 2 \\;\\cdot\\; \\log_2 3 \\cdot \\log_7 5 \\cdot \\log_3 2 \\cdot \\log_5 7"}
+        </Mb>
+        <p>Współczynniki liczbowe:</p>
+        <Mb>{"2 \\cdot (-2) \\cdot 4 \\cdot 2 = -32"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Upraszczamy iloczyn logarytmów</p>
+        <p>
+          Grupujemy logarytmy w pary, w których podstawa jednego jest argumentem drugiego, i korzystamy
+          z własności:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\log_a b \\cdot \\log_b a = 1"}</Mb>
+        </FormulaBox>
+        <Mb>{"\\log_2 3 \\cdot \\log_3 2 = 1"}</Mb>
+        <Mb>{"\\log_7 5 \\cdot \\log_5 7 = 1"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Wynik końcowy</p>
+        <Mb>{"-32 \\cdot 1 \\cdot 1 = -32"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"-32"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-czerwiec-dod-zad2-logarytmy-dowod",
     source: SOURCE_CKE_CZERWIEC_2025_DOD,

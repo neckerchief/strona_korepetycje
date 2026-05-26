@@ -13,6 +13,8 @@ const SOURCE_CKE_MAJ_2025 =
 
 const SOURCE_CKE_F2023 =
   "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
+const SOURCE_PROBNA_PL_MARZEC_2025 =
+  "Matura próbna, Politechnika Łódzka, marzec 2025";
 
 const tasks = [
   {
@@ -553,6 +555,112 @@ const tasks = [
         <FormulaBox>
           <Mb>{"P(A|B) = \\frac{|A \\cap B|}{|B|} = \\frac{22}{35}"}</Mb>
         </FormulaBox>
+      </div>
+    ),
+  },
+
+  // ── Matura próbna PŁ marzec 2025 ──────────────────────────
+  {
+    id: "probna-pl-2025-marzec-zad7-urna-bayes",
+    source: SOURCE_PROBNA_PL_MARZEC_2025,
+    number: "7",
+    points: null,
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Z urny zawierającej <Mi>{"10"}</Mi> białych kul i <Mi>{"4"}</Mi> czarne kule
+          wyjęto jedną kulę i odłożono, nie oglądając jej. Następnie wylosowano <Mi>{"3"}</Mi> kule.
+        </p>
+        <p>a) Oblicz prawdopodobieństwo, że były to białe kule.</p>
+        <p>
+          b) Jakie jest prawdopodobieństwo, że usunięta na początku kula była czarna, jeżeli
+          wiadomo, że trzy wylosowane kule są białe?
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-1">
+        <p>a) <Mi>{"\\dfrac{30}{91}"}</Mi></p>
+        <p>b) <Mi>{"\\dfrac{4}{11}"}</Mi></p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Nie wiemy, jaka kula została odłożona, więc rozpatrujemy dwa scenariusze: odłożono
+          białą (prawdopodobieństwo <Mi>{"\\tfrac{10}{14}"}</Mi>) albo czarną
+          (<Mi>{"\\tfrac{4}{14}"}</Mi>). W każdym z nich skład urny jest inny.
+        </p>
+        <p>W punkcie a) użyj wzoru na prawdopodobieństwo całkowite. W punkcie b) zastosuj wzór
+          na prawdopodobieństwo warunkowe:</p>
+        <FormulaBox>
+          <Mb>{"P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Oznaczenia</p>
+        <p>
+          W urnie jest <Mi>{"10"}</Mi> białych i <Mi>{"4"}</Mi> czarne kule (<Mi>{"14"}</Mi> łącznie).
+          Odłożona kula jest nieznana, więc rozpatrujemy dwa przypadki:
+        </p>
+        <ul className="list-disc list-inside space-y-1 ml-1">
+          <li><Mi>{"B_1"}</Mi> - odłożono białą: <Mi>{"P(B_1) = \\dfrac{10}{14} = \\dfrac{5}{7}"}</Mi></li>
+          <li><Mi>{"C_1"}</Mi> - odłożono czarną: <Mi>{"P(C_1) = \\dfrac{4}{14} = \\dfrac{2}{7}"}</Mi></li>
+        </ul>
+
+        <p className="font-semibold text-stone-800 mt-4">Punkt a)</p>
+        <p>
+          Niech <Mi>{"W"}</Mi> oznacza zdarzenie „wylosowano 3 białe kule" z pozostałych{" "}
+          <Mi>{"13"}</Mi> kul. Liczymy prawdopodobieństwa warunkowe:
+        </p>
+        <p>
+          Jeśli odłożono białą, w urnie zostaje <Mi>{"9"}</Mi> białych i <Mi>{"4"}</Mi> czarne:
+        </p>
+        <Mb>{"P(W \\mid B_1) = \\frac{\\binom{9}{3}}{\\binom{13}{3}} = \\frac{84}{286} = \\frac{42}{143}"}</Mb>
+        <p>
+          Jeśli odłożono czarną, w urnie zostaje <Mi>{"10"}</Mi> białych i <Mi>{"3"}</Mi> czarne:
+        </p>
+        <Mb>{"P(W \\mid C_1) = \\frac{\\binom{10}{3}}{\\binom{13}{3}} = \\frac{120}{286} = \\frac{60}{143}"}</Mb>
+
+        <p>Prawdopodobieństwo całkowite:</p>
+        <FormulaBox>
+          <Mb>{"P(W) = P(B_1) \\cdot P(W \\mid B_1) + P(C_1) \\cdot P(W \\mid C_1)"}</Mb>
+        </FormulaBox>
+        <Mb>
+          {"P(W) = \\frac{5}{7} \\cdot \\frac{42}{143} + \\frac{2}{7} \\cdot \\frac{60}{143} = \\frac{210}{1001} + \\frac{120}{1001} = \\frac{330}{1001} = \\frac{30}{91}"}
+        </Mb>
+
+        <p className="font-semibold text-stone-800 mt-4">Punkt b)</p>
+        <p>
+          Szukamy <Mi>{"P(C_1 \\mid W)"}</Mi>. Korzystamy ze wzoru na prawdopodobieństwo warunkowe:
+        </p>
+        <FormulaBox>
+          <Mb>{"P(C_1 \\mid W) = \\frac{P(C_1 \\cap W)}{P(W)}"}</Mb>
+        </FormulaBox>
+        <p>
+          Wartość <Mi>{"P(W)"}</Mi> znamy z punktu a). Natomiast{" "}
+          <Mi>{"P(C_1 \\cap W)"}</Mi> to prawdopodobieństwo, że odłożono czarną <strong>i</strong>{" "}
+          wylosowano 3 białe, czyli jeden ze składników, które już policzyliśmy:
+        </p>
+        <Mb>{"P(C_1 \\cap W) = P(C_1) \\cdot P(W \\mid C_1) = \\frac{2}{7} \\cdot \\frac{60}{143} = \\frac{120}{1001}"}</Mb>
+        <p>Podstawiamy:</p>
+        <Mb>
+          {"P(C_1 \\mid W) = \\frac{\\dfrac{120}{1001}}{\\dfrac{30}{91}} = \\frac{120}{1001} \\cdot \\frac{91}{30} = \\frac{120}{330} = \\frac{4}{11}"}
+        </Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: a) <Mi>{"\\dfrac{30}{91}"}</Mi>, b) <Mi>{"\\dfrac{4}{11}"}</Mi>
+          </p>
+        </div>
       </div>
     ),
   },
