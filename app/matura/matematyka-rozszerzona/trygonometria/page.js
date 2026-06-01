@@ -13,7 +13,124 @@ const SOURCE_CKE_MAJ_2025 =
 const SOURCE_PROBNA_PL_MARZEC_2025 =
   "Matura próbna, Politechnika Łódzka, marzec 2025";
 
+const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
+  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+
 const tasks = [
+  {
+    id: "cke-mock-2024-grudzien-zad9-sin4-cos4",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "9",
+    points: "0–4",
+    instruction: <span>Rozwiąż równanie</span>,
+    mathBlock: "\\sin^4 x = \\sin x \\cdot \\cos x - \\cos^4 x",
+    noteItems: [
+      { text: "w zbiorze " },
+      { math: "[-\\pi,\\,2\\pi]" },
+      { text: ". Zapisz obliczenia." },
+    ],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>
+          {"x \\in \\left\\{-\\dfrac{3\\pi}{4},\\,\\dfrac{\\pi}{4},\\,\\dfrac{5\\pi}{4}\\right\\}"}
+        </Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Przenieś <Mi>{"\\cos^4 x"}</Mi> na lewą stronę, żeby po lewej była suma <Mi>{"\\sin^4 x + \\cos^4 x"}</Mi>.
+        </p>
+        <p>
+          Zamień <Mi>{"\\sin^4 x + \\cos^4 x"}</Mi> na postać z kwadratem sumy:
+        </p>
+        <FormulaBox>
+          <Mb>
+            {
+              "\\sin^4 x + \\cos^4 x = (\\sin^2 x + \\cos^2 x)^2 - 2\\sin^2 x \\cos^2 x"
+            }
+          </Mb>
+        </FormulaBox>
+        <p>
+          Użyj jedynki trygonometrycznej <Mi>{"\\sin^2 x + \\cos^2 x = 1"}</Mi> oraz wzorów na kąt podwójny, żeby
+          wyrazić wszystko przez <Mi>{"\\sin(2x)"}</Mi>. Powinno wyjść równanie kwadratowe na <Mi>{"\\sin(2x)"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>{"\\sin(2x) = 2\\sin x \\cos x"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Przekształcenie równania</p>
+        <p>
+          Przenosimy <Mi>{"\\cos^4 x"}</Mi> na lewą stronę (równoważnie dla wszystkich <Mi>{"x"}</Mi>):
+        </p>
+        <Mb>{"\\sin^4 x + \\cos^4 x = \\sin x \\cos x"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Suma czwartych potęg</p>
+        <p>
+          Korzystamy ze wzoru <Mi>{"a^2 + b^2 = (a+b)^2 - 2ab"}</Mi> dla <Mi>{"a = \\sin^2 x"}</Mi>,{" "}
+          <Mi>{"b = \\cos^2 x"}</Mi>:
+        </p>
+        <Mb>
+          {
+            "\\sin^4 x + \\cos^4 x = (\\sin^2 x + \\cos^2 x)^2 - 2\\sin^2 x \\cos^2 x"
+          }
+        </Mb>
+        <p>Z jedynki trygonometrycznej <Mi>{"\\sin^2 x + \\cos^2 x = 1"}</Mi>:</p>
+        <Mb>{"\\sin^4 x + \\cos^4 x = 1 - 2\\sin^2 x \\cos^2 x"}</Mb>
+        <p>Równanie przyjmuje postać:</p>
+        <Mb>{"1 - 2\\sin^2 x \\cos^2 x = \\sin x \\cos x"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Kąt podwójny</p>
+        <p>
+          Wiemy, że <Mi>{"\\sin(2x) = 2\\sin x \\cos x"}</Mi>, więc <Mi>{"\\sin x \\cos x = \\dfrac{1}{2}\\sin(2x)"}</Mi>.
+          Ponadto <Mi>{"\\sin^2 x \\cos^2 x = \\dfrac{1}{4}\\sin^2(2x)"}</Mi>.
+        </p>
+        <Mb>{"1 - 2 \\cdot \\dfrac{1}{4}\\sin^2(2x) = \\dfrac{1}{2}\\sin(2x)"}</Mb>
+        <Mb>{"1 - \\dfrac{1}{2}\\sin^2(2x) = \\dfrac{1}{2}\\sin(2x)"}</Mb>
+        <p>Mnożymy obie strony przez <Mi>{"2"}</Mi>:</p>
+        <Mb>{"2 - \\sin^2(2x) = \\sin(2x)"}</Mb>
+        <Mb>{"\\sin^2(2x) + \\sin(2x) - 2 = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Równanie kwadratowe na <Mi>{"\\sin(2x)"}</Mi></p>
+        <p>Oznaczmy <Mi>{"t = \\sin(2x)"}</Mi>, gdzie <Mi>{"t \\in [-1,\\,1]"}</Mi>:</p>
+        <Mb>{"t^2 + t - 2 = 0"}</Mb>
+        <Mb>{"(t + 2)(t - 1) = 0 \\quad \\Longrightarrow \\quad t = -2 \\quad \\text{lub} \\quad t = 1"}</Mb>
+        <p>
+          Warunek <Mi>{"\\sin(2x) \\in [-1,\\,1]"}</Mi> odrzuca <Mi>{"t = -2"}</Mi>. Zostaje{" "}
+          <Mi>{"\\sin(2x) = 1"}</Mi>.
+        </p>
+        <Mb>{"2x = \\dfrac{\\pi}{2} + 2k\\pi, \\quad k \\in \\mathbb{Z} \\quad \\Longrightarrow \\quad x = \\dfrac{\\pi}{4} + k\\pi"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Rozwiązania w <Mi>{"[-\\pi,\\,2\\pi]"}</Mi></p>
+        <Mb>
+          {
+            "k = -1 \\Rightarrow x = -\\dfrac{3\\pi}{4},\\quad k = 0 \\Rightarrow x = \\dfrac{\\pi}{4},\\quad k = 1 \\Rightarrow x = \\dfrac{5\\pi}{4}"
+          }
+        </Mb>
+        <p>
+          Dla <Mi>{"k = 2"}</Mi> otrzymujemy <Mi>{"x = \\dfrac{9\\pi}{4} > 2\\pi"}</Mi>, więc poza zbiorem. Sprawdzenie
+          (np. dla <Mi>{"x = \\dfrac{\\pi}{4}"}</Mi>): lewa i prawa strona równają się <Mi>{"\\dfrac{1}{4}"}</Mi>.
+        </p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź:{" "}
+            <Mi>
+              {"x \\in \\left\\{-\\dfrac{3\\pi}{4},\\,\\dfrac{\\pi}{4},\\,\\dfrac{5\\pi}{4}\\right\\}"}
+            </Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-maj-zad9-rownanie-tryg",
     source: SOURCE_CKE_MAJ_2025,

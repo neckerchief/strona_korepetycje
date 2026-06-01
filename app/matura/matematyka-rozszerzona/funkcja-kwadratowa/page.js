@@ -13,7 +13,175 @@ const SOURCE_CKE_MAJ_2025 =
 const SOURCE_PROBNA_PL_MARZEC_2025 =
   "Matura próbna, Politechnika Łódzka, marzec 2025";
 
+const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
+  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+
 const tasks = [
+  {
+    id: "cke-mock-2024-grudzien-zad11-parametr-vieta",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "11",
+    points: "0–5",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Funkcja kwadratowa <Mi>{"f"}</Mi> zmiennej rzeczywistej <Mi>{"x"}</Mi> jest określona wzorem{" "}
+          <Mi>{"f(x) = x^2 - 3x - m^2 + m + 3"}</Mi>, gdzie <Mi>{"m"}</Mi> jest parametrem rzeczywistym.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Wyznacz wszystkie wartości parametru <Mi>{"m"}</Mi>, dla których funkcja <Mi>{"f"}</Mi> ma dwa różne
+          miejsca zerowe <Mi>{"x_1"}</Mi>, <Mi>{"x_2"}</Mi> spełniające warunek{" "}
+          <Mi>{"|x_1^2 - x_2^2| \\le 12"}</Mi>. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>
+          {
+            "m \\in \\left[\\dfrac{1 - 2\\sqrt{5}}{2},\\,-\\dfrac{1}{2}\\right) \\cup \\left(\\dfrac{3}{2},\\,\\dfrac{1 + 2\\sqrt{5}}{2}\\right]"
+          }
+        </Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Zapisz równanie <Mi>{"f(x) = 0"}</Mi> i współczynniki trójmianu. Dwa różne miejsca zerowe oznaczają{" "}
+          <Mi>{"\\Delta > 0"}</Mi>.
+        </p>
+        <p>
+          Rozłóż moduł z treści zadania:
+        </p>
+        <FormulaBox>
+          <Mb>
+            {
+              "|x_1^2 - x_2^2| = |(x_1 - x_2)(x_1 + x_2)|"
+            }
+          </Mb>
+        </FormulaBox>
+        <p>
+          Z wzorów Viète&apos;a podstaw <Mi>{"x_1 + x_2"}</Mi> i wyraź <Mi>{"(x_1 - x_2)^2"}</Mi> przez sumę i
+          iloczyn pierwiastków:
+        </p>
+        <FormulaBox>
+          <Mb>{"(x_1 - x_2)^2 = (x_1 + x_2)^2 - 4x_1 x_2"}</Mb>
+        </FormulaBox>
+        <p>
+          Na końcu weź przecięcie warunków na <Mi>{"m"}</Mi> z <Mi>{"\\Delta > 0"}</Mi> oraz z nierówności na
+          moduł.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Równanie i współczynniki</p>
+        <p>
+          Miejsca zerowe funkcji <Mi>{"f"}</Mi> spełniają:
+        </p>
+        <Mb>{"x^2 - 3x - m^2 + m + 3 = 0"}</Mb>
+        <p>Oznaczamy:</p>
+        <Mb>{"a = 1, \\qquad b = -3, \\qquad c = -m^2 + m + 3"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Wzory Viète&apos;a</p>
+        <p>
+          Jeśli <Mi>{"x_1"}</Mi> i <Mi>{"x_2"}</Mi> są miejscami zerowymi, to:
+        </p>
+        <Mb>{"x_1 + x_2 = -\\dfrac{b}{a} = 3"}</Mb>
+        <Mb>{"x_1 x_2 = \\dfrac{c}{a} = -m^2 + m + 3"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Warunek z modułem</p>
+        <p>
+          Korzystamy z rozkładu na iloczyn:
+        </p>
+        <Mb>{"|x_1^2 - x_2^2| = |(x_1 - x_2)(x_1 + x_2)| = |x_1 - x_2| \\cdot |x_1 + x_2|"}</Mb>
+        <p>
+          Ponieważ <Mi>{"x_1 + x_2 = 3 > 0"}</Mi>, mamy <Mi>{"|x_1 + x_2| = 3"}</Mi>. Warunek z treści:
+        </p>
+        <Mb>{"3|x_1 - x_2| \\le 12 \\quad \\Longrightarrow \\quad |x_1 - x_2| \\le 4"}</Mb>
+        <p>
+          Podnosimy obie strony do kwadratu (po lewej jest wartość bezwzględna, więc{" "}
+          <Mi>{"|x_1 - x_2|^2 = (x_1 - x_2)^2"}</Mi>):
+        </p>
+        <Mb>{"(x_1 - x_2)^2 \\le 16"}</Mb>
+        <p>
+          Korzystamy ze wzoru łączącego różnicę pierwiastków z sumą i iloczynem:
+        </p>
+        <FormulaBox>
+          <Mb>{"(x_1 - x_2)^2 = (x_1 + x_2)^2 - 4x_1 x_2"}</Mb>
+        </FormulaBox>
+        <Mb>
+          {
+            "(x_1 - x_2)^2 = 3^2 - 4(-m^2 + m + 3) = 9 + 4m^2 - 4m - 12 = 4m^2 - 4m - 3"
+          }
+        </Mb>
+        <Mb>{"4m^2 - 4m - 3 \\le 16 \\quad \\Longrightarrow \\quad 4m^2 - 4m - 19 \\le 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Dwa różne miejsca zerowe</p>
+        <p>
+          Potrzebujemy dwóch różnych pierwiastków rzeczywistych, czyli <Mi>{"\\Delta > 0"}</Mi>:
+        </p>
+        <Mb>{"\\Delta = b^2 - 4ac = (-3)^2 - 4 \\cdot 1 \\cdot (-m^2 + m + 3) = 4m^2 - 4m - 3"}</Mb>
+        <Mb>{"\\Delta > 0 \\quad \\Longrightarrow \\quad 4m^2 - 4m - 3 > 0"}</Mb>
+        <Mb>{"(2m - 3)(2m + 1) > 0"}</Mb>
+        <Mb>{"m < -\\dfrac{1}{2} \\quad \\text{lub} \\quad m > \\dfrac{3}{2}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Nierówność kwadratowa na <Mi>{"m"}</Mi></p>
+        <p>Rozwiązujemy <Mi>{"4m^2 - 4m - 19 \\le 0"}</Mi>:</p>
+        <Mb>
+          {
+            "m = \\dfrac{4 \\pm \\sqrt{16 + 304}}{8} = \\dfrac{4 \\pm \\sqrt{320}}{8} = \\dfrac{4 \\pm 8\\sqrt{5}}{8} = \\dfrac{1 \\pm 2\\sqrt{5}}{2}"
+          }
+        </Mb>
+        <p>
+          Parabola <Mi>{"4m^2 - 4m - 19"}</Mi> ma współczynnik przy <Mi>{"m^2"}</Mi> dodatni, więc nierówność{" "}
+          <Mi>{"\\le 0"}</Mi> zachodzi między pierwiastkami:
+        </p>
+        <Mb>
+          {
+            "m \\in \\left[\\dfrac{1 - 2\\sqrt{5}}{2},\\,\\dfrac{1 + 2\\sqrt{5}}{2}\\right]"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 6. Przecięcie warunków</p>
+        <p>
+          Łączymy z warunkiem <Mi>{"\\Delta > 0"}</Mi> (czyli <Mi>{"m < -\\dfrac{1}{2}"}</Mi> lub{" "}
+          <Mi>{"m > \\dfrac{3}{2}"}</Mi>):
+        </p>
+        <ul className="list-disc list-inside space-y-2 ml-1">
+          <li>
+            dla <Mi>{"m < -\\dfrac{1}{2}"}</Mi>:{" "}
+            <Mi>{"m \\in \\left[\\dfrac{1 - 2\\sqrt{5}}{2},\\,-\\dfrac{1}{2}\\right)"}</Mi>
+          </li>
+          <li>
+            dla <Mi>{"m > \\dfrac{3}{2}"}</Mi>:{" "}
+            <Mi>{"m \\in \\left(\\dfrac{3}{2},\\,\\dfrac{1 + 2\\sqrt{5}}{2}\\right]"}</Mi>
+          </li>
+        </ul>
+        <p className="text-stone-600 text-sm">
+          Sprawdzenie: <Mi>{"\\dfrac{1 - 2\\sqrt{5}}{2} < -\\dfrac{1}{2} < \\dfrac{3}{2} < \\dfrac{1 + 2\\sqrt{5}}{2}"}</Mi>.
+        </p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź:{" "}
+            <Mi>
+              {
+                "m \\in \\left[\\dfrac{1 - 2\\sqrt{5}}{2},\\,-\\dfrac{1}{2}\\right) \\cup \\left(\\dfrac{3}{2},\\,\\dfrac{1 + 2\\sqrt{5}}{2}\\right]"
+              }
+            </Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-maj-zad11-parametr-vieta",
     source: SOURCE_CKE_MAJ_2025,

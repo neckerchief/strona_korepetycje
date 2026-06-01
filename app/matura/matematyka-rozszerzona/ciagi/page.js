@@ -13,7 +13,227 @@ const SOURCE_CKE_MAJ_2025 =
 const SOURCE_PROBNA_PL_MARZEC_2025 =
   "Matura próbna, Politechnika Łódzka, marzec 2025";
 
+const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
+  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+
 const tasks = [
+  {
+    id: "cke-mock-2024-grudzien-zad8-granica-nieparzyste",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "8",
+    points: "0–4",
+    instruction: "Oblicz granicę",
+    mathBlock:
+      "\\lim_{n \\to +\\infty} \\frac{1 + 3 + 5 + 7 + \\cdots + (2n + 1)}{\\binom{n}{2}}",
+    noteItems: [
+      { text: "gdzie " },
+      { math: "1 + 3 + 5 + 7 + \\cdots + (2n + 1)" },
+      { text: " jest sumą kolejnych liczb naturalnych nieparzystych. Zapisz obliczenia." },
+    ],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"2"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Licznik to suma ciągu arytmetycznego: pierwszy wyraz <Mi>{"a_1 = 1"}</Mi>, różnica{" "}
+          <Mi>{"r = 2"}</Mi>, ostatni wyraz <Mi>{"a_{n+1} = 2n + 1"}</Mi>, więc jest{" "}
+          <Mi>{"n + 1"}</Mi> wyrazów. Zastosuj wzór na sumę ciągu arytmetycznego.
+        </p>
+        <FormulaBox>
+          <Mb>{"S_k = \\dfrac{a_1 + a_k}{2} \\cdot k"}</Mb>
+        </FormulaBox>
+        <p>
+          Mianownik to symbol Newtona: <Mi>{"\\binom{n}{2} = \\dfrac{n(n-1)}{2}"}</Mi>. Po podstawieniu
+          zostaw w ułamku najwyższe potęgi <Mi>{"n"}</Mi> w liczniku i mianowniku, a potem policz granicę przy{" "}
+          <Mi>{"n \\to +\\infty"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Suma w liczniku (ciąg arytmetyczny)</p>
+        <p>
+          Wyrazy <Mi>{"1,\\, 3,\\, 5,\\, \\ldots,\\, 2n + 1"}</Mi> tworzą ciąg arytmetyczny o{" "}
+          <Mi>{"a_1 = 1"}</Mi> i <Mi>{"r = 2"}</Mi>. Ostatni wyraz to <Mi>{"2n + 1"}</Mi>.
+        </p>
+        <p>
+          Sprawdzamy liczbę wyrazów: jeśli jest ich <Mi>{"k"}</Mi>, to{" "}
+          <Mi>{"1 + (k-1) \\cdot 2 = 2n + 1"}</Mi>, stąd <Mi>{"k - 1 = n"}</Mi>, czyli <Mi>{"k = n + 1"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>
+            {
+              "S = \\frac{1 + (2n + 1)}{2} \\cdot (n + 1) = \\frac{2n + 2}{2} \\cdot (n + 1) = (n + 1)^2"
+            }
+          </Mb>
+        </FormulaBox>
+        <p className="text-stone-600 text-sm">
+          (To też znany fakt: suma pierwszych <Mi>{"n + 1"}</Mi> liczb nieparzystych równa się{" "}
+          <Mi>{"(n+1)^2"}</Mi>.)
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Mianownik</p>
+        <Mb>{"\\binom{n}{2} = \\dfrac{n!}{2!\\,(n-2)!} = \\dfrac{n(n-1)}{2}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Ułamek przed granicą</p>
+        <Mb>
+          {
+            "\\frac{(n+1)^2}{\\dfrac{n(n-1)}{2}} = \\frac{2(n+1)^2}{n(n-1)} = \\frac{2(n^2 + 2n + 1)}{n^2 - n}"
+          }
+        </Mb>
+        <p>
+          Dzielimy licznik i mianownik przez <Mi>{"n^2"}</Mi> (najwyższa potęga przy dużym{" "}
+          <Mi>{"n"}</Mi>):
+        </p>
+        <Mb>
+          {
+            "\\frac{2\\left(1 + \\dfrac{2}{n} + \\dfrac{1}{n^2}\\right)}{1 - \\dfrac{1}{n}}"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Granica</p>
+        <p>
+          Gdy <Mi>{"n \\to +\\infty"}</Mi>, wyrażenia <Mi>{"\\dfrac{1}{n}"}</Mi> i <Mi>{"\\dfrac{1}{n^2}"}</Mi>{" "}
+          dążą do <Mi>{"0"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>
+            {
+              "\\lim_{n \\to +\\infty} \\frac{2\\left(1 + \\dfrac{2}{n} + \\dfrac{1}{n^2}\\right)}{1 - \\dfrac{1}{n}} = \\frac{2 \\cdot 1}{1} = 2"
+            }
+          </Mb>
+        </FormulaBox>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"2"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    id: "cke-mock-2024-grudzien-zad10-aryt-geom",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "10",
+    points: "0–5",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Trzeci i piąty wyraz malejącego ciągu arytmetycznego <Mi>{"(a_n)"}</Mi>, określonego dla każdej liczby
+          naturalnej <Mi>{"n \\geq 1"}</Mi>, spełniają warunek <Mi>{"a_3 + a_5 = 10"}</Mi>.
+        </p>
+        <p>
+          Trzywyrazowy ciąg{" "}
+          <Mi>{"\\left(2a_1 + 4,\\; a_4 - 1,\\; -\\dfrac{1}{8}a_7\\right)"}</Mi> jest geometryczny.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Oblicz wyrazy tego ciągu geometrycznego. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        Wyrazy ciągu geometrycznego: <Mi>{"32"}</Mi>, <Mi>{"4"}</Mi>, <Mi>{"\\dfrac{1}{2}"}</Mi>.
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Zapisz <Mi>{"a_3"}</Mi>, <Mi>{"a_5"}</Mi>, <Mi>{"a_4"}</Mi> i <Mi>{"a_7"}</Mi> przez <Mi>{"a_1"}</Mi> oraz
+          różnicę <Mi>{"r"}</Mi>. Z warunku <Mi>{"a_3 + a_5 = 10"}</Mi> wyprowadź zależność między{" "}
+          <Mi>{"a_1"}</Mi> i <Mi>{"r"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>{"a_n = a_1 + (n-1)r"}</Mb>
+        </FormulaBox>
+        <p>
+          Dla ciągu geometrycznego <Mi>{"(b_1, b_2, b_3)"}</Mi> zachodzi{" "}
+          <Mi>{"b_2^2 = b_1 \\cdot b_3"}</Mi>. Po podstawieniu wyrazów otrzymasz równanie na{" "}
+          <Mi>{"r"}</Mi>. Pamiętaj, że ciąg <Mi>{"(a_n)"}</Mi> jest <strong>malejący</strong>, więc{" "}
+          <Mi>{"r < 0"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Wyrazy ciągu arytmetycznego</p>
+        <p>
+          Ciąg <Mi>{"(a_n)"}</Mi> jest arytmetyczny, więc <Mi>{"a_n = a_1 + (n-1)r"}</Mi>:
+        </p>
+        <Mb>{"a_3 = a_1 + 2r, \\qquad a_5 = a_1 + 4r, \\qquad a_4 = a_1 + 3r, \\qquad a_7 = a_1 + 6r"}</Mb>
+        <p>Z warunku <Mi>{"a_3 + a_5 = 10"}</Mi>:</p>
+        <Mb>{"(a_1 + 2r) + (a_1 + 4r) = 10 \\quad \\Longrightarrow \\quad 2a_1 + 6r = 10"}</Mb>
+        <Mb>{"a_1 + 3r = 5 \\quad \\Longrightarrow \\quad a_4 = 5"}</Mb>
+        <p>
+          Drugi wyraz ciągu geometrycznego od razu widać bez wyznaczania <Mi>{"a_1"}</Mi> i <Mi>{"r"}</Mi>:
+        </p>
+        <Mb>{"a_4 - 1 = 5 - 1 = 4"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Pozostałe wyrazy ciągu geometrycznego</p>
+        <p>Oznaczmy wyrazy ciągu geometrycznego:</p>
+        <Mb>{"b_1 = 2a_1 + 4, \\qquad b_2 = a_4 - 1 = 4, \\qquad b_3 = -\\dfrac{1}{8}a_7"}</Mb>
+        <p>
+          Wyrażamy <Mi>{"b_1"}</Mi> i <Mi>{"b_3"}</Mi> przez <Mi>{"r"}</Mi>, korzystając z{" "}
+          <Mi>{"a_1 = 5 - 3r"}</Mi>:
+        </p>
+        <Mb>{"b_1 = 2(5 - 3r) + 4 = 14 - 6r"}</Mb>
+        <Mb>{"b_3 = -\\dfrac{1}{8}(a_1 + 6r) = -\\dfrac{1}{8}(5 - 3r + 6r) = -\\dfrac{5 + 3r}{8}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Warunek na ciąg geometryczny</p>
+        <FormulaBox>
+          <Mb>{"b_2^2 = b_1 \\cdot b_3"}</Mb>
+        </FormulaBox>
+        <Mb>{"16 = (14 - 6r) \\cdot \\left(-\\dfrac{5 + 3r}{8}\\right)"}</Mb>
+        <p>Mnożymy obie strony przez <Mi>{"8"}</Mi>:</p>
+        <Mb>{"128 = -(14 - 6r)(5 + 3r)"}</Mb>
+        <Mb>{"128 = -(70 + 42r - 30r - 18r^2) = -70 - 12r + 18r^2"}</Mb>
+        <Mb>{"18r^2 - 12r - 198 = 0"}</Mb>
+        <p>Dzielimy przez <Mi>{"6"}</Mi>:</p>
+        <Mb>{"3r^2 - 2r - 33 = 0"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Równanie kwadratowe na <Mi>{"r"}</Mi></p>
+        <Mb>{"\\Delta = (-2)^2 - 4 \\cdot 3 \\cdot (-33) = 4 + 396 = 400"}</Mb>
+        <Mb>{"\\sqrt{\\Delta} = 20"}</Mb>
+        <Mb>{"r = \\dfrac{2 \\pm 20}{6} = \\dfrac{11}{3} \\quad \\text{lub} \\quad r = -3"}</Mb>
+        <p>
+          Ciąg <Mi>{"(a_n)"}</Mi> jest malejący, więc <Mi>{"r < 0"}</Mi>. Bierzemy <Mi>{"r = -3"}</Mi>.
+        </p>
+        <Mb>{"a_1 = 5 - 3r = 5 - 3 \\cdot (-3) = 14"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Wyrazy ciągu geometrycznego</p>
+        <Mb>{"b_1 = 2 \\cdot 14 + 4 = 32"}</Mb>
+        <Mb>{"b_2 = 4"}</Mb>
+        <Mb>{"b_3 = -\\dfrac{1}{8} \\cdot (14 + 6 \\cdot (-3)) = -\\dfrac{1}{8} \\cdot (-4) = \\dfrac{1}{2}"}</Mb>
+        <p>
+          Sprawdzenie: <Mi>{"b_2^2 = 16"}</Mi>, <Mi>{"b_1 \\cdot b_3 = 32 \\cdot \\dfrac{1}{2} = 16"}</Mi>. Iloraz{" "}
+          <Mi>{"q = \\dfrac{4}{32} = \\dfrac{1}{8}"}</Mi>.
+        </p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: wyrazy ciągu geometrycznego to <Mi>{"32"}</Mi>, <Mi>{"4"}</Mi>,{" "}
+            <Mi>{"\\dfrac{1}{2}"}</Mi>.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-czerwiec-dod-zad9-ciagi-aryt-geom",
     source: SOURCE_CKE_CZERWIEC_2025_DOD,

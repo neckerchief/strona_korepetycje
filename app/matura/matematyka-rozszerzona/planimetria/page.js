@@ -17,7 +17,273 @@ const SOURCE_CKE_MAJ_2025 =
 const SOURCE_PROBNA_PL_MARZEC_2025 =
   "Matura próbna, Politechnika Łódzka, marzec 2025";
 
+const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
+  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+
 const tasks = [
+  {
+    id: "cke-mock-2024-grudzien-zad2-okrag-styczny",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "2",
+    points: "0–2",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          Okrąg <Mi>{"\\mathcal{O}"}</Mi> jest styczny do boków <Mi>{"AC"}</Mi> i <Mi>{"BC"}</Mi> trójkąta{" "}
+          <Mi>{"ABC"}</Mi> oraz przecina bok <Mi>{"AB"}</Mi> tego trójkąta w punktach <Mi>{"M"}</Mi> oraz{" "}
+          <Mi>{"N"}</Mi>, przy czym <Mi>{"0 < |AM| < |AN| < |AB|"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Wykaż, że jeśli <Mi>{"|AM| = |BN|"}</Mi>, to trójkąt <Mi>{"ABC"}</Mi> jest równoramienny.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Oznacz punkty styczności okręgu z bokami <Mi>{"AC"}</Mi> i <Mi>{"BC"}</Mi> odpowiednio przez{" "}
+          <Mi>{"P"}</Mi> i <Mi>{"Q"}</Mi>. Na prostej <Mi>{"AB"}</Mi> punkty układają się w kolejności{" "}
+          <Mi>{"A"}</Mi>, <Mi>{"M"}</Mi>, <Mi>{"N"}</Mi>, <Mi>{"B"}</Mi>.
+        </p>
+        <p>
+          Z <strong>twierdzenia o stycznej i siecznej</strong> wyznacz zależności dla wierzchołków{" "}
+          <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>:
+        </p>
+        <FormulaBox>
+          <Mb>{"|AP|^2 = |AM| \\cdot |AN|, \\qquad |BQ|^2 = |BN| \\cdot |BM|"}</Mb>
+        </FormulaBox>
+        <p>
+          Z <strong>twierdzenia o odcinkach stycznych</strong> (z wierzchołka <Mi>{"C"}</Mi>) otrzymasz{" "}
+          <Mi>{"|CP| = |CQ|"}</Mi>. Wykorzystaj warunek <Mi>{"|AM| = |BN|"}</Mi> oraz to, że{" "}
+          <Mi>{"|AN|"}</Mi> i <Mi>{"|BM|"}</Mi> można zapisać przez ten sam odcinek <Mi>{"|MN|"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Punkty styczności i układ na boku <Mi>{"AB"}</Mi></p>
+        <p>
+          Niech <Mi>{"P"}</Mi> i <Mi>{"Q"}</Mi> będą punktami, w których okrąg <Mi>{"\\mathcal{O}"}</Mi> jest
+          styczny odpowiednio do <Mi>{"AC"}</Mi> i <Mi>{"BC"}</Mi>. Z warunku{" "}
+          <Mi>{"0 < |AM| < |AN| < |AB|"}</Mi> wynika, że na boku <Mi>{"AB"}</Mi> (w kolejności od{" "}
+          <Mi>{"A"}</Mi> do <Mi>{"B"}</Mi>) leżą kolejno punkty <Mi>{"M"}</Mi>, potem <Mi>{"N"}</Mi>:
+        </p>
+        <Mb>{"A \\text{---} M \\text{---} N \\text{---} B"}</Mb>
+        <p>
+          Z <strong>twierdzenia o odcinkach stycznych</strong> (odcinki styczne wychodzące z jednego punktu na
+          zewnątrz okręgu mają tę samą długość) dla wierzchołka <Mi>{"C"}</Mi>:
+        </p>
+        <Mb>{"|CP| = |CQ|"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Twierdzenie o stycznej i siecznej</p>
+        <p>
+          Z wierzchołka <Mi>{"A"}</Mi> do okręgu prowadzi styczna <Mi>{"AP"}</Mi> oraz sieczna przechodząca
+          przez <Mi>{"M"}</Mi> i <Mi>{"N"}</Mi> (bliższy punkt przecięcia to <Mi>{"M"}</Mi>). Z twierdzenia o
+          stycznej i siecznej:
+        </p>
+        <Mb>{"|AP|^2 = |AM| \\cdot |AN|"}</Mb>
+        <p>
+          Z wierzchołka <Mi>{"B"}</Mi> sieczna przecina okrąg w punktach <Mi>{"N"}</Mi> (bliżej <Mi>{"B"}</Mi>)
+          oraz <Mi>{"M"}</Mi> (dalej), a styczna to <Mi>{"BQ"}</Mi>:
+        </p>
+        <Mb>{"|BQ|^2 = |BN| \\cdot |BM|"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Warunek <Mi>{"|AM| = |BN|"}</Mi></p>
+        <p>
+          Ponieważ <Mi>{"M"}</Mi> leży między <Mi>{"A"}</Mi> a <Mi>{"N"}</Mi>, a <Mi>{"N"}</Mi> między{" "}
+          <Mi>{"M"}</Mi> a <Mi>{"B"}</Mi>:
+        </p>
+        <Mb>{"|AN| = |AM| + |MN|, \\qquad |BM| = |BN| + |MN|"}</Mb>
+        <p>
+          Zakładamy <Mi>{"|AM| = |BN|"}</Mi>. Wtedy prawe strony powyższych równości są równe, więc:
+        </p>
+        <Mb>{"|AN| = |BM|"}</Mb>
+        <p>
+          Podstawiamy do wzorów ze stycznej i siecznej oraz do warunku <Mi>{"|AM| = |BN|"}</Mi>:
+        </p>
+        <Mb>
+          {
+            "|AP|^2 = |AM| \\cdot |AN| = |BN| \\cdot |BM| = |BQ|^2"
+          }
+        </Mb>
+        <p>
+          Długości <Mi>{"|AP|"}</Mi> i <Mi>{"|BQ|"}</Mi> są dodatnie (to odcinki styczne), więc:
+        </p>
+        <Mb>{"|AP| = |BQ|"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Boki trójkąta przy wierzchołku <Mi>{"C"}</Mi></p>
+        <p>
+          Punkt <Mi>{"P"}</Mi> leży na <Mi>{"AC"}</Mi> między <Mi>{"A"}</Mi> a <Mi>{"C"}</Mi>, a{" "}
+          <Mi>{"Q"}</Mi> na <Mi>{"BC"}</Mi> między <Mi>{"B"}</Mi> a <Mi>{"C"}</Mi>, więc:
+        </p>
+        <Mb>{"|AC| = |AP| + |PC|, \\qquad |BC| = |BQ| + |QC|"}</Mb>
+        <p>
+          Korzystamy z <Mi>{"|CP| = |CQ|"}</Mi>, <Mi>{"|AP| = |BQ|"}</Mi> i podstawiamy:
+        </p>
+        <Mb>{"|AC| = |AP| + |CP| = |BQ| + |CQ| = |BC|"}</Mb>
+        <p>
+          Trójkąt <Mi>{"ABC"}</Mi> ma dwa równe boki przy wierzchołku <Mi>{"C"}</Mi>, więc jest
+          równoramienny.{" "}
+          <Mi>{"\\blacksquare"}</Mi>
+        </p>
+      </div>
+    ),
+  },
+
+  {
+    id: "cke-mock-2024-grudzien-zad12-trojkat-ostrokatny",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "12",
+    points: "0–5",
+    instruction: (
+      <div className="space-y-4">
+        <p>
+          W trójkącie ostrym <Mi>{"ABC"}</Mi> miara kąta <Mi>{"BAC"}</Mi> jest dwa razy większa od miary kąta{" "}
+          <Mi>{"ABC"}</Mi>. Punkt <Mi>{"D"}</Mi> jest środkiem boku <Mi>{"AB"}</Mi>. Miarę kąta <Mi>{"ABC"}</Mi>{" "}
+          oznaczamy przez <Mi>{"\\alpha"}</Mi>, a miarę kąta <Mi>{"ADC"}</Mi> przez <Mi>{"\\beta"}</Mi> (zobacz
+          rysunek).
+        </p>
+        <figure className="flex flex-col items-center mx-auto w-[40%] max-w-full font-normal">
+          <Image
+            src="/matura/planimetria_cke_grudzien_zad12.png"
+            alt="Trójkąt ostry ABC: kąt przy A równy 2α, przy B równy α, D środek AB, kąt ADC oznaczony β"
+            width={420}
+            height={320}
+            className="w-full h-auto rounded-lg border border-[#c4a8e8] bg-white"
+          />
+        </figure>
+        <p className="font-semibold text-stone-800">
+          Oblicz <Mi>{"\\dfrac{\\tg \\beta}{\\sin(2\\alpha)}"}</Mi>. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"\\dfrac{\\tg \\beta}{\\sin(2\\alpha)} = 2"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Przyjmij <Mi>{"|AB| = 2"}</Mi>, więc <Mi>{"|AD| = |BD| = 1"}</Mi>. W dużym trójkącie <Mi>{"ABC"}</Mi> zapisz
+          kąty i z twierdzenia sinusów wyznacz <Mi>{"|AC|"}</Mi> oraz <Mi>{"|BC|"}</Mi>.
+        </p>
+        <p>
+          To samo zrób w małych trójkątach <Mi>{"ADC"}</Mi> oraz{" "}
+          <Mi>{"BDC"}</Mi>. Porównaj oba zapisy tak, aby zniknął <Mi>{"\\sin\\beta"}</Mi>, a potem rozpisz{" "}
+          <Mi>{"\\sin(2\\alpha+\\beta)"}</Mi> i <Mi>{"\\sin(\\beta-\\alpha)"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Duży trójkąt ABC (na całym rysunku)</p>
+        <p>Z treści zadania i rysunku:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>
+            przy <Mi>{"B"}</Mi>: kąt <Mi>{"\\alpha"}</Mi>
+          </li>
+          <li>
+            przy <Mi>{"A"}</Mi>: kąt <Mi>{"2\\alpha"}</Mi>
+          </li>
+          <li>
+            przy <Mi>{"C"}</Mi>: kąt <Mi>{"180^\\circ - 3\\alpha"}</Mi>
+          </li>
+          <li>
+            <Mi>{"D"}</Mi> jest środkiem <Mi>{"AB"}</Mi>, więc przyjmujemy <Mi>{"|AB| = 2"}</Mi> i wtedy{" "}
+            <Mi>{"|AD| = |BD| = 1"}</Mi>
+          </li>
+        </ul>
+        <p>Twierdzenie sinusów w <Mi>{"\\triangle ABC"}</Mi> (bok <Mi>{"AB"}</Mi> leży naprzeciw kąta przy <Mi>{"C"}</Mi>):</p>
+        <Mb>{"\\dfrac{|AC|}{\\sin\\alpha} = \\dfrac{|BC|}{\\sin(2\\alpha)} = \\dfrac{2}{\\sin(3\\alpha)}"}</Mb>
+        <Mb>{"|AC| = \\dfrac{2\\sin\\alpha}{\\sin(3\\alpha)}, \\qquad |BC| = \\dfrac{2\\sin(2\\alpha)}{\\sin(3\\alpha)}"}</Mb>
+
+        <p className="font-semibold text-stone-800">
+          Krok 2. Mały trójkąt ADC (wierzchołki <Mi>{"A"}</Mi>, <Mi>{"D"}</Mi>, <Mi>{"C"}</Mi>, kąt <Mi>{"\\beta"}</Mi> przy{" "}
+          <Mi>{"D"}</Mi>)
+        </p>
+        <p>Kąty w tym trójkącie:</p>
+        <Mb>{"\\angle DAC = 2\\alpha, \\quad \\angle ADC = \\beta, \\quad \\angle ACD = 180^\\circ - 2\\alpha - \\beta"}</Mb>
+        <p>
+          Bok <Mi>{"AD = 1"}</Mi> leży naprzeciw kąta przy <Mi>{"C"}</Mi>, więc w twierdzeniu sinusów bierzemy parę: bok{" "}
+          <Mi>{"AD"}</Mi> i kąt przy <Mi>{"C"}</Mi>, oraz bok <Mi>{"AC"}</Mi> i kąt <Mi>{"\\beta"}</Mi>:
+        </p>
+        <Mb>{"\\dfrac{1}{\\sin(180^\\circ - 2\\alpha - \\beta)} = \\dfrac{|AC|}{\\sin\\beta}"}</Mb>
+        <p>Po uproszczeniu:</p>
+        <FormulaBox>
+          <Mb>{"\\sin(2\\alpha + \\beta) = \\dfrac{\\sin\\beta}{|AC|}"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">
+          Krok 3. Mały trójkąt BDC (wierzchołki <Mi>{"B"}</Mi>, <Mi>{"D"}</Mi>, <Mi>{"C"}</Mi>)
+        </p>
+        <p>Kąty w tym trójkącie:</p>
+        <Mb>{"\\angle DBC = \\alpha, \\quad \\angle BDC = 180^\\circ - \\beta, \\quad \\angle BCD = \\beta - \\alpha"}</Mb>
+        <p>
+          Ostatni kąt wynika z podziału kąta przy <Mi>{"C"}</Mi> w dużym trójkącie: cały kąt ma{" "}
+          <Mi>{"180^\\circ - 3\\alpha"}</Mi>, a w trójkącie <Mi>{"ADC"}</Mi> przy <Mi>{"C"}</Mi> zostaje{" "}
+          <Mi>{"180^\\circ - 2\\alpha - \\beta"}</Mi>, więc różnica to <Mi>{"\\beta - \\alpha"}</Mi>.
+        </p>
+        <p>
+          Bok <Mi>{"BD = 1"}</Mi> leży naprzeciw kąta <Mi>{"\\beta - \\alpha"}</Mi>. Analogicznie jak w kroku 2:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\sin(\\beta - \\alpha) = \\dfrac{\\sin\\beta}{|BC|}"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 4. Porównanie kroków 2 i 3</p>
+        <p>
+          W obu równaniach po prawej stronie jest <Mi>{"\\sin\\beta"}</Mi>. Dzielimy pierwsze przez drugie:{" "}
+          <Mi>{"\\sin\\beta"}</Mi> się skraca, a zamiast <Mi>{"|AC|"}</Mi> i <Mi>{"|BC|"}</Mi> wstawiamy wyniki z kroku 1:
+        </p>
+        <Mb>
+          {
+            "\\dfrac{\\sin(2\\alpha + \\beta)}{\\sin(\\beta - \\alpha)} = \\dfrac{|BC|}{|AC|} = \\dfrac{\\sin(2\\alpha)}{\\sin\\alpha} = 2\\cos\\alpha"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Z równania na tangens</p>
+        <p>Z kroku 4:</p>
+        <Mb>{"\\sin(2\\alpha + \\beta) = 2\\cos\\alpha \\cdot \\sin(\\beta - \\alpha)"}</Mb>
+        <p>Rozwijamy sinus sumy po lewej i sinus różnicy po prawej:</p>
+        <Mb>{"\\sin(2\\alpha)\\cos\\beta + \\cos(2\\alpha)\\sin\\beta = 2\\cos\\alpha(\\sin\\beta\\cos\\alpha - \\sin\\alpha\\cos\\beta)"}</Mb>
+        <p>Po przeniesieniu na lewą stronę i zebraniu wyrazów z <Mi>{"\\cos\\beta"}</Mi> oraz <Mi>{"\\sin\\beta"}</Mi>:</p>
+        <Mb>{"2\\sin(2\\alpha)\\cos\\beta + \\sin\\beta\\bigl(\\cos(2\\alpha) - 2\\cos^2\\alpha\\bigr) = 0"}</Mb>
+        <p>
+          Nawias równa się <Mi>{"-1"}</Mi>, bo <Mi>{"\\cos(2\\alpha) = 2\\cos^2\\alpha - 1"}</Mi>, więc:
+        </p>
+        <Mb>{"2\\sin(2\\alpha)\\cos\\beta = \\sin\\beta"}</Mb>
+        <p>
+          Dzielimy obie strony przez <Mi>{"\\cos\\beta"}</Mi> (trójkąt ostry, więc <Mi>{"\\cos\\beta \\neq 0"}</Mi>):
+        </p>
+        <FormulaBox>
+          <Mb>{"\\tg\\beta = 2\\sin(2\\alpha)"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 6. Odpowiedź z treści zadania</p>
+        <Mb>{"\\dfrac{\\tg\\beta}{\\sin(2\\alpha)} = \\dfrac{2\\sin(2\\alpha)}{\\sin(2\\alpha)} = 2"}</Mb>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"\\dfrac{\\tg \\beta}{\\sin(2\\alpha)} = 2"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-maj-zad3-trojkat-rownoboczny",
     source: SOURCE_CKE_MAJ_2025,

@@ -6,8 +6,15 @@ import { Zad12 } from "./Zad12";
 import { Zad12Czerwiec2025Dod } from "./Zad12Czerwiec2025Dod";
 import { Zad12Maj2025 } from "./Zad12Maj2025";
 import { Zad1Smwp2026 } from "./Zad1Smwp2026";
+import { Zad13CkeMock2024 } from "./Zad13CkeMock2024";
 
 const COMPOUND_TASKS = [
+  {
+    id: "cke-mock-2024-grudzien-czworokat-f",
+    source: "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024",
+    points: "0–6",
+    Component: Zad13CkeMock2024,
+  },
   {
     id: "cke-maj-2025-stozek",
     source: "Matura z matematyki, poziom rozszerzony, CKE, maj 2025",

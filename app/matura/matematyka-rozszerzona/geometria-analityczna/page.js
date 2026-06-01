@@ -55,7 +55,242 @@ const SOURCE_CKE_MAJ_2025 =
 const SOURCE_PROBNA_PL_MARZEC_2025 =
   "Matura próbna, Politechnika Łódzka, marzec 2025";
 
+const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
+  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+
+// Rysunek z współrzędnymi z treści zadania (skala jednakowa na osiach x i y)
+const DiagramSymetralnaOkrag = () => {
+  const xmin = -10.5;
+  const xmax = 8.5;
+  const ymin = -5.5;
+  const ymax = 11.5;
+  const padL = 44;
+  const padR = 20;
+  const padT = 24;
+  const padB = 36;
+  const vbW = 400;
+  const vbH = 310;
+  const plotW = vbW - padL - padR;
+  const plotH = vbH - padT - padB;
+  const scale = Math.min(plotW / (xmax - xmin), plotH / (ymax - ymin));
+
+  const px = (x, y) => ({
+    x: padL + (x - xmin) * scale,
+    y: padT + (ymax - y) * scale,
+  });
+
+  const S = px(-1, 3);
+  const A = px(6, 4);
+  const B = px(-6, 8);
+  const M = px(0, 6);
+  const sqrt5 = Math.sqrt(5);
+  const C1 = px(-1 + sqrt5, 3 + 3 * sqrt5);
+  const C2 = px(-1 - sqrt5, 3 - 3 * sqrt5);
+  const r = Math.sqrt(50) * scale;
+
+  const along = (from, to, t) => ({
+    x: from.x + t * (to.x - from.x),
+    y: from.y + t * (to.y - from.y),
+  });
+  const bisectorStart = along(C2, C1, -0.12);
+  const bisectorEnd = along(C2, C1, 1.08);
+
+  const abLen = Math.hypot(B.x - A.x, B.y - A.y);
+  const ux = (B.x - A.x) / abLen;
+  const uy = (B.y - A.y) / abLen;
+  const biLen = Math.hypot(C1.x - M.x, C1.y - M.y);
+  const vx = (C1.x - M.x) / biLen;
+  const vy = (C1.y - M.y) / biLen;
+  const mark = 11;
+  const ra = { x: M.x + ux * mark, y: M.y + uy * mark };
+  const rb = { x: M.x + ux * mark + vx * mark, y: M.y + uy * mark + vy * mark };
+  const rc = { x: M.x + vx * mark, y: M.y + vy * mark };
+
+  const label = (p, text, dx, dy, fill = "currentColor") => (
+    <text
+      x={p.x + dx}
+      y={p.y + dy}
+      fontSize="13"
+      fontFamily="Georgia, serif"
+      fontStyle="italic"
+      fill={fill}
+    >
+      {text}
+    </text>
+  );
+
+  return (
+    <svg
+      viewBox={`0 0 ${vbW} ${vbH}`}
+      className="w-full max-w-lg mx-auto my-4 block text-[#52297a]"
+      role="img"
+      aria-label="Okrąg o środku S, odcinek AB ze środkiem M, symetralna przechodząca przez S, M, C1 i C2"
+    >
+      <title>Symetralna odcinka AB i przecięcie z okręgiem</title>
+      <line
+        x1={padL}
+        y1={padT + plotH}
+        x2={padL + plotW}
+        y2={padT + plotH}
+        stroke="#e2e8f0"
+        strokeWidth="1"
+      />
+      <line x1={padL} y1={padT} x2={padL} y2={padT + plotH} stroke="#e2e8f0" strokeWidth="1" />
+      <circle cx={S.x} cy={S.y} r={r} fill="#f5f0ff" stroke="#c4a8e8" strokeWidth="2" />
+      <line x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke="#6d3a8e" strokeWidth="2.2" />
+      <line
+        x1={bisectorStart.x}
+        y1={bisectorStart.y}
+        x2={bisectorEnd.x}
+        y2={bisectorEnd.y}
+        stroke="#059669"
+        strokeWidth="2"
+        strokeDasharray="7 5"
+      />
+      <path
+        d={`M ${ra.x} ${ra.y} L ${rb.x} ${rb.y} L ${rc.x} ${rc.y}`}
+        fill="none"
+        stroke="#059669"
+        strokeWidth="1.3"
+      />
+      <circle cx={S.x} cy={S.y} r={3.5} fill="#8b5cf6" />
+      <circle cx={A.x} cy={A.y} r={3} fill="currentColor" />
+      <circle cx={B.x} cy={B.y} r={3} fill="currentColor" />
+      <circle cx={M.x} cy={M.y} r={3} fill="#6d3a8e" />
+      <circle cx={C1.x} cy={C1.y} r={3.5} fill="#059669" />
+      <circle cx={C2.x} cy={C2.y} r={3.5} fill="#059669" />
+      {label(S, "S", 6, -5, "#6d3a8e")}
+      {label(A, "A", 7, 4)}
+      {label(B, "B", -16, -5)}
+      {label(M, "M", 7, -4, "#6d3a8e")}
+      {label(C1, "C\u2081", 7, -5, "#047857")}
+      {label(C2, "C\u2082", -18, 14, "#047857")}
+    </svg>
+  );
+};
+
 const tasks = [
+  {
+    id: "cke-mock-2024-grudzien-zad7-okrag-symetria",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "7",
+    points: "0–4",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          W kartezjańskim układzie współrzędnych <Mi>{"(x, y)"}</Mi> dane są: okrąg o równaniu{" "}
+          <Mi>{"(x + 1)^2 + (y - 3)^2 = 50"}</Mi> oraz punkty <Mi>{"A = (6, 4)"}</Mi> i{" "}
+          <Mi>{"B = (-6, 8)"}</Mi>. Punkt <Mi>{"C"}</Mi> leży na tym okręgu i <Mi>{"|AC| = |BC|"}</Mi>.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Oblicz współrzędne punktu <Mi>{"C"}</Mi>. Rozważ wszystkie przypadki. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <div className="space-y-2">
+        <p>
+          <Mi>{"C_1 = \\left(-1 + \\sqrt{5},\\; 3 + 3\\sqrt{5}\\right)"}</Mi>
+        </p>
+        <p>
+          <Mi>{"C_2 = \\left(-1 - \\sqrt{5},\\; 3 - 3\\sqrt{5}\\right)"}</Mi>
+        </p>
+      </div>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Warunek <Mi>{"|AC| = |BC|"}</Mi> znaczy, że punkt <Mi>{"C"}</Mi> jest w jednakowej odległości od{" "}
+          <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>, więc <Mi>{"C"}</Mi> leży na <strong>symetralnej</strong>{" "}
+          odcinka <Mi>{"AB"}</Mi>, czyli na prostej <strong>prostopadłej do</strong> <Mi>{"AB"}</Mi>, która
+          przechodzi przez <strong>środek</strong> tego odcinka.
+        </p>
+        <figure className="flex flex-col items-center">
+          <DiagramSymetralnaOkrag />
+          <figcaption className="text-xs text-stone-500 text-center max-w-lg leading-relaxed mt-1 px-2">
+            Zielona przerywana prosta to symetralna <Mi>{"AB"}</Mi> (punkt <Mi>{"M"}</Mi> to środek odcinka). Punktu{" "}
+            <Mi>{"C"}</Mi> szukamy tam, gdzie ta prosta przecina okrąg, więc zwykle są <strong>dwa</strong>{" "}
+            rozwiązania.
+          </figcaption>
+        </figure>
+        <p>
+          Wyznacz współrzędne środka <Mi>{"AB"}</Mi> oraz równanie symetralnej (nachylenie prostopadłe do{" "}
+          <Mi>{"AB"}</Mi>). Następnie podstaw prostą do równania okręgu.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Symetralna odcinka <Mi>{"AB"}</Mi></p>
+        <figure className="flex flex-col items-center">
+          <DiagramSymetralnaOkrag />
+          <figcaption className="text-xs text-stone-500 text-center max-w-lg leading-relaxed mt-1 px-2">
+            <Mi>{"C"}</Mi> leży na prostej prostopadłej do <Mi>{"AB"}</Mi> przechodzącej przez środek <Mi>{"M"}</Mi>{" "}
+            oraz na okręgu.
+          </figcaption>
+        </figure>
+        <p>
+          Punkt <Mi>{"C"}</Mi> ma być w jednakowej odległości od <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi>, więc leży na
+          symetralnej odcinka <Mi>{"AB"}</Mi>. Zamiast pierwiastków porównujemy kwadraty odległości:
+        </p>
+        <Mb>{"|AC|^2 = |BC|^2"}</Mb>
+        <p>Podstawiamy <Mi>{"A = (6, 4)"}</Mi>, <Mi>{"B = (-6, 8)"}</Mi> i <Mi>{"C = (x, y)"}</Mi>:</p>
+        <Mb>{"(x - 6)^2 + (y - 4)^2 = (x + 6)^2 + (y - 8)^2"}</Mb>
+        <p>Rozwijamy nawiasy (składniki z <Mi>{"x^2"}</Mi> i <Mi>{"y^2"}</Mi> się skracają):</p>
+        <Mb>{"-12x - 8y + 52 = 12x - 16y + 100"}</Mb>
+        <Mb>{"-24x + 8y = 48 \\quad \\Longrightarrow \\quad y = 3x + 6"}</Mb>
+        <p>
+          To równanie symetralnej. Można też sprawdzić środek odcinka:{" "}
+          <Mi>{"\\left(\\dfrac{6 + (-6)}{2},\\, \\dfrac{4 + 8}{2}\\right) = (0, 6)"}</Mi>, a nachylenie{" "}
+          <Mi>{"AB"}</Mi> to <Mi>{"\\dfrac{8 - 4}{-6 - 6} = -\\dfrac{1}{3}"}</Mi>, więc symetralna ma nachylenie{" "}
+          <Mi>{"3"}</Mi> i przechodzi przez <Mi>{"(0, 6)"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 2. Punkt <Mi>{"C"}</Mi> na okręgu</p>
+        <p>
+          Współrzędne <Mi>{"C"}</Mi> spełniają równanie okręgu oraz <Mi>{"y = 3x + 6"}</Mi>. Podstawiamy:
+        </p>
+        <Mb>{"(x + 1)^2 + (3x + 6 - 3)^2 = 50"}</Mb>
+        <Mb>{"(x + 1)^2 + (3x + 3)^2 = 50"}</Mb>
+        <p>Wyciągamy wspólny czynnik <Mi>{"(x + 1)"}</Mi>:</p>
+        <Mb>{"(x + 1)^2 + 9(x + 1)^2 = 50"}</Mb>
+        <Mb>{"10(x + 1)^2 = 50 \\quad \\Longrightarrow \\quad (x + 1)^2 = 5"}</Mb>
+        <Mb>{"x + 1 = \\sqrt{5} \\quad \\text{lub} \\quad x + 1 = -\\sqrt{5}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Współrzędne <Mi>{"y"}</Mi></p>
+        <p>Dla <Mi>{"x = -1 + \\sqrt{5}"}</Mi>:</p>
+        <Mb>{"y = 3(-1 + \\sqrt{5}) + 6 = 3 + 3\\sqrt{5}"}</Mb>
+        <p>Dla <Mi>{"x = -1 - \\sqrt{5}"}</Mi>:</p>
+        <Mb>{"y = 3(-1 - \\sqrt{5}) + 6 = 3 - 3\\sqrt{5}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Sprawdzenie (opcjonalnie)</p>
+        <p>
+          Dla <Mi>{"C_1 = (-1 + \\sqrt{5},\\; 3 + 3\\sqrt{5})"}</Mi>:{" "}
+          <Mi>{"(x+1)^2 = 5"}</Mi>, <Mi>{"(y-3)^2 = (3\\sqrt{5})^2 = 45"}</Mi>, suma <Mi>{"50"}</Mi>. Odległości od{" "}
+          <Mi>{"A"}</Mi> i <Mi>{"B"}</Mi> są równe (punkt leży na symetralnej). Analogicznie dla{" "}
+          <Mi>{"C_2"}</Mi>.
+        </p>
+        <p>
+          Okrąg i prosta przecinają się w dwóch punktach, więc są dokładnie dwa rozwiązania.
+        </p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź:{" "}
+            <Mi>{"C_1 = \\left(-1 + \\sqrt{5},\\; 3 + 3\\sqrt{5}\\right)"}</Mi>,{" "}
+            <Mi>{"C_2 = \\left(-1 - \\sqrt{5},\\; 3 - 3\\sqrt{5}\\right)"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-maj-zad8-okregi-przeciecie",
     source: SOURCE_CKE_MAJ_2025,

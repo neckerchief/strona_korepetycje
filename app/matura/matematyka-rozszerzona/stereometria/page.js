@@ -29,7 +29,7 @@ export default function StereometriaPage() {
             Stereometria
           </h1>
           <p className="text-stone-500 text-lg max-w-xl leading-relaxed">
-            4 zadania
+            5 zadań
           </p>
         </div>
 
@@ -665,6 +665,93 @@ export default function StereometriaPage() {
                   Odpowiedź: <Mi>{"6"}</Mi>
                 </p>
               </div>
+            </div>
+          }
+        />
+
+        {/* ── Zadanie 5 (CKE matura próbna, grudzień 2024, zad. 3) ── */}
+        <TaskCard
+          number="5"
+          points="0–3"
+          source="Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024"
+          instruction={
+            <div className="space-y-3">
+              <p>
+                Iloczyn długości średnicy podstawy walca i wysokości walca jest równy{" "}
+                <Mi>{"12\\sqrt{3}"}</Mi>. Pole powierzchni całkowitej tego walca jest równe{" "}
+                <Mi>{"12\\pi(\\sqrt{3} + 1)"}</Mi>.
+              </p>
+              <p className="font-semibold text-stone-800">
+                Oblicz objętość tego walca. Zapisz obliczenia.
+              </p>
+            </div>
+          }
+          answer={
+            <p>
+              Objętość walca: <Mi>{"V = 18\\pi\\sqrt{2}"}</Mi>.
+            </p>
+          }
+          hint={
+            <div className="space-y-3">
+              <p>
+                Oznacz promień podstawy przez <Mi>{"r"}</Mi> i wysokość przez <Mi>{"h"}</Mi>. Średnica to{" "}
+                <Mi>{"2r"}</Mi>, więc z pierwszego warunku: <Mi>{"2rh = 12\\sqrt{3}"}</Mi>, czyli{" "}
+                <Mi>{"rh = 6\\sqrt{3}"}</Mi>.
+              </p>
+              <p>
+                Pole powierzchni całkowitej walca:
+              </p>
+              <FormulaBox>
+                <Mb>{"P_c = 2\\pi r^2 + 2\\pi rh = 2\\pi r(r + h)"}</Mb>
+              </FormulaBox>
+              <p>
+                Podziel obie strony przez <Mi>{"2\\pi"}</Mi>, wyraź <Mi>{"h"}</Mi> przez <Mi>{"r"}</Mi> z{" "}
+                <Mi>{"rh = 6\\sqrt{3}"}</Mi> i podstaw. Na końcu użyj{" "}
+                <Mi>{"V = \\pi r^2 h"}</Mi>.
+              </p>
+            </div>
+          }
+          solution={
+            <div className="space-y-4">
+              <p className="font-semibold text-stone-800">Krok 1. Oznaczenia i pierwszy warunek</p>
+              <p>
+                Niech <Mi>{"r"}</Mi> oznacza promień podstawy walca, a <Mi>{"h"}</Mi> jego wysokość. Średnica
+                podstawy ma długość <Mi>{"2r"}</Mi>. Z treści zadania:
+              </p>
+              <Mb>{"2r \\cdot h = 12\\sqrt{3} \\quad \\Longrightarrow \\quad rh = 6\\sqrt{3}"}</Mb>
+              <p>Stąd możemy wyrazić wysokość przez promień:</p>
+              <Mb>{"h = \\dfrac{6\\sqrt{3}}{r}"}</Mb>
+
+              <p className="font-semibold text-stone-800">Krok 2. Pole powierzchni całkowitej</p>
+              <p>
+                Walec ma dwa koła o promieniu <Mi>{"r"}</Mi> (pola <Mi>{"2\\pi r^2"}</Mi>) oraz powierzchnię
+                boczną (pole prostokąta o bokach <Mi>{"2\\pi r"}</Mi> i <Mi>{"h"}</Mi>, czyli{" "}
+                <Mi>{"2\\pi rh"}</Mi>):
+              </p>
+              <Mb>{"P_c = 2\\pi r^2 + 2\\pi rh = 2\\pi r(r + h)"}</Mb>
+              <p>Z treści <Mi>{"P_c = 12\\pi(\\sqrt{3} + 1)"}</Mi>. Dzielimy obie strony przez <Mi>{"2\\pi"}</Mi>:</p>
+              <Mb>{"r(r + h) = 6(\\sqrt{3} + 1)"}</Mb>
+
+              <p className="font-semibold text-stone-800">Krok 3. Równanie na <Mi>{"r"}</Mi></p>
+              <p>Podstawiamy <Mi>{"h = \\dfrac{6\\sqrt{3}}{r}"}</Mi>:</p>
+              <Mb>
+                {
+                  "r\\left(r + \\dfrac{6\\sqrt{3}}{r}\\right) = r^2 + 6\\sqrt{3} = 6(\\sqrt{3} + 1)"
+                }
+              </Mb>
+              <Mb>{"r^2 = 6 \\quad \\Longrightarrow \\quad r = \\sqrt{6} \\quad (r > 0)"}</Mb>
+              <Mb>{"h = \\dfrac{6\\sqrt{3}}{\\sqrt{6}} = \\dfrac{6\\sqrt{3}}{\\sqrt{6}} = 6\\sqrt{\\dfrac{1}{2}} = 3\\sqrt{2}"}</Mb>
+
+              <p className="font-semibold text-stone-800">Krok 4. Sprawdzenie (opcjonalnie)</p>
+              <Mb>{"2r \\cdot h = 2\\sqrt{6} \\cdot 3\\sqrt{2} = 6\\sqrt{12} = 12\\sqrt{3}"}</Mb>
+              <Mb>
+                {
+                  "P_c = 2\\pi \\cdot 6 + 2\\pi \\cdot \\sqrt{6} \\cdot 3\\sqrt{2} = 12\\pi + 12\\pi\\sqrt{3} = 12\\pi(\\sqrt{3} + 1)"
+                }
+              </Mb>
+
+              <p className="font-semibold text-stone-800">Krok 5. Objętość</p>
+              <Mb>{"V = \\pi r^2 h = \\pi \\cdot 6 \\cdot 3\\sqrt{2} = 18\\pi\\sqrt{2}"}</Mb>
             </div>
           }
         />

@@ -16,7 +16,112 @@ const SOURCE_CKE_F2023 =
 const SOURCE_PROBNA_PL_MARZEC_2025 =
   "Matura próbna, Politechnika Łódzka, marzec 2025";
 
+const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
+  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+
 const tasks = [
+  {
+    id: "cke-mock-2024-grudzien-zad5-niemiecki-warunkowe",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "5",
+    points: "0–3",
+    instruction: (
+      <div className="space-y-3">
+        <p>
+          W pewnej lokalnej społeczności <Mi>{"35\\%"}</Mi> osób ma wyższe wykształcenie. W tej społeczności
+          językiem niemieckim dobrze włada <Mi>{"70\\%"}</Mi> osób mających wyższe wykształcenie i{" "}
+          <Mi>{"40\\%"}</Mi> osób bez wyższego wykształcenia. Spośród członków tej społeczności wybieramy
+          losowo jedną osobę.
+        </p>
+        <p className="font-semibold text-stone-800">
+          Oblicz prawdopodobieństwo zdarzenia polegającego na tym, że wybierzemy osobę z wyższym
+          wykształceniem, jeżeli wiadomo, że ta osoba dobrze włada językiem niemieckim. Wynik zapisz w postaci
+          ułamka dziesiętnego w zaokrągleniu do części setnych. Zapisz obliczenia.
+        </p>
+      </div>
+    ),
+    mathBlock: null,
+    noteItems: null,
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"0{,}49"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Oznacz: <Mi>{"H"}</Mi> = „osoba ma wyższe wykształcenie”, <Mi>{"G"}</Mi> = „osoba dobrze włada
+          niemieckim”. Z treści masz <Mi>{"P(H) = 0{,}35"}</Mi>, <Mi>{"P(G \\mid H) = 0{,}70"}</Mi>,{" "}
+          <Mi>{"P(G \\mid H') = 0{,}40"}</Mi>. Szukasz <Mi>{"P(H \\mid G)"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>{"P(H \\mid G) = \\frac{P(H \\cap G)}{P(G)} = \\frac{P(H) \\cdot P(G \\mid H)}{P(G)}"}</Mb>
+        </FormulaBox>
+        <p>
+          Najpierw policz <Mi>{"P(G)"}</Mi> ze wzoru na prawdopodobieństwo całkowite (dwa rozłączne
+          przypadki: wyższe wykształcenie albo nie):
+        </p>
+        <FormulaBox>
+          <Mb>{"P(G) = P(H) \\cdot P(G \\mid H) + P(H') \\cdot P(G \\mid H')"}</Mb>
+        </FormulaBox>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Oznaczenia</p>
+        <p>
+          Niech <Mi>{"H"}</Mi> oznacza zdarzenie: wylosowana osoba ma wyższe wykształcenie, a <Mi>{"G"}</Mi>:
+          dobrze włada językiem niemieckim. Z treści zadania:
+        </p>
+        <Mb>{"P(H) = 0{,}35, \\qquad P(H') = 1 - 0{,}35 = 0{,}65"}</Mb>
+        <Mb>{"P(G \\mid H) = 0{,}70, \\qquad P(G \\mid H') = 0{,}40"}</Mb>
+        <p>
+          Pytanie dotyczy prawdopodobieństwa <strong>warunkowego</strong> (wiemy już, że osoba włada
+          niemieckim):
+        </p>
+        <FormulaBox>
+          <Mb>{"P(H \\mid G) = \\frac{P(H \\cap G)}{P(G)}"}</Mb>
+        </FormulaBox>
+
+        <p className="font-semibold text-stone-800">Krok 2. Prawdopodobieństwo zdarzenia <Mi>{"G"}</Mi></p>
+        <p>
+          Osoba albo ma wyższe wykształcenie, albo nie (zdarzenia rozłączne i wyczerpujące), więc:
+        </p>
+        <FormulaBox>
+          <Mb>{"P(G) = P(H) \\cdot P(G \\mid H) + P(H') \\cdot P(G \\mid H')"}</Mb>
+        </FormulaBox>
+        <Mb>
+          {
+            "P(G) = 0{,}35 \\cdot 0{,}70 + 0{,}65 \\cdot 0{,}40 = 0{,}245 + 0{,}26 = 0{,}505"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Część wspólna <Mi>{"H \\cap G"}</Mi></p>
+        <p>
+          Osoba ma wyższe wykształcenie <strong>i</strong> włada niemieckim. Korzystamy z definicji
+          prawdopodobieństwa warunkowego:
+        </p>
+        <Mb>{"P(H \\cap G) = P(H) \\cdot P(G \\mid H) = 0{,}35 \\cdot 0{,}70 = 0{,}245"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Prawdopodobieństwo warunkowe</p>
+        <Mb>
+          {
+            "P(H \\mid G) = \\frac{P(H \\cap G)}{P(G)} = \\frac{0{,}245}{0{,}505} = \\frac{245}{505} = \\frac{49}{101}"
+          }
+        </Mb>
+        <p>
+          Jako ułamek dziesiętny (zaokrąglenie do setnych): <Mi>{"\\dfrac{49}{101} \\approx 0{,}4851\\ldots"}</Mi>,
+          cyfra tysięcznych to <Mi>{"5"}</Mi>, więc:
+        </p>
+        <Mb>{"P(H \\mid G) \\approx 0{,}49"}</Mb>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-maj-zad4-kostka-warunkowe",
     source: SOURCE_CKE_MAJ_2025,

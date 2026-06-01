@@ -8,7 +8,127 @@ const SOURCE_SMWP_2025_PAZDZIERNIK = "Matura próbna SMWP, październik 2025, po
 const SOURCE_CKE_MAJ_2025 =
   "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
 
+const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
+  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+
 const tasks = [
+  {
+    id: "cke-mock-2024-grudzien-zad1-kondensator",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "1",
+    points: "0–2",
+    instruction: (
+      <span>
+        Ładunek elektryczny zgromadzony w kondensatorze można opisać zależnością
+      </span>
+    ),
+    mathBlock: "Q(t) = Q_0 \\cdot \\beta^{-t},\\quad t \\geq 0",
+    noteItems: [
+      { text: "gdzie " },
+      { math: "Q_0" },
+      { text: " – ładunek elektryczny zgromadzony w kondensatorze w chwili początkowej (" },
+      { math: "t = 0" },
+      { text: ") wyrażony w milikulombach, " },
+      { math: "Q" },
+      { text: " – ładunek elektryczny zgromadzony w kondensatorze w chwili " },
+      { math: "t" },
+      { text: " (licząc od chwili początkowej) wyrażony w milikulombach, " },
+      { math: "\\beta" },
+      { text: " – stała dodatnia, " },
+      { math: "t" },
+      { text: " – czas wyrażony w sekundach. Wiadomo, że w chwili " },
+      { math: "t = 4\\ \\text{s}" },
+      { text: " w kondensatorze był zgromadzony ładunek " },
+      { math: "2" },
+      { text: " milikulombów, a w chwili " },
+      { math: "t = 6\\ \\text{s}" },
+      { text: " – ładunek " },
+      { math: "18" },
+      { text: " milikulombów. Oblicz, ile milikulombów ładunku było zgromadzone w tym kondensatorze w chwili " },
+      { math: "t = 5\\ \\text{s}" },
+      { text: ". Zapisz obliczenia." },
+    ],
+    answers: null,
+
+    answer: (
+      <p>
+        W chwili <Mi>{"t = 5\\ \\text{s}"}</Mi> w kondensatorze było zgromadzone{" "}
+        <Mi>{"6"}</Mi> milikulombów ładunku.
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Podstaw do wzoru <Mi>{"Q(t) = Q_0 \\cdot \\beta^{-t}"}</Mi> dane chwile{" "}
+          <Mi>{"t = 4"}</Mi> i <Mi>{"t = 6"}</Mi>. Otrzymasz dwa równania z niewiadomymi{" "}
+          <Mi>{"Q_0"}</Mi> i <Mi>{"\\beta"}</Mi>.
+        </p>
+        <p>
+          Podziel drugie równanie przez pierwsze, żeby wyeliminować{" "}
+          <Mi>{"Q_0"}</Mi> i wyznaczyć <Mi>{"\\beta"}</Mi>. Potem oblicz{" "}
+          <Mi>{"Q(5)"}</Mi>.
+        </p>
+        <p>
+          Możesz też zauważyć, że <Mi>{"5"}</Mi> leży dokładnie w połowie między{" "}
+          <Mi>{"4"}</Mi> a <Mi>{"6"}</Mi>: w takim modelu wartości w równych odstępach czasu
+          tworzą ciąg geometryczny, więc <Mi>{"Q(5)"}</Mi> jest średnią geometryczną{" "}
+          <Mi>{"Q(4)"}</Mi> i <Mi>{"Q(6)"}</Mi>.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Zapisujemy warunki z treści zadania</p>
+        <p>
+          Z wzoru <Mi>{"Q(t) = Q_0 \\cdot \\beta^{-t}"}</Mi> oraz z danych liczbowych:
+        </p>
+        <Mb>{"Q(4) = Q_0 \\cdot \\beta^{-4} = 2"}</Mb>
+        <Mb>{"Q(6) = Q_0 \\cdot \\beta^{-6} = 18"}</Mb>
+
+        <p className="font-semibold text-stone-800">
+          Krok 2. Dzielimy równania, żeby wyznaczyć <Mi>{"\\beta"}</Mi>
+        </p>
+        <p>
+          Dzielimy drugie równanie przez pierwsze. Po lewej stronie skracają się{" "}
+          <Mi>{"Q_0"}</Mi> oraz potęgi <Mi>{"\\beta"}</Mi>:
+        </p>
+        <Mb>
+          {
+            "\\frac{Q(6)}{Q(4)} = \\frac{Q_0 \\cdot \\beta^{-6}}{Q_0 \\cdot \\beta^{-4}} = \\beta^{-6-(-4)} = \\beta^{-2}"
+          }
+        </Mb>
+        <Mb>{"\\beta^{-2} = \\frac{18}{2} = 9"}</Mb>
+        <p>
+          Stała <Mi>{"\\beta"}</Mi> jest dodatnia, więc <Mi>{"\\beta^{-1} > 0"}</Mi>. Z{" "}
+          <Mi>{"\\beta^{-2} = 9"}</Mi> wynika <Mi>{"\\beta^{-1} = 3"}</Mi>, czyli{" "}
+          <Mi>{"\\beta = \\dfrac{1}{3}"}</Mi>.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Obliczamy <Mi>{"Q(5)"}</Mi></p>
+        <p>
+          Korzystamy z pierwszego równania (można też z drugiego). Z{" "}
+          <Mi>{"Q(4) = 2"}</Mi>:
+        </p>
+        <Mb>{"Q_0 \\cdot \\beta^{-4} = 2 \\quad \\Rightarrow \\quad Q_0 = 2 \\cdot \\beta^{4}"}</Mb>
+        <Mb>{"Q(5) = Q_0 \\cdot \\beta^{-5} = 2 \\cdot \\beta^{4} \\cdot \\beta^{-5} = 2 \\cdot \\beta^{-1}"}</Mb>
+        <Mb>{"Q(5) = 2 \\cdot 3 = 6"}</Mb>
+        <p>
+          W chwili <Mi>{"t = 5\\ \\text{s}"}</Mi> w kondensatorze było zgromadzone{" "}
+          <Mi>{"6"}</Mi> milikulombów ładunku.
+        </p>
+
+        <p className="font-semibold text-stone-800">Sprawdzenie (opcjonalnie)</p>
+        <p>
+          Chwila <Mi>{"t = 5"}</Mi> jest w połowie drogi między <Mi>{"t = 4"}</Mi> a{" "}
+          <Mi>{"t = 6"}</Mi>. W modelu <Mi>{"Q(t) = Q_0 \\cdot \\beta^{-t}"}</Mi> wartości w
+          kolejnych sekundach tworzą ciąg geometryczny, więc{" "}
+          <Mi>{"Q(5) = \\sqrt{Q(4) \\cdot Q(6)} = \\sqrt{2 \\cdot 18} = 6"}</Mi>.
+        </p>
+      </div>
+    ),
+  },
   {
     id: "cke-2025-maj-zad1-bakterie",
     source: SOURCE_CKE_MAJ_2025,

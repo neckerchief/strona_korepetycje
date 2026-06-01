@@ -15,6 +15,7 @@ export function getSourceSortKey(source = "") {
   else if (s.includes("styczeń") || s.includes("styczen")) month = 1;
   else if (s.includes("marzec")) month = 3;
   else if (s.includes("październik") || s.includes("pazdziernik")) month = 10;
+  else if (s.includes("grudzień") || s.includes("grudzien")) month = 12;
   else if (s.includes("lipiec")) month = 7;
   else if (s.includes("sierpień") || s.includes("sierpien")) month = 8;
   else if (year >= 2026 && (s.includes("egzamin w 2026") || s.includes("maj 2026"))) month = 5;

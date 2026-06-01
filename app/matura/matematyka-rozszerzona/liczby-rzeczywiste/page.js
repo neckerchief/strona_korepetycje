@@ -10,7 +10,108 @@ const SOURCE_CKE_CZERWIEC_2025_DOD =
 const SOURCE_PROBNA_PL_MARZEC_2025 =
   "Matura próbna, Politechnika Łódzka, marzec 2025";
 
+const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
+  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+
 const tasks = [
+  {
+    id: "cke-mock-2024-grudzien-zad4-logarytmy-dowod",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "4",
+    points: "0–3",
+    instruction: <span>Wykaż, że</span>,
+    mathBlock:
+      "\\frac{1}{\\log_2 35 + 1} + \\frac{1}{\\log_7 140 - \\log_7 2} + \\frac{1}{\\log_5 7 + \\log_5 2 + 1} = 1",
+    noteItems: null,
+    answers: null,
+    answer: null,
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Uprość każdy mianownik osobno, korzystając ze wzorów na sumę i różnicę logarytmów oraz z tego, że{" "}
+          <Mi>{"1 = \\log_a a"}</Mi> dla dodatniej podstawy <Mi>{"a"}</Mi>.
+        </p>
+        <FormulaBox>
+          <Mb>
+            {
+              "\\log_a x + \\log_a y = \\log_a(xy), \\qquad \\log_a x - \\log_a y = \\log_a\\dfrac{x}{y}"
+            }
+          </Mb>
+        </FormulaBox>
+        <p>
+          Gdy w trzech mianownikach pojawi się ten sam argument (np. <Mi>{"70"}</Mi>), zastosuj związek między
+          logarytmem a jego odwrotnością:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\dfrac{1}{\\log_a b} = \\log_b a"}</Mb>
+        </FormulaBox>
+        <p>
+          Na końcu zsumuj trzy logarytmy o tej samej podstawie jako logarytm iloczynu argumentów.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Pierwszy mianownik</p>
+        <p>
+          Liczbę <Mi>{"1"}</Mi> zapisujemy jako <Mi>{"\\log_2 2"}</Mi> (bo <Mi>{"2^1 = 2"}</Mi>). Stosujemy
+          wzór na sumę logarytmów:
+        </p>
+        <Mb>{"\\log_2 35 + 1 = \\log_2 35 + \\log_2 2 = \\log_2(35 \\cdot 2) = \\log_2 70"}</Mb>
+        <p>Pierwszy składnik sumy z treści zadania to więc:</p>
+        <Mb>{"\\dfrac{1}{\\log_2 35 + 1} = \\dfrac{1}{\\log_2 70}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Drugi mianownik</p>
+        <p>Korzystamy ze wzoru na różnicę logarytmów:</p>
+        <Mb>
+          {"\\log_7 140 - \\log_7 2 = \\log_7\\dfrac{140}{2} = \\log_7 70"}
+        </Mb>
+        <Mb>{"\\dfrac{1}{\\log_7 140 - \\log_7 2} = \\dfrac{1}{\\log_7 70}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 3. Trzeci mianownik</p>
+        <p>Najpierw sumujemy dwa pierwsze składniki, potem dodajemy <Mi>{"1"}</Mi>:</p>
+        <Mb>{"\\log_5 7 + \\log_5 2 = \\log_5(7 \\cdot 2) = \\log_5 14"}</Mb>
+        <Mb>
+          {
+            "\\log_5 7 + \\log_5 2 + 1 = \\log_5 14 + \\log_5 5 = \\log_5(14 \\cdot 5) = \\log_5 70"
+          }
+        </Mb>
+        <Mb>{"\\dfrac{1}{\\log_5 7 + \\log_5 2 + 1} = \\dfrac{1}{\\log_5 70}"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 4. Zamiana odwrotności logarytmu</p>
+        <p>
+          Dla dodatniej podstawy <Mi>{"a \\neq 1"}</Mi> i dodatniego argumentu <Mi>{"b"}</Mi> z definicji
+          logarytmu wynika:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\dfrac{1}{\\log_a b} = \\log_b a"}</Mb>
+        </FormulaBox>
+        <p>(bo <Mi>{"\\log_a b = \\dfrac{\\ln b}{\\ln a}"}</Mi>, więc odwrotność to{" "}
+        <Mi>{"\\dfrac{\\ln a}{\\ln b} = \\log_b a"}</Mi>).</p>
+        <p>Stosujemy to do każdego składnika:</p>
+        <Mb>
+          {
+            "\\dfrac{1}{\\log_2 70} + \\dfrac{1}{\\log_7 70} + \\dfrac{1}{\\log_5 70} = \\log_{70} 2 + \\log_{70} 7 + \\log_{70} 5"
+          }
+        </Mb>
+
+        <p className="font-semibold text-stone-800">Krok 5. Suma logarytmów</p>
+        <p>Z wzoru na sumę logarytmów o tej samej podstawie:</p>
+        <Mb>
+          {
+            "\\log_{70} 2 + \\log_{70} 7 + \\log_{70} 5 = \\log_{70}(2 \\cdot 7 \\cdot 5) = \\log_{70} 70 = 1"
+          }
+        </Mb>
+        <p>
+          Lewa strona równości z treści zadania równa się <Mi>{"1"}</Mi>, co należało wykazać.{" "}
+          <Mi>{"\\blacksquare"}</Mi>
+        </p>
+      </div>
+    ),
+  },
+
   {
     id: "probna-pl-2025-marzec-zad1-logarytmy",
     source: SOURCE_PROBNA_PL_MARZEC_2025,

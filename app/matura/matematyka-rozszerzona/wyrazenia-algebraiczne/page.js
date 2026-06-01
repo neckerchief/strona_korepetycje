@@ -81,7 +81,160 @@ const SOURCE_CKE_F2023 =
 const SOURCE_CKE_MAJ_2025 =
   "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
 
+const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
+  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+
+// Tabliczka znaków: |x+2|, |x−2| (punkty krytyczne: −2, 2)
+const DiagramZnakiCkeMock2024Zad6 = () => (
+  <svg viewBox="0 0 400 100" className="w-full max-w-md mx-auto my-5 block">
+    <line x1="85" y1="10" x2="385" y2="10" stroke="#e2e8f0" strokeWidth="1" />
+    <line x1="85" y1="40" x2="385" y2="40" stroke="#e2e8f0" strokeWidth="1" />
+    <line x1="175" y1="10" x2="175" y2="82" stroke="#c4a8e8" strokeWidth="1.5" />
+    <line x1="280" y1="10" x2="280" y2="82" stroke="#c4a8e8" strokeWidth="1.5" />
+    <text x="80" y="31" fontSize="12" textAnchor="end" fill="#444" fontStyle="italic">x + 2</text>
+    <text x="80" y="61" fontSize="12" textAnchor="end" fill="#444" fontStyle="italic">x − 2</text>
+    <text x="130" y="33" fontSize="18" textAnchor="middle" fill="#991b1b" fontWeight="bold">−</text>
+    <text x="130" y="63" fontSize="18" textAnchor="middle" fill="#991b1b" fontWeight="bold">−</text>
+    <text x="227" y="33" fontSize="18" textAnchor="middle" fill="#166534" fontWeight="bold">+</text>
+    <text x="227" y="63" fontSize="18" textAnchor="middle" fill="#991b1b" fontWeight="bold">−</text>
+    <text x="332" y="33" fontSize="18" textAnchor="middle" fill="#166534" fontWeight="bold">+</text>
+    <text x="332" y="63" fontSize="18" textAnchor="middle" fill="#166534" fontWeight="bold">+</text>
+    <line x1="88" y1="82" x2="372" y2="82" stroke="#374151" strokeWidth="2" />
+    <polygon points="372,77 384,82 372,87" fill="#374151" />
+    <text x="388" y="86" fontSize="13" fill="#374151" fontStyle="italic">x</text>
+    <line x1="175" y1="77" x2="175" y2="87" stroke="#374151" strokeWidth="2" />
+    <line x1="280" y1="77" x2="280" y2="87" stroke="#374151" strokeWidth="2" />
+    <text x="175" y="98" fontSize="12" textAnchor="middle" fill="#374151">−2</text>
+    <text x="280" y="98" fontSize="12" textAnchor="middle" fill="#374151">2</text>
+  </svg>
+);
+
 const tasks = [
+  {
+    id: "cke-mock-2024-grudzien-zad6-moduly-rownanie",
+    source: SOURCE_CKE_MOCK_GRUDZIEN_2024,
+    number: "6",
+    points: "0–4",
+    instruction: "Rozwiąż równanie",
+    mathBlock: "|4x - 8| + |x - 2| = |2 - x| + |x + 2| + 4",
+    noteItems: [{ text: "Zapisz obliczenia." }],
+    answers: null,
+
+    answer: (
+      <p>
+        <Mi>{"x = \\dfrac{2}{5} \\quad \\text{lub} \\quad x = \\dfrac{14}{3}"}</Mi>
+      </p>
+    ),
+
+    hint: (
+      <div className="space-y-3">
+        <p>
+          Wyznacz miejsca zerowe wyrażeń wewnątrz modułów: <Mi>{"4x - 8 = 0"}</Mi>, <Mi>{"x - 2 = 0"}</Mi>,{" "}
+          <Mi>{"2 - x = 0"}</Mi>, <Mi>{"x + 2 = 0"}</Mi>. Podziel oś liczbową na przedziały między tymi
+          punktami.
+        </p>
+        <p>
+          W każdym przedziale rozpisz moduły z definicji wartości bezwzględnej:
+        </p>
+        <FormulaBox>
+          <Mb>{"\\left|w\\right| = \\begin{cases} w & \\text{jeżeli } w \\geq 0 \\\\ -w & \\text{jeżeli } w < 0 \\end{cases}"}</Mb>
+        </FormulaBox>
+        <p>
+        podstaw do równania i rozwiąż. Na końcu sprawdź, czy wynik należy do rozpatrywanego
+        przedziału.
+        </p>
+        <p className="text-stone-600 text-sm">
+          Uwaga: <Mi>{"|x - 2| = |2 - x|"}</Mi>, więc po obu stronach równania występuje ten sam moduł. Możesz go
+          skrócić, zanim zaczniesz rozpatrywać przypadki.
+        </p>
+      </div>
+    ),
+
+    solution: (
+      <div className="space-y-4">
+        <p className="font-semibold text-stone-800">Krok 1. Uproszczenie równania</p>
+        <p>
+          Po prawej stronie <Mi>{"|2 - x| = |x - 2|"}</Mi>, więc po obu stronach występuje ten sam składnik{" "}
+          <Mi>{"|x - 2|"}</Mi>. Odejmujemy go od lewej i prawej strony:
+        </p>
+        <Mb>{"|4x - 8| = |x + 2| + 4"}</Mb>
+        <p>
+          Dodatkowo <Mi>{"|4x - 8| = |4(x - 2)| = 4|x - 2|"}</Mi>, więc możemy pisać krócej:
+        </p>
+        <Mb>{"4|x - 2| = |x + 2| + 4"}</Mb>
+
+        <p className="font-semibold text-stone-800">Krok 2. Punkty krytyczne na osi</p>
+        <p>
+          Wyrażenia pod modułami zerują się w punktach <Mi>{"x = -2"}</Mi> (dla <Mi>{"x + 2"}</Mi>) oraz{" "}
+          <Mi>{"x = 2"}</Mi> (dla <Mi>{"x - 2"}</Mi> i <Mi>{"4x - 8"}</Mi>). Rozpatrujemy trzy przypadki:
+        </p>
+        <DiagramZnakiCkeMock2024Zad6 />
+
+        <p className="font-semibold text-stone-800">
+          Przypadek 1: <Mi>{"x < -2"}</Mi>
+        </p>
+        <p>
+          Wtedy <Mi>{"x - 2 < 0"}</Mi> oraz <Mi>{"x + 2 < 0"}</Mi>, więc <Mi>{"|x - 2| = -(x - 2) = 2 - x"}</Mi>{" "}
+          i <Mi>{"|x + 2| = -(x + 2) = -x - 2"}</Mi>. Podstawiamy do <Mi>{"4|x - 2| = |x + 2| + 4"}</Mi>:
+        </p>
+        <Mb>{"4(2 - x) = (-x - 2) + 4"}</Mb>
+        <Mb>{"8 - 4x = -x + 2"}</Mb>
+        <Mb>{"-3x = -6 \\quad \\Longrightarrow \\quad x = 2"}</Mb>
+        <p>
+          Liczba <Mi>{"x = 2"}</Mi> nie należy do przedziału <Mi>{"x < -2"}</Mi>, więc w tym przypadku brak
+          rozwiązania.
+        </p>
+
+        <p className="font-semibold text-stone-800">
+          Przypadek 2: <Mi>{"-2 \\leq x < 2"}</Mi>
+        </p>
+        <p>
+          Mamy <Mi>{"|x - 2| = 2 - x"}</Mi> oraz <Mi>{"|x + 2| = x + 2"}</Mi>:
+        </p>
+        <Mb>{"4(2 - x) = (x + 2) + 4"}</Mb>
+        <Mb>{"8 - 4x = x + 6"}</Mb>
+        <Mb>{"-5x = -2 \\quad \\Longrightarrow \\quad x = \\dfrac{2}{5}"}</Mb>
+        <p>
+          Sprawdzamy: <Mi>{"\\dfrac{2}{5} \\in [-2,\\, 2)"}</Mi>, więc <Mi>{"x = \\dfrac{2}{5}"}</Mi> jest
+          rozwiązaniem.
+        </p>
+
+        <p className="font-semibold text-stone-800">
+          Przypadek 3: <Mi>{"x \\geq 2"}</Mi>
+        </p>
+        <p>
+          Oba wyrażenia pod modułem są nieujemne: <Mi>{"|x - 2| = x - 2"}</Mi>, <Mi>{"|x + 2| = x + 2"}</Mi>:
+        </p>
+        <Mb>{"4(x - 2) = (x + 2) + 4"}</Mb>
+        <Mb>{"4x - 8 = x + 6"}</Mb>
+        <Mb>{"3x = 14 \\quad \\Longrightarrow \\quad x = \\dfrac{14}{3}"}</Mb>
+        <p>
+          Sprawdzamy: <Mi>{"\\dfrac{14}{3} \\geq 2"}</Mi>, więc <Mi>{"x = \\dfrac{14}{3}"}</Mi> jest rozwiązaniem.
+        </p>
+
+        <p className="font-semibold text-stone-800">Krok 3. Sprawdzenie w równaniu wyjściowym (opcjonalnie)</p>
+        <p>Dla <Mi>{"x = \\dfrac{2}{5}"}</Mi>:</p>
+        <Mb>
+          {
+            "\\left|4 \\cdot \\frac{2}{5} - 8\\right| + \\left|\\frac{2}{5} - 2\\right| = \\frac{32}{5} + \\frac{8}{5} = 8"
+          }
+        </Mb>
+        <Mb>
+          {
+            "\\left|2 - \\frac{2}{5}\\right| + \\left|\\frac{2}{5} + 2\\right| + 4 = \\frac{8}{5} + \\frac{12}{5} + 4 = 8"
+          }
+        </Mb>
+        <p>Analogicznie dla <Mi>{"x = \\dfrac{14}{3}"}</Mi> obie strony dają <Mi>{"\\dfrac{40}{3}"}</Mi>.</p>
+
+        <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
+          <p className="font-semibold text-stone-800">
+            Odpowiedź: <Mi>{"x = \\dfrac{2}{5}"}</Mi> lub <Mi>{"x = \\dfrac{14}{3}"}</Mi>
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
   {
     id: "cke-2025-maj-zad2-nierownosc-szescian",
     source: SOURCE_CKE_MAJ_2025,
