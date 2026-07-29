@@ -56,11 +56,10 @@ const tasks = [
       <div className="space-y-4">
         <p className="font-semibold text-stone-800">Krok 1. Pierwszy mianownik</p>
         <p>
-          Liczbę <Mi>{"1"}</Mi> zapisujemy jako <Mi>{"\\log_2 2"}</Mi> (bo <Mi>{"2^1 = 2"}</Mi>). Stosujemy
+          Liczbę <Mi>{"1"}</Mi> zapisujemy jako <Mi>{"\\log_2 2"}</Mi>. Stosujemy
           wzór na sumę logarytmów:
         </p>
         <Mb>{"\\log_2 35 + 1 = \\log_2 35 + \\log_2 2 = \\log_2(35 \\cdot 2) = \\log_2 70"}</Mb>
-        <p>Pierwszy składnik sumy z treści zadania to więc:</p>
         <Mb>{"\\dfrac{1}{\\log_2 35 + 1} = \\dfrac{1}{\\log_2 70}"}</Mb>
 
         <p className="font-semibold text-stone-800">Krok 2. Drugi mianownik</p>
@@ -205,8 +204,8 @@ const tasks = [
     hint: (
       <div className="space-y-3">
         <p>
-          Najpierw zapisz <Mi>{"b"}</Mi> jako logarytm o podstawie <Mi>{"2"}</Mi> wyłącznie wzorem na zamianę
-          podstawy. Potem uprość <strong>prawą</strong> stronę tezy{" "}
+          Najpierw zapisz <Mi>{"b"}</Mi> jako logarytm o podstawie <Mi>{"2"}</Mi> stosując wzór na zamianę
+          podstawy:{" "}
           <Mi>{"\\dfrac{b + 2}{2a - 2}"}</Mi>.
         </p>
         <FormulaBox>
@@ -216,11 +215,13 @@ const tasks = [
           <Mb>{"\\log_b c = \\frac{\\log_a c}{\\log_a b}"}</Mb>
         </FormulaBox>
         <p>
-          W liczniku i mianowniku podstaw <Mi>{"a = \\log_2 14"}</Mi> oraz uproszczone <Mi>{"b"}</Mi>. Przydatne
-          fakty: <Mi>{"2 = \\log_2 4"}</Mi>, <Mi>{"1 = \\log_2 2"}</Mi>, a także suma i różnica logarytmów jako
-          iloczyn i iloraz argumentów. Gdy ułamek się uprości, rozpoznasz ten sam wzór zamiany podstawy co dla{" "}
-          <Mi>{"\\log_7 54"}</Mi>.
+          W liczniku i mianowniku podstaw <Mi>{"a = \\log_2 14"}</Mi> oraz uproszczone <Mi>{"b"}</Mi>.
         </p>
+        <p>
+          Przydatne fakty: <Mi>{"2 = \\log_2 4"}</Mi>, <Mi>{"1 = \\log_2 2"}</Mi>, a także suma i różnica logarytmów jako
+          iloczyn i iloraz argumentów:
+        </p>
+        <Mb>{"\\log_a(xy) = \\log_a x + \\log_a y, \\qquad \\log_a\\dfrac{x}{y} = \\log_a x - \\log_a y"}</Mb>
       </div>
     ),
 
@@ -248,7 +249,7 @@ const tasks = [
           podstawiamy <Mi>{"a = \\log_2 14"}</Mi> oraz <Mi>{"b = 2\\log_2 27"}</Mi> z kroku 1.
         </p>
         <p>
-          Przydatne równości (definicja logarytmu): <Mi>{"1 = \\log_2 2"}</Mi>.
+          Przydatna będzie równość: <Mi>{"1 = \\log_2 2"}</Mi>.
           Korzystamy też ze wzorów:
         </p>
         <Mb>{"\\log_a x + \\log_a y = \\log_a(xy), \\qquad \\log_a x - \\log_a y = \\log_a\\dfrac{x}{y}"}</Mb>
@@ -267,7 +268,7 @@ const tasks = [
         <p className="font-semibold text-stone-800">Krok 4. Mianownik <Mi>{"2a - 2"}</Mi></p>
         <Mb>{"2a - 2 = 2\\log_2 14 - 2 = 2\\bigl(\\log_2 14 - 1\\bigr)"}</Mb>
         <p>
-          Liczbę <Mi>{"1"}</Mi> w ostatnim składniku zapisujemy jako <Mi>{"\\log_2 1"}</Mi>. Różnica logarytmów to logarytm ilorazu:</p>
+          Liczbę <Mi>{"1"}</Mi> w ostatnim składniku zapisujemy jako <Mi>{"\\log_2 2"}</Mi>. Różnica logarytmów to logarytm ilorazu:</p>
         <Mb>
           {"a - 1 = \\log_2 14 - \\log_2 2= \\log_2\\dfrac{14}{2} = \\log_2 7"}
         </Mb>
@@ -346,7 +347,10 @@ const tasks = [
           <Mi>{"d_2,\\ldots,d_6 \\in \\{0,1,\\ldots,9\\}"}</Mi>.
         </p>
         <p>
-          Oznaczmy <Mi>{"P = d_1 \\cdot d_2 \\cdot d_3 \\cdot d_4 \\cdot d_5 \\cdot d_6"}</Mi>. Warunki zadania:
+          Oznaczmy <Mi>{"P = d_1 \\cdot d_2 \\cdot d_3 \\cdot d_4 \\cdot d_5 \\cdot d_6"}</Mi>. 
+        </p>
+        <p>
+          Warunki zadania są następujące:{" "}
           <Mi>{"P"}</Mi> jest parzyste oraz <Mi>{"P < 5"}</Mi>. Jedynymi parzystymi liczbami naturalnymi
           mniejszymi od <Mi>{"5"}</Mi> są:
         </p>
@@ -376,8 +380,7 @@ const tasks = [
 
         <p className="font-semibold text-stone-800">Krok 3. Iloczyn cyfr równy <Mi>{"2"}</Mi></p>
         <p>
-          Żeby iloczyn sześciu cyfr z zbioru <Mi>{"\\{0,\\ldots,9\\}"}</Mi> wyniósł dokładnie <Mi>{"2"}</Mi>, nie
-          może być zera (bo wtedy iloczyn byłby <Mi>{"0"}</Mi>). Jedyny rozkład na czynniki pierwsze to jedna
+          Jedyny rozkład na czynniki pierwsze iloczynu sześciu cyfr z zbioru <Mi>{"\\{0,\\ldots,9\\}"}</Mi> wynoszący dokładnie <Mi>{"2"}</Mi>, to jedna
           cyfra <Mi>{"2"}</Mi> i pięć cyfr <Mi>{"1"}</Mi>.
         </p>
         <p>
@@ -387,14 +390,13 @@ const tasks = [
           <Mb>{"\\frac{6!}{5!} = 6"}</Mb>
         </FormulaBox>
         <p>
-          W każdym takim ułożeniu pierwsza cyfra to <Mi>{"1"}</Mi> lub <Mi>{"2"}</Mi>, więc wszystkie{" "}
-          <Mi>{"6"}</Mi> liczb są sześciocyfrowe.
+          Lub inaczej: mamy do wyboru 6 pozycji, na których stoi cyfra <Mi>{"2"}</Mi>, reszta to jedynki.
         </p>
         <Mb>{"N_2 = 6"}</Mb>
 
         <p className="font-semibold text-stone-800">Krok 4. Iloczyn cyfr równy <Mi>{"4"}</Mi></p>
         <p>
-          Znowu nie może być zera. Szukamy rozkładów iloczynu <Mi>{"4"}</Mi> na sześć cyfr z{" "}
+          Szukamy rozkładów iloczynu <Mi>{"4"}</Mi> na sześć cyfr z{" "}
           <Mi>{"\\{1,\\ldots,9\\}"}</Mi>. Są dwa typy:
         </p>
         <p className="font-medium text-stone-700">Typ A: jedna cyfra <Mi>{"4"}</Mi> i pięć cyfr <Mi>{"1"}</Mi></p>
@@ -404,10 +406,6 @@ const tasks = [
           Wybieramy, na których dwóch z sześciu pozycjach stoją dwójki:
         </p>
         <Mb>{"\\frac{6!}{2!\\,4!} = \\binom{6}{2} = 15"}</Mb>
-        <p>
-          Znowu pierwsza cyfra jest zawsze <Mi>{"1"}</Mi> lub <Mi>{"2"}</Mi>, więc wszystkie te liczby są
-          poprawne sześciocyfrowe.
-        </p>
         <Mb>{"N_4 = 6 + 15 = 21"}</Mb>
 
         <p className="font-semibold text-stone-800">Krok 5. Suma</p>
@@ -444,7 +442,7 @@ const tasks = [
 
     hint: (
       <div className="space-y-3">
-        <p>Wzór na zamianę podstawy logarytmu:</p>
+        <p>Zastosuj wzór na zamianę podstawy logarytmu:</p>
         <p className="text-stone-500 text-xs">
           jeżeli <Mi>{"a > 0,\\ a \\neq 1,\\ b > 0,\\ b \\neq 1"}</Mi> oraz <Mi>{"c > 0"}</Mi>, to:
         </p>
@@ -452,7 +450,7 @@ const tasks = [
           <Mb>{"\\log_b c = \\frac{\\log_a c}{\\log_a b}"}</Mb>
         </FormulaBox>
         <p>
-          Zastosuj dla <Mi>{"b = x,\\ c = 27,\\ a = 3"}</Mi>:
+          dla <Mi>{"b = x,\\ c = 27,\\ a = 3"}</Mi>:
         </p>
         <Mb>{"\\log_x 27 = \\frac{\\log_3 27}{\\log_3 x} = \\frac{3}{\\log_3 x}"}</Mb>
       </div>

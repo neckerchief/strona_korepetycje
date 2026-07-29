@@ -129,8 +129,7 @@ const tasks = [
     hint: (
       <div className="space-y-3">
         <p>
-          Wyznacz miejsca zerowe wyrażeń wewnątrz modułów: <Mi>{"4x - 8 = 0"}</Mi>, <Mi>{"x - 2 = 0"}</Mi>,{" "}
-          <Mi>{"2 - x = 0"}</Mi>, <Mi>{"x + 2 = 0"}</Mi>. Podziel oś liczbową na przedziały między tymi
+          Wyznacz miejsca zerowe wyrażeń wewnątrz modułów i podziel oś liczbową na przedziały między tymi
           punktami.
         </p>
         <p>
@@ -262,7 +261,7 @@ const tasks = [
         </FormulaBox>
         <p>
           Przenieś wyrażenie z prawej strony nierówności na lewą i uprość różnicę. Spróbuj wyłączyć
-          wspólny czynnik <Mi>{"(a - 2b)"}</Mi> (to ten sam warunek co <Mi>{"b \\neq \\dfrac{1}{2}a"}</Mi>).
+          wspólny czynnik <Mi>{"(a - 2b)"}</Mi>.
         </p>
       </div>
     ),
@@ -349,8 +348,7 @@ const tasks = [
           <Mb>{"\\left|w\\right| = \\begin{cases} w & \\text{jeżeli } w \\geq 0 \\\\ -w & \\text{jeżeli } w < 0 \\end{cases}"}</Mb>
         </FormulaBox>
         <p>
-          Miejsca zerowe wyrażeń pod modułami: <Mi>{"x - 2 = 0"}</Mi> daje <Mi>{"x = 2"}</Mi>, a{" "}
-          <Mi>{"x + 3 = 0"}</Mi> daje <Mi>{"x = -3"}</Mi>. Podziel oś na trzy przedziały i rozwiązuj
+          Podziel oś na trzy przedziały względem miejsc zerowych wyrażeń pod modułami i rozwiązuj
           nierówność w każdym z nich, a na końcu zsumuj rozwiązania z poszczególnych przypadków.
         </p>
       </div>
@@ -418,13 +416,7 @@ const tasks = [
         </Mb>
         <p>
           Przedziały <Mi>{"\\left(-\\dfrac{2}{3},\\, 2\\right)"}</Mi> i <Mi>{"[2,\\,+\\infty)"}</Mi> łączą się w{" "}
-          <Mi>{"\\left(-\\dfrac{2}{3},\\,+\\infty\\right)"}</Mi>, bo granica <Mi>{"x = 2"}</Mi> należy do obu (w
-          przypadku 3 mamy <Mi>{"x \\geq 2"}</Mi>).
-        </p>
-        <p className="text-stone-600 text-sm">
-          Sprawdzenie brzegów: dla <Mi>{"x = -10"}</Mi> oraz <Mi>{"x = -\\dfrac{2}{3}"}</Mi> lewa strona nierówności
-          równa się dokładnie <Mi>{"-2"}</Mi>, więc te punkty nie wchodzą do rozwiązania (nierówność jest
-          „ostra”).
+          <Mi>{"\\left(-\\dfrac{2}{3},\\,+\\infty\\right)"}</Mi>.
         </p>
 
         <div className="mt-2 pt-3 border-t border-[#e0d0f8]">
@@ -456,12 +448,12 @@ const tasks = [
     hint: (
       <div className="space-y-3">
         <p>
-          Pomnóż obie strony przez <Mi>{"x^2y^2"}</Mi>: dla <Mi>{"x,y>0"}</Mi> ten czynnik jest dodatni,
-          więc znaki nierówności się nie zmieniają.
+          Pomnóż obie strony przez <Mi>{"x^2y^2"}</Mi>, ponieważ ten czynnik jest dodatni,{" "}
+          znaki nierówności się nie zmieniają.
         </p>
         <p>
-          Po pomnożeniu przenieś wszystko na jedną stronę i spróbuj wygładzić zapis przez wyłączenie
-          wspólnego czynnika <Mi>{"(x-y)"}</Mi>.
+          Po pomnożeniu przenieś wszystko na jedną stronę i spróbuj uprościć wyrażenie przez wyłączenie
+          wspólnego czynnika przed nawias: <Mi>{"(x-y)"}</Mi>.
         </p>
       </div>
     ),
@@ -470,7 +462,8 @@ const tasks = [
       <div className="space-y-4">
         <p className="font-semibold text-stone-800">Krok 1. Założenia</p>
         <p>
-          Niech <Mi>{"x>0"}</Mi> oraz <Mi>{"y>0"}</Mi>. Wtedy <Mi>{"(x+y)>0"}</Mi> oraz <Mi>{"x^2y^2>0"}</Mi>, więc mnożenie nierówności przez <Mi>{"x^2y^2"}</Mi> jej nie zmienia.
+          Niech <Mi>{"x>0"}</Mi> oraz <Mi>{"y>0"}</Mi>. Wtedy <Mi>{"x^2y^2>0"}</Mi>, więc mnożenie nierówności przez <Mi>{"x^2y^2"}</Mi> jej nie zmienia.{" "}
+          Dodatkowo <Mi>{"(x+y)>0"}</Mi> z założeń.
         </p>
 
         <p className="font-semibold text-stone-800">Krok 2. Mnożenie przez <Mi>{"x^2y^2"}</Mi></p>
@@ -519,11 +512,8 @@ const tasks = [
           <Mb>{"\\left|w\\right| = \\begin{cases} w & \\text{jeżeli } w \\geq 0 \\\\ -w & \\text{jeżeli } w < 0 \\end{cases}"}</Mb>
         </FormulaBox>
         <p>
-          Wyznacz miejsca zerowe wyrażeń pod modułami:{" "}
-          <Mi>{"x + 2 = 0"}</Mi> daje <Mi>{"x = -2"}</Mi>, a{" "}
-          <Mi>{"x - 3 = 0"}</Mi> daje <Mi>{"x = 3"}</Mi>.
-          Podziel oś liczbową w tych punktach na trzy przedziały i rozwiązuj
-          nierówność osobno w każdym z nich, pamiętając by na koniec wziąć sumę zbiorów.
+          Wyznacz miejsca zerowe wyrażeń pod modułami, podziel oś liczbową w tych punktach na trzy przedziały i rozwiązuj
+          nierówność osobno w każdym z nich. Na koniec weź sumę otrzymanych zbiorów.
         </p>
       </div>
     ),
@@ -622,7 +612,7 @@ const tasks = [
     hint: (
       <div className="space-y-3">
         <p>
-          Skorzystaj ze wzoru skróconego mnożenia na kwadrat sumy: z warunku{" "}
+          Z warunku{" "}
           <Mi>{"2b = a-c"}</Mi> wyraź <Mi>{"c = a-2b"}</Mi> i podstaw do prawej strony.
         </p>
         <FormulaBox>
@@ -645,7 +635,7 @@ const tasks = [
           Krok 2. Różnica lewej strony nierówności minus prawa strona
         </p>
         <Mb>{"2a^2+5b^2 - \\frac{1}{2}(a^2-4ab+4b^2) = \\frac{3}{2}a^2 + 2ab + 3b^2"}</Mb>
-        <p>Mnożymy przez 2 (nie zmienia znaku):</p>
+        <p>Mnożymy przez 2:</p>
         <Mb>{"3a^2 + 4ab + 6b^2"}</Mb>
 
         <p className="font-semibold text-stone-800">Krok 3. Pokazujemy, że trójmian jest zawsze dodatni</p>
@@ -685,7 +675,7 @@ const tasks = [
       <div className="space-y-3">
         <p>
           Przenieś wszystko na lewą stronę i sprowadź do wspólnego mianownika{" "}
-          <Mi>{"2(x-3)(x+3)"}</Mi>. Licznik uprość do postaci:
+          <Mi>{"2(x-3)(x+3)"}</Mi>. Licznik powinien się uprościć do postaci:
         </p>
         <Mb>{"-15x^2-7x+98 = -(3x-7)(5x+14)"}</Mb>
         <p>Rozwiąż nierówność wymierną, analizując znaki czynników.</p>
@@ -769,7 +759,10 @@ const tasks = [
       <div className="space-y-3">
         <p>
           Miejsca zerowe wyrażeń pod modułami to{" "}
-          <Mi>{"x = \\pm 3"}</Mi>. Rozwiąż nierówność na przedziałach podzielonych przez te miejsca zerowe.
+          <Mi>{"x = \\pm 3"}</Mi>. Rozwiąż nierówność na przedziałach podzielonych przez te miejsca zerowe, korzystając z definicji wartości bezwględnej:
+        <FormulaBox>
+          <Mb>{"\\left|w\\right| = \\begin{cases} w & \\text{jeżeli } w \\geq 0 \\\\ -w & \\text{jeżeli } w < 0 \\end{cases}"}</Mb>
+        </FormulaBox>
         </p>
       </div>
     ),
@@ -779,25 +772,25 @@ const tasks = [
         <p className="font-semibold text-stone-800">Metoda przedziałowa</p>
         <p>Miejsca zerowe wyrażeń pod modułami to <Mi>{"x = \\pm 3"}</Mi>.</p>
         <p>
-          Dzielimy prostą rzeczywistą na przedziały wg punktów <Mi>{"-3"}</Mi> oraz{" "}
+          Dzielimy prostą rzeczywistą na przedziały według tych dwóch punktów: <Mi>{"-3"}</Mi> oraz{" "}
           <Mi>{"3"}</Mi>.
         </p>
         <p className="font-semibold text-stone-800">Przedział <Mi>{"x < -3"}</Mi></p>
         <p>
-          W tym przedziale <Mi>{"x^2 > 9"}</Mi>, więc <Mi>{"x^2 - 9"}</Mi> jest dodatnie oraz{" "}
+          W tym przedziale więc <Mi>{"x^2 - 9"}</Mi> jest dodatnie oraz{" "}
           <Mi>{"2x - 6"}</Mi> jest ujemne. Stąd
         </p>
         <Mb>{"|2x-6| = -(2x-6) = 6-2x, \\quad |x^2-9| = x^2-9"}</Mb>
         <Mb>{"6-2x - (x^2-9) < 0 \\quad \\Longleftrightarrow \\quad -x^2-2x+15 < 0"}</Mb>
         <p>Mnożymy przez <Mi>{"-1"}</Mi> (zmiana znaku):</p>
         <Mb>{"x^2+2x-15 > 0 \\quad \\Longleftrightarrow \\quad (x+5)(x-3) > 0"}</Mb>
-        <p>Na tym przedziale dostajemy <Mi>{"x < -5"}</Mi>.</p>
+        <p>Łącząc z <Mi>{"x<-3"}</Mi>, na tym przedziale dostajemy <Mi>{"x \\in (-\\infty,\\,-5)"}</Mi>.</p>
 
         <p className="font-semibold text-stone-800">Przedział <Mi>{"-3 \\le x < 3"}</Mi></p>
         <Mb>{"|2x-6| = 6-2x, \\quad |x^2-9| = 9-x^2"}</Mb>
         <Mb>{"6-2x - (9-x^2) < 0 \\quad \\Longleftrightarrow \\quad x^2 - 2x - 3 < 0"}</Mb>
         <Mb>{"(x-3)(x+1) < 0 \\quad \\Longleftrightarrow \\quad x \\in (-1,\\, 3)"}</Mb>
-        <p>Przekrój z aktualnym przedziałem: <Mi>{"(-1,\\, 3)"}</Mi>.</p>
+        <p>Przekrój z aktualnym przedziałem daje nam: <Mi>{"(-1,\\, 3)"}</Mi>.</p>
 
         <p className="font-semibold text-stone-800">Przedział <Mi>{"x \\ge 3"}</Mi></p>
         <Mb>{"|2x-6| = 2x-6, \\quad |x^2-9| = x^2-9"}</Mb>
