@@ -3,7 +3,7 @@ import Image from "next/image";
 import { SubTask, Mi, Mb, FormulaBox, SideWork } from "../_components";
 
 const SOURCE_CKE_F2023 =
-  "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
+  "Matura z matematyki, CKE, maj 2026, poziom rozszerzony, formuła 2023, arkusz z 11 maja 2023";
 
 export const Zad12 = ({ number = "1", points = "0–7" }) => (
   <div className="border border-[#c4a8e8] rounded-xl overflow-hidden">

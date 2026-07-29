@@ -39,7 +39,7 @@ export default function StereometriaPage() {
         <TaskCard
           number="4"
           points="0–5"
-          source="Matura z matematyki, poziom rozszerzony, CKE, maj 2025"
+          source="Matura z matematyki, CKE, maj 2025, poziom rozszerzony"
           instruction={
             <div className="space-y-3">
               <p>
@@ -160,7 +160,7 @@ export default function StereometriaPage() {
         <TaskCard
           number="1"
           points="0–4"
-          source="Matura z matematyki, poziom rozszerzony, arkusz CKE (formuła 2023), egzamin maj 2026"
+          source="Matura z matematyki, CKE, maj 2026, poziom rozszerzony, formuła 2023, arkusz z 11 maja 2023"
           instruction={
             <span>
               W ostrosłupie prawidłowym trójkątnym <Mi>{"ABCS"}</Mi> podstawa <Mi>{"ABC"}</Mi> jest
@@ -415,7 +415,7 @@ export default function StereometriaPage() {
         <TaskCard
           number="2"
           points="0–5"
-          source="Matura próbna SMWP, październik 2025, poziom rozszerzony"
+          source="Matura próbna z matematyki, SMWP, październik 2025, poziom rozszerzony"
           instruction={
             <span>
               W ostrosłupie prawidłowym czworokątnym <Mi>{"ABCDS"}</Mi> o podstawie{" "}
@@ -561,7 +561,7 @@ export default function StereometriaPage() {
         <TaskCard
           number="3"
           points="0–5"
-          source="Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy"
+          source="Matura z matematyki, CKE, czerwiec 2025, poziom rozszerzony, termin dodatkowy"
           instruction={
             <div className="space-y-3">
               <p>
@@ -673,7 +673,7 @@ export default function StereometriaPage() {
         <TaskCard
           number="5"
           points="0–3"
-          source="Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024"
+          source="Matura próbna z matematyki, CKE, grudzień 2024, poziom rozszerzony"
           instruction={
             <div className="space-y-3">
               <p>

@@ -6,15 +6,15 @@ import {TaskCard, Mi, Mb, FormulaBox, SideWork, sortTasksBySourceDate, getDispla
 // ─── Zadania ──────────────────────────────────────────────────
 
 const SOURCE_CKE_CZERWIEC_2025_DOD =
-  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+  "Matura z matematyki, CKE, czerwiec 2025, poziom rozszerzony, termin dodatkowy";
 
 const SOURCE_CKE_MAJ_2025 =
-  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+  "Matura z matematyki, CKE, maj 2025, poziom rozszerzony";
 const SOURCE_PROBNA_PL_MARZEC_2025 =
-  "Matura próbna, Politechnika Łódzka, marzec 2025";
+  "Matura próbna z matematyki, Politechnika Łódzka, marzec 2025, poziom rozszerzony";
 
 const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
-  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+  "Matura próbna z matematyki, CKE, grudzień 2024, poziom rozszerzony";
 
 const tasks = [
   {
@@ -479,7 +479,7 @@ const tasks = [
 
   {
     id: "smwp-2026-styczen-zad9",
-    source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
+    source: "Matura próbna z matematyki, SMWP, styczeń 2026, poziom rozszerzony",
     number: "1",
     points: "0–6",
     instruction: (
@@ -642,7 +642,7 @@ const tasks = [
   // ── Zadanie 2 ─────────────────────────────────────────────
   {
     id: "smwp-2025-pazdziernik-zad10",
-    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    source: "Matura próbna z matematyki, SMWP, październik 2025, poziom rozszerzony",
     number: "2",
     points: "0–5",
     instruction: (
@@ -767,7 +767,7 @@ const tasks = [
   {
     id: "cke-2026-formula2023-maj-zad10-kwadratowa",
     source:
-      "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)",
+      "Matura z matematyki, CKE, maj 2026, poziom rozszerzony, formuła 2023, arkusz z 11 maja 2023",
     number: "3",
     points: "0–5",
     instruction: (

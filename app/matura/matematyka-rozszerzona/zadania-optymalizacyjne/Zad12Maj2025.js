@@ -1,7 +1,7 @@
 "use client";
 import { SubTask, Mi, Mb, FormulaBox } from "../_components";
 
-const SOURCE = "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+const SOURCE = "Matura z matematyki, CKE, maj 2025, poziom rozszerzony";
 
 export const Zad12Maj2025 = ({ number = "1", points = "0–6" }) => (
   <div className="border border-[#c4a8e8] rounded-xl overflow-hidden">

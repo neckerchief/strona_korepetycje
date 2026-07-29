@@ -6,12 +6,12 @@ import {TaskCard, Mi, Mb, FormulaBox, SideWork, sortTasksBySourceDate, getDispla
 // ─── Zadania ──────────────────────────────────────────────────
 
 const SOURCE_PROBNA_PL_MARZEC_2025 =
-  "Matura próbna, Politechnika Łódzka, marzec 2025";
+  "Matura próbna z matematyki, Politechnika Łódzka, marzec 2025, poziom rozszerzony";
 
 const tasks = [
   {
     id: "smwp-2026-styczen-zad8",
-    source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
+    source: "Matura próbna z matematyki, SMWP, styczeń 2026, poziom rozszerzony",
     number: "1",
     points: "0–6",
     instruction: (

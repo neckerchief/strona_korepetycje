@@ -75,6 +75,23 @@ alwaysApply: false
 
 **Zakres:** `app/matura/matematyka-rozszerzona/page.js` oraz wszystkie podstrony z zadaniami w `app/matura/matematyka-rozszerzona/` (treści w `TaskCard`, `SubTask` i odpowiadające im bloki).
 
+### Flagi źródła matury (tylko matematyka rozszerzona)
+
+- Te zasady dotyczą **wyłącznie** zadań z `app/matura/matematyka-rozszerzona/`.
+- **Nie** stosuj ich automatycznie do matury podstawowej ani do innych przedmiotów (np. fizyka rozszerzona).
+- Każda flaga źródła (`source`) ma mieć format:
+  - `Matura{ [typ]} z matematyki, {organizator}, {miesiąc} {rok}, poziom rozszerzony{, [dopisek 1][, dopisek 2]...}`
+- Dopuszczalne `typ`: `próbna`, `dodatkowa`, `poprawkowa`; dla terminu zwykłego typ pomijamy.
+- Zawsze używaj szyku daty `miesiąc rok` (np. `maj 2025`), nigdy `rok miesiąc`.
+- Dopiski (np. `formuła 2023`, `arkusz z 11 maja 2023`) zawsze umieszczaj na końcu, po przecinku.
+- Stała fraza poziomu to dokładnie: `poziom rozszerzony`.
+- Przykłady poprawne:
+  - `Matura z matematyki, CKE, maj 2025, poziom rozszerzony`
+  - `Matura próbna z matematyki, SMWP, styczeń 2026, poziom rozszerzony`
+  - `Matura dodatkowa z matematyki, CKE, czerwiec 2025, poziom rozszerzony`
+  - `Matura poprawkowa z matematyki, CKE, sierpień 2025, poziom rozszerzony`
+  - `Matura z matematyki, CKE, maj 2026, poziom rozszerzony, formuła 2023, arkusz z 11 maja 2023`
+
 ### Rozwiązania: szczegóły i prostota
 
 - Pisz rozwiązania **naprawdę szczegółowo**, ale językiem **jak najprostszym**: jeden czysty tok rozumowania, bez skrótów myślowych „dla wtajemniczonych”.

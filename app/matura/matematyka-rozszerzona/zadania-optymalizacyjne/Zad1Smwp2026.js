@@ -1,7 +1,7 @@
 "use client";
 import { SubTask, Mi, Mb, FormulaBox, SideWork } from "../_components";
 
-const SOURCE = "Matura próbna SMWP, styczeń 2026, poziom rozszerzony";
+const SOURCE = "Matura próbna z matematyki, SMWP, styczeń 2026, poziom rozszerzony";
 
 export const Zad1Smwp2026 = ({ number = "1", points = "0–6" }) => (
   <div className="border border-[#c4a8e8] rounded-xl overflow-hidden">

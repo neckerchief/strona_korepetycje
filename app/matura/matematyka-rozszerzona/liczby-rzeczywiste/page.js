@@ -6,12 +6,12 @@ import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} f
 // ─── Zadania ──────────────────────────────────────────────────
 
 const SOURCE_CKE_CZERWIEC_2025_DOD =
-  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
+  "Matura z matematyki, CKE, czerwiec 2025, poziom rozszerzony, termin dodatkowy";
 const SOURCE_PROBNA_PL_MARZEC_2025 =
-  "Matura próbna, Politechnika Łódzka, marzec 2025";
+  "Matura próbna z matematyki, Politechnika Łódzka, marzec 2025, poziom rozszerzony";
 
 const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
-  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+  "Matura próbna z matematyki, CKE, grudzień 2024, poziom rozszerzony";
 
 const tasks = [
   {
@@ -422,7 +422,7 @@ const tasks = [
 
   {
     id: "smwp-2026-styczen-zad1",
-    source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
+    source: "Matura próbna z matematyki, SMWP, styczeń 2026, poziom rozszerzony",
     number: "1",
     points: "0–3",
     instruction: "Rozwiąż równanie",

@@ -11,32 +11,32 @@ import { Zad13CkeMock2024 } from "./Zad13CkeMock2024";
 const COMPOUND_TASKS = [
   {
     id: "cke-mock-2024-grudzien-czworokat-f",
-    source: "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024",
+    source: "Matura próbna z matematyki, CKE, grudzień 2024, poziom rozszerzony",
     points: "0–6",
     Component: Zad13CkeMock2024,
   },
   {
     id: "cke-maj-2025-stozek",
-    source: "Matura z matematyki, poziom rozszerzony, CKE, maj 2025",
+    source: "Matura z matematyki, CKE, maj 2025, poziom rozszerzony",
     points: "0–6",
     Component: Zad12Maj2025,
   },
   {
     id: "cke-maj-2026-kwietnik",
     source:
-      "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)",
+      "Matura z matematyki, CKE, maj 2026, poziom rozszerzony, formuła 2023, arkusz z 11 maja 2023",
     points: "0–7",
     Component: Zad12,
   },
   {
     id: "smwp-styczen-2026-graniastoslup",
-    source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
+    source: "Matura próbna z matematyki, SMWP, styczeń 2026, poziom rozszerzony",
     points: "0–6",
     Component: Zad1Smwp2026,
   },
   {
     id: "cke-czerwiec-2025-dod-graniastoslup",
-    source: "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy",
+    source: "Matura z matematyki, CKE, czerwiec 2025, poziom rozszerzony, termin dodatkowy",
     points: "0–6",
     Component: Zad12Czerwiec2025Dod,
   },

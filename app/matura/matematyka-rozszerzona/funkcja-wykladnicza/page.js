@@ -3,13 +3,13 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import {TaskCard, Mi, Mb, FormulaBox, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
-const SOURCE_SMWP_2025_PAZDZIERNIK = "Matura próbna SMWP, październik 2025, poziom rozszerzony";
+const SOURCE_SMWP_2025_PAZDZIERNIK = "Matura próbna z matematyki, SMWP, październik 2025, poziom rozszerzony";
 
 const SOURCE_CKE_MAJ_2025 =
-  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+  "Matura z matematyki, CKE, maj 2025, poziom rozszerzony";
 
 const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
-  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+  "Matura próbna z matematyki, CKE, grudzień 2024, poziom rozszerzony";
 
 const tasks = [
   {

@@ -4,12 +4,12 @@ import { ArrowLeft } from "lucide-react";
 import {TaskCard, Mi, Mb, FormulaBox, SideWork, sortTasksBySourceDate, getDisplayNumber} from "../_components";
 
 const SOURCE_CKE_F2023 =
-  "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
+  "Matura z matematyki, CKE, maj 2026, poziom rozszerzony, formuła 2023, arkusz z 11 maja 2023";
 const SOURCE_CKE_CZERWIEC_2025_DOD =
-  "Matura z matematyki, poziom rozszerzony, CKE, czerwiec 2025, termin dodatkowy";
-const SOURCE_SMWP = "Matura próbna SMWP, październik 2025, poziom rozszerzony";
+  "Matura z matematyki, CKE, czerwiec 2025, poziom rozszerzony, termin dodatkowy";
+const SOURCE_SMWP = "Matura próbna z matematyki, SMWP, październik 2025, poziom rozszerzony";
 const SOURCE_PROBNA_PL_MARZEC_2025 =
-  "Matura próbna, Politechnika Łódzka, marzec 2025";
+  "Matura próbna z matematyki, Politechnika Łódzka, marzec 2025, poziom rozszerzony";
 
 const tasks = [
   {

@@ -76,13 +76,13 @@ const DiagramZnakiMaj2025Zad5 = () => (
 // ─── Zadania ──────────────────────────────────────────────────
 
 const SOURCE_CKE_F2023 =
-  "Matura z matematyki, poziom rozszerzony, formuła 2023, egzamin w 2026 roku CKE (arkusz z 11 maja 2023)";
+  "Matura z matematyki, CKE, maj 2026, poziom rozszerzony, formuła 2023, arkusz z 11 maja 2023";
 
 const SOURCE_CKE_MAJ_2025 =
-  "Matura z matematyki, poziom rozszerzony, CKE, maj 2025";
+  "Matura z matematyki, CKE, maj 2025, poziom rozszerzony";
 
 const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
-  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+  "Matura próbna z matematyki, CKE, grudzień 2024, poziom rozszerzony";
 
 // Tabliczka znaków: |x+2|, |x−2| (punkty krytyczne: −2, 2)
 const DiagramZnakiCkeMock2024Zad6 = () => (
@@ -493,7 +493,7 @@ const tasks = [
 
   {
     id: "smwp-2026-styczen-zad6",
-    source: "Matura próbna SMWP, styczeń 2026, poziom rozszerzony",
+    source: "Matura próbna z matematyki, SMWP, styczeń 2026, poziom rozszerzony",
     number: "2",
     points: "0–4",
     instruction: "Rozwiąż nierówność",
@@ -594,7 +594,7 @@ const tasks = [
   // ── Zadanie 3 ─────────────────────────────────────────────
   {
     id: "smwp-2025-pazdziernik-zad5",
-    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    source: "Matura próbna z matematyki, SMWP, październik 2025, poziom rozszerzony",
     number: "3",
     points: "0–3",
     instruction: (
@@ -661,7 +661,7 @@ const tasks = [
   // ── Zadanie 4 ─────────────────────────────────────────────
   {
     id: "smwp-2025-pazdziernik-zad11",
-    source: "Matura próbna SMWP, październik 2025, poziom rozszerzony",
+    source: "Matura próbna z matematyki, SMWP, październik 2025, poziom rozszerzony",
     number: "4",
     points: "0–5",
     instruction: <span>Rozwiąż nierówność</span>,
@@ -740,7 +740,7 @@ const tasks = [
   {
     id: "cke-formula2023-maj-2026-przyklad-zad5-moduly",
     source:
-      "Matura z matematyki, poziom rozszerzony, arkusz CKE (formuła 2023), egzamin maj 2026",
+      "Matura z matematyki, CKE, maj 2026, poziom rozszerzony, formuła 2023, arkusz z 11 maja 2023",
     number: "5",
     points: "0–4",
     instruction: "Rozwiąż nierówność",

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { SubTask, Mi, Mb, FormulaBox, SideWork } from "../_components";
 
 const SOURCE_CKE_MOCK_GRUDZIEN_2024 =
-  "Matura próbna z matematyki, poziom rozszerzony, CKE, grudzień 2024";
+  "Matura próbna z matematyki, CKE, grudzień 2024, poziom rozszerzony";
 
 export const Zad13CkeMock2024 = ({ number = "1", points = "0–6" }) => (
   <div className="border border-[#c4a8e8] rounded-xl overflow-hidden">
