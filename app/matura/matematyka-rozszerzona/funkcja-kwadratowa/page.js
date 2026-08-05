@@ -275,7 +275,7 @@ const tasks = [
 
         <p className="font-semibold text-stone-800">Krok 3. Warunek <Mi>{"(x_1 - x_2)^2 \\le 180"}</Mi></p>
         <p>
-          Korzystamy z tożsamości (jak we wskazówce):
+          Korzystamy z tożsamości:
         </p>
         <Mb>
           {"(x_1 - x_2)^2 = (x_1 + x_2)^2 - 4x_1 x_2 = \\left(-\\dfrac{b}{a}\\right)^2 - 4 \\cdot \\dfrac{c}{a} = \\dfrac{b^2 - 4ac}{a^2} = \\dfrac{\\Delta}{a^2}"}
@@ -423,14 +423,11 @@ const tasks = [
           <Mi>{"m - 2"}</Mi> jest czynnikiem. Dzieląc wielomian otrzymujemy:
         </p>
 
-        <div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
-          <div className="flex-1 min-w-0 space-y-3">
+        <div className="flex flex-col gap-4">
+          <div className="min-w-0">
             <Mb>{"4m^3 - 10m^2 + 5m - 2 = (m - 2)(4m^2 - 2m + 1)"}</Mb>
           </div>
-          <SideWork
-            className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0"
-            title="Dzielenie wielomianów"
-          >
+          <SideWork className="w-full" title="Dzielenie wielomianów">
             <Mb>
               {[
                 "\\begin{aligned}",
@@ -524,7 +521,7 @@ const tasks = [
           <Mb>{"x_1^3+x_2^3 = (x_1+x_2)\\bigl[(x_1+x_2)^2 - 3x_1 x_2\\bigr]"}</Mb>
         </FormulaBox>
         <p>
-          Krok 4: znajdź część wspólną obu warunków (na <Mi>{"\\Delta"}</Mi> i na nierówność).
+          Krok 4: znajdź część wspólną obu warunków.
         </p>
       </div>
     ),
@@ -679,9 +676,7 @@ const tasks = [
           <Mb>{"x_1 + x_2 = \\frac{6}{2m+1}, \\qquad x_1 x_2 = \\frac{m-3}{2m+1}"}</Mb>
         </FormulaBox>
         <p>
-          Warunek <Mi>{"x_1 x_2 < 0"}</Mi> daje <Mi>{"m \\in (-\\frac{1}{2}, 3)"}</Mi>.
-          Następnie uprość <Mi>{"x_1^3 + x_2^3 = (x_1+x_2)^3 - 3x_1 x_2(x_1+x_2)"}</Mi>
-          i rozwiąż nierówność.
+          Uprość, korzystając z wzorów skróconego mnożenia: <Mi>{"x_1^3 + x_2^3 = (x_1+x_2)^3 - 3x_1 x_2(x_1+x_2)"}</Mi>.
         </p>
       </div>
     ),
@@ -690,12 +685,13 @@ const tasks = [
       <div className="space-y-4">
         <p className="font-semibold text-stone-800">Krok 1. Warunek na dwa miejsca zerowe przeciwnych znaków</p>
         <p>Potrzebujemy: <Mi>{"2m+1 \\neq 0"}</Mi> i <Mi>{"x_1 x_2 < 0"}</Mi>.</p>
-        <p>Wzory Viète'a: <Mi>{"s = x_1+x_2 = \\frac{6}{2m+1}"}</Mi>, <Mi>{"p = x_1 x_2 = \\frac{m-3}{2m+1}"}</Mi></p>
-        <Mb>{"p < 0 \\quad\\Leftrightarrow\\quad \\frac{m-3}{2m+1} < 0 \\quad\\Leftrightarrow\\quad m \\in \\left(-\\frac{1}{2},\\, 3\\right)"}</Mb>
+        <p>Wzory Viète'a: </p>
+          <Mb>{"x_1+x_2 = \\frac{6}{2m+1}, \\qquad x_1 x_2 = \\frac{m-3}{2m+1}"}</Mb>
+        <Mb>{"x_1 x_2 < 0 \\quad\\Leftrightarrow\\quad \\frac{m-3}{2m+1} < 0 \\quad\\Leftrightarrow\\quad m \\in \\left(-\\frac{1}{2},\\, 3\\right)"}</Mb>
         <p>
-          Na tym przedziale mamy dwa różne pierwiastki rzeczywiste, bo{" "}
-          <Mb>{"\\Delta = 36-4(2m+1)(m-3) = -8m^2+20m+48 > 0"}</Mb>
-          (sprawdzenie: np. w środku przedziału <Mi>{"m = 0"}</Mi> daje <Mi>{"\\Delta = 48 > 0"}</Mi>).
+          Na tym przedziale mamy dwa różne pierwiastki rzeczywiste, bo:{" "}
+          <Mb>{"\\Delta = 36-4(2m+1)(m-3) = -8m^2+20m+48"}</Mb>
+          <Mb>{"\\Delta > 0 \\quad\\Leftrightarrow\\quad -8m^2+20m+48 > 0 \\quad\\Leftrightarrow\\quad m \\in \\left(-\\frac{3}{2},\\, 4\\right)"}</Mb>
         </p>
 
         <p className="font-semibold text-stone-800">Krok 2. Nierówność <Mi>{"x_1^3+x_2^3 > (x_1+x_2)^4"}</Mi></p>
@@ -711,8 +707,8 @@ const tasks = [
         </FormulaBox>
         <p>
           Stąd{" "}
-          <Mi>{"x_1^3 + x_2^3 = (x_1+x_2)^3 - 3x_1 x_2 (x_1+x_2)"}</Mi>. Oznaczając jak w
-          poprzednim kroku <Mi>{"s = x_1+x_2"}</Mi> i <Mi>{"p = x_1 x_2"}</Mi>, otrzymujemy na
+          <Mi>{"x_1^3 + x_2^3 = (x_1+x_2)^3 - 3x_1 x_2 (x_1+x_2)"}</Mi>. Oznaczając{" "}
+          <Mi>{"s = x_1+x_2"}</Mi> i <Mi>{"p = x_1 x_2"}</Mi>, otrzymujemy na
           końcu zwartą postać:
         </p>
         <Mb>{"x_1^3+x_2^3 = s^3 - 3ps"}</Mb>
@@ -728,8 +724,34 @@ const tasks = [
         <Mb>{"4m^3-8m^2-35m+57 < 0"}</Mb>
 
         <p className="font-semibold text-stone-800">Krok 3. Rozkład trójmianu</p>
-        <p>Sprawdzamy <Mi>{"m = \\frac{3}{2}"}</Mi>: <Mi>{"4\\cdot\\frac{27}{8}-8\\cdot\\frac{9}{4}-35\\cdot\\frac{3}{2}+57 = \\frac{27}{2}-18-\\frac{105}{2}+57 = 0"}</Mi> ✓</p>
-        <Mb>{"4m^3-8m^2-35m+57 = (2m-3)(2m^2-m-19)"}</Mb>
+        <p>Korzystając z twierdzenia o pierwiastkach wymiernych wielomianu <Mi>{"\\frac{p}{q}"}</Mi>,{" "}
+        gdzie <Mi>{"p"}</Mi> jest dzielnikiem 57 i <Mi>{"q"}</Mi> jest dzielnikiem 4, otrzymujemy dla <Mi>{"m = \\frac{3}{2}"}</Mi>:</p>
+        <p><Mi>{"4\\cdot\\frac{27}{8}-8\\cdot\\frac{9}{4}-35\\cdot\\frac{3}{2}+57 = \\frac{27}{2}-18-\\frac{105}{2}+57 = 0"}</Mi> ✓</p>
+        <p>
+          Zatem <Mi>{"2m - 3"}</Mi> jest czynnikiem. Dzieląc wielomian otrzymujemy:
+        </p>
+
+        <div className="flex flex-col gap-4">
+          <div className="min-w-0">
+            <Mb>{"4m^3-8m^2-35m+57 = (2m-3)(2m^2-m-19)"}</Mb>
+          </div>
+          <SideWork className="w-full" title="Dzielenie wielomianów">
+            <Mb>
+              {[
+                "\\begin{aligned}",
+                "& \\underline{\\hspace{0.1em}2m^2-m-19\\hspace{4.1em}} \\\\[0.25em]",
+                "& (4m^3-8m^2-35m+57):(2m-3) \\\\[0.45em]",
+                "& \\underline{-(4m^3-6m^2)\\hspace{2.8em}} \\\\[0.25em]",
+                "& \\hspace{1.5em}-2m^2-35m+57 \\\\[0.45em]",
+                "& \\hspace{1.5em}\\underline{-(-2m^2+3m)\\hspace{1.25em}} \\\\[0.25em]",
+                "& \\hspace{3em}-38m+57 \\\\[0.45em]",
+                "& \\hspace{3em}\\underline{-(-38m+57)} \\\\[0.25em]",
+                "& \\hspace{4.5em}0",
+                "\\end{aligned}",
+              ].join("")}
+            </Mb>
+          </SideWork>
+        </div>
         <p>Pierwiastki <Mi>{"2m^2-m-19=0"}</Mi>: <Mi>{"m = \\frac{1\\pm\\sqrt{153}}{4} = \\frac{1\\pm 3\\sqrt{17}}{4}"}</Mi></p>
         <p><Mi>{"m_1 \\approx 3{,}34"}</Mi> (poza <Mi>{"(-\\frac{1}{2},3)"}</Mi>), <Mi>{"m_2 \\approx -2{,}84"}</Mi> (poza <Mi>{"(-\\frac{1}{2},3)"}</Mi>)</p>
         <p>Na przedziale <Mi>{"(-\\frac{1}{2},3)"}</Mi>: <Mi>{"2m^2-m-19 < 0"}</Mi>, więc znak <Mi>{"(2m-3)\\cdot(-)"}</Mi>:</p>
@@ -797,7 +819,7 @@ const tasks = [
           <Mi>{"a = m^2 > 0"}</Mi>, więc parabola „otwiera się” do góry.
         </p>
         <p>
-          Dwa różne miejsca zerowe: oblicz <Mi>{"\\Delta"}</Mi> i wymagaj{" "}
+          Dwa różne miejsca zerowe: oblicz <Mi>{"\\Delta"}</Mi> i znajdź rozwiązanie nierówności{" "}
           <Mi>{"\\Delta > 0"}</Mi>.
         </p>
         <p>
