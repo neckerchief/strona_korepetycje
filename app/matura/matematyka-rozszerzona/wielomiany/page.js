@@ -122,14 +122,11 @@ const tasks = [
           Dzielimy <Mi>{"W(x)"}</Mi> przez <Mi>{"(x+1)"}</Mi>:
         </p>
 
-        <div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
-          <div className="flex-1 min-w-0 space-y-3">
+        <div className="flex flex-col gap-4">
+          <div className="min-w-0">
             <Mb>{"W(x) = (x+1)(x^2 + x + 2)"}</Mb>
           </div>
-          <SideWork
-            className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0"
-            title="Dzielenie wielomianów"
-          >
+          <SideWork className="w-full" title="Dzielenie wielomianów">
             <Mb>
               {[
                 "\\begin{aligned}",
@@ -231,10 +228,6 @@ const tasks = [
         <Mb>
           {"W(-1) = (-1)^{2025} - 2 \\cdot (-1)^{2024} + 2 \\cdot (-1)^{2023} - 1"}
         </Mb>
-        <p>
-          Wykładnik <Mi>{"2025"}</Mi> jest nieparzysty, więc <Mi>{"(-1)^{2025} = -1"}</Mi>.
-          Wykładniki <Mi>{"2024"}</Mi> i <Mi>{"2023"}</Mi> są odpowiednio parzysty i nieparzysty:
-        </p>
         <Mb>{"W(-1) = -1 - 2 \\cdot 1 + 2 \\cdot (-1) - 1 = -1 - 2 - 2 - 1 = -6"}</Mb>
         <Mb>{"A - B + C = -6 \\quad \\text{(III)}"}</Mb>
 
@@ -327,14 +320,11 @@ const tasks = [
           Dzielimy wielomian przez <Mi>{"(n - 7)"}</Mi>:
         </p>
 
-        <div className="flex flex-col xl:flex-row gap-4 items-stretch xl:items-start">
-          <div className="flex-1 min-w-0 space-y-3">
+        <div className="flex flex-col gap-4">
+          <div className="min-w-0">
             <Mb>{"n^3 - 6n^2 + 5n - 84 = (n - 7)(n^2 + n + 12)"}</Mb>
           </div>
-          <SideWork
-            className="w-full xl:w-[min(100%,min(38rem,46vw))] xl:shrink-0"
-            title="Dzielenie wielomianów"
-          >
+          <SideWork className="w-full" title="Dzielenie wielomianów">
             <Mb>
               {[
                 "\\begin{aligned}",
