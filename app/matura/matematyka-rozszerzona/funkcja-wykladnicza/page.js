@@ -272,7 +272,7 @@ const tasks = [
     hint: (
       <div className="space-y-3">
         <p>
-          Podziel <Mi>{"K(4)"}</Mi> przez <Mi>{"K(2)"}</Mi> aby wyeliminować <Mi>{"W_0"}</Mi>
+          Podziel <Mi>{"K(4)"}</Mi> przez <Mi>{"K(2)"}</Mi> aby wyeliminować <Mi>{"W_0"}</Mi>{" "}
           i wyznaczyć <Mi>{"g^2"}</Mi>:
         </p>
         <FormulaBox>
