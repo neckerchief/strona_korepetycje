@@ -64,6 +64,8 @@ alwaysApply: false
 ## SVG Diagrams
 - Leave SVG text content unchanged; KaTeX cannot render inside SVG.
 - SVG labels may keep Unicode subscripts (e.g. `vₓ`) or `<tspan>` subscripts.
+- **Wykresy sin/cos/tg (siatka `\pi/6`)**: schemat wzorcowy w `.cursor/rules/trig-unit-graphs.mdc`;
+  referencja kodu: `TrigGraph` / `TanGraph` w `app/matura/matematyka-rozszerzona/trygonometria/page.js`.
 
 ## Styl tekstu na stronie (język polski)
 

@@ -1,0 +1,86 @@
+---
+description: Wzorcowe wykresy sin/cos/tg (siatka szkolna) w rozwiązaniach matury PR
+globs: app/matura/matematyka-rozszerzona/**/*.js
+alwaysApply: false
+---
+
+# Wykresy jednostkowe sin / cos / tg (schemat wzorcowy)
+
+**Referencja implementacji:** `TrigGraph`, `TanGraph` + `SvgFrac` w
+`app/matura/matematyka-rozszerzona/trygonometria/page.js`.
+Przy nowych wykresach **kopiuj / reuse te komponenty**, nie rysuj od zera innego układu.
+
+## Sin / cos
+
+### Kiedy używać
+
+W rozwiązaniach równań trygonometrycznych, gdy pomaga wizualnie zobaczyć miejsca zerowe
+lub poziomice (np. `\sin u = 0`, `\cos u = 1/2`) na jednej pełnej fali `[0, 2\pi]`.
+
+### Siatka (skala szkolna)
+
+| Oś | 1 kratka | Uwagi |
+|----|----------|--------|
+| `u` | `\pi/6` | główne linie co `\pi/2` (co 3 kratki) |
+| wartości (`sin`/`cos`) | `1/2` | 2 kratki = 1; główne linie na `0`, `\pm 1` |
+
+### Zakres z „oddechem”
+
+- Widoczna siatka: `u \in [-\pi/6,\ 13\pi/6]`, wartości `\in [-3/2,\ 3/2]`
+- **Oś `u` rysuj od `u = 0` w prawo** (lewa kratka tylko jako luz, bez linii osi)
+- Oś wartości przez `u = 0`, ze strzałkami lekko poza siatkę
+
+### Etykiety
+
+- Ułamki w SVG jak `\frac{a}{b}` (helper `SvgFrac`; KaTeX w `<text>` nie działa)
+- Ujemne: `-\frac{1}{2}`, **nie** `\frac{-1}{2}` (`negative` w `SvgFrac`)
+- **Bold** (`fontWeight="700"`) na wartościach osi i podpisach przy zaznaczonych punktach
+- Zero tylko przy osi wartości (obok `1`, `1/2`, …), **nie** pod początkiem osi `u`
+- Na osi `u` podpisuj co najmniej: `\pi/2`, `\pi`, `3\pi/2`, `2\pi`
+
+### Kolory / zaznaczenia
+
+- Krzywa: `#6d3a8e`
+- Siatka minor / major: `#d8ccec` / `#b9a3db`
+- Punkty rozwiązań: pomarańczowe kropki `#ea580c`, podpisy `#c2410c`
+- Poziomica (np. `y = 1/2`): przerywana `#f97316`
+
+### Użycie
+
+```jsx
+<TrigGraph
+  fn="sin" // lub "cos"
+  yGuide={0.5}
+  points={[
+    { u: Math.PI / 3, y: 0.5, frac: { num: "π", den: "3" }, labelDy: 18 },
+  ]}
+/>
+```
+
+## Tangens (`TanGraph`)
+
+### Kiedy używać
+
+Gdy równanie sprowadza się do `\operatorname{tg} u = c` (np. `-\sqrt{3}`).
+
+### Siatka
+
+| Oś | 1 kratka | Uwagi |
+|----|----------|--------|
+| `u` | `\pi/6` | zakres `(-\pi/2,\ \pi/2)` = 6 kratek; asymptoty w `\pm\pi/2` |
+| `tg u` | `1/2` | 2 kratki = 1; zakres `[-3,\ 3]` = 12 kratek |
+
+- Przerywane asymptoty pionowe w `u = \pm\pi/2`
+- Krzywą urywaj przy asymptotach (nie łącz przez nieskończoność)
+- Poziomica i punkt rozwiązania w tym samym stylu co sin/cos
+
+```jsx
+<TanGraph
+  yGuide={-Math.sqrt(3)}
+  points={[
+    { u: -Math.PI / 3, y: -Math.sqrt(3), frac: { num: "π", den: "3" }, negative: true, labelDy: 18 },
+  ]}
+/>
+```
+
+Krótki tekst wokół wykresu: oznacz `u = \ldots`, powiedz co widać na wycinku, potem wzór ogólny (okres `\pi` dla tg).
